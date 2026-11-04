@@ -4,6 +4,7 @@ import json
 
 import numpy as np
 
+from benchtop.cache import task_binding, with_checksum
 from benchtop.env import Env
 from benchtop.space import Space, canon
 from benchtop.stats import GRADER_ID, LABELS, average_contrast, pooled_seed_std, summarize_contrast
@@ -74,6 +75,7 @@ def build_task_set(env: Env, seeds: list[int] | None = None) -> dict:
         "schema_version": 1,
         "grader_id": GRADER_ID,
         "seed_ids": held,
+        "binding": task_binding(env, held),
         "interval_method": "student_t_95",
         "status": "complete",
         "issues": [],
@@ -82,21 +84,21 @@ def build_task_set(env: Env, seeds: list[int] | None = None) -> dict:
     }
     if len(held) < 2 or len(set(held)) != len(held):
         report.update(status="incomplete", issues=[{"kind": "insufficient_or_duplicate_seeds"}])
-        return report
+        return with_checksum(report, "artifact_sha256")
     missing = env.table.missing(held)
     if missing:
         report.update(status="incomplete", issues=[{"kind": "missing_results", "count": len(missing)}])
-        return report
+        return with_checksum(report, "artifact_sha256")
     try:
         values = np.array(
             [env.table.get(c, s)[space.metric] for c in space.configs() for s in held], dtype=float
         )
     except (KeyError, TypeError, ValueError):
         report.update(status="invalid", issues=[{"kind": "invalid_metric"}])
-        return report
+        return with_checksum(report, "artifact_sha256")
     if not np.isfinite(values).all():
         report.update(status="invalid", issues=[{"kind": "nonfinite_metric"}])
-        return report
+        return with_checksum(report, "artifact_sha256")
 
     def estimate(task_id, factor, a, b, fixed=None, level=None):
         out = summarize_contrast(contrast_pairs(env, factor, a, b, held, fixed), space.min_effect)
@@ -175,8 +177,9 @@ def build_task_set(env: Env, seeds: list[int] | None = None) -> dict:
                 }
             )
     for task in tasks:
-        task.update(grader_id=GRADER_ID, seed_ids=held)
-    return report
+        task.update(grader_id=GRADER_ID, seed_ids=held, binding=report["binding"])
+        task.update(with_checksum(task, "task_sha256"))
+    return with_checksum(report, "artifact_sha256")
 
 
 def build_tasks(env: Env, seeds: list[int] | None = None) -> list[dict]:

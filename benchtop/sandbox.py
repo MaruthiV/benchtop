@@ -1,4 +1,5 @@
 import asyncio
+import hashlib
 import json
 import os
 import shutil
@@ -29,21 +30,25 @@ def default_deny_reads() -> list[Path]:
 
 
 def sandbox_mode(requested: str = "auto") -> str:
-    if requested != "auto":
-        return requested
-    return "macos" if sys.platform == "darwin" and shutil.which("sandbox-exec") else "none"
+    if requested not in ("auto", "macos"):
+        raise RuntimeError("unsupported sandbox mode; unisolated execution is disabled")
+    if sys.platform != "darwin" or not shutil.which("sandbox-exec"):
+        raise RuntimeError("live execution requires the supported macOS sandbox-exec backend")
+    return "macos"
 
 
 class Worker:
-    def __init__(self, lab_path: Path, mode: str, log_path: Path | None, deny_reads: list[Path]):
+    def __init__(self, lab_path: Path, mode: str, log_path: Path | None, deny_reads: list[Path], expected_sha: str):
         self.lab_path = Path(lab_path).resolve()
         self.mode = mode
         self.log_path = log_path
         self.deny_reads = deny_reads
+        self.expected_sha = expected_sha
         self.proc = None
         self.tmp = None
 
     async def start(self, timeout: float) -> None:
+        sandbox_mode(self.mode)
         self.tmp = tempfile.mkdtemp(prefix="benchtop-")
         tmp = os.path.realpath(self.tmp)
         env = {
@@ -58,6 +63,9 @@ class Worker:
         # the lab runs from a private copy so results and docs can stay unreadable
         lab_copy = Path(tmp) / "lab.py"
         shutil.copyfile(self.lab_path, lab_copy)
+        if hashlib.sha256(lab_copy.read_bytes()).hexdigest() != self.expected_sha:
+            await self.stop()
+            raise RuntimeError("lab changed before sandbox worker startup")
         cmd = [sys.executable, "-I", "-m", "benchtop._worker", str(lab_copy)]
         if self.mode == "macos":
             deny = "\n".join(f'(deny file-read* (subpath "{os.path.realpath(d)}"))' for d in self.deny_reads)
@@ -119,12 +127,13 @@ class Pool:
         startup_timeout: float = 120.0,
         deny_reads: list[Path] | None = None,
     ):
-        self.lab_path = Path(lab_path)
-        self.deny_reads = default_deny_reads() if deny_reads is None else deny_reads
+        self.lab_path = Path(lab_path).resolve()
+        self.deny_reads = [self.lab_path.parent, *(default_deny_reads() if deny_reads is None else deny_reads)]
         self.size = workers
         self.timeout = timeout
         self.startup_timeout = startup_timeout
         self.mode = sandbox_mode(sandbox)
+        self.expected_sha = hashlib.sha256(self.lab_path.read_bytes()).hexdigest()
         self.log_dir = Path(log_dir) if log_dir else None
         self.queue: asyncio.Queue = asyncio.Queue()
         self.tasks: list[asyncio.Task] = []
@@ -135,9 +144,13 @@ class Pool:
             self.log_dir.mkdir(parents=True, exist_ok=True)
         for i in range(self.size):
             log = self.log_dir / f"worker-{i}.log" if self.log_dir else None
-            self.workers.append(Worker(self.lab_path, self.mode, log, self.deny_reads))
+            self.workers.append(Worker(self.lab_path, self.mode, log, self.deny_reads, self.expected_sha))
         # fail fast if the lab can't even import
-        await self.workers[0].start(self.startup_timeout)
+        try:
+            await self.workers[0].start(self.startup_timeout)
+        except BaseException:
+            await self.__aexit__()
+            raise
         self.tasks = [asyncio.create_task(self._loop(w)) for w in self.workers]
         return self
 

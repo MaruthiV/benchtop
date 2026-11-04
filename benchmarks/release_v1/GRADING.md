@@ -21,13 +21,15 @@ A deterministic 2,000-resample bootstrap samples whole seed blocks, using RNG se
 
 New sweeps persist a task object with schema version 1, grader ID, qualification seed IDs, data status, eligible tasks, and all contrast diagnostics. Each eligible task also carries its grader and seeds. Complete data may still contain ambiguous contrasts. Missing pairs produce an `incomplete` artifact with no eligible tasks; nonfinite or invalid metrics produce an `invalid` artifact. Pipeline acceptance rejects those data states.
 
+New artifacts also carry [execution and qualification-data bindings](CACHE.md), generator source hashes, and payload checksums. Loading rejects stale generators, changed qualification observations, and altered task payloads. Visible appends do not change the qualification digest.
+
 The eligible-only `build_tasks` helper remains available and raises on incomplete or invalid data. `build_task_set` returns the full diagnostic artifact and accepts explicit seed IDs. The generation pipeline still defaults to its existing held-out split; the fresh three-part split and execution lock gates must be wired into the release harness before that study can run.
 
 Historical unversioned task lists load as `historical_v0` without modifying their files. Mixed task graders and contradictions between the task artifact and environment manifest are errors. Catalogs must declare a supported grader; selected labs must match it and contain eligible tasks. Changing a catalog label alone cannot upgrade historical task labels.
 
 New baseline and agent records carry `grader_id`, and generated reports identify their task graders. Untagged saved results are explicitly interpreted as historical. Report generation rejects selected-environment score records whose grader differs from the loaded tasks, before writing output. This prevents reusing historical scores as if they were measured against corrected labels.
 
-Regenerating a selected lab with the new sweep changes its grader version. Its old catalog and result files must not be silently reused; use an intentionally versioned cohort and matching evaluation artifacts. Best-configuration questions still use the observed held-out best mean and are not confidence-qualified optima.
+Historical directories are verified read-only snapshots. Rebuild reviewed code in a separate versioned directory to collect new data and corrected tasks. Old catalog and result files must not be silently reused; use an intentionally versioned cohort and matching evaluation artifacts. Best-configuration questions still use the observed held-out best mean and are not confidence-qualified optima.
 
 ## Review of the existing collection
 

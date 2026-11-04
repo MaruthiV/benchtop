@@ -1,6 +1,6 @@
 # Release evaluation protocol
 
-[spec.json](spec.json) defines the next evaluation before fresh model results exist. It is a protocol, not a completed experiment or a runnable CLI configuration. Corrected grading, endpoint separation, and frozen episode charging are implemented; the fresh seed-split harness and protocol-specific rollout records remain pending.
+[spec.json](spec.json) defines the next evaluation before fresh model results exist. It is a protocol, not a completed experiment or a runnable CLI configuration. Corrected grading, endpoint separation, frozen charging, and execution-cache versioning are implemented; the fresh seed-split harness and protocol-specific rollout records remain pending.
 
 The primary question is whether a small calibration batch can select a useful experiment budget for one agent better than choosing one global budget on development labs. The measured outcome is how often a group of eight rollouts contains both correct and incorrect answers. That can inform environment selection for training, but mixed rewards can also arise from guessing, malformed answers, or timeouts. Report accuracy, failures, classical controls, and costs alongside it.
 
@@ -59,4 +59,6 @@ The [corrected grader and versioned task artifacts](GRADING.md) are implemented.
 
 [Agent and evaluator access](ACCESS.md) now use separate listeners, episode-scoped capabilities, and a private local admin credential. The integration tests exercise both ports and credential cleanup, but Qualia connectivity is still unverified.
 
-[Charging and episode operations](BUDGETS.md) now use a shared immutable price schedule and one lock per episode across both interfaces. Failed and cancelled work uses a call slot without charging for undelivered observations; retries preserve missing replicates, and waiter cancellation preserves shared live work. The fresh three-part split and execution harness remain pending. The next checkpoint is execution-cache input versioning and rejection of stale data and unsupported live sandboxes.
+[Charging and episode operations](BUDGETS.md) use a shared immutable price schedule and one lock per episode across both interfaces. Failed and cancelled work uses a call slot without charging for undelivered observations; retries preserve missing replicates, and waiter cancellation preserves shared live work.
+
+[Cache provenance](CACHE.md) now binds execution inputs, result rows, qualification data, and task generators. Historical files remain verified snapshots; recorded replay cannot authorize live execution. Stale sweeps preserve old data, and unsupported live sandboxes fail closed. The next checkpoint is final foundation integration and documented reproduction checks. Real Qualia connectivity, the fresh three-part split, and the evaluation harness remain pending.

@@ -10,6 +10,13 @@ from benchtop.space import config_key
 from tests.test_core import toy_env
 
 
+@pytest.fixture(autouse=True)
+def simulated_backend_availability(monkeypatch):
+    # All workers in this module are controlled substitutes.
+    monkeypatch.setattr("benchtop.server.sandbox_mode", lambda: "macos")
+    monkeypatch.setattr("benchtop.live.sandbox_mode", lambda: "macos")
+
+
 class ControlledPool:
     def __init__(self, results=(), blocked=False):
         self.results = list(results)

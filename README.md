@@ -53,7 +53,8 @@ Example, [2610.36983](https://arxiv.org/abs/2610.36983) "Advancement or Accelera
 - claim and where questions require a settled interval-based label; historical and corrected interval rules differ (see the grading review above)
 - the budget is a quarter of the visible grid (6% in the tight runs); new episodes use a [frozen, public runtime estimate per configuration](benchmarks/release_v1/BUDGETS.md)
 - agents get three tools and nothing else: `describe_lab`, `run_experiments`, `submit_answer`
-- labs run under macOS `sandbox-exec` with no network, no writes outside a temp dir, and no reads of results or docs
+- live labs require macOS `sandbox-exec` with no network, no writes outside a temp dir, and no reads of results or docs; unsupported execution fails closed
+- new caches [bind execution inputs and task versions](benchmarks/release_v1/CACHE.md); historical labs remain verified snapshots for cached replay
 
 ## Agents
 

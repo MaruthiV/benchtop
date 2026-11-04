@@ -1,0 +1,224 @@
+{
+  "schema_version": 1,
+  "source": "benchmarks/historical_v0/manifest.json",
+  "policy": "Immutable historical replay only; no live appends or inferred runtime provenance.",
+  "environments": {
+    "2610-36935-gaussian-process-bandits-for": {
+      "lab.py": "f4a4bb7156cc0c081f90ed8703629f44ed2530854a1342f75e0d38434e62e117",
+      "manifest.json": "11a547c2bf83d8dc84a3c9d3d17d3a2fc7f972591168405933ddbb1e0e20829f",
+      "results.jsonl": "55345c42a55484affcee7719c50ea1beac1d5f252d624b458cd4da4ed83fa48c",
+      "space.json": "7f0f1b901b8a3024401bbaa41a7921b2705d5df82fec6d890c0440ddc521068f",
+      "tasks.json": "13aa494a03bdc2247c1a064782e6e178faf3712b3b5f95db437407eba2ce4fdc"
+    },
+    "2610-36941-algorithmic-monoculture-in-machine": {
+      "lab.py": "7c8409f65a9b54ace947f5b4c4dfb6dfd710011e3fe9b9186789988a712bd6ca",
+      "manifest.json": "8e5f93cae5564cc5f6d3f64ce7ae495b4cc1bbd636143c8eae87fb4fb739d112",
+      "results.jsonl": "097628d7ba7dd3bfba154cb82d6b8a0949031c92f65c5e6d3b6d9f5e887347d8",
+      "space.json": "c23314ce85b12b01540087b6517c5e23b92d80a4ea74eff7793759b3012de684",
+      "tasks.json": "b2109d4308b6a7c2d83d0fbb4efa1c4fa550558ef064eedfcc699f076458dac6"
+    },
+    "2610-36983-advancement-or-acceleration-how": {
+      "lab.py": "c87e4977489dc420e06af0cbb0dce7100a91d4e25b8940761f2beee60b0b5980",
+      "manifest.json": "cafcb203d138d4699e43f2fd9b8914d7fc06dff3a3968682545df121cb89736f",
+      "results.jsonl": "38f7b346f5a98a2e65450140704a8f3ce5c33271c10a300f688979df07aa5419",
+      "space.json": "04b2e9698f4295cfc7797be8fe320512dcab0616facbe0796cb871903b618a7a",
+      "tasks.json": "3090d2ad1db6a11727665300fea1dd5f9428c5fe09bb9f3f38f545b0f47070ea"
+    },
+    "2610-36994-callm-continual-adaptation-of": {
+      "lab.py": "7a1a0677fe6cac97a87325a05cb379d7f72245f3a1a83850f4039e64b173c7fd",
+      "manifest.json": "2e5cc473bc9987d79166d665da9d5a3c888d1183febe70181f183f51dd5d8a14",
+      "results.jsonl": "51234adf71fe2289b4bbc1162f43b9234e2a899150d7515b910dd9ceae0f21c6",
+      "space.json": "62eed32b6a8b34c680c24c447d87fa83f34032b420a4e667262d6ca13dbeb282",
+      "tasks.json": "0a4a82111b623fe923655117475f16ac6f402a14b42b53363a21ec48bcfef0b2"
+    },
+    "2610-36999-online-gas-classification-at": {
+      "lab.py": "17416fac829a820d6b7fd7dc87c71696804a2f6dde543f99fb54ecb124c1e310",
+      "manifest.json": "89ea5e4df8bf2d23733508e56a2dc90f65ec5d1b2aa6e6667fa0176a4aa94bd4",
+      "results.jsonl": "0cbd031773bf7d14a7b0ac8830a3b1766ab256b4e5ed674d9568d013ac14114d",
+      "space.json": "14879744ff2efaadfa1d86eecc00e5881ad013ed120171eb4aac99828c74dd89",
+      "tasks.json": "8430352dd32785e8e53a447e81ca2633fe46662bc8b69bcae1d622263de5356c"
+    },
+    "2610-37005-compote-collapseresistant-multiple-hypothesis": {
+      "lab.py": "21b6d5f3f925026927dadaadfc124bc8720fadc7034efe95bbe9c62c650fed39",
+      "manifest.json": "515dd78668a988c9863a3a99e8ee2b041dcd414b0bca6b1c500a70a14881760f",
+      "results.jsonl": "dc8cf80efe4c1dda54b1d606c4c678a3188109e49795a3dab0f9c11f9e47c7d5",
+      "space.json": "bd2f579ef8e004bf144265312db922acdd7c89e930dd464c34004d8bdbae0079",
+      "tasks.json": "a739c4444172eb385df37017251252bde6d8e4997c2e7b22ead386525d050ba6"
+    },
+    "2610-37062-energycal-taming-loss-spikes": {
+      "lab.py": "8df749ee6010cafecad7f0713ed7bb1fed2801ae1cce1d2e5378161c7e03b692",
+      "manifest.json": "407ac5b6eb02f2b325ceadb73f59fd5d9f59eac49db2da02700ee8255af6c347",
+      "results.jsonl": "661d30eb97fc99632e992d279e2366233fe8aa64bf77efb6ca025d834718aeb0",
+      "space.json": "445696bce498cb8e3c4331559cf6714b428d28b021e516b03e2b6b75ba6da246",
+      "tasks.json": "b26394f16662ecadc0b1865a218ea22053fd4dab6389042532e131efc23f5b31"
+    },
+    "2610-37085-on-the-sparsity-of": {
+      "lab.py": "6749f8566da6f8cad80b356e9e293c30727593e038bbfbe5e8d75da149e9267f",
+      "manifest.json": "ba657f354c706cc3718b96962344b5263e0bcd9b123ce4d7b1cabdc91a066bf6",
+      "results.jsonl": "66072f862aa136974c5a8bd894971880d7b9c493e9ffdd3bab6fe6f0728727fb",
+      "space.json": "6a35a40d2448b613a173471234c6283753f733a1307a5a71b5905b0f3db0feea",
+      "tasks.json": "fa06d32f35e2aace007da2e3d253d1297cbdee35f50b7e94f35c39117ddcdc85"
+    },
+    "2610-37145-beyond-parameter-protection-fishershaped": {
+      "lab.py": "6c3d41b15eba172b20b2b7749e20fa64c9e08e26be9bbb5716a7d0255b1277cb",
+      "manifest.json": "17159bee9a89f9e86b34d7f71edc875170181937198ce5f6481a4b8d7b5ec43e",
+      "results.jsonl": "31cc43e3ebe05db1b875dfb5f2b15237696d4cc0763c19ee1240697668967311",
+      "space.json": "d668d19e68cbfac92f52401cb70830355f798eeb55e123b233703ddcbebb48c8",
+      "tasks.json": "9635cb5ff1d2c1374b52787439b930eac67e3202d1c2dda35df5a4e00c5c4f7a"
+    },
+    "2610-37159-physicsguided-flow-matching-a": {
+      "lab.py": "2394b757c5a38a718f78433a6a6f10cc7d610f7fb71172e68bcace06d70e0470",
+      "manifest.json": "b3ed0a6ed8e9c27dbab2b7fb492e88428d9c89d4a3b8807576ffa1f277f8131d",
+      "results.jsonl": "0305df2f39c5cbc1eb65bd4df5c8f55009f2750a50cf72ef13de8df57abdf880",
+      "space.json": "0e0dc618db06b9662b487bc477411f806a8b8ef4a1a250191f59b4e1e03295a5",
+      "tasks.json": "e876e88da093f8864631f0a73a9ba07065fbbf66952634c563f1d0c86cfe8ecf"
+    },
+    "2610-37169-rnyiregularized-flowbased-variational-inference": {
+      "lab.py": "63727c2e72f1d9e6ee84356a3f882468a95bcd352ad004ce812b1db74270e274",
+      "manifest.json": "62d91739d2b2794f193c7d3779ce5ff45accb4aba742eb8c9948c50fb5ce350a",
+      "results.jsonl": "ebfdf8ba7af15cfadad6c485c44c16898fb88080bb12373cd0d0119d5847aa96",
+      "space.json": "daaebc02a06fab25dcc69739e49e198df9fdccdd779347424d03d583051ad158",
+      "tasks.json": "13ac3f023e4ef2a4466ac94369f5760a38cbedaaf5ab9e6bc5047179c14b74a5"
+    },
+    "2610-37195-actionvalue-calibration-via-continuation": {
+      "lab.py": "bcdaaa3d75d96cb241dae69ac1045e11cfa27256ca61b5eafafbbafe2a0fe991",
+      "manifest.json": "4e4fb0a36bd4fb8104d6f1edfb53a34a75c5243e05eac07562b585e7352564a8",
+      "results.jsonl": "b9bc3396b29f5cd8d8592013ca6c4af88bf490240b70f2d222869b5268753ea3",
+      "space.json": "6e80de65038be182e10422b976657a51e2afbe9677fb0e2cb24c894abcfc7289",
+      "tasks.json": "233a33256a881fe3f02057adcf7a38483c67ab42f05216fd3bf73d7fbb9950d5"
+    },
+    "2610-37225-sharpnessaware-muon-matrixaware-optimization": {
+      "lab.py": "bbbebfd531fe48bbd2333ff068cf6f009d41b73d938d12c084f7f7c23ba481fd",
+      "manifest.json": "2692c9a073181b625d4e8a47563893ae1c214789a8de339a788073e3c7a100b5",
+      "results.jsonl": "17a5abefb0898cb87bd32a794be69005e49c257582430ac1f03b2ea5f76ee5cf",
+      "space.json": "7444b8b8e857e9c613f629b6aefa4400462aed93e702dda06d311523f46b9820",
+      "tasks.json": "21a798cb75d65453ef42c19d9acc65f2b40c26d054652f23ca05a8bad3e30d41"
+    },
+    "2610-37227-doubly-robust-deep-kernel": {
+      "lab.py": "2097f3d0b394219eb7d8c1f7ff95073c9d1bf890e8d96643b40055edd2ac2b2c",
+      "manifest.json": "824193a6d7c4d1da63775ce052321729f624fd03553701a53ebe71465065c399",
+      "results.jsonl": "0cf8a21de1037d8258f2ce70a23f8beaf3769ab325ab73d18766cc8c13d88fa1",
+      "space.json": "d78e455846b87e8c0a306f455a0ba5605526ee39167b72b5b59033dff64b9153",
+      "tasks.json": "769e9dceb9724c8508e989e093a765c1603f5dc5c7b8dbd6e2fa5a9d4605994d"
+    },
+    "2610-37284-bayesian-inference-of-expensive": {
+      "lab.py": "2c9346f33c8bc37d21a6bf5a792dab8dab08d351c6647a789ff448b5a73a3344",
+      "manifest.json": "1cef34db88542d9b787c2814a0f8d8d200535844a8ca06893768463fa5ab1025",
+      "results.jsonl": "f47ab04e62f43ceaf414904272251c65ba670157c0e72a6378530b34ab401177",
+      "space.json": "997eb048bbdaad5aea6f6ff7eb69986b1f8269d053aa87e7b9f7af6bb48d4008",
+      "tasks.json": "c8378b1d00e3898f1e7ff4d5f2e1a3553dd78238d59483b60584d142d2dbee0a"
+    },
+    "2610-37353-costbased-variable-selection-for": {
+      "lab.py": "91681e29ab276d05905c86e38afbd359bbe626be0a98f6e4ae2ba44a2663db1b",
+      "manifest.json": "f2a9bf8d7b575849e15c7972312864a8c3b348167ab9233c66cb9a9a099f0b6c",
+      "results.jsonl": "6b0e83e380c6bdff47d2ef6acb42f4dcb97709731f1d596d6c0ddb8064849326",
+      "space.json": "b699a6a0368ad536ea3f43af643856a5fa8add0b4f4d672cfe35c46ee0c0b2a1",
+      "tasks.json": "cdf279b988051db7532765ed0530bb52d2f3c44349852d4ace37b9afb9befe09"
+    },
+    "2610-37365-tridentseq-profilematched-prefixfuture-contrast": {
+      "lab.py": "a74a4ead94dd2a39c281434e46bdb9369ee2e1416137c8055d95bcb2f02a3664",
+      "manifest.json": "0638c4683da94d83396aa69a77ca280c51ed970d07351599ed756447557dc982",
+      "results.jsonl": "e7784911e3b61c273d813015ae58637124e1f96231746f2097d309afb0771d68",
+      "space.json": "0870f893b1ef52df361cd6345c9d28377e52e8fa4b4a2f231600f3eaeb305d42",
+      "tasks.json": "dd360b615f9cad48e81b555ffccba85d775786967d7793c80d7d3d36fd364796"
+    },
+    "2610-37373-euclidean-crowdingdriven-adaptive-euclideanhyperbolic": {
+      "lab.py": "f8e0384151d26eb66095ca8c8f9fb0a1032cf6902a400d291e0d900f3eb9273f",
+      "manifest.json": "14ec42ed109bfb652146b918f7de762f366362dcca92ef62ffc6f51d3aaefb0f",
+      "results.jsonl": "420460d9c051c037262e0e8f3f60f1bb299e82d57dccdef29ec9360d26e51a48",
+      "space.json": "484e011d64138478659d18c449bcfdb5c3a4c35bc38f40d204263c13fc642e57",
+      "tasks.json": "5b5739688c23c8af1332bbb14ac303605dd3b2759c080f1543924373f775c0cf"
+    },
+    "2610-37388-paragaussian-approximations-of-random": {
+      "lab.py": "7052c19137f4091b2bc0548a2d55d6205a7ad989f0f9ec8baf0b8d545fe0e442",
+      "manifest.json": "7e12305713779fc7b84a237317228262a2871faee57071f583a761813d9a1e17",
+      "results.jsonl": "557f3f36ef5c86d8a6bae7a082a082eb8f69552a5b86d3822554168ebe553e11",
+      "space.json": "217281d0e851da2c8b778249e9dc2e9a1a04b53f74323c03d046048efc2bc500",
+      "tasks.json": "b2784910fdd2e8be26d96040e74bd8462c0aaae497c68bc959063c1f2f5b3c2d"
+    },
+    "2610-37389-how-many-and-how": {
+      "lab.py": "4c0381a9bf8e38c44251bdb118c30010dde17788e99da6abec522401dfa8273e",
+      "manifest.json": "eefd36a77d99ffc99f0c83ccdea0eedb6e7547623278a36e2ee3f3c6d387749f",
+      "results.jsonl": "4849045b83739910dbb30d2b3dc997285a996abc8b341f628c986533adcf8d8e",
+      "space.json": "5f401313e9bea9a2869d54f8ea525752cf31d8925112975d4b99918d9bc17180",
+      "tasks.json": "c4a2d2229cea58dc543b9c581705177caf6bc553899a7632333a9deb72b14aa9"
+    },
+    "2610-37390-linmix-data-mixing-as": {
+      "lab.py": "4ea05b47c51c5fa12c8d577a2b103465a919dcddde9684fbcaa20367d0bcc3a6",
+      "manifest.json": "e2cb0e0d05728f32e6ecd2da60ccf5c33a3dbf1da2be97f59997aca7256cea7d",
+      "results.jsonl": "ca8dd12b03805db82f778609509bbe8f0a6a38f8907cac499e58bad1ac2d57ef",
+      "space.json": "d86fb3e0d429819dd96de0573d48b7470663a0227a53bf75e4ee1b82fe1d2b5e",
+      "tasks.json": "dd4f98e9637273d17487208478f72b3810f5e913173b3a7d89b51f13bc3001b7"
+    },
+    "2610-37450-graph-representation-learning-via": {
+      "lab.py": "fdd274d7e43c097fc679c688c0f87cff3bf0a4ca9987d0652bc1a22e4158b765",
+      "manifest.json": "aa2576fe48cfe3bf5f4fd426d005ed8924b8a895a5f651ca0e858c6c11ee74c8",
+      "results.jsonl": "13e1dd89b84ec98508efcd7fd63afe654cf70e0003c8bfbb489ed9311a9f06b4",
+      "space.json": "004f9a45538e144299f7f34d624d7b2b053fe396a542810fb0b5d522740265be",
+      "tasks.json": "ac31ce4494ad86d70700a785915ac8cd9eeb08af1cfde2a159f0f8af865817ef"
+    },
+    "2610-37456-an-input-skip-can": {
+      "lab.py": "3b327eefd8fda90173080d3add0bfa1969b6db636be5799e4756827ebbe70a48",
+      "manifest.json": "c6a70556b798a4f4a72dd4dae95b3fea7d428af5493b88aebe8949fd1d13e457",
+      "results.jsonl": "07f8085ee9e4a19a680ba4fd9144df2259d8d983a181ef87f96e4bbae2c9ead6",
+      "space.json": "821382363fca98b3ec1edba1439db4f8c55b357d0212dc93a6f4d3956c9de28f",
+      "tasks.json": "7fae9a863392b43e7d03c8f70bf5104bd7d8a7fefcb9abc66c63cba43d6662fb"
+    },
+    "2610-37473-qdpinna-physicsinformed-neural-network": {
+      "lab.py": "04021dea392b5bfa8622489a31c6196d6f18a073a78f7e583527b98b1fb0039a",
+      "manifest.json": "392810eec33615c5b4c80672a9eb0c578739aa02a5c2f33d864073d6fdf9ee9b",
+      "results.jsonl": "0d838741f58d72a78b299ae6412ec0cffa1e3a2a362112a3a4eafe41cca622bd",
+      "space.json": "960565d16e46d8b4087d6d3e214e774ba8a5f72ed2b2e6b734d2a09e05a60682",
+      "tasks.json": "2348619aa360acac2cbe4510148786093fa4714f7ac4e4e7d8e0c2a538e2819f"
+    },
+    "2610-37523-the-structure-gap-when": {
+      "lab.py": "d8fdfa28ddcfbba6014223a43e4793d9c9e3ba294ebef476f13f76f94398de8e",
+      "manifest.json": "c8436b22934b560b4bdb850e2f6ed9073b1b16f4656f2619fc5c6244352878a8",
+      "results.jsonl": "3c3a4dc7253a0b095f95ec743ba1c9b4d6f27a4657df040050a78c2b76ded8b6",
+      "space.json": "9c761dc50cc604548920939e39f357b9079722066320f1962a63a6957fe9e779",
+      "tasks.json": "57f9ba7ccdb5a2843d8852d6ee03b91f1e16106b2e4541e0132396f87dbb54e6"
+    },
+    "2610-37553-collective-dynamics-of-selfreinforcement": {
+      "lab.py": "7998230da6e08a6f4cffef5358bab6adbfbcb007a8f66d346ee9348ec83c933d",
+      "manifest.json": "da9b8300e132a71a82bc7cb54a217923595f27e7831af5ac6c8bd8b090893622",
+      "results.jsonl": "ce9b9f7b6146de0a10d8ccd3a5a80da65028da17c2c044f7578e36d1935a1d09",
+      "space.json": "ce6ae6374fa2fc1379686ad29deb0c09fffaa51ac3ef10486d4ebcfe4e3348a6",
+      "tasks.json": "44f02d586e53a0141790595eda07a41cc5e067066e4901164102eca6dfdd180d"
+    },
+    "2610-37561-when-uncertainty-quantification-fails": {
+      "lab.py": "e07f577129b10c548ee35a2ac2e403b4854ad880ff341d4b3463e27445f25abe",
+      "manifest.json": "4ae111bd2d4a6367efba499563a62b01096a5a0a8560166a42b09d09a39e6739",
+      "results.jsonl": "f1f45f1c26e297226ce4eae7c5dff5c496df6b3b3ab3672b715efadafba902b0",
+      "space.json": "9380f7da038534107f2d878aca164adb8384ab5ecb3e02cdb33f0de71af82078",
+      "tasks.json": "ac1f7ec62a1ef71d7d5873efd947899f82a208bf3ac1647cd0b99bfe76873413"
+    },
+    "2610-37588-understanding-the-limits-of": {
+      "lab.py": "93e724e06c363e15e46d9905e75ef859402acde91360302e92a2dc7d117a7946",
+      "manifest.json": "74f90e3a508ed9c81a69408a6a6bd35e1bec4a74f41ba41448b94a145332b047",
+      "results.jsonl": "553e6f374f3cda5874929653f14ce80ea45482e4d968f7c48d9fe599ef4919dc",
+      "space.json": "7337f19157252688afe940c7015650bea74f7ca44c4888504067000a9f5dbd01",
+      "tasks.json": "ae3f3c83e96e8d115ec6e6a9ce0c330fefa9949ab0c5fab311f7c575144ac3ab"
+    },
+    "2610-37656-attention-as-lattice-gauge": {
+      "lab.py": "292c3be13e0484c468781e515fe24764ee484c6380cee7b7da3c28416693906d",
+      "manifest.json": "45b77b17ba169a85551078c78b99a569a4b3dc7da6e083dcc75205dca3e611ec",
+      "results.jsonl": "2cd32e9f62962ed7a7b363ff2ba24bc07050b59ff3ca274996ded029f5991d64",
+      "space.json": "224dbcf2b63bf68a036773a3395fe8d4ccf100f940e2dc78ccf8bd531bf774bf",
+      "tasks.json": "a5b2ae2e0adbdd107f0b5236d0ec052c0e6aace9bfbdd790fd6287effea49127"
+    },
+    "2610-37658-when-should-we-intervene": {
+      "lab.py": "f17fbfae8d4c86daa5b7637169c082fbceb9c5a5194499e7b707953a4db82a5c",
+      "manifest.json": "116894a8e1c9f39fc77cb4c33e123d05d7b599c799bbd000d98c144dbac72a67",
+      "results.jsonl": "974344f6eecb2ed17e03f1a22d15f71266c0a102262d9147bd32dee792e16d3c",
+      "space.json": "6524e912edfe25460e0623b98a9844d7011c52561e9939755e7cc5ada51fb9b1",
+      "tasks.json": "732255db10f4b98229981c4d81f381ba34f19799353407887fba695cc5813327"
+    },
+    "label-smoothing": {
+      "lab.py": "befb15e5b25bf4a6fec589e447ed90c69b07a3defa569660b74af6f1d4241e54",
+      "manifest.json": "b58c283a38d5eb9a1b9fa90888e8c096e8fc80caf6b259feb821ab3b3416f494",
+      "results.jsonl": "29deeaef7408e2e36f65ea804d82c0fd8e31f8312d924d014be1bac406f6c783",
+      "space.json": "14b5a12d7343a1e1004d84cd3beecbc25ca3158f1a6bb6264bc17912a2aa039c",
+      "tasks.json": "3065f02b31e9748f85ff4c9477beff3ab4a7467b7cb10e959da6db088a7aed56"
+    }
+  }
+}

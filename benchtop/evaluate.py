@@ -14,10 +14,10 @@ def accepted_ids() -> set[str]:
     return set(load_catalog(ENVS)["environments"])
 
 
-def all_envs(only_accepted: bool = True, envs_dir: Path | None = None) -> list[Env]:
+def all_envs(only_accepted: bool = True, envs_dir: Path | None = None, *, replay: bool = False) -> list[Env]:
     root = Path(envs_dir) if envs_dir is not None else ENVS
     if not only_accepted:
-        return [Env.load(p.parent) for p in sorted(root.glob("*/tasks.json"))]
+        return [Env.load(p.parent, replay=replay) for p in sorted(root.glob("*/tasks.json"))]
     envs = []
     catalog = load_catalog(root)
     for name in catalog["environments"]:
@@ -25,7 +25,7 @@ def all_envs(only_accepted: bool = True, envs_dir: Path | None = None) -> list[E
         for artifact in ("lab.py", "space.json", "manifest.json", "tasks.json", "results.jsonl"):
             if not (path / artifact).is_file():
                 raise FileNotFoundError(f"catalog environment {name!r} is missing {artifact}")
-        env = Env.load(path)
+        env = Env.load(path, replay=replay)
         if env.id != name:
             raise ValueError(f"catalog identity {name!r} differs from environment identity {env.id!r}")
         if catalog["grader_id"] != env.grader_id:
@@ -38,7 +38,7 @@ def all_envs(only_accepted: bool = True, envs_dir: Path | None = None) -> list[E
 
 def run_baselines(episodes: int = 50, budget_frac: float = 0.25, name: str = "baselines.json") -> list[dict]:
     rows = []
-    for env in all_envs():
+    for env in all_envs(replay=True):
         for task in env.tasks:
             for agent in baselines.BASELINES:
                 scores = [
@@ -57,6 +57,8 @@ def run_baselines(episodes: int = 50, budget_frac: float = 0.25, name: str = "ba
                         "n": episodes,
                         "budget_frac": budget_frac,
                         "grader_id": env.grader_id,
+                        "execution_id": env.execution_id,
+                        "task_version": env.task_version,
                         "charging_id": env.charging_schedule()[1],
                     }
                 )

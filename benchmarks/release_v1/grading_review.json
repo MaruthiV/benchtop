@@ -6,9 +6,10 @@
   "catalog_sha256": "7b914e699e6fa5cf3b6c8e25927542d6b31ca038fd59ccd31d49c7e6b7d8135c",
   "generator_sha256": {
     "benchtop/stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
-    "benchtop/tasks.py": "9994fd40f1c7ac6a4cde85820193896778adfb9656967474145b0bc4f6923439",
-    "benchtop/env.py": "43f786cb0be9194ed6d62da34484bd4b1a95f40ee346ff2613c33fcff3b10c7e",
-    "benchmarks/release_v1/review_grading.py": "4c03ac55cd8b1aa0546a060eaf96c12e7b96e83140ef0481a879c655352b63e9"
+    "benchtop/tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+    "benchtop/env.py": "0ee1c53004af8750cfa6f625c13167406b137aa6e6e97f0900b81429cf79be1c",
+    "benchtop/cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729",
+    "benchmarks/release_v1/review_grading.py": "72eb5e0f4d592de12c481f7e299f5cac99574c87e86df2b42ed33d8a0f47836f"
   },
   "summary": {
     "labs": 30,
@@ -51,6 +52,30 @@
           14,
           15
         ],
+        "binding": {
+          "execution_id": "historical_v0:61992841b3a74ac68707e3e65922821d54b520c25e6f39ce474493b06a647765",
+          "qualification_sha256": "ee9ee405736c70686157940be0da77efeb1c82224ef3f41fea0b939eca7dc18b",
+          "generator_sha256": {
+            "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+            "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+            "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+            "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+          },
+          "seed_ids": [
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        },
         "interval_method": "student_t_95",
         "status": "complete",
         "issues": [],
@@ -81,7 +106,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:61992841b3a74ac68707e3e65922821d54b520c25e6f39ce474493b06a647765",
+              "qualification_sha256": "ee9ee405736c70686157940be0da77efeb1c82224ef3f41fea0b939eca7dc18b",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "68a412096ac7f6149132224e470c6a3414d644323ced57741256b4f39ae5e9ea"
           },
           {
             "id": "best",
@@ -105,7 +155,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:61992841b3a74ac68707e3e65922821d54b520c25e6f39ce474493b06a647765",
+              "qualification_sha256": "ee9ee405736c70686157940be0da77efeb1c82224ef3f41fea0b939eca7dc18b",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "ee4e8bcd51a43f97d1492fecbb428e35ffee8a87cae963cfdfdaec0a15f1314a"
           }
         ],
         "contrasts": [
@@ -260,7 +335,8 @@
             "bootstrap_label": "paper_better",
             "diagnostic_disagreement": false
           }
-        ]
+        ],
+        "artifact_sha256": "19aaa603f9ff1c4cf841e64658ab2e237033f89f92a0035936f4543829221d48"
       }
     },
     {
@@ -292,6 +368,30 @@
           14,
           15
         ],
+        "binding": {
+          "execution_id": "historical_v0:f48ac9573d32b5d7ee29cdb520aa09d1ac4f3fc6773b4decb3ef6470f3e72763",
+          "qualification_sha256": "a5d4a93d607c7c33337cede7245b7ea09eb394c7b44f25e4711c471a89a56b2d",
+          "generator_sha256": {
+            "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+            "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+            "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+            "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+          },
+          "seed_ids": [
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        },
         "interval_method": "student_t_95",
         "status": "complete",
         "issues": [],
@@ -322,7 +422,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:f48ac9573d32b5d7ee29cdb520aa09d1ac4f3fc6773b4decb3ef6470f3e72763",
+              "qualification_sha256": "a5d4a93d607c7c33337cede7245b7ea09eb394c7b44f25e4711c471a89a56b2d",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "6be7deb658f8e06f24b5c1d95faa71fa68b9f721542cd6e5c7c7b6620a0f0126"
           },
           {
             "id": "where:kappa",
@@ -401,7 +526,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:f48ac9573d32b5d7ee29cdb520aa09d1ac4f3fc6773b4decb3ef6470f3e72763",
+              "qualification_sha256": "a5d4a93d607c7c33337cede7245b7ea09eb394c7b44f25e4711c471a89a56b2d",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "7e68511866f6820362ed377c508c68f68e29d6c1313292dd39902c2a6a4e88d7"
           },
           {
             "id": "best",
@@ -425,7 +575,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:f48ac9573d32b5d7ee29cdb520aa09d1ac4f3fc6773b4decb3ef6470f3e72763",
+              "qualification_sha256": "a5d4a93d607c7c33337cede7245b7ea09eb394c7b44f25e4711c471a89a56b2d",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "a2dca7d6e9dc93ebd58395a87d6aee26c4b2a968203add46f7e5597be33f1c1a"
           }
         ],
         "contrasts": [
@@ -580,7 +755,8 @@
             "bootstrap_label": "paper_better",
             "diagnostic_disagreement": false
           }
-        ]
+        ],
+        "artifact_sha256": "024357ea7785c318578f6f9c4d521ca255e6444fbebfc60d968eed87bf175b2f"
       }
     },
     {
@@ -612,6 +788,30 @@
           14,
           15
         ],
+        "binding": {
+          "execution_id": "historical_v0:944abb12e0a9018deefcd992b61836354c360f18c929c61e94c94de26711cf8f",
+          "qualification_sha256": "e0b20f7c60d3c53e0055893f325fded39604d7ea881b1392635e275bf8f96baa",
+          "generator_sha256": {
+            "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+            "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+            "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+            "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+          },
+          "seed_ids": [
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        },
         "interval_method": "student_t_95",
         "status": "complete",
         "issues": [],
@@ -642,7 +842,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:944abb12e0a9018deefcd992b61836354c360f18c929c61e94c94de26711cf8f",
+              "qualification_sha256": "e0b20f7c60d3c53e0055893f325fded39604d7ea881b1392635e275bf8f96baa",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "97cebd40fc2a54b981fea1219bcf9e26b3c844d75fb45a2d1ce1c27d7b47d5de"
           },
           {
             "id": "where:gap_deg",
@@ -720,7 +945,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:944abb12e0a9018deefcd992b61836354c360f18c929c61e94c94de26711cf8f",
+              "qualification_sha256": "e0b20f7c60d3c53e0055893f325fded39604d7ea881b1392635e275bf8f96baa",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "cb0c59ff9fd5756ed2c3fbdc774a5d64b36400058ae0f38db49cfaba5606d295"
           },
           {
             "id": "where:label_noise",
@@ -781,7 +1031,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:944abb12e0a9018deefcd992b61836354c360f18c929c61e94c94de26711cf8f",
+              "qualification_sha256": "e0b20f7c60d3c53e0055893f325fded39604d7ea881b1392635e275bf8f96baa",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "acd1a90efce55b82826da48e80d3e22742a7f42f03dc63d3c8cc121a7e6627ba"
           },
           {
             "id": "best",
@@ -805,7 +1080,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:944abb12e0a9018deefcd992b61836354c360f18c929c61e94c94de26711cf8f",
+              "qualification_sha256": "e0b20f7c60d3c53e0055893f325fded39604d7ea881b1392635e275bf8f96baa",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "c447f9e6e91a6b7328a3d5499ad557624eb4ddf748af4e441a48346091bbf58a"
           }
         ],
         "contrasts": [
@@ -960,7 +1260,8 @@
             "bootstrap_label": "baseline_better",
             "diagnostic_disagreement": false
           }
-        ]
+        ],
+        "artifact_sha256": "aa273db8a5c35f3fb9b7fa1d0c1eff1017ed4b14baa01c74b4eb1964e0c32cc1"
       }
     },
     {
@@ -992,6 +1293,30 @@
           14,
           15
         ],
+        "binding": {
+          "execution_id": "historical_v0:a837be0f67946efbe7937192f3b003a36807a864e67b5f8983588ba48d5abeaa",
+          "qualification_sha256": "99ef1f4df52b61adf56e3bc2003ec05903cbedfe986d4e37161921f98ac2c15e",
+          "generator_sha256": {
+            "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+            "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+            "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+            "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+          },
+          "seed_ids": [
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        },
         "interval_method": "student_t_95",
         "status": "complete",
         "issues": [],
@@ -1022,7 +1347,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:a837be0f67946efbe7937192f3b003a36807a864e67b5f8983588ba48d5abeaa",
+              "qualification_sha256": "99ef1f4df52b61adf56e3bc2003ec05903cbedfe986d4e37161921f98ac2c15e",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "0f966c5ae92b72b7f7d2c0c78bc333ad4ed09adb50abd5c3aa4efeb3608c5e49"
           },
           {
             "id": "best",
@@ -1046,7 +1396,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:a837be0f67946efbe7937192f3b003a36807a864e67b5f8983588ba48d5abeaa",
+              "qualification_sha256": "99ef1f4df52b61adf56e3bc2003ec05903cbedfe986d4e37161921f98ac2c15e",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "6ce84de4344b0387931cc834d6191b67f865294320b544bf068900525823ffae"
           }
         ],
         "contrasts": [
@@ -1201,7 +1576,8 @@
             "bootstrap_label": "paper_better",
             "diagnostic_disagreement": false
           }
-        ]
+        ],
+        "artifact_sha256": "e14dd1e088027b4c5d0a349001e28688352c61e83f1852861e3d61bd79e6dfcb"
       }
     },
     {
@@ -1233,6 +1609,30 @@
           14,
           15
         ],
+        "binding": {
+          "execution_id": "historical_v0:1afe6b573ad0e573a9dee298e5ae777015931f85e95271f6035e8443627e5eb7",
+          "qualification_sha256": "7872744c4527d7eb274906eeefd0cfca708aa3cb85a00a1be3535962ac7f02bb",
+          "generator_sha256": {
+            "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+            "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+            "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+            "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+          },
+          "seed_ids": [
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        },
         "interval_method": "student_t_95",
         "status": "complete",
         "issues": [],
@@ -1263,7 +1663,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:1afe6b573ad0e573a9dee298e5ae777015931f85e95271f6035e8443627e5eb7",
+              "qualification_sha256": "7872744c4527d7eb274906eeefd0cfca708aa3cb85a00a1be3535962ac7f02bb",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "c845cabde79bed6e20dc837952757409ad1b0eb70e000fc3460b3a79004176ba"
           },
           {
             "id": "best",
@@ -1287,7 +1712,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:1afe6b573ad0e573a9dee298e5ae777015931f85e95271f6035e8443627e5eb7",
+              "qualification_sha256": "7872744c4527d7eb274906eeefd0cfca708aa3cb85a00a1be3535962ac7f02bb",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "903ad239360fa2309b056c6314428314d811c6f97cca852b9f22588268965e6b"
           }
         ],
         "contrasts": [
@@ -1442,7 +1892,8 @@
             "bootstrap_label": "baseline_better",
             "diagnostic_disagreement": false
           }
-        ]
+        ],
+        "artifact_sha256": "6c57d733423aaf2ded0ea22c677035dd9ec1698889533b32535c1b22cbaf7581"
       }
     },
     {
@@ -1474,6 +1925,30 @@
           14,
           15
         ],
+        "binding": {
+          "execution_id": "historical_v0:8eb118e3709db169e4394fc79653dbea1059037a8b1f0cd331506451961340cf",
+          "qualification_sha256": "4ffc21922279cb13fb654b19f6efe803802ab248bd4470300d1aba4fbf36c625",
+          "generator_sha256": {
+            "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+            "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+            "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+            "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+          },
+          "seed_ids": [
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        },
         "interval_method": "student_t_95",
         "status": "complete",
         "issues": [],
@@ -1504,7 +1979,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:8eb118e3709db169e4394fc79653dbea1059037a8b1f0cd331506451961340cf",
+              "qualification_sha256": "4ffc21922279cb13fb654b19f6efe803802ab248bd4470300d1aba4fbf36c625",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "17e6a3626723817f888d601a12b0410b755e355fb318558f52211c85cc94b1de"
           },
           {
             "id": "where:n_hyp",
@@ -1583,7 +2083,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:8eb118e3709db169e4394fc79653dbea1059037a8b1f0cd331506451961340cf",
+              "qualification_sha256": "4ffc21922279cb13fb654b19f6efe803802ab248bd4470300d1aba4fbf36c625",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "5833d1d3b8a84303baed73ff282ef282d8a736106f219c674eb41b41656190d7"
           },
           {
             "id": "best",
@@ -1607,7 +2132,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:8eb118e3709db169e4394fc79653dbea1059037a8b1f0cd331506451961340cf",
+              "qualification_sha256": "4ffc21922279cb13fb654b19f6efe803802ab248bd4470300d1aba4fbf36c625",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "636c5be65a37904552f6a3b13c7f09d2bd3764629ea69873170e76b0efe73102"
           }
         ],
         "contrasts": [
@@ -1743,7 +2293,8 @@
             "bootstrap_label": "baseline_better",
             "diagnostic_disagreement": false
           }
-        ]
+        ],
+        "artifact_sha256": "7f09c9dec398ef662965b46b2c8bef61eaf0ba80998027a4ff117a50ee57e0fc"
       }
     },
     {
@@ -1775,6 +2326,30 @@
           14,
           15
         ],
+        "binding": {
+          "execution_id": "historical_v0:1c4cad580cb3a59c91ac23f0fd47a745cba80a463561a4a9b4c6de8c6c3a3f08",
+          "qualification_sha256": "a7bb9e7facdf5dc81b51eb4fc9c5269b7d4ab14db852314fec85ca6c02ec532c",
+          "generator_sha256": {
+            "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+            "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+            "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+            "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+          },
+          "seed_ids": [
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        },
         "interval_method": "student_t_95",
         "status": "complete",
         "issues": [],
@@ -1805,7 +2380,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:1c4cad580cb3a59c91ac23f0fd47a745cba80a463561a4a9b4c6de8c6c3a3f08",
+              "qualification_sha256": "a7bb9e7facdf5dc81b51eb4fc9c5269b7d4ab14db852314fec85ca6c02ec532c",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "9efae81de70cef2b2039f44f3fe236638bcdb8104b3ff3e7f02c486abda0d329"
           },
           {
             "id": "where:lr",
@@ -1884,7 +2484,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:1c4cad580cb3a59c91ac23f0fd47a745cba80a463561a4a9b4c6de8c6c3a3f08",
+              "qualification_sha256": "a7bb9e7facdf5dc81b51eb4fc9c5269b7d4ab14db852314fec85ca6c02ec532c",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "f674b72f5999610e706c0843957829df0bb9626fa7937e1734c25276f0dbb2b1"
           },
           {
             "id": "best",
@@ -1908,7 +2533,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:1c4cad580cb3a59c91ac23f0fd47a745cba80a463561a4a9b4c6de8c6c3a3f08",
+              "qualification_sha256": "a7bb9e7facdf5dc81b51eb4fc9c5269b7d4ab14db852314fec85ca6c02ec532c",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "95f08ecff784e5c64b7d5000076d1636014396a053643f9398bb198b5fea847d"
           }
         ],
         "contrasts": [
@@ -2044,7 +2694,8 @@
             "bootstrap_label": "paper_better",
             "diagnostic_disagreement": false
           }
-        ]
+        ],
+        "artifact_sha256": "27bd1b530b2545c1c4ea3f860a60dfe0bbde6b4f0a271f42dbd0bb0d0caf0544"
       }
     },
     {
@@ -2076,6 +2727,30 @@
           14,
           15
         ],
+        "binding": {
+          "execution_id": "historical_v0:01a82d70d19803ad4cb8ab208b9a86cc5bf40f9651ab7078ca654541a9faaa6b",
+          "qualification_sha256": "4a7655c78c3fc5afb0e7d5b7483f404138fc4ae8322653f83d6c6739881f9735",
+          "generator_sha256": {
+            "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+            "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+            "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+            "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+          },
+          "seed_ids": [
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        },
         "interval_method": "student_t_95",
         "status": "complete",
         "issues": [],
@@ -2106,7 +2781,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:01a82d70d19803ad4cb8ab208b9a86cc5bf40f9651ab7078ca654541a9faaa6b",
+              "qualification_sha256": "4a7655c78c3fc5afb0e7d5b7483f404138fc4ae8322653f83d6c6739881f9735",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "19243c80d14e3849c3c658acee4ea59b54087b7dc4969cc5a4a9bf693f9ddaac"
           },
           {
             "id": "where:beta",
@@ -2167,7 +2867,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:01a82d70d19803ad4cb8ab208b9a86cc5bf40f9651ab7078ca654541a9faaa6b",
+              "qualification_sha256": "4a7655c78c3fc5afb0e7d5b7483f404138fc4ae8322653f83d6c6739881f9735",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "0a715b932c281bf8ecd70e6cdb1308f2d476cf1ecdf2b98df85e830e9739f3e4"
           },
           {
             "id": "best",
@@ -2191,7 +2916,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:01a82d70d19803ad4cb8ab208b9a86cc5bf40f9651ab7078ca654541a9faaa6b",
+              "qualification_sha256": "4a7655c78c3fc5afb0e7d5b7483f404138fc4ae8322653f83d6c6739881f9735",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "c9049e4fb2ee36b998aac4d006156cb1503c418c7c670c0f95ccb65553a2a2d2"
           }
         ],
         "contrasts": [
@@ -2346,7 +3096,8 @@
             "bootstrap_label": "baseline_better",
             "diagnostic_disagreement": false
           }
-        ]
+        ],
+        "artifact_sha256": "049827da14eccdeec62db8b911eed20597cf19852feb91cc961db9555c68fb66"
       }
     },
     {
@@ -2378,6 +3129,30 @@
           14,
           15
         ],
+        "binding": {
+          "execution_id": "historical_v0:52c3112075f45e09fec2531b575ee08f934cca669245f094fb927a3d8656d537",
+          "qualification_sha256": "9e81ae8f4fa947ba907af044c6e393ae49efc7af6bc4810474b1a8f9dbfe3a60",
+          "generator_sha256": {
+            "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+            "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+            "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+            "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+          },
+          "seed_ids": [
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        },
         "interval_method": "student_t_95",
         "status": "complete",
         "issues": [],
@@ -2408,7 +3183,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:52c3112075f45e09fec2531b575ee08f934cca669245f094fb927a3d8656d537",
+              "qualification_sha256": "9e81ae8f4fa947ba907af044c6e393ae49efc7af6bc4810474b1a8f9dbfe3a60",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "a7942da7abdd4db8c49d70a5b5319cb05bf872d09c9af9a3d7de492bb088e8da"
           },
           {
             "id": "best",
@@ -2432,7 +3232,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:52c3112075f45e09fec2531b575ee08f934cca669245f094fb927a3d8656d537",
+              "qualification_sha256": "9e81ae8f4fa947ba907af044c6e393ae49efc7af6bc4810474b1a8f9dbfe3a60",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "22cf0186d591e1b6c3dd33022747c64c2d7abff1ff3ee7bb2769b811c096e2e7"
           }
         ],
         "contrasts": [
@@ -2587,7 +3412,8 @@
             "bootstrap_label": "baseline_better",
             "diagnostic_disagreement": false
           }
-        ]
+        ],
+        "artifact_sha256": "4fb96109419a7e9100d79532f3cc23c5c8f1fdf4ae44f5305757565cab4d4d24"
       }
     },
     {
@@ -2619,6 +3445,30 @@
           14,
           15
         ],
+        "binding": {
+          "execution_id": "historical_v0:2a10ab56e3f696877439c7bd6036809eb298cfe67bf827f32a046395e00d1c7c",
+          "qualification_sha256": "134373f07e8d43d05c9342523d0b8910a3f498e56812821b5c0dd85db37d86e4",
+          "generator_sha256": {
+            "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+            "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+            "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+            "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+          },
+          "seed_ids": [
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        },
         "interval_method": "student_t_95",
         "status": "complete",
         "issues": [],
@@ -2649,7 +3499,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:2a10ab56e3f696877439c7bd6036809eb298cfe67bf827f32a046395e00d1c7c",
+              "qualification_sha256": "134373f07e8d43d05c9342523d0b8910a3f498e56812821b5c0dd85db37d86e4",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "e6fd75fb797840bf65028aad3a05034910eadcd28c5624bb881e1a4c4ee48615"
           },
           {
             "id": "best",
@@ -2673,7 +3548,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:2a10ab56e3f696877439c7bd6036809eb298cfe67bf827f32a046395e00d1c7c",
+              "qualification_sha256": "134373f07e8d43d05c9342523d0b8910a3f498e56812821b5c0dd85db37d86e4",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "f6c60987d8aee69a1bea27dceff1cc1a0bf0175da6f326ddeed1561ad8698b7f"
           }
         ],
         "contrasts": [
@@ -2847,7 +3747,8 @@
             "bootstrap_label": "paper_better",
             "diagnostic_disagreement": false
           }
-        ]
+        ],
+        "artifact_sha256": "5515d7202a46aaddcb21b1fc9a8a9abbac860b49e609b845f39d480772a30db6"
       }
     },
     {
@@ -2879,6 +3780,30 @@
           14,
           15
         ],
+        "binding": {
+          "execution_id": "historical_v0:4f503410466cd6dac94e1417bd1fd8d2e5d49f52286021b137124cfbdce70f55",
+          "qualification_sha256": "779696f31135dffd04c3c67d0c52fea79dedadadf475813f53aab95978be7b25",
+          "generator_sha256": {
+            "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+            "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+            "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+            "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+          },
+          "seed_ids": [
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        },
         "interval_method": "student_t_95",
         "status": "complete",
         "issues": [],
@@ -2942,7 +3867,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:4f503410466cd6dac94e1417bd1fd8d2e5d49f52286021b137124cfbdce70f55",
+              "qualification_sha256": "779696f31135dffd04c3c67d0c52fea79dedadadf475813f53aab95978be7b25",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "6943b81cbffc6b65055df4b1d175dd33022dca9986bee4236c4f00b97b051d0e"
           },
           {
             "id": "where:alpha",
@@ -3020,7 +3970,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:4f503410466cd6dac94e1417bd1fd8d2e5d49f52286021b137124cfbdce70f55",
+              "qualification_sha256": "779696f31135dffd04c3c67d0c52fea79dedadadf475813f53aab95978be7b25",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "20039cdf672769048ca28c5033827a287d3d11bce537223183346b80001ee9f5"
           },
           {
             "id": "best",
@@ -3044,7 +4019,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:4f503410466cd6dac94e1417bd1fd8d2e5d49f52286021b137124cfbdce70f55",
+              "qualification_sha256": "779696f31135dffd04c3c67d0c52fea79dedadadf475813f53aab95978be7b25",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "f66b675409348c9a66b7b16d0c7584c4779e6cabf8e5d2f2742e42cf55acfbca"
           }
         ],
         "contrasts": [
@@ -3218,7 +4218,8 @@
             "bootstrap_label": null,
             "diagnostic_disagreement": false
           }
-        ]
+        ],
+        "artifact_sha256": "0b2b825448eda502a80cad77c350b65552830d281dff307afada794582ae7a3c"
       }
     },
     {
@@ -3250,6 +4251,30 @@
           14,
           15
         ],
+        "binding": {
+          "execution_id": "historical_v0:67699d8883682dd165717e5bdec3a55a182c374e9657baf0446519203743bbaa",
+          "qualification_sha256": "cf2211c074919301c0b43a97561a573f23210eaaebbeb91faea690a8d168b8c9",
+          "generator_sha256": {
+            "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+            "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+            "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+            "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+          },
+          "seed_ids": [
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        },
         "interval_method": "student_t_95",
         "status": "complete",
         "issues": [],
@@ -3280,7 +4305,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:67699d8883682dd165717e5bdec3a55a182c374e9657baf0446519203743bbaa",
+              "qualification_sha256": "cf2211c074919301c0b43a97561a573f23210eaaebbeb91faea690a8d168b8c9",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "13343ce3859ccfe293a3aaf0b18f0496018c65f67eb66458209218db9e3231b8"
           },
           {
             "id": "best",
@@ -3304,7 +4354,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:67699d8883682dd165717e5bdec3a55a182c374e9657baf0446519203743bbaa",
+              "qualification_sha256": "cf2211c074919301c0b43a97561a573f23210eaaebbeb91faea690a8d168b8c9",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "1b2597b18e9786bb807668583baf77b5881416c26a36086b7a12e59b889d3dd8"
           }
         ],
         "contrasts": [
@@ -3459,7 +4534,8 @@
             "bootstrap_label": "paper_better",
             "diagnostic_disagreement": false
           }
-        ]
+        ],
+        "artifact_sha256": "b3dc1bb6dc0171519730a49b7e99d79293a72656bf399c2bc2d18c8eca8ba040"
       }
     },
     {
@@ -3491,6 +4567,30 @@
           14,
           15
         ],
+        "binding": {
+          "execution_id": "historical_v0:732def1c3a372908f151bf87494e25b069969ea7ae719e97a109a951288e296b",
+          "qualification_sha256": "11720bebe916b8602a9e068017bd60efa813e9e230d2b549d5e34739559847d2",
+          "generator_sha256": {
+            "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+            "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+            "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+            "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+          },
+          "seed_ids": [
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        },
         "interval_method": "student_t_95",
         "status": "complete",
         "issues": [],
@@ -3521,7 +4621,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:732def1c3a372908f151bf87494e25b069969ea7ae719e97a109a951288e296b",
+              "qualification_sha256": "11720bebe916b8602a9e068017bd60efa813e9e230d2b549d5e34739559847d2",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "989f56843f38567063a0a800f1f44188169f5beb89961a782aa22b9889dfcc3d"
           },
           {
             "id": "where:rho",
@@ -3582,7 +4707,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:732def1c3a372908f151bf87494e25b069969ea7ae719e97a109a951288e296b",
+              "qualification_sha256": "11720bebe916b8602a9e068017bd60efa813e9e230d2b549d5e34739559847d2",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "5ba60d5e422a7d4a32aa9328845c41b23560429abefe6b2be0c63771e789c951"
           },
           {
             "id": "best",
@@ -3606,7 +4756,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:732def1c3a372908f151bf87494e25b069969ea7ae719e97a109a951288e296b",
+              "qualification_sha256": "11720bebe916b8602a9e068017bd60efa813e9e230d2b549d5e34739559847d2",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "5a572c8a92a686a362463b954ede83f9e2e97b39b59730665250d709498cdbc0"
           }
         ],
         "contrasts": [
@@ -3761,7 +4936,8 @@
             "bootstrap_label": "baseline_better",
             "diagnostic_disagreement": false
           }
-        ]
+        ],
+        "artifact_sha256": "35dd5be1fccbaa07a02102383a96000c46ca14aac3d810e5dc261b51caae27df"
       }
     },
     {
@@ -3793,6 +4969,30 @@
           14,
           15
         ],
+        "binding": {
+          "execution_id": "historical_v0:b3fd4fb1248ba114f455f060e345d7cbc708d82b4563430db3c95a8a08c5e7db",
+          "qualification_sha256": "dbcc56a1402a86623e278eb8170ad80d8e4dc97458238e688246cef73d7dd478",
+          "generator_sha256": {
+            "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+            "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+            "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+            "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+          },
+          "seed_ids": [
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        },
         "interval_method": "student_t_95",
         "status": "complete",
         "issues": [],
@@ -3823,7 +5023,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:b3fd4fb1248ba114f455f060e345d7cbc708d82b4563430db3c95a8a08c5e7db",
+              "qualification_sha256": "dbcc56a1402a86623e278eb8170ad80d8e4dc97458238e688246cef73d7dd478",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "dfd994810a18a14211a93ab42630146883e0b804bb503cab6d7dcef13bea332c"
           },
           {
             "id": "best",
@@ -3847,7 +5072,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:b3fd4fb1248ba114f455f060e345d7cbc708d82b4563430db3c95a8a08c5e7db",
+              "qualification_sha256": "dbcc56a1402a86623e278eb8170ad80d8e4dc97458238e688246cef73d7dd478",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "9b42f0e0e8c64c9a2eeb02b9ef235af0b9a2a1c4d0b3440f998236e6d921d735"
           }
         ],
         "contrasts": [
@@ -3983,7 +5233,8 @@
             "bootstrap_label": "paper_better",
             "diagnostic_disagreement": false
           }
-        ]
+        ],
+        "artifact_sha256": "f565b2f15173ec3a098da7c3212c79a2d59607bea00d3b8ffa48409dcf0214b4"
       }
     },
     {
@@ -4015,6 +5266,30 @@
           14,
           15
         ],
+        "binding": {
+          "execution_id": "historical_v0:c8ad45ea06ae8a3d343ca1dec00f3191e3d14544dc2428209ab1dfa3a2be6fa0",
+          "qualification_sha256": "f299d9c29e31e32c6686e6a9bfa894fe3161b22497ad11a1ef781655815954bb",
+          "generator_sha256": {
+            "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+            "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+            "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+            "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+          },
+          "seed_ids": [
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        },
         "interval_method": "student_t_95",
         "status": "complete",
         "issues": [],
@@ -4045,7 +5320,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:c8ad45ea06ae8a3d343ca1dec00f3191e3d14544dc2428209ab1dfa3a2be6fa0",
+              "qualification_sha256": "f299d9c29e31e32c6686e6a9bfa894fe3161b22497ad11a1ef781655815954bb",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "3ea93cebceae77452f2e9c5e956200aef150d9ff28bdc0def98e52b17f74b842"
           },
           {
             "id": "best",
@@ -4069,7 +5369,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:c8ad45ea06ae8a3d343ca1dec00f3191e3d14544dc2428209ab1dfa3a2be6fa0",
+              "qualification_sha256": "f299d9c29e31e32c6686e6a9bfa894fe3161b22497ad11a1ef781655815954bb",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "649ef78bd72fe3f39add6df4b49a784266dc11c2f2163c61a74f11f81f83e9c4"
           }
         ],
         "contrasts": [
@@ -4224,7 +5549,8 @@
             "bootstrap_label": "baseline_better",
             "diagnostic_disagreement": false
           }
-        ]
+        ],
+        "artifact_sha256": "6cf1740927cc508a666145b226fb886d5603d1711091de2a12a24e5e453edc01"
       }
     },
     {
@@ -4256,6 +5582,30 @@
           14,
           15
         ],
+        "binding": {
+          "execution_id": "historical_v0:8245563baabdcb085761f7fd5939e6448a13cf2a20bf7f694ee582c584ad63f3",
+          "qualification_sha256": "37a81a0d0ca503c279390e8cbe238381f14996935873b6c3d2a04df3c4a4fa99",
+          "generator_sha256": {
+            "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+            "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+            "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+            "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+          },
+          "seed_ids": [
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        },
         "interval_method": "student_t_95",
         "status": "complete",
         "issues": [],
@@ -4286,7 +5636,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:8245563baabdcb085761f7fd5939e6448a13cf2a20bf7f694ee582c584ad63f3",
+              "qualification_sha256": "37a81a0d0ca503c279390e8cbe238381f14996935873b6c3d2a04df3c4a4fa99",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "f24425387388998e0f6b95b3458fa756b3dc345a8a62d8321aacf4e0841beb41"
           },
           {
             "id": "where:expensive_harm",
@@ -4365,7 +5740,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:8245563baabdcb085761f7fd5939e6448a13cf2a20bf7f694ee582c584ad63f3",
+              "qualification_sha256": "37a81a0d0ca503c279390e8cbe238381f14996935873b6c3d2a04df3c4a4fa99",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "a4a159ae5c64412c90c6c7eb6b9b32e6d941257ba74b2d22763937fc5b7b78ed"
           },
           {
             "id": "best",
@@ -4389,7 +5789,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:8245563baabdcb085761f7fd5939e6448a13cf2a20bf7f694ee582c584ad63f3",
+              "qualification_sha256": "37a81a0d0ca503c279390e8cbe238381f14996935873b6c3d2a04df3c4a4fa99",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "cc935389d23f02efc967b8c8bc8fb533be8b5129bb113edd8c6f7c26670bb1af"
           }
         ],
         "contrasts": [
@@ -4544,7 +5969,8 @@
             "bootstrap_label": "paper_better",
             "diagnostic_disagreement": false
           }
-        ]
+        ],
+        "artifact_sha256": "09dd1bf3616a886a58754cf383abf4573d59061c44e4531ed36dec169bd6d161"
       }
     },
     {
@@ -4576,6 +6002,30 @@
           14,
           15
         ],
+        "binding": {
+          "execution_id": "historical_v0:a2a6119d33cce21a5e842c156678b3407725de9e1cc31388c54c964711028498",
+          "qualification_sha256": "77ee1f1ac9845d901307321f81482a4052b530474ef1ce7509e1424bbe15be9d",
+          "generator_sha256": {
+            "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+            "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+            "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+            "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+          },
+          "seed_ids": [
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        },
         "interval_method": "student_t_95",
         "status": "complete",
         "issues": [],
@@ -4606,7 +6056,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:a2a6119d33cce21a5e842c156678b3407725de9e1cc31388c54c964711028498",
+              "qualification_sha256": "77ee1f1ac9845d901307321f81482a4052b530474ef1ce7509e1424bbe15be9d",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "6f811862fd00972c02d291e42988c02d02d119fe8877710745c9ce9ceac7c682"
           },
           {
             "id": "best",
@@ -4630,7 +6105,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:a2a6119d33cce21a5e842c156678b3407725de9e1cc31388c54c964711028498",
+              "qualification_sha256": "77ee1f1ac9845d901307321f81482a4052b530474ef1ce7509e1424bbe15be9d",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "9d1c1e0d17a6f2e57cdc1bf93a8d7eef76c8c809241a9a40f4aefe76cd330e54"
           }
         ],
         "contrasts": [
@@ -4785,7 +6285,8 @@
             "bootstrap_label": "no_meaningful_difference",
             "diagnostic_disagreement": false
           }
-        ]
+        ],
+        "artifact_sha256": "b7425186330600c39d037a25ff12b2cd1eb0ee9508b736635d025ad2e67be40d"
       }
     },
     {
@@ -4817,6 +6318,30 @@
           14,
           15
         ],
+        "binding": {
+          "execution_id": "historical_v0:66e2db34c7508ac9edefaa995adc2043549094ccc3ddc9ea16f270aded899552",
+          "qualification_sha256": "eec7a87ab875cf65c428596b1bb140425d395cf2a3f86dcc75517b15f76df509",
+          "generator_sha256": {
+            "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+            "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+            "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+            "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+          },
+          "seed_ids": [
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        },
         "interval_method": "student_t_95",
         "status": "complete",
         "issues": [],
@@ -4847,7 +6372,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:66e2db34c7508ac9edefaa995adc2043549094ccc3ddc9ea16f270aded899552",
+              "qualification_sha256": "eec7a87ab875cf65c428596b1bb140425d395cf2a3f86dcc75517b15f76df509",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "577b5db0ea1df764ed44f5e49d4a0412c1463fb524f0b691a154a285714345c7"
           },
           {
             "id": "best",
@@ -4871,7 +6421,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:66e2db34c7508ac9edefaa995adc2043549094ccc3ddc9ea16f270aded899552",
+              "qualification_sha256": "eec7a87ab875cf65c428596b1bb140425d395cf2a3f86dcc75517b15f76df509",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "0e9c6f74df0cb81e5c684c892b3123a897be152b03c9af91c5ab1caa15f7a7ea"
           }
         ],
         "contrasts": [
@@ -5026,7 +6601,8 @@
             "bootstrap_label": "paper_better",
             "diagnostic_disagreement": false
           }
-        ]
+        ],
+        "artifact_sha256": "b07c07a4d6c449ba8cc98b2084569da569f64ea7282cde74eae3996035816909"
       }
     },
     {
@@ -5058,6 +6634,30 @@
           14,
           15
         ],
+        "binding": {
+          "execution_id": "historical_v0:7cadec6600923ef52e06ed8eb013d63265f933413c12d80c8ad4d1e354d19299",
+          "qualification_sha256": "15c7201a12a4d46b65b1acee7426a431951f542258952c35fbc5f8dd0635407a",
+          "generator_sha256": {
+            "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+            "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+            "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+            "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+          },
+          "seed_ids": [
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        },
         "interval_method": "student_t_95",
         "status": "complete",
         "issues": [],
@@ -5088,7 +6688,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:7cadec6600923ef52e06ed8eb013d63265f933413c12d80c8ad4d1e354d19299",
+              "qualification_sha256": "15c7201a12a4d46b65b1acee7426a431951f542258952c35fbc5f8dd0635407a",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "c38b2e7266769f5669df76d6e86b5b8cacb945f5cb26399a981c6bb0e91e7b98"
           },
           {
             "id": "where:width",
@@ -5167,7 +6792,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:7cadec6600923ef52e06ed8eb013d63265f933413c12d80c8ad4d1e354d19299",
+              "qualification_sha256": "15c7201a12a4d46b65b1acee7426a431951f542258952c35fbc5f8dd0635407a",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "8610f825c461e1616b19422bf9c0d0b20e2e535e23bdca98760fb5012cc571a5"
           },
           {
             "id": "best",
@@ -5191,7 +6841,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:7cadec6600923ef52e06ed8eb013d63265f933413c12d80c8ad4d1e354d19299",
+              "qualification_sha256": "15c7201a12a4d46b65b1acee7426a431951f542258952c35fbc5f8dd0635407a",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "c9f7a8d87243f2213a4717ff61496f41ac064485722f274e2ea9b697b5b2a0d0"
           }
         ],
         "contrasts": [
@@ -5346,7 +7021,8 @@
             "bootstrap_label": "baseline_better",
             "diagnostic_disagreement": false
           }
-        ]
+        ],
+        "artifact_sha256": "2cf454b47f4510c29466b512e98546a49ef908286d3814be80cce2dc13d46bf0"
       }
     },
     {
@@ -5385,6 +7061,30 @@
           14,
           15
         ],
+        "binding": {
+          "execution_id": "historical_v0:8acbfdf2e2a54949aae63e70c151fae2dafbf692ef85524b92956f38a242b39e",
+          "qualification_sha256": "405a3d58260a569afce5127b043fefaf0bb0a99e222db6af19b7602a7bf8fc7e",
+          "generator_sha256": {
+            "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+            "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+            "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+            "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+          },
+          "seed_ids": [
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        },
         "interval_method": "student_t_95",
         "status": "complete",
         "issues": [],
@@ -5415,7 +7115,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:8acbfdf2e2a54949aae63e70c151fae2dafbf692ef85524b92956f38a242b39e",
+              "qualification_sha256": "405a3d58260a569afce5127b043fefaf0bb0a99e222db6af19b7602a7bf8fc7e",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "e4cf0113d3a70286ccd4ed0789efa75ff295072e32cc5892f466af11aa330deb"
           },
           {
             "id": "where:p",
@@ -5494,7 +7219,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:8acbfdf2e2a54949aae63e70c151fae2dafbf692ef85524b92956f38a242b39e",
+              "qualification_sha256": "405a3d58260a569afce5127b043fefaf0bb0a99e222db6af19b7602a7bf8fc7e",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "edd0d1fb8125c712692d26b08912e92968cb35008b7241a973b7213b24336693"
           },
           {
             "id": "best",
@@ -5518,7 +7268,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:8acbfdf2e2a54949aae63e70c151fae2dafbf692ef85524b92956f38a242b39e",
+              "qualification_sha256": "405a3d58260a569afce5127b043fefaf0bb0a99e222db6af19b7602a7bf8fc7e",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "b58e842ddf9ef5af81f027430e943bd74553de5d9c1b45712639b8e3ac172cae"
           }
         ],
         "contrasts": [
@@ -5692,7 +7467,8 @@
             "bootstrap_label": "paper_better",
             "diagnostic_disagreement": false
           }
-        ]
+        ],
+        "artifact_sha256": "87656e9b4c21c8efe3d9ecfa5b2ef4b3b2f57e3d3407724a99801b08dcb67010"
       }
     },
     {
@@ -5724,6 +7500,30 @@
           14,
           15
         ],
+        "binding": {
+          "execution_id": "historical_v0:d94abe35cc71baedfd47045113642f09b4882263e424a2c7478bd6ff6d5aad90",
+          "qualification_sha256": "8c013518d5513f0c2e9464da1acc6ff24516b7c94ab4324114259e85d2ac1503",
+          "generator_sha256": {
+            "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+            "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+            "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+            "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+          },
+          "seed_ids": [
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        },
         "interval_method": "student_t_95",
         "status": "complete",
         "issues": [],
@@ -5754,7 +7554,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:d94abe35cc71baedfd47045113642f09b4882263e424a2c7478bd6ff6d5aad90",
+              "qualification_sha256": "8c013518d5513f0c2e9464da1acc6ff24516b7c94ab4324114259e85d2ac1503",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "7873040afb2db85c1e7c21917353ab71d1f40d394f89433c5d321a58ade3da78"
           },
           {
             "id": "best",
@@ -5778,7 +7603,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:d94abe35cc71baedfd47045113642f09b4882263e424a2c7478bd6ff6d5aad90",
+              "qualification_sha256": "8c013518d5513f0c2e9464da1acc6ff24516b7c94ab4324114259e85d2ac1503",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "6f3092e1a36934a1f01ec3faebf11b817bc8330c6020aaeb048c1db1169bb28c"
           }
         ],
         "contrasts": [
@@ -5933,7 +7783,8 @@
             "bootstrap_label": "paper_better",
             "diagnostic_disagreement": false
           }
-        ]
+        ],
+        "artifact_sha256": "36cf935bf2f4be7eca055035e64e3981557d49438d524aa5433b03fd67b88d3e"
       }
     },
     {
@@ -5965,6 +7816,30 @@
           14,
           15
         ],
+        "binding": {
+          "execution_id": "historical_v0:5618dd700a144dd424d279532928907554346d2b3239cfd88323fb3579a0d5ac",
+          "qualification_sha256": "7aaba009e79da2f55369aa4650492e3594a20c126219a704a7451d83026204c9",
+          "generator_sha256": {
+            "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+            "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+            "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+            "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+          },
+          "seed_ids": [
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        },
         "interval_method": "student_t_95",
         "status": "complete",
         "issues": [],
@@ -5995,7 +7870,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:5618dd700a144dd424d279532928907554346d2b3239cfd88323fb3579a0d5ac",
+              "qualification_sha256": "7aaba009e79da2f55369aa4650492e3594a20c126219a704a7451d83026204c9",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "9b2329c17b747eccad5287afdf007234fa03f766f2ee3e2556d05c63f089d434"
           },
           {
             "id": "best",
@@ -6019,7 +7919,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:5618dd700a144dd424d279532928907554346d2b3239cfd88323fb3579a0d5ac",
+              "qualification_sha256": "7aaba009e79da2f55369aa4650492e3594a20c126219a704a7451d83026204c9",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "82f4359f3119ba407e54a7a655047815ee04eaf5fd8d47b1acaa4a71e5d5c388"
           }
         ],
         "contrasts": [
@@ -6174,7 +8099,8 @@
             "bootstrap_label": null,
             "diagnostic_disagreement": false
           }
-        ]
+        ],
+        "artifact_sha256": "935b9c9cd0b54a6aa7616dc2fd9d3d444ca2c51bdb5e06fcfe9de5a726e4c473"
       }
     },
     {
@@ -6213,6 +8139,30 @@
           14,
           15
         ],
+        "binding": {
+          "execution_id": "historical_v0:ede2083e7d5b62e0feb14db7cd0291e1e9fadf81b6f6be773eb37df47babdd8d",
+          "qualification_sha256": "562c394a1c95b309b97b3944cc763a9c328e08ac2aac66c898b1b21aa8661357",
+          "generator_sha256": {
+            "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+            "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+            "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+            "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+          },
+          "seed_ids": [
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        },
         "interval_method": "student_t_95",
         "status": "complete",
         "issues": [],
@@ -6243,7 +8193,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:ede2083e7d5b62e0feb14db7cd0291e1e9fadf81b6f6be773eb37df47babdd8d",
+              "qualification_sha256": "562c394a1c95b309b97b3944cc763a9c328e08ac2aac66c898b1b21aa8661357",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "4ac50e088946e97e9339f3bf088716fa901167511552d1c874f5fc20e33a147a"
           },
           {
             "id": "where:alpha",
@@ -6321,7 +8296,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:ede2083e7d5b62e0feb14db7cd0291e1e9fadf81b6f6be773eb37df47babdd8d",
+              "qualification_sha256": "562c394a1c95b309b97b3944cc763a9c328e08ac2aac66c898b1b21aa8661357",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "36f78eec9545539df895ab22a2113ed0f1f246079ce927077bfa88cb910979bb"
           },
           {
             "id": "best",
@@ -6345,7 +8345,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:ede2083e7d5b62e0feb14db7cd0291e1e9fadf81b6f6be773eb37df47babdd8d",
+              "qualification_sha256": "562c394a1c95b309b97b3944cc763a9c328e08ac2aac66c898b1b21aa8661357",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "a7f40f8efec8d8ef43ef44d8966d9db4e7fe8cbe27618ddb60e1e5e474abb105"
           }
         ],
         "contrasts": [
@@ -6500,7 +8525,8 @@
             "bootstrap_label": "baseline_better",
             "diagnostic_disagreement": false
           }
-        ]
+        ],
+        "artifact_sha256": "aeb5ddc24261f05790ea4dc90c251b2a8c6e1e9402476aed147817353bf4db10"
       }
     },
     {
@@ -6532,6 +8558,30 @@
           14,
           15
         ],
+        "binding": {
+          "execution_id": "historical_v0:651411b5689124a524bbbdc28c2e8ebb5ac15a0e763edb8377df550341e7dab9",
+          "qualification_sha256": "f4bde719e35e67406fd702f4ab861c404d9c66de71c2714195d2e4606840e0d7",
+          "generator_sha256": {
+            "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+            "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+            "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+            "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+          },
+          "seed_ids": [
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        },
         "interval_method": "student_t_95",
         "status": "complete",
         "issues": [],
@@ -6562,7 +8612,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:651411b5689124a524bbbdc28c2e8ebb5ac15a0e763edb8377df550341e7dab9",
+              "qualification_sha256": "f4bde719e35e67406fd702f4ab861c404d9c66de71c2714195d2e4606840e0d7",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "dacacaa97f5e14e9a7d7544ebfd231872d29612dbd334ae2a2a58214557d3458"
           },
           {
             "id": "best",
@@ -6586,7 +8661,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:651411b5689124a524bbbdc28c2e8ebb5ac15a0e763edb8377df550341e7dab9",
+              "qualification_sha256": "f4bde719e35e67406fd702f4ab861c404d9c66de71c2714195d2e4606840e0d7",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "a0d45204095c67ccc51478808e0425dccd276c21f0a2a0cf0146f8ef2c26af8a"
           }
         ],
         "contrasts": [
@@ -6741,7 +8841,8 @@
             "bootstrap_label": "baseline_better",
             "diagnostic_disagreement": false
           }
-        ]
+        ],
+        "artifact_sha256": "aef0581b3e73297a15ffa00a7967d798e1ab840f56bcd71ecba368c2c39df3c3"
       }
     },
     {
@@ -6773,6 +8874,30 @@
           14,
           15
         ],
+        "binding": {
+          "execution_id": "historical_v0:fdcfbaf76d6024426f9c16ca6059b4b6bcfb294839272e7bf4572f6b38ee03c0",
+          "qualification_sha256": "1481ee9b404b4547d93253373c0f39aa0814a0c00fe410091ca16bda12c86158",
+          "generator_sha256": {
+            "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+            "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+            "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+            "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+          },
+          "seed_ids": [
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        },
         "interval_method": "student_t_95",
         "status": "complete",
         "issues": [],
@@ -6803,7 +8928,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:fdcfbaf76d6024426f9c16ca6059b4b6bcfb294839272e7bf4572f6b38ee03c0",
+              "qualification_sha256": "1481ee9b404b4547d93253373c0f39aa0814a0c00fe410091ca16bda12c86158",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "914083c94edfdf52a871d9330a4b8c9f3ff2bd5ac2133b281d1fea6c3648369d"
           },
           {
             "id": "where:n_per_d",
@@ -6881,7 +9031,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:fdcfbaf76d6024426f9c16ca6059b4b6bcfb294839272e7bf4572f6b38ee03c0",
+              "qualification_sha256": "1481ee9b404b4547d93253373c0f39aa0814a0c00fe410091ca16bda12c86158",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "4b7ca005eb234d43652db81bb3d82ed700a69664f08a508419591f955b92c496"
           },
           {
             "id": "where:operator_error",
@@ -6942,7 +9117,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:fdcfbaf76d6024426f9c16ca6059b4b6bcfb294839272e7bf4572f6b38ee03c0",
+              "qualification_sha256": "1481ee9b404b4547d93253373c0f39aa0814a0c00fe410091ca16bda12c86158",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "a983226ac2d92c59a2d7faa80ea034ddf4b70ff850b725694bb61f3a4dd3e2b9"
           },
           {
             "id": "best",
@@ -6966,7 +9166,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:fdcfbaf76d6024426f9c16ca6059b4b6bcfb294839272e7bf4572f6b38ee03c0",
+              "qualification_sha256": "1481ee9b404b4547d93253373c0f39aa0814a0c00fe410091ca16bda12c86158",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "6c2cd958dbaafbfbadbcf2694f05f05a7c21a631fafa9823dce2604730b8b4af"
           }
         ],
         "contrasts": [
@@ -7121,7 +9346,8 @@
             "bootstrap_label": "no_meaningful_difference",
             "diagnostic_disagreement": false
           }
-        ]
+        ],
+        "artifact_sha256": "492663dd2b8edef87d6a0988f925980c765382ce05bea9c1dc85b2d6d720b861"
       }
     },
     {
@@ -7160,6 +9386,30 @@
           14,
           15
         ],
+        "binding": {
+          "execution_id": "historical_v0:fde7807f13f0b82424bfcf94e2eb89ec03095a804cdffb93e858d0ce58b295ab",
+          "qualification_sha256": "350c0ebce8fc021af37f1bf14d2b86ef591a0f82664dec362bf113e8ea4db0a8",
+          "generator_sha256": {
+            "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+            "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+            "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+            "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+          },
+          "seed_ids": [
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        },
         "interval_method": "student_t_95",
         "status": "complete",
         "issues": [],
@@ -7223,7 +9473,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:fde7807f13f0b82424bfcf94e2eb89ec03095a804cdffb93e858d0ce58b295ab",
+              "qualification_sha256": "350c0ebce8fc021af37f1bf14d2b86ef591a0f82664dec362bf113e8ea4db0a8",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "1bf31aa356458387667f6a968523e4c4dcc8a869ef0403dd58f56a12b3b416c1"
           }
         ],
         "contrasts": [
@@ -7378,7 +9653,8 @@
             "bootstrap_label": "no_meaningful_difference",
             "diagnostic_disagreement": false
           }
-        ]
+        ],
+        "artifact_sha256": "a1d797d0dae13473957487553fb800c74e9af43ae7b6e1d642273029348cad99"
       }
     },
     {
@@ -7410,6 +9686,30 @@
           14,
           15
         ],
+        "binding": {
+          "execution_id": "historical_v0:640dc2bfa4126871d3c1033b5c89c32d8b358bc83309978135812bcb98deb5d9",
+          "qualification_sha256": "52509d2522a7b582f0ac3493fa5556593f7404ccb2c68fa6b99204c185487e4a",
+          "generator_sha256": {
+            "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+            "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+            "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+            "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+          },
+          "seed_ids": [
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        },
         "interval_method": "student_t_95",
         "status": "complete",
         "issues": [],
@@ -7440,7 +9740,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:640dc2bfa4126871d3c1033b5c89c32d8b358bc83309978135812bcb98deb5d9",
+              "qualification_sha256": "52509d2522a7b582f0ac3493fa5556593f7404ccb2c68fa6b99204c185487e4a",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "892114a0b9cdbe0e7d3850391c4013012acd29c1a7907ae64d03b81da078d68d"
           },
           {
             "id": "best",
@@ -7464,7 +9789,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:640dc2bfa4126871d3c1033b5c89c32d8b358bc83309978135812bcb98deb5d9",
+              "qualification_sha256": "52509d2522a7b582f0ac3493fa5556593f7404ccb2c68fa6b99204c185487e4a",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "e5788cae74babcdf3e98deabbeff63d61108701e5c9b82abe5e458e6bb8eb7f5"
           }
         ],
         "contrasts": [
@@ -7619,7 +9969,8 @@
             "bootstrap_label": "paper_better",
             "diagnostic_disagreement": false
           }
-        ]
+        ],
+        "artifact_sha256": "56e27e95ff08109d0a1a11cacb64eec34d7d2b59e68e755cda8e6ca4fb166bd9"
       }
     },
     {
@@ -7651,6 +10002,30 @@
           14,
           15
         ],
+        "binding": {
+          "execution_id": "historical_v0:0b0c1f0653a891d47814e2e3d861e2955eb053aefa10da6055593142bc36a0ed",
+          "qualification_sha256": "74c6bdd8f21f8ed46999fda948b17141efccb5b1dff32974db8ecca94292547a",
+          "generator_sha256": {
+            "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+            "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+            "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+            "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+          },
+          "seed_ids": [
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        },
         "interval_method": "student_t_95",
         "status": "complete",
         "issues": [],
@@ -7681,7 +10056,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:0b0c1f0653a891d47814e2e3d861e2955eb053aefa10da6055593142bc36a0ed",
+              "qualification_sha256": "74c6bdd8f21f8ed46999fda948b17141efccb5b1dff32974db8ecca94292547a",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "a1c4ae77e92e1954952d5be6c98e22e089a56b82ca7a901bbcf61b3339b0b0e0"
           },
           {
             "id": "where:horizon",
@@ -7760,7 +10160,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:0b0c1f0653a891d47814e2e3d861e2955eb053aefa10da6055593142bc36a0ed",
+              "qualification_sha256": "74c6bdd8f21f8ed46999fda948b17141efccb5b1dff32974db8ecca94292547a",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "ecd0e798e9281a7b12cce414dc9f6e60a9f692d4179db5283d6237c645c23db0"
           },
           {
             "id": "best",
@@ -7784,7 +10209,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:0b0c1f0653a891d47814e2e3d861e2955eb053aefa10da6055593142bc36a0ed",
+              "qualification_sha256": "74c6bdd8f21f8ed46999fda948b17141efccb5b1dff32974db8ecca94292547a",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "7f7167f00c7fdd00e65dc2b1396c213e780bc8c37ce4293b32b74e107848b1e8"
           }
         ],
         "contrasts": [
@@ -7958,7 +10408,8 @@
             "bootstrap_label": "paper_better",
             "diagnostic_disagreement": false
           }
-        ]
+        ],
+        "artifact_sha256": "a2606552294e5d2bfc2cbee8683a7703bf03341837edd717e836fb1254df8f4f"
       }
     },
     {
@@ -7990,6 +10441,30 @@
           14,
           15
         ],
+        "binding": {
+          "execution_id": "historical_v0:d2547e515bf19e57e2ae7bafcab536cca4654daeaea49f5479604c8f41f4fac2",
+          "qualification_sha256": "eac8c2d1069b606927b056940b972e6b62f99471e96fdc8315c4b262a0e7a24f",
+          "generator_sha256": {
+            "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+            "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+            "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+            "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+          },
+          "seed_ids": [
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        },
         "interval_method": "student_t_95",
         "status": "complete",
         "issues": [],
@@ -8020,7 +10495,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:d2547e515bf19e57e2ae7bafcab536cca4654daeaea49f5479604c8f41f4fac2",
+              "qualification_sha256": "eac8c2d1069b606927b056940b972e6b62f99471e96fdc8315c4b262a0e7a24f",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "ae458178e71e4eec251abc21ddc9c3dab0c58874300a0b8acb25d5a536e81ca2"
           },
           {
             "id": "where:group",
@@ -8099,7 +10599,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:d2547e515bf19e57e2ae7bafcab536cca4654daeaea49f5479604c8f41f4fac2",
+              "qualification_sha256": "eac8c2d1069b606927b056940b972e6b62f99471e96fdc8315c4b262a0e7a24f",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "1a761fdab9c707de711581780560170703d679718d41e7d444702992aefa8ae9"
           },
           {
             "id": "best",
@@ -8123,7 +10648,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:d2547e515bf19e57e2ae7bafcab536cca4654daeaea49f5479604c8f41f4fac2",
+              "qualification_sha256": "eac8c2d1069b606927b056940b972e6b62f99471e96fdc8315c4b262a0e7a24f",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "00700b8baaba9be798a16a994dab2627035ac281a3174703b25b47f3007a5bb2"
           }
         ],
         "contrasts": [
@@ -8297,7 +10847,8 @@
             "bootstrap_label": "no_meaningful_difference",
             "diagnostic_disagreement": false
           }
-        ]
+        ],
+        "artifact_sha256": "ed8e4dd628d22ea0a65307e06ca6eb3480bd6f7041fe8ac225dd40b405c1e342"
       }
     },
     {
@@ -8329,6 +10880,30 @@
           14,
           15
         ],
+        "binding": {
+          "execution_id": "historical_v0:d490e4869c705a737a79976f41254b0299e627fc27dbafb87becc43d095ece6d",
+          "qualification_sha256": "e5401485c9c854956a98637c6185f7772b770dc8453f068853009d307c772a67",
+          "generator_sha256": {
+            "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+            "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+            "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+            "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+          },
+          "seed_ids": [
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        },
         "interval_method": "student_t_95",
         "status": "complete",
         "issues": [],
@@ -8359,7 +10934,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:d490e4869c705a737a79976f41254b0299e627fc27dbafb87becc43d095ece6d",
+              "qualification_sha256": "e5401485c9c854956a98637c6185f7772b770dc8453f068853009d307c772a67",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "adb95e9735130b176393171e9a459f0e07ade6804204afc352d0b4915a015710"
           },
           {
             "id": "best",
@@ -8383,7 +10983,32 @@
               13,
               14,
               15
-            ]
+            ],
+            "binding": {
+              "execution_id": "historical_v0:d490e4869c705a737a79976f41254b0299e627fc27dbafb87becc43d095ece6d",
+              "qualification_sha256": "e5401485c9c854956a98637c6185f7772b770dc8453f068853009d307c772a67",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ]
+            },
+            "task_sha256": "246a4d17de802a012827e020b3882d6c2693a2d2d4490f3739b4d67b016321ce"
           }
         ],
         "contrasts": [
@@ -8538,7 +11163,8 @@
             "bootstrap_label": "no_meaningful_difference",
             "diagnostic_disagreement": false
           }
-        ]
+        ],
+        "artifact_sha256": "02f01868eb585b0c088dd39bfdea35636f519e13a6a48bb78b3177fec5d5e6a2"
       }
     }
   ]

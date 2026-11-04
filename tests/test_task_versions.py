@@ -4,6 +4,7 @@ import pytest
 
 from benchtop import report
 from benchtop.agents.common import outcome
+from benchtop.cache import with_checksum
 from benchtop.env import Env, lab_sha
 from benchtop.episode import Episode
 from benchtop.evaluate import all_envs
@@ -99,8 +100,7 @@ def test_mixed_task_graders_are_rejected(tmp_path):
 
 
 def test_catalog_rejects_a_different_task_grader(tmp_path):
-    env = toy_env(tmp_path)
-    (env.dir / "lab.py").write_text("def run(config, seed):\n    return {'acc': 0.7}\n")
+    toy_env(tmp_path)
     catalog = {
         "schema_version": 1,
         "id": "historical",
@@ -130,7 +130,6 @@ def test_report_refuses_historical_scores_for_corrected_tasks(tmp_path, monkeypa
 def test_cached_sweep_persists_corrected_artifact_and_manifest(tmp_path):
     env = toy_env(tmp_path)
     lab = env.dir / "lab.py"
-    lab.write_text("def run(config, seed):\n    return {'acc': 0.7}\n")
     path = env.dir / "manifest.json"
     manifest = json.loads(path.read_text())
     manifest["lab_sha256"] = lab_sha(lab)
@@ -154,10 +153,9 @@ def test_pipeline_cannot_admit_invalid_qualification(tmp_path, status):
 
 def test_catalog_cannot_silently_keep_a_lab_without_eligible_tasks(tmp_path):
     env = toy_env(tmp_path)
-    (env.dir / "lab.py").write_text("def run(config, seed):\n    return {'acc': 0.7}\n")
     artifact = build_task_set(env)
     artifact.update(status="incomplete", tasks=[])
-    (env.dir / "tasks.json").write_text(json.dumps(artifact))
+    (env.dir / "tasks.json").write_text(json.dumps(with_checksum(artifact, "artifact_sha256")))
     catalog = {
         "schema_version": 1,
         "id": "corrected",

@@ -19,9 +19,11 @@ from starlette.responses import JSONResponse
 from starlette.routing import Route
 
 from benchtop.access import url_base, write_profile
+from benchtop.cache import CacheError
 from benchtop.env import ENVS, Env
 from benchtop.episode import Episode
 from benchtop.live import LiveStore
+from benchtop.sandbox import sandbox_mode
 
 HEADER = "x-benchtop-episode"
 MAX_EPISODES = 200_000
@@ -37,6 +39,8 @@ class Hub:
         self, envs_dir: Path = ENVS, live: bool = False, live_workers: int = 4,
         agent_base: str = "http://127.0.0.1:8788",
     ):
+        if live:
+            sandbox_mode()
         self.envs_dir = Path(envs_dir)
         self.envs: dict[str, Env] = {}
         self.episodes: OrderedDict[str, Episode] = OrderedDict()
@@ -67,10 +71,14 @@ class Hub:
                         for (_, key, seed, _), outcome in zip(request["steps"], outcomes, strict=True)
                         if not outcome["ok"]
                     }
+                ep.env.assert_current()
                 return ep.finish_run(request, failures)
             except asyncio.CancelledError:
                 ep.abort_run(request, "cancelled")
                 raise
+            except CacheError:
+                ep.abort_run(request, "failed")
+                return {"error": "environment cache inputs changed; reload or rebuild", "code": "stale_cache"}
             except Exception:
                 ep.abort_run(request, "failed")
                 raise
@@ -95,7 +103,7 @@ class Hub:
             path = self.envs_dir / env_id
             if not (path / "tasks.json").exists():
                 raise KeyError(f"unknown env {env_id!r}")
-            self.envs[env_id] = Env.load(path)
+            self.envs[env_id] = Env.load(path, replay=not self.live)
         return self.envs[env_id]
 
     def list_envs(self) -> list[dict]:
@@ -113,7 +121,10 @@ class Hub:
         return out
 
     def create(self, env_id: str, task_id: str, **kw) -> Episode:
-        ep = Episode(self.env(env_id), task_id, **kw)
+        env = self.env(env_id)
+        if self.live:
+            env.prepare_live()
+        ep = Episode(env, task_id, **kw)
         while ep.id in self.episodes:
             ep.id = secrets.token_hex(6)
         self.episodes[ep.id] = ep

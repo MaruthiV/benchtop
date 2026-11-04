@@ -57,7 +57,7 @@ def read_jsonl(path: Path) -> list[dict]:
 
 
 def env_index() -> dict[str, Env]:
-    return {env.id: env for env in all_envs(envs_dir=ENVS)}
+    return {env.id: env for env in all_envs(envs_dir=ENVS, replay=True)}
 
 
 def task_kind(envs, env_id, task_id) -> str | None:
@@ -330,6 +330,10 @@ def check_grading(envs: dict[str, Env]) -> None:
             env = envs.get(row["env"])
             if env is not None and row.get("grader_id", LEGACY_GRADER_ID) != env.grader_id:
                 raise ValueError(f"result grader differs from task grader in {name}: {env.id}")
+            if (env is not None and env.cache_status != "historical"
+                    and (row.get("execution_id") != env.execution_id or row.get("task_version") != env.task_version
+                         or row.get("charging_id") != env.charging_schedule()[1])):
+                raise ValueError(f"result cache versions differ from environment in {name}: {env.id}")
 
 
 def build_report(tag: str | None = "main") -> dict:

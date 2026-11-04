@@ -19,7 +19,6 @@ def catalog_tree(tmp_path, monkeypatch):
     root = tmp_path / "envs"
     root.mkdir()
     original = toy_env(root)
-    (original.dir / "lab.py").write_text("def run(config, seed):\n    return {'acc': 0.7}\n")
     for name in ["other", "unlisted"]:
         target = root / name
         shutil.copytree(original.dir, target)

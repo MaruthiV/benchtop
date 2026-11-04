@@ -6,6 +6,7 @@ import numpy as np
 import pytest
 
 from benchtop.agents.baselines import play
+from benchtop.cache import initialize_cache, seal_result
 from benchtop.env import Env
 from benchtop.episode import Episode
 from benchtop.space import Space
@@ -23,6 +24,13 @@ SPACE = {
     "treatment": {"factor": "method", "paper": "new", "baseline": "base"},
 }
 GAIN = {0: 0.0, 1: -0.05, 2: 0.08}
+LAB = """import numpy as np
+def run(config, seed):
+    acc = 0.7 + 0.1 * (config['width'] == 64) + np.random.default_rng(seed).normal(0, 0.01)
+    if config['method'] == 'new':
+        acc += {0: 0.0, 1: -0.05, 2: 0.08}[config['ctx']] + np.random.default_rng(1000 + seed).normal(0, 0.003)
+    return {'acc': acc}
+"""
 
 
 def toy_env(tmp_path: Path, seeds: int = 16) -> Env:
@@ -37,9 +45,12 @@ def toy_env(tmp_path: Path, seeds: int = 16) -> Env:
             rows.append({"config": config, "seed": seed, "ok": True, "metrics": {"acc": acc}, "secs": 1.0})
     d = tmp_path / "toy"
     d.mkdir()
+    (d / "lab.py").write_text(LAB)
     (d / "space.json").write_text(json.dumps(SPACE))
-    (d / "results.jsonl").write_text("".join(json.dumps(r) + "\n" for r in rows))
-    (d / "manifest.json").write_text(json.dumps({"id": "toy", "seeds": seeds, "visible_seeds": 4}))
+    manifest = {"id": "toy", "seeds": seeds, "visible_seeds": 4}
+    (d / "manifest.json").write_text(json.dumps(manifest))
+    execution = initialize_cache(d, manifest)
+    (d / "results.jsonl").write_text("".join(json.dumps(seal_result(execution, space, r['config'], r['seed'], r)) + "\n" for r in rows))
     env = Env.load(d)
     (d / "tasks.json").write_text(json.dumps(build_tasks(env)))
     return Env.load(d)

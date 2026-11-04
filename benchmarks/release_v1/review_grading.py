@@ -69,7 +69,7 @@ def review():
                 "corrected_task_set": corrected,
             }
         )
-    sources = ["benchtop/stats.py", "benchtop/tasks.py", "benchtop/env.py", "benchmarks/release_v1/review_grading.py"]
+    sources = ["benchtop/stats.py", "benchtop/tasks.py", "benchtop/env.py", "benchtop/cache.py", "benchmarks/release_v1/review_grading.py"]
     return {
         "schema_version": 1,
         "source_grader": LEGACY_GRADER_ID,

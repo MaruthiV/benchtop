@@ -5,6 +5,7 @@ import time
 
 import numpy as np
 
+from benchtop.cache import CacheError
 from benchtop.env import Env
 from benchtop.space import canon, config_key
 from benchtop.stats import LABELS
@@ -28,6 +29,7 @@ class Episode:
         show_paper: bool = True,
         max_calls: int = MAX_CALLS,
     ):
+        env.assert_current()
         self.id = secrets.token_hex(6)
         self.env = env
         self.task = env.task(task_id)
@@ -98,6 +100,10 @@ class Episode:
             return {"error": "episode is finished"}
         if self.calls >= self.max_calls:
             return {"error": f"call limit of {self.max_calls} reached; submit an answer"}
+        try:
+            self.env.assert_current()
+        except CacheError:
+            return {"error": "environment cache inputs changed; reload or rebuild", "code": "stale_cache"}
         try:
             configs, seeds = clean_request(configs, seeds)
             steps, notes = self.plan(configs, seeds)
@@ -172,6 +178,10 @@ class Episode:
     def submit(self, answer, confidence: float | None = None) -> dict:
         if self.done:
             return {"done": True}
+        try:
+            self.env.assert_current()
+        except CacheError:
+            return {"error": "environment cache inputs changed; reload or rebuild", "code": "stale_cache"}
         graded = grade(self.env, self.task, answer)
         bad_format = "error" in graded and "given" not in graded
         # bad format gets one more try instead of a silent zero
@@ -276,6 +286,8 @@ class Episode:
             "env": self.env.id,
             "task": self.task["id"],
             "grader_id": self.env.grader_id,
+            "execution_id": self.env.execution_id,
+            "task_version": self.env.task_version,
             "charging_id": self.charging_id,
             "seed": self.seed,
             "show_paper": self.show_paper,

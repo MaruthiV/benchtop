@@ -2,14 +2,17 @@ import asyncio
 import json
 import math
 
+from benchtop.cache import CacheError, seal_result
 from benchtop.env import STATE, Env
-from benchtop.sandbox import Pool
+from benchtop.sandbox import Pool, sandbox_mode
 from benchtop.space import config_key
 
 
 class LiveStore:
     # runs missing (config, seed) pairs in the sandbox; identical concurrent requests share one run
     def __init__(self, env: Env, workers: int = 4, timeout: float = 60.0):
+        sandbox_mode()
+        env.prepare_live()
         self.env = env
         self.workers = workers
         self.timeout = timeout
@@ -43,6 +46,10 @@ class LiveStore:
         self.stats["requested"] += 1
         if self.closed:
             return {"ok": False, "error": {"code": "store_closed", "retryable": False}}
+        try:
+            self.env.assert_current()
+        except CacheError:
+            return {"ok": False, "error": {"code": "stale_cache", "retryable": False}}
         if self.env.table.get(config, seed) is not None:
             self.stats["hits"] += 1
             return {"ok": True}
@@ -63,6 +70,7 @@ class LiveStore:
 
     async def _execute(self, config: dict, seed: int) -> dict:
         try:
+            self.env.assert_current()
             pool = await self._pool()
             result = await pool.run(config, seed)
             if not result["ok"]:
@@ -72,14 +80,20 @@ class LiveStore:
                 raise ValueError("worker returned invalid metrics")
             if not math.isfinite(result["secs"]) or result["secs"] < 0:
                 raise ValueError("worker returned invalid timing")
+            self.env.assert_current()
+            row = seal_result(self.env.execution, self.env.space, config, seed, {**result, "metrics": metrics})
             with (self.env.dir / "results.jsonl").open("a") as f:
-                f.write(json.dumps({"config": config, "seed": seed, **result, "metrics": metrics}, allow_nan=False) + "\n")
+                f.write(json.dumps(row, allow_nan=False) + "\n")
             self.env.table.add(config, seed, metrics, result["secs"])
+            self.env.result_written()
             self.stats["executed"] += 1
             return {"ok": True}
         except asyncio.CancelledError:
             self.stats["cancelled"] += 1
             raise
+        except CacheError:
+            self.stats["failed"] += 1
+            return {"ok": False, "error": {"code": "stale_cache", "retryable": False}}
         except Exception:
             self.stats["failed"] += 1
             return {"ok": False, "error": {"code": "execution_failed", "retryable": True}}

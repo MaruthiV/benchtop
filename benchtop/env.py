@@ -2,12 +2,13 @@ import hashlib
 import json
 import math
 import statistics
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from types import MappingProxyType
 
 import numpy as np
 
+from benchtop import cache
 from benchtop.space import Space, canon, config_key
 from benchtop.stats import GRADER_ID, LEGACY_GRADER_ID
 
@@ -136,16 +137,20 @@ class Env:
     table: Table
     manifest: dict
     tasks: list[dict]
+    execution: dict
+    cache_status: str
+    task_version: str = ""
+    _tracked: dict = field(default_factory=dict, repr=False)
 
     @classmethod
-    def load(cls, env_dir: Path) -> "Env":
+    def load(cls, env_dir: Path, *, replay: bool = False, load_tasks: bool = True) -> "Env":
         env_dir = Path(env_dir)
         raw = json.loads((env_dir / "space.json").read_text())
         space = Space.from_dict(raw)
         manifest_path = env_dir / "manifest.json"
         manifest = json.loads(manifest_path.read_text()) if manifest_path.exists() else {}
         tasks_path = env_dir / "tasks.json"
-        stored = json.loads(tasks_path.read_text()) if tasks_path.exists() else []
+        stored = json.loads(tasks_path.read_text()) if tasks_path.exists() and load_tasks else []
         artifact_grader = None
         if isinstance(stored, dict):
             if type(stored.get("schema_version")) is not int or stored["schema_version"] != 1 or stored.get("grader_id") != GRADER_ID:
@@ -168,8 +173,56 @@ class Env:
             raise ValueError(f"task and manifest grader versions differ: {tasks_path}")
         manifest = {**manifest, "grader_id": grader}
         tasks = [{**task, "grader_id": grader} for task in tasks]
-        table = Table(space, read_jsonl(env_dir / "results.jsonl"))
-        return cls(env_dir, manifest.get("id", env_dir.name), space, raw, table, manifest, tasks)
+        rows = read_jsonl(env_dir / "results.jsonl")
+        execution, status = cache.load_binding(env_dir, manifest, space, rows, replay=replay)
+        table = Table(space, rows)
+        env = cls(env_dir, manifest.get("id", env_dir.name), space, raw, table, manifest, tasks, execution, status)
+        if grader == GRADER_ID and load_tasks:
+            if isinstance(stored, dict) and not cache.valid_checksum(stored, "artifact_sha256"):
+                raise cache.CacheError("task cache artifact checksum is invalid")
+            if any(not cache.valid_checksum(task, "task_sha256") for task in tasks):
+                raise cache.CacheError("task cache payload checksum is invalid")
+            bindings = [task.get("binding") for task in tasks]
+            if isinstance(stored, dict):
+                bindings.append(stored.get("binding"))
+            for binding in bindings:
+                if not isinstance(binding, dict) or binding != cache.task_binding(env, binding.get("seed_ids", [])):
+                    raise cache.CacheError("task cache inputs or generator changed; regenerate tasks from validated results")
+            if any(task.get("seed_ids") != task["binding"]["seed_ids"] for task in tasks):
+                raise cache.CacheError("task cache seed sources differ")
+        env.task_version = cache.digest({"execution_id": env.execution_id, "grader_id": grader, "artifact": stored})
+        tracked = [env_dir / name for name in (*cache.DATA_FILES, "cache.json")]
+        tracked.append(env_dir.parent / "historical_cache.json")
+        if status in ("current", "empty"):
+            tracked.extend(cache.CODE / name for name in (*cache.ENGINE_FILES, "tasks.py", "stats.py"))
+        env._tracked = {path: cache.file_signature(path) for path in tracked}
+        return env
+
+    @property
+    def execution_id(self):
+        return self.execution["id"]
+
+    def assert_current(self):
+        if any(cache.file_signature(path) != signature for path, signature in self._tracked.items()):
+            raise cache.CacheError("environment cache files changed; reload or rebuild before continuing")
+        if self.cache_status in ("current", "empty"):
+            runtime = json.loads(json.dumps(cache.runtime_identity()))
+            if self.execution["inputs"]["runtime"] != runtime:
+                raise cache.CacheError("execution cache runtime changed; restart and rebuild")
+
+    def prepare_live(self):
+        self.assert_current()
+        if self.cache_status in ("historical", "replay"):
+            raise cache.CacheError("historical or replay cache is read-only; rebuild in a new directory for live execution")
+        if self.cache_status == "empty":
+            execution = cache.initialize_cache(self.dir, self.manifest)
+            if execution != self.execution:
+                raise cache.CacheError("execution cache inputs changed")
+            self.cache_status = "current"
+            self._tracked[self.dir / "cache.json"] = cache.file_signature(self.dir / "cache.json")
+
+    def result_written(self):
+        self._tracked[self.dir / "results.jsonl"] = cache.file_signature(self.dir / "results.jsonl")
 
     @property
     def seeds(self) -> int:

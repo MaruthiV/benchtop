@@ -12,6 +12,13 @@ from tests.test_core import toy_env
 from tests.test_server import MCP_HEADERS
 
 
+@pytest.fixture(autouse=True)
+def simulated_backend_availability(monkeypatch):
+    # These tests substitute stores; sandbox availability is tested with real workers elsewhere.
+    monkeypatch.setattr("benchtop.server.sandbox_mode", lambda: "macos")
+    monkeypatch.setattr("benchtop.live.sandbox_mode", lambda: "macos")
+
+
 @asynccontextmanager
 async def clients(hub):
     app, _ = build_app(hub)
