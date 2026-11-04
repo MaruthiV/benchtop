@@ -1,0 +1,22 @@
+{
+  "title": "Euclidean crowding vs hyperbolic embedding of trees",
+  "setting": "Balanced b-ary trees of a given depth are embedded in a d-dimensional space by gradient descent (Adam, 80 steps) on a relative-distance loss against shortest-path tree distances, with a learned global scale. Training uses at most 2000 randomly chosen node pairs from one random half of all pairs, and distortion is measured on up to 6000 pairs from the other, held-out half. Methods: Euclidean, Poincare-ball (hyperbolic), and a gated Euclidean-hyperbolic fusion whose per-node gate depends on the neighborhood expansion ratio.",
+  "paper": {
+    "title": "Euclidean Crowding-Driven Adaptive Euclidean-Hyperbolic Graph Learning",
+    "arxiv_id": "2610.37373",
+    "claim": "Fixed-dimensional Euclidean embeddings of tree-like graphs suffer layer-wise crowding and higher distortion than hyperbolic embeddings, and adaptive Euclidean-hyperbolic fusion captures the benefit."
+  },
+  "metric": {
+    "name": "avg_distortion",
+    "goal": "min",
+    "min_effect": 0.05,
+    "description": "Mean multiplicative distortion max(d_emb/d_tree, d_tree/d_emb) over held-out node pairs, after the learned global rescaling. 1.0 is perfect. Diagnostics: max_distortion, mean_rel_error, leaf_sep_norm (min distance between deepest-layer nodes divided by their median distance), train_avg_distortion."
+  },
+  "factors": [
+    {"name": "method", "role": "treatment", "levels": ["euclidean", "hyperbolic", "fusion"], "description": "Embedding geometry: Euclidean R^d, Poincare ball of dimension d, or gated fusion of both distances."},
+    {"name": "depth", "role": "context", "levels": [3, 4, 5], "description": "Tree depth (number of layers below the root)."},
+    {"name": "branching", "role": "context", "levels": [2, 3], "description": "Branching factor of the balanced tree."},
+    {"name": "dim", "role": "context", "levels": [2, 8], "description": "Embedding dimension for all geometries."}
+  ],
+  "treatment": {"factor": "method", "paper": "hyperbolic", "baseline": "euclidean"}
+}

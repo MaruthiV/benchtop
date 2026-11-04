@@ -1,0 +1,18 @@
+{
+ "ok": true,
+ "auditor": "claude:opus",
+ "tests_core_claim": true,
+ "fidelity": "medium",
+ "baseline_fair": true,
+ "same_data_across_arms": true,
+ "metric_on_heldout": true,
+ "issues": [
+  "Scope is limited to the single-input single-neuron marginal from Figure 1. It does not test the joint multi-input/multi-output para-Gaussian (Thm 1.13), the Hermite cumulant recursion (Thm 1.18), or the O(n^-2) vs O(n^-1) TV rate.",
+  "For ReLU, kappa4 comes from the closed form 3[(1+5/n)^L-1] (PHI_C['relu']=5.0) rather than the paper's recursion, so the 'approximate recursion' for ReLU is not exercised.",
+  "At width=4, depth=8, kappa = 3[(1+c/n)^L-1] is about 74 (linear) and about 1967 (ReLU), far outside the regime where a first-order He4 correction is valid. These cells will dominate any pooled comparison, so results should be read per cell.",
+  "The para_gaussian arm is a signed measure, so bin masses q_k can be negative. The binned TV is still computed but is not a probability-to-probability distance; para_clipped partly addresses this.",
+  "N_SAMPLES=4000 networks (vs the paper's 2^24). The rare large values of Sigma that drive kurtosis at small n and large L may be undersampled, biasing mc_excess_kurtosis and the TV low or noisy at the hardest settings.",
+  "The input layer z^0 is drawn directly as iid N(0,1)^n instead of W^0 x / sqrt(n_in) with a unit-norm x. This is equivalent in law, so it is fine, but the depth index means z^L with L-1 random hidden matrices after z^0."
+ ],
+ "summary": "The lab faithfully re-tests the Figure 1 claim: for a single neuron, the para-Gaussian law \u03c6(x)[1+\u03ba4/24\u00b7He4] fits better than N(0,1) in binned TV. Ground truth is an exact conditional-Gaussian mixture over freshly simulated random covariances \u03a3. The data are identical across methods for a given seed, the \u03ba4 formula is exact for linear networks, and the Gaussian baseline is the paper's own and fair. Fidelity is medium because the lab skips the multi-input/joint results, the Hermite recursion (it uses the closed-form c=5 for ReLU), and the convergence-rate claims. Some grid cells (n=4, L=8) are far outside the regime where a first-order correction is valid, and 4000 samples is modest for heavy-tailed settings."
+}

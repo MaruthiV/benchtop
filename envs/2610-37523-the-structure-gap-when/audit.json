@@ -1,0 +1,17 @@
+{
+ "ok": true,
+ "auditor": "claude:opus",
+ "tests_core_claim": true,
+ "fidelity": "high",
+ "baseline_fair": true,
+ "same_data_across_arms": true,
+ "metric_on_heldout": true,
+ "issues": [
+  "The structured arm gets more than the operator. `_wiener(Ah, Sigma, s)` also receives the true prior covariance Sigma and the true noise level s, and only A is perturbed when operator_error > 0. The paper's Wiener solver also assumes a known prior and noise level, but there the prior is isotropic. Here it is anisotropic, so 'structure' quietly includes a non-trivial prior. The learner has to infer that prior implicitly, and ridge's isotropic penalty `lam*np.eye` does not match it.",
+  "When operator_error = 0, the Wiener arm's excess risk is exactly 0 for every seed, by construction (`Wstar` is identical to `W`). That comparison is what the theorem predicts, but it has zero variance and is not informative. The cells that actually test something are the n-scaling of the learners and the misspecified-operator cells.",
+  "The default noise level `config.get('noise', 0.5)` is not one of the declared levels (0.1, 1.0). This is harmless if the grid always sets it explicitly.",
+  "Training sets are prefixes of one fixed pool (`Xall[:n]`), so the data are nested across n_per_d levels. Runs at different n are therefore correlated within a seed. This is fine, but it should be accounted for when interpreting trends across n.",
+  "The learner arms do not depend on operator_error, so those runs are just duplicates across that factor (no bias)."
+ ],
+ "summary": "This lab is a faithful, high-fidelity version of Theorem 1 (M1, operator identification). The data and operator come from a seed-only random generator and are identical across methods. The risk is the exact population risk, `tr(M \u03a3 M\u1d40) + s\u00b2 tr(W W\u1d40)`, which is equivalent to testing on infinitely many fresh draws. I checked the formulas for the risk, the Wiener solver and ridge regression, and they are correct. The baseline is a cross-validated ridge learner, which is stronger than the paper's plain least-squares learner; plain least squares is also included. The penalty grid comfortably covers the data's scale, so the baseline is not sabotaged. The n_per_d levels test whether the gap closes as data grows, and the misspecified-operator level adds a useful test of what happens when the structure is wrong. Main caveat: the structured arm also gets the true anisotropic prior and the true noise level, which is more side information than 'the operator' alone. Also, with the exact operator the result (zero excess risk) is fixed by construction."
+}

@@ -1,0 +1,19 @@
+[
+  {
+    "id": "claim",
+    "kind": "claim",
+    "answer": "no_meaningful_difference",
+    "delta": 0.005063657407407401,
+    "se": 0.0009458315967844698,
+    "seed_std": 0.022524694713545484,
+    "top_share": 0.38235294117646984
+  },
+  {
+    "id": "best",
+    "kind": "best",
+    "answer": "{\"arrival\":\"mixed\",\"budget\":2,\"method\":\"always_bn\",\"shift\":0.5}",
+    "best": 0.8807508680555555,
+    "median": 0.8706597222222221,
+    "seed_std": 0.022524694713545484
+  }
+]

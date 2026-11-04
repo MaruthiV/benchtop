@@ -1,0 +1,42 @@
+{
+  "title": "Profile-matched prefix-future contrast on synthetic payment histories",
+  "setting": "Synthetic transaction histories (20 events: log-amount, log-gap, channel one-hot) where a hidden resource-usage trait drives channel switching and the fraud label; activity (amount/timing) is correlated with that trait by a tunable amount. A 32-unit GRU is optionally pretrained without labels on prefix-to-future-summary contrast (candidates profile-matched on activity, or random) plus activity-prediction and dispersion terms, then fully fine-tuned with class-balanced loss on a labeled fraction. The metric is average precision on 3000 fresh held-out users; recall and precision at a 0.5% review budget are diagnostics.",
+  "paper": {
+    "title": "TRIDENT-Seq: Profile-Matched Prefix-Future Contrast for Label-Efficient Payment Risk Modeling",
+    "arxiv_id": "2610.37365",
+    "claim": "Pretraining with prefix-future contrast over activity-profile-matched candidates improves risk ranking over scratch training and over random-candidate contrast, especially when labels are scarce."
+  },
+  "metric": {
+    "name": "ap",
+    "goal": "max",
+    "min_effect": 0.02,
+    "description": "Average precision of the fine-tuned model's scores on 3000 held-out synthetic users (about 10% positives)."
+  },
+  "factors": [
+    {
+      "name": "method",
+      "role": "treatment",
+      "levels": ["scratch", "pfc_matched", "pfc_random"],
+      "description": "scratch: GRU trained only on labeled subset; pfc_matched: PFC pretraining with profile-matched candidates then fine-tune; pfc_random: same pretraining with all in-batch futures as candidates."
+    },
+    {
+      "name": "label_frac",
+      "role": "context",
+      "levels": [0.1, 0.25, 1.0],
+      "description": "Fraction of the 1200-user labeled pool used for fine-tuning."
+    },
+    {
+      "name": "act_corr",
+      "role": "context",
+      "levels": [0.0, 0.7],
+      "description": "Correlation between hidden risk trait and activity level (amount/timing). 0 means activity is a pure confounder-free nuisance; 0.7 means activity is a strong proxy for risk."
+    },
+    {
+      "name": "pretrain_domain",
+      "role": "context",
+      "levels": ["same", "shifted"],
+      "description": "Whether unlabeled pretraining histories come from the target generator or a shifted one (different channel preferences, amount/timing offsets, weaker risk-switching link)."
+    }
+  ],
+  "treatment": {"factor": "method", "paper": "pfc_matched", "baseline": "scratch"}
+}

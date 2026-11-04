@@ -1,0 +1,19 @@
+{
+ "ok": true,
+ "auditor": "claude:opus",
+ "tests_core_claim": true,
+ "fidelity": "medium",
+ "baseline_fair": true,
+ "same_data_across_arms": true,
+ "metric_on_heldout": true,
+ "issues": [
+  "Type-I calibration, which is half of the claim, is barely tested. `R_NULL = 3` gives at most 3 null replications per run, so `type1` can only be 0, 1/3, 2/3 or 1, and it is not part of the primary metric. Inflated size from the deep kernel would not show up.",
+  "The power estimate is coarse. `R_ALT = 6` means power moves in steps of 1/6 \u2248 0.167 per run, which is far larger than the declared `min_effect: 0.05`. Many seeds are needed before an effect of that size can be resolved.",
+  "Both nuisances can be misspecified at the same time, so double robustness can fail. The propensity is clipped with `np.clip(..., 0.05, 0.95)`; at confounding=2.0 the true e(x) falls outside that range for about 14% of units, so even the correctly specified logistic model is biased there. The outcome model (`Z = [1, X]`, linear ridge on random Fourier features) is misspecified, because E[cos(wY/h+b)|X] is nonlinear in X. That leaves a nonzero mean in g under H0. A deep kernel fitted to the train half to maximise d/\u03c3 could learn to amplify this systematic bias, which would raise both power and type-I. With R_NULL=3 this cannot be detected.",
+  "The alternative is only an additive mean shift in pixel space (`delta * T * v`), drawn from the same image distribution in both arms. This is much simpler than the paper's structured image/text/graph alternatives. A learned linear-like projection is enough to win, so the result says little about 'structured outcomes' as such.",
+  "Only the binary contrast do(A=1) vs do(A=0) is tested, where `w = T/e - (1-T)/(1-e)`. The paper's general soft interventions \u03c0, \u03c0' are a special case not covered, and everything uses random-Fourier-feature approximations (D_F=64) instead of exact kernels.",
+  "Deep-kernel training is short and unselected: 60 full-batch Adam steps, a fixed lr of 0.02, no restarts, and no train-half validation or early stopping. The `_crit` objective is evaluated with nuisances (`_fit_B`, `etr`) fitted in-sample on the same train data used for training, so the training criterion is optimistically biased. Held-out evaluation itself is clean.",
+  "The sign-flip calibration assumes each pseudo-feature g_i is symmetric about zero under H0. With DR weights and clipped propensities it is only mean-zero, approximately. The test is also one-sided (`null >= obs`). This is acceptable for the cross-U statistic but only approximately valid."
+ ],
+ "summary": "The lab does test the paper's core idea in miniature. It builds a doubly robust pseudo-embedding of the treatment effect from cross-fitted propensity and outcome-embedding models, trains a deep kernel (an MLP plus a characteristic component) to maximise a studentised cross-U power criterion on the train half, and runs a sign-flip test on the held-out half. It compares against a median-bandwidth kernel and a 5-point bandwidth grid optimised on the same criterion. For a given seed, the data, random Fourier feature weights and sign-flip draws are seeded independently of the method, so all arms see identical inputs. The baselines are not sabotaged. Fidelity is medium for four reasons: the alternative is a simple mean shift on 8x8 digits, only a binary treatment contrast is tested, kernels are approximated with random Fourier features, and kernel training is minimal. The main weaknesses are (a) type-I error is estimated from just 3 null replications, so the 'well-calibrated' half of the claim is effectively unchecked; (b) power from 6 replications has resolution far coarser than the declared minimum effect; and (c) clipped propensities combined with a misspecified linear outcome model can leave bias under the null, which a power-trained deep kernel might exploit."
+}

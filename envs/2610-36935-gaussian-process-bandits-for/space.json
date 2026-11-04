@@ -1,0 +1,42 @@
+{
+  "title": "GP-UCB vs epsilon-greedy for constrained budget-allocation levers",
+  "setting": "Three segments share a budget through proportional allocation. Weights lie on a 0.1-step grid (271 arms after the anchor constraint that at least one weight is 1.0), and each weight may move by at most one step per round. The reward is a smooth, non-monotone function of the weights, observed with Gaussian noise and optional delay, over T=52 rounds. The environment is stationary, drifting (landscape parameters random-walk every 10 rounds) or reactive (an adversarial landscape blended in at 20% penalises the region near the agent's last action). The metric is cumulative regret against the per-round oracle best arm, computed from noise-free expected rewards on a freshly drawn landscape for each seed. Each method's exploration parameter (epsilon scale or beta scale) is tuned per condition on separate fixed seeds.",
+  "paper": {
+    "title": "Gaussian Process Bandits for Constraint Black Box Lever Optimization",
+    "arxiv_id": "2610.36935",
+    "claim": "GP-UCB with a Matern+Linear composite kernel attains lower cumulative regret than an epsilon-greedy baseline on sparse, noisy allocation problems, including under drifting and reactive environments."
+  },
+  "metric": {
+    "name": "cum_regret",
+    "goal": "min",
+    "min_effect": 0.3,
+    "description": "Sum over 52 rounds of (best expected reward in that round minus expected reward of the chosen allocation). Lower is better. Typical values are a few units."
+  },
+  "factors": [
+    {
+      "name": "method",
+      "role": "treatment",
+      "levels": ["epsilon_greedy", "gp_ucb_matern_linear", "gp_ucb_rbf"],
+      "description": "epsilon_greedy: decaying-epsilon policy with per-arm sample means. gp_ucb_matern_linear: GP-UCB with a Matern(nu=1.5)+Linear kernel (the paper's method). gp_ucb_rbf: GP-UCB with an RBF-only kernel (ablation). All three move toward their chosen target under the step limit, and all have their exploration scale tuned on separate seeds."
+    },
+    {
+      "name": "environment",
+      "role": "context",
+      "levels": ["stationary", "drift", "reactive"],
+      "description": "Reward-landscape dynamics: fixed, random-walk drift of landscape parameters every 10 rounds, or an adversarial blend that reacts to the agent's last action."
+    },
+    {
+      "name": "noise_sd",
+      "role": "context",
+      "levels": [0.1, 0.3],
+      "description": "Standard deviation of Gaussian observation noise on the aggregate reward (reward values lie in roughly [0.2, 1])."
+    },
+    {
+      "name": "delay",
+      "role": "context",
+      "levels": [0, 3],
+      "description": "Number of rounds by which feedback is delayed before the policy can use it."
+    }
+  ],
+  "treatment": {"factor": "method", "paper": "gp_ucb_matern_linear", "baseline": "epsilon_greedy"}
+}

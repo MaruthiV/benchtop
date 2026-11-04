@@ -1,0 +1,22 @@
+{
+  "title": "Fisher-Shaped EWC on permuted digits",
+  "setting": "Sequential domain-incremental learning on sklearn digits (8x8, standardized) where each task applies a different fixed pixel permutation, with a single-head 64-32-10 MLP trained by minibatch SGD and no replay. Online EWC (normalized, damped diagonal empirical Fisher) is compared with FS-EWC (SAM-style worst-case empirical FIM-trace penalty within an L2 ball of radius rho, plus averaging the last 10 iterates into the retained anchor) and a merging-only ablation. The metric is mean held-out test accuracy over all tasks after the final task; diagnostics include forgetting, last-task accuracy, and accuracy under a fixed-norm random parameter drift.",
+  "paper": {
+    "title": "Beyond Parameter Protection: Fisher-Shaped EWC for Replay-Free Continual Learning",
+    "arxiv_id": "2610.37145",
+    "claim": "Shaping solutions by minimizing worst-case neighborhood FIM trace and merging the optimization trajectory, on top of EWC, yields a better stability-plasticity balance and higher final accuracy than standard EWC."
+  },
+  "metric": {
+    "name": "avg_final_acc",
+    "goal": "max",
+    "min_effect": 0.01,
+    "description": "Mean test accuracy over all tasks after training on the last task (held-out digits, each task's own pixel permutation)."
+  },
+  "factors": [
+    {"name": "method", "role": "treatment", "levels": ["ewc", "fs_ewc", "merge_only"], "description": "ewc: online EWC with terminal iterate as anchor; fs_ewc: EWC plus worst-case FIM-trace shaping and last-K trajectory averaging; merge_only: EWC plus trajectory averaging without FIM shaping (ablation)."},
+    {"name": "ewc_lambda", "role": "context", "levels": [1, 10, 100], "description": "Strength of the EWC quadratic penalty (weak to strong protection)."},
+    {"name": "n_tasks", "role": "context", "levels": [3, 5], "description": "Number of sequential permuted-pixel tasks; more tasks mean more accumulated drift and capacity pressure."},
+    {"name": "rho", "role": "context", "levels": [0.05, 0.5], "description": "L2 radius of the neighborhood for the worst-case FIM-trace term (only affects fs_ewc)."}
+  ],
+  "treatment": {"factor": "method", "paper": "fs_ewc", "baseline": "ewc"}
+}

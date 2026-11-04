@@ -1,0 +1,21 @@
+{
+ "ok": true,
+ "auditor": "claude:opus",
+ "tests_core_claim": false,
+ "fidelity": "low",
+ "baseline_fair": true,
+ "same_data_across_arms": true,
+ "metric_on_heldout": true,
+ "issues": [
+  "The primary metric is avg_distortion, the global multiplicative distortion of free embeddings of balanced trees. The paper says it is NOT analyzing global distortion: 'Rather than analyzing global metric distortion, we study the layer-wise minimum separation'. So the headline metric re-tests the known Sarkar/Sala/Nickel-Kiela result that hyperbolic space embeds trees with less distortion, not the paper's own contribution. The crowding measure (leaf_sep_norm) is only a diagnostic.",
+  "The paper's central link, that crowding shrinks the margin and so weakens margin-based generalization, is not tested. There is no downstream classifier, no link-prediction task, no margin, and no generalization-gap measurement.",
+  "The paper's method (GnnE2H / EH-Fusion: a GNN encoder whose outputs are lifted to hyperbolic space by an exponential map and fused) is replaced by free per-node embedding tables. The lab has no GNN, no node features, and no message passing. Its 'fusion' arm mixes the two distances, `(1 - gij) * _eucl(...) + gij * _hyp(...)`, instead of fusing representations.",
+  "The fusion gate's input is degenerate. In a balanced b-ary tree, `logr = log(n2/n1)` takes only about 3 distinct values (root, internal, leaf), so the 'node-level neighborhood expansion' gate is effectively a role indicator with 2 scalar parameters (gw, gb). Every graph is a perfectly hierarchical tree, with no mixed-geometry or weakly hyperbolic graphs, so the claim that adaptive fusion helps across heterogeneous geometry cannot show up.",
+  "Because the space.json treatment is hyperbolic vs euclidean, the paper's own proposed method (fusion) is not the treatment arm.",
+  "'Held-out' means held-out pairs only. Every node's embedding is trained (transductive), so the test measures how well pairwise distances are completed, not generalization to unseen nodes or graphs.",
+  "STEPS=80 with a shared LR=0.08 may leave runs under-converged. The hyperbolic arm is parameterized in the tangent space at the origin (`_exp0` uses tanh), so it has to grow large tangent norms to reach the deep, near-boundary regions. Results may therefore reflect optimization speed rather than geometric capacity, and this could go against either arm. No convergence check is reported.",
+  "For the smallest config (b=2, L=3, n=15), there are only 52 train and 53 test pairs. With d=8, the Euclidean arm has 120 free parameters for 52 constraints, so the comparison there is mostly about overfitting the split.",
+  "The curvature is fixed at -1, but the learned global scale log_s partly stands in for curvature only in the hyperbolic arm. This is fine, but it is worth noting that the scale has a different effect in each geometry."
+ ],
+ "summary": "The lab is clean and fair as a geometry experiment. Within each seed, the pair split and the Z0 initialization are the same for every method, the optimizer, step count and learned scale are identical, and distortion is measured on held-out pairs. I found no leaks and no sabotaged baseline. But it tests the textbook claim that hyperbolic space embeds trees with less distortion than Euclidean space, using free embedding tables and global distortion as the main metric. That is the very framing the paper says it moves beyond. The lab does not test the paper's own contributions: layer-wise crowding is only a diagnostic, nothing checks the crowding-to-margin-to-generalization link, and the GNN-based EH-Fusion is absent. Its 'fusion' arm mixes distances, and its gate is degenerate on balanced trees, which also contain no mixed-geometry graphs where adaptivity could matter. Overall it is a generic stand-in with low fidelity to the paper's actual claims."
+}

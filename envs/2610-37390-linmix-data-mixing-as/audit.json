@@ -1,0 +1,21 @@
+{
+ "ok": true,
+ "auditor": "claude:opus",
+ "tests_core_claim": true,
+ "fidelity": "medium",
+ "baseline_fair": true,
+ "same_data_across_arms": true,
+ "metric_on_heldout": true,
+ "issues": [
+  "Uniform caps `_project_caps(pi, 1.0 / K)` and `X[2*i, perm[:K]] = 1.0` replace the paper's prior-proportional caps u_k = min(1, \u03ba\u00b7prior_k). This turns the vertex design into random K-subsets with no fractional boundary coordinate. The skewed prior is used only to make the Dirichlet arms worse, not to shape the capped simplex, so the miniature ignores the interaction between prior skew and caps.",
+  "The oracle is linear in X before the sigmoid (`lin = X @ beta / np.sqrt(K)`), and with nu=0 its optimum is exactly a top-K vertex. That matches LinMix's OLS-plus-top-K selector structurally. Half the grid therefore builds in the paper's modeling assumption.",
+  "The dirichlet_gbm selector averages the top-10 interior mixes from a Dirichlet pool (`xsel = pool_X[top].mean(0)`). At concentration=30 the pool sits tightly around the prior, so it cannot reach vertices at all. Regret then mixes design quality with a limited search space. No cross arm (vertex design + GBM, or GBM optimized over the capped simplex) separates the effect of the design from the surrogate/search. dirichlet_ols isolates the design only under OLS.",
+  "Only the RegMix-style GBM is included. Olmix, the exponential mixing law minimized exactly over P_cap, which the paper also compares against, is missing, even though it is arguably the stronger Dirichlet baseline.",
+  "The proxy budget m = 4d always exceeds d, so Dirichlet OLS is always identifiable. The paper's headline regime, where 'only vertex sampling supports a linear fit' at 288 domains, is never tested.",
+  "The reference optimum comes from local search restricted to binary vertices (`_climb`) with only 4 starts. With nu=1 and an indefinite W, an interior or better vertex optimum can exist, so `max(0.0, ref - chosen)` clipping can hide cases where a method beats the reference and biases regret toward 0.",
+  "`_project_caps` can leave rows with sum < 1 when the uncapped mass is below the 1e-12 floor (sparse draws at conc=0.3 with alpha floored at 1e-3). If that happens, Dirichlet proxies are evaluated at infeasible mixes with sum(X) < K, which lowers their scores compared with feasible vertex mixes.",
+  "linmix ignores concentration, so its cells repeat exactly across concentration levels for the same seed. Pooling over concentration double-counts identical linmix runs.",
+  "Minor: K = round(d/4) uses banker's rounding, so d=10 gives K=2 (cap 0.5), a very coarse design."
+ ],
+ "summary": "The lab does test the paper's main claim: vertex (capped-simplex) proxy designs with OLS against Dirichlet designs with a RegMix-style GBM, plus a Dirichlet+OLS arm that isolates the effect of the design alone. Several things are handled well. For a given seed, the oracle, prior and noise vector are shared across arms. GBM uses reasonable settings. Regret is scored on a fresh, noise-free oracle. Fidelity is only medium, though:\n- The caps are uniform 1/K rather than tied to the prior.\n- With nu=0 the oracle is linear before the sigmoid, so it rewards the linear top-K selector.\n- The m=4d budget never reaches the regime where Dirichlet OLS cannot be fit.\n- The Olmix baseline is missing.\n- There is no cross arm to separate the effect of the design from the restricted Dirichlet candidate-pool search.\n- The reference is a vertex-only local search with clipping, which may understate regret for the nonlinear cells."
+}

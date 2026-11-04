@@ -1,0 +1,50 @@
+[
+  {
+    "id": "where:noise",
+    "kind": "where",
+    "factor": "noise",
+    "answer": {
+      "0.6": "no_meaningful_difference",
+      "1.5": "baseline_better"
+    },
+    "stats": {
+      "0.6": {
+        "delta": -0.0011574074074074032,
+        "se": 0.015788789558817833
+      },
+      "1.5": {
+        "delta": -0.12731481481481483,
+        "se": 0.015235312373237168
+      }
+    },
+    "seed_std": 0.1482816666062098
+  },
+  {
+    "id": "where:alpha",
+    "kind": "where",
+    "factor": "alpha",
+    "answer": {
+      "0.5": "paper_better",
+      "2.0": "baseline_better"
+    },
+    "stats": {
+      "0.5": {
+        "delta": 0.10416666666666667,
+        "se": 0.0126931624134363
+      },
+      "2.0": {
+        "delta": -0.26215277777777773,
+        "se": 0.02630339853614103
+      }
+    },
+    "seed_std": 0.1482816666062098
+  },
+  {
+    "id": "best",
+    "kind": "best",
+    "answer": "{\"alpha\":0.5,\"method\":\"kl\",\"noise\":1.5,\"separation\":0.5}",
+    "best": -0.0,
+    "median": -0.42708333333333337,
+    "seed_std": 0.1482816666062098
+  }
+]

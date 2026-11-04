@@ -1,0 +1,42 @@
+{
+  "title": "Para-Gaussian vs Gaussian approximation of random-network preactivations",
+  "setting": "Randomly initialized fully connected networks (standard Gaussian weights, 1/sqrt(n) scaling, unit-variance input, linear or normalized ReLU sqrt(2)·max(0,x)) of width n and depth L; 4000 random networks are sampled, and the layer-L neuron's law is the exact conditional-Gaussian mixture over the sampled random covariance. Predictors are N(0,1) or the para-Gaussian density φ(x)[1+κ4/4!·He4(x)] with κ4=3[(1+c/n)^L−1] (c=2 linear, c=5 ReLU). The metric is the binned (width 0.1) total variation distance between the predictor and the Monte Carlo law.",
+  "paper": {
+    "title": "Para-Gaussian Approximations of Random Deep Neural Networks",
+    "arxiv_id": "2610.37388",
+    "claim": "A para-Gaussian (Gaussian plus fourth-cumulant Hermite correction) approximation matches the finite-width distribution of random network preactivations better than the Gaussian approximation, and the gap matters most at small width and large depth."
+  },
+  "metric": {
+    "name": "tv_binned",
+    "goal": "min",
+    "min_effect": 0.01,
+    "description": "Binned total variation distance (bin width 0.1 on [-8,8] plus two tail bins) between the approximating distribution and the Monte Carlo distribution of a layer-L preactivation. Lower is better."
+  },
+  "factors": [
+    {
+      "name": "method",
+      "role": "treatment",
+      "levels": ["gaussian", "para_gaussian", "para_clipped"],
+      "description": "Approximating law: infinite-width Gaussian N(0,1); para-Gaussian with Hermite He4 correction (signed density); or para-Gaussian with negative bin masses clipped to zero and renormalized."
+    },
+    {
+      "name": "width",
+      "role": "context",
+      "levels": [4, 12, 32],
+      "description": "Hidden layer width n; non-Gaussian corrections scale like 1/n."
+    },
+    {
+      "name": "depth",
+      "role": "context",
+      "levels": [2, 8],
+      "description": "Number of weight layers L at which the preactivation is measured; non-Gaussianity compounds with depth, possibly beyond where a first-order correction is valid."
+    },
+    {
+      "name": "activation",
+      "role": "context",
+      "levels": ["linear", "relu"],
+      "description": "Nonlinearity: identity (exactly solvable) or normalized ReLU (approximate recursion)."
+    }
+  ],
+  "treatment": {"factor": "method", "paper": "para_gaussian", "baseline": "gaussian"}
+}

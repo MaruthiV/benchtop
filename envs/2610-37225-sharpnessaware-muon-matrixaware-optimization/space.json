@@ -1,0 +1,22 @@
+{
+  "title": "Sharpness-aware Muon on digits MLP",
+  "setting": "A 64-64-10 ReLU MLP is trained on a subsample of sklearn load_digits with a fixed 150-step budget, using Muon-style Newton-Schulz orthogonalized momentum updates for weight matrices and momentum SGD for biases. Methods differ only in how the gradient used for the update is obtained: at the current point (Muon), at a point perturbed along the normalized clean minibatch gradient (MuSAM, two gradient evaluations), or at a point perturbed along the normalized momentum (MoMuSAM, one gradient evaluation). The metric is accuracy on 400 held-out digits; diagnostics include train accuracy, the train-test gap, test loss, and a train-loss sharpness measure.",
+  "paper": {
+    "title": "Sharpness-Aware Muon: Matrix-Aware Optimization with Momentum-Guided Perturbations",
+    "arxiv_id": "2610.37225",
+    "claim": "Momentum-guided sharpness-aware perturbation (MoMuSAM) improves Muon's generalization at one gradient evaluation per step, matching or beating MuSAM, especially when minibatch gradients are noisy."
+  },
+  "metric": {
+    "name": "test_acc",
+    "goal": "max",
+    "min_effect": 0.01,
+    "description": "Classification accuracy on 400 held-out load_digits samples after training (higher is better)."
+  },
+  "factors": [
+    {"name": "method", "role": "treatment", "levels": ["muon", "momusam", "musam"], "description": "Optimizer: plain Muon (baseline), MoMuSAM (normalized-momentum perturbation, paper method), MuSAM (clean-gradient perturbation, costs an extra gradient per step)."},
+    {"name": "batch_size", "role": "context", "levels": [16, 64, 256], "description": "Minibatch size; smaller means noisier single-batch gradients."},
+    {"name": "rho", "role": "context", "levels": [0.05, 0.3], "description": "Frobenius-norm perturbation radius per parameter block (ignored by muon)."},
+    {"name": "train_n", "role": "context", "levels": [200, 1000], "description": "Number of training samples; small values give a data-limited regime prone to overfitting."}
+  ],
+  "treatment": {"factor": "method", "paper": "momusam", "baseline": "muon"}
+}

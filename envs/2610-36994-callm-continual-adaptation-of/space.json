@@ -1,0 +1,42 @@
+{
+  "title": "Prototype routing to isolated adapters on digits",
+  "setting": "sklearn digits (64 px) are standardized and projected to a frozen 32-d PCA embedding (fit on train). Classes are split into T disjoint tasks. Each task gets its own logistic-regression adapter, and test chunks are routed to adapters via cosine similarity to per-task mean-embedding prototypes. The metric is class-incremental accuracy (10-way global label) on held-out test samples, averaged over tasks after the whole sequence; the replay baseline is a shared MLP trained sequentially with 20 stored samples per past task.",
+  "paper": {
+    "title": "CaLLM: Continual Adaptation of LLMs via Non-Parametric Adapter Routing",
+    "arxiv_id": "2610.36994",
+    "claim": "Training-free nearest-prototype routing of batches to isolated per-task adapters beats replay-based sequential training and approaches oracle task routing, with the advantage depending on prototype separability and routing batch size."
+  },
+  "metric": {
+    "name": "final_average_accuracy",
+    "goal": "max",
+    "min_effect": 0.02,
+    "description": "Mean over tasks of held-out test accuracy (global 10-class label) after the full task sequence."
+  },
+  "factors": [
+    {
+      "name": "method",
+      "role": "treatment",
+      "levels": ["shared_replay", "prototype_routing", "oracle_routing"],
+      "description": "shared_replay: single MLP trained sequentially with a 20-per-past-task replay buffer; prototype_routing: CaLLM-style cosine nearest-prototype chunk routing to per-task adapters; oracle_routing: true task ID routing (upper bound for the adapters)."
+    },
+    {
+      "name": "task_count",
+      "role": "context",
+      "levels": [2, 5, 10],
+      "description": "Number of tasks the 10 classes are split into (10 means one class per task, so accuracy equals routing accuracy)."
+    },
+    {
+      "name": "task_grouping",
+      "role": "context",
+      "levels": ["clustered", "interleaved"],
+      "description": "clustered: tasks are contiguous groups of classes along the main axis of class-mean variation (distinct prototypes); interleaved: classes are dealt round-robin so task prototypes are close together and overlap."
+    },
+    {
+      "name": "chunk_size",
+      "role": "context",
+      "levels": [32, 4],
+      "description": "Number of single-task test samples per routed chunk; small chunks give noisier batch-mean embeddings."
+    }
+  ],
+  "treatment": {"factor": "method", "paper": "prototype_routing", "baseline": "shared_replay"}
+}

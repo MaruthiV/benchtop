@@ -1,0 +1,18 @@
+{
+ "ok": true,
+ "auditor": "claude:opus",
+ "tests_core_claim": true,
+ "fidelity": "medium",
+ "baseline_fair": true,
+ "same_data_across_arms": true,
+ "metric_on_heldout": true,
+ "issues": [
+  "The paper's first contribution, a physics-guided path built from PDE-generated intermediate states, is not implemented. Both arms use the linear path `z = (1 - tau) * z0 + tau * z1`; only the per-location blend of a physics velocity with the network velocity is tested.",
+  "With the gate near 0, the physics term `(p - z)/clamp(1 - tau)` drives Euler inference exactly to the PDE prediction p, so pgfm can largely reduce to interpolating between the PDE-only forecast and the MLP. Gains should be read against rmse_pde_only, not only against data_only.",
+  "The gate is a fixed per-cell nn.Parameter that ignores the input and tau, and it trains at 10x the network's learning rate (3e-2 vs 3e-3). This is simpler than the paper's spatial weighting, which is learned jointly with the velocity estimators.",
+  "In the 'exact' setting the guidance gets the oracle wind and diffusion, while the paper estimates its physical dynamics from historical information. The data-only arm never sees the wind field, so the physics arm has a strong built-in prior advantage, especially at n_train=50.",
+  "`torch.clamp(1.0 - tau, min=1.0/K_EULER)` changes the physics velocity only for training samples with tau > 0.8, which inference never reaches (its largest tau is 0.8). The network must compensate for this training-only bias. Minor.",
+  "Large simplification: MLP on a synthetic 8x8 field instead of a convolutional model on TIEGCM data, a 3-step autoregressive horizon instead of day-ahead, and no ConvLSTM or statistical baselines. Only the ablation part of the claim is tested."
+ ],
+ "summary": "The lab tests the paper's ablation claim (physics guidance with adaptive per-location weighting vs the same flow-matching model without it) with well-controlled seeds: identical data, init, batches and evaluation noise across arms, a fair baseline with the same budget, and RMSE on fresh held-out initial states. Fidelity is medium. It leaves out the physics-guided path, uses an input-independent per-cell gate, and gives the model oracle PDE coefficients, so pgfm can partly reduce to blending in the PDE-only forecast. Results should be read against the rmse_pde_only diagnostic."
+}

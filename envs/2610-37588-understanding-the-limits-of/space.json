@@ -1,0 +1,42 @@
+{
+  "title": "Can latent rollout consistency identify faithful latent dynamics?",
+  "setting": "A 2D state is rotated by one of four discrete action angles and observed through a 6-D linear-plus-tanh mixing with Gaussian noise. A whitened PCA encoder is learned from 160 transitions per trial, and two latent dynamics models are fit on the same latents: an equivariant orthogonal (Procrustes) map per action (faithful) and an unconstrained least-squares map per action fit on one-step pairs (unfaithful). Each run repeats 80 independent trials; in each trial a model-selection criterion picks the better of the two on held-out data, and the metric is the fraction of trials in which it picks the faithful model.",
+  "paper": {
+    "title": "Understanding the limits of latent world models",
+    "arxiv_id": "2610.37588",
+    "claim": "Latent rollout consistency (LRC) at longer horizons exposes unfaithful latent dynamics that one-step latent prediction error does not reveal."
+  },
+  "metric": {
+    "name": "rank_acc",
+    "goal": "max",
+    "min_effect": 0.05,
+    "description": "Fraction of trials (ties count 0.5) in which the chosen criterion ranks the faithful equivariant model above the unfaithful least-squares model, using held-out rollouts. Chance is 0.5."
+  },
+  "factors": [
+    {
+      "name": "method",
+      "role": "treatment",
+      "levels": ["one_step_mse", "lrc"],
+      "description": "Criterion used to rank the two latent models: held-out one-step normalised latent prediction error (baseline) or normalised latent rollout error (1 - R^2) at the configured horizon against latents encoded from realized observations (LRC)."
+    },
+    {
+      "name": "horizon",
+      "role": "context",
+      "levels": [1, 5, 20],
+      "description": "Rollout horizon H used by LRC. At H=1 LRC coincides with the one-step criterion; the one-step baseline ignores H."
+    },
+    {
+      "name": "obs_noise",
+      "role": "context",
+      "levels": [0.02, 0.1, 0.3],
+      "description": "Std of Gaussian observation noise added before encoding, in both training and evaluation. It makes the encoded latents noisy, so least-squares regression shrinks the learned dynamics."
+    },
+    {
+      "name": "nonlinearity",
+      "role": "context",
+      "levels": [0.0, 0.6],
+      "description": "Strength of the tanh nonlinearity in the observation map. When nonzero, the linear whitened encoder cannot exactly invert the mixing, so the latent is a distorted view of the state and exact equivariance is harder to satisfy."
+    }
+  ],
+  "treatment": {"factor": "method", "paper": "lrc", "baseline": "one_step_mse"}
+}

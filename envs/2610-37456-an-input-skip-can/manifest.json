@@ -1,0 +1,30 @@
+{
+  "id": "2610-37456-an-input-skip-can",
+  "source": "arxiv",
+  "arxiv_id": "2610.37456",
+  "paper_title": "An Input Skip Can Reparameterize a VAE Without Improving the Generator",
+  "published": "2026-10-27T15:57:37Z",
+  "synth": {
+    "backend": "claude",
+    "model": "sonnet",
+    "attempts": 1
+  },
+  "lab_sha256": "3b327eefd8fda90173080d3add0bfa1969b6db636be5799e4756827ebbe70a48",
+  "seeds": 16,
+  "visible_seeds": 4,
+  "sweep": {
+    "env": "2610-37456-an-input-skip-can",
+    "runs_ok": 576,
+    "runs_failed": 0,
+    "wall_secs": 49.4,
+    "cpu_secs": 284.1,
+    "tasks": [
+      "claim",
+      "where:alpha",
+      "where:noise_sd",
+      "best"
+    ],
+    "errors": {},
+    "swept_at": "2026-10-29T00:57:40+00:00"
+  }
+}

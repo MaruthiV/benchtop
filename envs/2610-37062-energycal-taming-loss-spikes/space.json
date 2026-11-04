@@ -1,0 +1,36 @@
+{
+  "title": "EnergyCal attenuation of routed-expert Muon updates in a tiny MoE",
+  "setting": "A small top-2 sparse MoE (one residual MoE layer with 4-16 ReLU experts) is trained on sklearn digits for 250 minibatch steps with Muon (5-step quintic Newton-Schulz, Nesterov momentum 0.95, decoupled weight decay), with Adam for the router. The treatment rescales each routed-expert matrix update by a factor derived from the normalized squared Frobenius norm of its Newton-Schulz direction. The metric is the thresholded loss-spike burden of the training-loss trace (mean excess over the trailing 20-step median at steps exceeding 1.5x that median); held-out test loss and accuracy are reported as endpoint checks.",
+  "paper": {
+    "title": "EnergyCal: Taming Loss Spikes in Muon-Family Optimizers for Sparse MoE Training",
+    "arxiv_id": "2610.37062",
+    "claim": "Attenuating routed-expert updates by a post-Newton-Schulz energy coefficient reduces loss-spike burden of plain Muon at matched nominal learning rate and weight decay without hurting the endpoint."
+  },
+  "metric": {
+    "name": "spike_burden",
+    "goal": "min",
+    "min_effect": 0.01,
+    "description": "Sum over steps (after a 20-step warm start) of the training loss minus its trailing 20-step median, counted only where loss exceeds 1.5x that median, divided by the number of evaluated steps. Diagnostics: final_test_loss and test_acc on held-out samples, spike_frac (fraction of flagged steps), mean_q (mean routed-expert scale factor)."
+  },
+  "factors": [
+    {
+      "name": "method",
+      "role": "treatment",
+      "levels": ["muon", "energycal", "uniform_scale"],
+      "description": "muon: plain Muon. energycal: routed-expert update scaled by q=clip((||D||_F^2/(d*0.8))^p,0,1) with p=1 per expert matrix (assumed form from the paper's Eq. 5). uniform_scale: routed-expert update scaled by a constant 0.6, a non-energy-dependent control for simple magnitude reduction."
+    },
+    {
+      "name": "lr",
+      "role": "context",
+      "levels": [0.03, 0.1, 0.3],
+      "description": "Nominal Muon matrix learning rate, from stable to spike-prone."
+    },
+    {
+      "name": "n_experts",
+      "role": "context",
+      "levels": [4, 8, 16],
+      "description": "Number of routed experts (top-2 routing); more experts means sparser traffic per expert and more low-token updates."
+    }
+  ],
+  "treatment": {"factor": "method", "paper": "energycal", "baseline": "muon"}
+}

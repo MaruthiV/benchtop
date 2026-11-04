@@ -1,0 +1,19 @@
+{
+ "ok": true,
+ "auditor": "claude:opus",
+ "tests_core_claim": true,
+ "fidelity": "medium",
+ "baseline_fair": true,
+ "same_data_across_arms": true,
+ "metric_on_heldout": true,
+ "issues": [
+  "Only the selection half of the paper is covered. The mixture setting (training composition w vs target composition \u0175, where target matching is optimal as \u03b1\u2192\u221e) is not tested, yet it is half of the paper's framing.",
+  "Information asymmetry: target_select gets 40 labeled target examples (`wp = _fit(Xl, yl, PROBE_LAM)`) that uniform and random_select never see. When gap>0, a gain could come just from that extra target supervision rather than from curation correcting the gap. There is no control arm such as training on Xl alone or on pool+Xl, so the two explanations can't be separated.",
+  "The \u0394-test is computed as a diagnostic, but nothing checks the paper's central operational claim that \u0394 predicts lasting gains. Also, `delta = abs(_logloss(w_base, Xt, yt_noisy) - _logloss(w_base, Xp, yp))` mixes the ordinary generalization (overfitting) gap with the train\u2013target gap. At gap=0 and n=200 (\u03b1=10) it will be clearly nonzero, so it does not cleanly measure the train\u2013target gap.",
+  "Advancement vs acceleration is judged from only two budgets (n_pool 200/2000, i.e. \u03b1=10/100). The probe stays at 40 samples while the pool grows, so target_select's ceiling is capped by probe quality and the 'converged endpoint' comparison is confounded with probe noise. With label_noise=0.2 the probe is also trained on noisy labels.",
+  "Selection rule: `order = agree[np.argsort(np.abs(s[agree]))]` keeps the half of probe-agreeing points closest to the probe's decision boundary. This differs from the paper's margin rule along the true B_tar. The kept labels still come from the source teacher B, and this biased subset can tilt the logistic fit in ways unrelated to gap correction.",
+  "Minor: the test set Xt is drawn after Xp, so its draw depends on n_pool. For a fixed seed the test samples therefore differ across n_pool levels (but not across methods, the treatment factor).",
+  "Minor: the fallback `if len(agree) >= 10 ... else idx = np.arange(n)` quietly turns target_select into uniform. It should almost never trigger, but it would hide failures if it did."
+ ],
+ "summary": "This lab is a reasonable, honestly built small version of the paper's selection experiment. It uses a teacher\u2013student setup with a rotated target teacher, compares a target-aware selection rule against full retention and a random half, and scores accuracy on 4000 fresh target samples with clean labels. All data is generated from the seed before the method branch, so every arm sees the same pool, test set and noise. random_select draws from its own separate random generator. The baseline is not sabotaged: it uses the same solver and regularization, and full retention is exactly the paper's selection baseline. The main weaknesses are these: the mixture half of the paper is left out; only the target arm gets 40 target labels, with no arm that controls for them; the \u0394 diagnostic is computed but its predictive power is never tested, and it mixes overfitting with the train\u2013target gap; and only two budgets are tried, with a fixed-size probe that caps the endpoint. Fidelity is medium."
+}

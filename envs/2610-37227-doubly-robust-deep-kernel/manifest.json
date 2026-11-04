@@ -1,0 +1,28 @@
+{
+  "id": "2610-37227-doubly-robust-deep-kernel",
+  "source": "arxiv",
+  "arxiv_id": "2610.37227",
+  "paper_title": "Doubly Robust Deep Kernel Tests for Structured Outcomes",
+  "published": "2026-10-27T13:37:28Z",
+  "synth": {
+    "backend": "claude",
+    "model": "sonnet",
+    "attempts": 2
+  },
+  "lab_sha256": "2097f3d0b394219eb7d8c1f7ff95073c9d1bf890e8d96643b40055edd2ac2b2c",
+  "seeds": 16,
+  "visible_seeds": 4,
+  "sweep": {
+    "env": "2610-37227-doubly-robust-deep-kernel",
+    "runs_ok": 384,
+    "runs_failed": 0,
+    "wall_secs": 31.9,
+    "cpu_secs": 163.4,
+    "tasks": [
+      "claim",
+      "best"
+    ],
+    "errors": {},
+    "swept_at": "2026-10-29T00:48:25+00:00"
+  }
+}

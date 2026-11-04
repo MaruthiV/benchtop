@@ -1,0 +1,19 @@
+[
+  {
+    "id": "claim",
+    "kind": "claim",
+    "answer": "no_meaningful_difference",
+    "delta": 0.005427182419616146,
+    "se": 0.001139393531724709,
+    "seed_std": 0.02034204902490646,
+    "top_share": 0.24059313508346783
+  },
+  {
+    "id": "best",
+    "kind": "best",
+    "answer": "{\"act_corr\":0.7,\"label_frac\":1.0,\"method\":\"pfc_random\",\"pretrain_domain\":\"shifted\"}",
+    "best": 0.48399493954101985,
+    "median": 0.31059587544695827,
+    "seed_std": 0.02034204902490646
+  }
+]

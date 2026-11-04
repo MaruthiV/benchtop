@@ -1,0 +1,42 @@
+{
+  "title": "Risk-aware negative budgets and calibrated weighting for KGE",
+  "setting": "A synthetic typed knowledge graph (80 entities, 4 relations, cluster-compatibility rules plus latent affinities and heterogeneous entity popularity) is the closed world. Each true triple is observed with probability p to form the open-world training KG, and unobserved true triples form the test set. TransE or DistMult (dim 16) is trained with a logistic contrastive loss using a fixed total negative budget of K per positive; the metric is filtered MRR on held-out true triples (head and tail prediction), and the fraction of sampled negatives that are actually true in the closed world is reported as a diagnostic.",
+  "paper": {
+    "title": "How Many and How Much? Contrastive Learning with Negative Samples for Knowledge Graph Embedding",
+    "arxiv_id": "2610.37389",
+    "claim": "Allocating negatives per positive by estimated false-negative risk (observed anchor degree) and weighting negatives by score dispersion and concentration (RADAR) improves link-prediction quality and cuts sampled false negatives versus fixed-budget uniform negative sampling."
+  },
+  "metric": {
+    "name": "mrr",
+    "goal": "max",
+    "min_effect": 0.01,
+    "description": "Filtered mean reciprocal rank (head and tail queries, filtered against the closed-world truth) of held-out true triples that were unobserved during training. Diagnostics: hits10, fn_rate (fraction of sampled valid negatives that are true in the closed world), neg_used_per_pos, n_train."
+  },
+  "factors": [
+    {
+      "name": "method",
+      "role": "treatment",
+      "levels": ["uniform", "radar"],
+      "description": "uniform: fixed K negatives per positive with unit weights. radar: degree-based risk-aware budget allocation (same total budget) plus distribution-calibrated negative weighting."
+    },
+    {
+      "name": "p",
+      "role": "context",
+      "levels": [0.3, 0.6, 0.9],
+      "description": "Observation probability of closed-world triples; low p means a sparse KG with many unobserved true triples (more false negatives)."
+    },
+    {
+      "name": "K",
+      "role": "context",
+      "levels": [2, 8, 32],
+      "description": "Average number of negatives per positive (total budget = K times the number of training positives)."
+    },
+    {
+      "name": "model",
+      "role": "context",
+      "levels": ["TransE", "DistMult"],
+      "description": "Scoring function: translational (TransE) or bilinear (DistMult)."
+    }
+  ],
+  "treatment": {"factor": "method", "paper": "radar", "baseline": "uniform"}
+}

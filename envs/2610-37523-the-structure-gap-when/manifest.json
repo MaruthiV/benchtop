@@ -1,0 +1,30 @@
+{
+  "id": "2610-37523-the-structure-gap-when",
+  "source": "arxiv",
+  "arxiv_id": "2610.37523",
+  "paper_title": "The Structure Gap: When More Data Cannot Replace Structured Reasoning",
+  "published": "2026-10-27T16:45:22Z",
+  "synth": {
+    "backend": "claude",
+    "model": "sonnet",
+    "attempts": 1
+  },
+  "lab_sha256": "d8fdfa28ddcfbba6014223a43e4793d9c9e3ba294ebef476f13f76f94398de8e",
+  "seeds": 16,
+  "visible_seeds": 4,
+  "sweep": {
+    "env": "2610-37523-the-structure-gap-when",
+    "runs_ok": 576,
+    "runs_failed": 0,
+    "wall_secs": 0.3,
+    "cpu_secs": 1.0,
+    "tasks": [
+      "claim",
+      "where:n_per_d",
+      "where:operator_error",
+      "best"
+    ],
+    "errors": {},
+    "swept_at": "2026-10-29T00:57:47+00:00"
+  }
+}

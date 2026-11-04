@@ -1,0 +1,22 @@
+{
+  "title": "Cost-based variable selection via harm-adjusted net benefit",
+  "setting": "Synthetic logistic-outcome data (1000 train, 4000 held-out rows) with 6 predictors: 3 cheap informative, 1 expensive informative (weak or strong), and 2 noise. Three selectors choose a subset: exhaustive search on CV net benefit minus measurement harm, backward elimination on CV log-loss, or CV-tuned L1 logistic regression. The chosen model is refit, and the metric is held-out net benefit at threshold pt minus the summed harm of the selected variables.",
+  "paper": {
+    "title": "Cost-based variable selection for prediction models",
+    "arxiv_id": "2610.37353",
+    "claim": "Selecting variables by cross-validated net benefit minus measurement harm yields higher harm-adjusted clinical utility and fewer costly predictors than cost-blind backward elimination or LASSO."
+  },
+  "metric": {
+    "name": "adj_net_benefit",
+    "goal": "max",
+    "min_effect": 0.005,
+    "description": "Held-out net benefit TP/n - FP/n*pt/(1-pt) of the refit model on the selected variables, minus the summed measurement harm of those variables. Diagnostics: raw_net_benefit, n_selected, expensive_selected, auc."
+  },
+  "factors": [
+    {"name": "method", "role": "treatment", "levels": ["backward_elim", "cost_nb", "lasso"], "description": "Variable selection: backward elimination on CV log-loss (cost-blind), exhaustive cost-based net-benefit search (paper), or L1 logistic regression with CV penalty (cost-blind)."},
+    {"name": "expensive_harm", "role": "context", "levels": [0.005, 0.02, 0.05], "description": "Net-benefit harm of measuring the expensive predictor (cheap predictors cost 0.001 each)."},
+    {"name": "expensive_coef", "role": "context", "levels": [0.2, 1.0], "description": "True logistic coefficient of the expensive predictor (weak vs strong signal)."},
+    {"name": "pt", "role": "context", "levels": [0.1, 0.35], "description": "Decision threshold probability used for net benefit; sets the weight of false positives."}
+  ],
+  "treatment": {"factor": "method", "paper": "cost_nb", "baseline": "backward_elim"}
+}

@@ -1,0 +1,19 @@
+{
+ "ok": true,
+ "auditor": "claude:opus",
+ "tests_core_claim": true,
+ "fidelity": "medium",
+ "baseline_fair": true,
+ "same_data_across_arms": true,
+ "metric_on_heldout": true,
+ "issues": [
+  "No learnable tau, sigmoid smoothing, differentiable fixed point, or GCN: ExpectileGCN is replaced by fixed precomputed aggregation + logistic regression, with tau picked from {0.5,0.1,0.25,0.75,0.9} on validation. This tests the expectile-vs-mean aggregation claim (closer to Thms 3-4) rather than the end-to-end model.",
+  "Synthetic data matches mean AND variance across classes, so the signal is skew/tail. The paper's Theorem 3 mechanism is class-dependent scale differences, so this is a related but different mechanism.",
+  "At homophily=0.5 the neighbor label mix is independent of the node's class, so neighbors carry zero class information. This is not Theorem 4's regime, where per-neighbor information diminishes but stays nonzero.",
+  "Average degree is 10, while the theory is asymptotic in neighborhood size; only small neighborhoods are tested.",
+  "'expectile' arm selects among 5 taus on only 120 validation nodes (selection noise; tau=0.5 included with tie-break to mean, so no bias toward expectile). 'oracle_test_acc' selects on test and must not be used as the primary result.",
+  "Structural-perturbation robustness claims are not tested; only Gaussian feature noise is.",
+  "LogisticRegression max_iter=200 may not converge for C=10; minor noise source."
+ ],
+ "summary": "The lab fairly tests whether one shared expectile level, chosen on validation (tau=0.5 included, ties go to the mean), beats mean neighbor aggregation on a contextual SBM where the class signal is in tail/skew. No data leaks, rigging or bugs: the expectile fixed-point is correct, data/split are seeded independently of method, and the metric is held-out test accuracy. Fidelity is medium: no learnable tau, sigmoid-smoothed fixed point or GCN; the signal is skew rather than the paper's scale mechanism; homophily=0.5 makes neighbors fully uninformative; neighborhoods are small; and structural perturbations are not tested."
+}

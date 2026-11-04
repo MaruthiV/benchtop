@@ -1,0 +1,12 @@
+{
+  "title": "Annealed multi-hypothesis next-item prediction",
+  "setting": "Synthetic catalogue of 64 items with 2-d latent embeddings in 8 regions. A history is 3 items from one region, and the next item is drawn from a uniform mixture over K_true target regions determined by the source region, with popularity skew inside each region. A one-hidden-layer MLP outputs H softmax score vectors over the catalogue and trains for 300 full-batch Adam steps. The metric is Recall@5 of the true next item on 1000 fresh held-out sequences, ranking items by the max over hypotheses.",
+  "paper": {"title": "Compote: Collapse-Resistant Multiple Hypothesis Learning For Sequential Recommendation", "arxiv_id": "2610.37005", "claim": "Multi-hypothesis training with an annealed uniform-to-winner-takes-all objective avoids head collapse and ranks the true next item better than single-head and conventional multi-head training when the next item is ambiguous."},
+  "metric": {"name": "recall5", "goal": "max", "min_effect": 0.01, "description": "Recall@5 of the sampled next item on held-out histories, using max-over-hypotheses item scores. Diagnostics: recall10, recall5_pooled (mean-pooled scores), active_heads (hypotheses winning at least 5% of training samples), and win_entropy (entropy of the training win distribution)."},
+  "factors": [
+    {"name": "method", "role": "treatment", "levels": ["single", "uniform", "wta", "compote"], "description": "single: one head with a wider hidden layer to match parameters; uniform: H heads with averaged per-head loss; wta: H heads with hard winner-takes-all from step 0; compote: H heads with softmax-weighted loss annealed from uniform to hard WTA over the first 70% of steps."},
+    {"name": "k_true", "role": "context", "levels": [1, 2, 4], "description": "Number of target regions in the next-item mixture, i.e. the ambiguity of the conditional distribution (1 is unimodal)."},
+    {"name": "n_hyp", "role": "context", "levels": [2, 4, 8], "description": "Number of hypothesis heads H, which also sets the parameter budget the single-head model matches."}
+  ],
+  "treatment": {"factor": "method", "paper": "compote", "baseline": "single"}
+}

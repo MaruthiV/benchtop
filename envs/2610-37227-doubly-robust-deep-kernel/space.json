@@ -1,0 +1,42 @@
+{
+  "title": "Doubly robust deep kernel test on confounded digit outcomes",
+  "setting": "Outcomes are 64-dim digits images with covariate-driven confounding (logistic treatment assignment on X). Treated outcomes get a fixed-norm mean shift concentrated on 1 pixel or spread over 16 pixels. A doubly robust pseudo-embedding is built from a logistic propensity and ridge outcome-embedding regressions, using random Fourier features of the kernel, with nuisances fitted on the train half. The kernel is either fixed (median bandwidth), bandwidth-tuned on the train half, or a deep kernel (MLP, 60 Adam steps) trained to maximise the cross-U power criterion. A studentised cross-U statistic on the held-out half is calibrated by sign-flips, and the metric is the rejection rate at 0.05 under the alternative (type-I rate on null replications is a diagnostic).",
+  "paper": {
+    "title": "Doubly Robust Deep Kernel Tests for Structured Outcomes",
+    "arxiv_id": "2610.37227",
+    "claim": "Learning deep kernel features by maximising an estimated power criterion on the doubly robust treatment-effect embedding gives higher test power than fixed and bandwidth-optimised kernels while keeping Type-I error calibrated."
+  },
+  "metric": {
+    "name": "power",
+    "goal": "max",
+    "min_effect": 0.05,
+    "description": "Fraction of alternative-hypothesis replications (6 per run) in which the held-out sign-flip p-value is below 0.05. Diagnostics: type1 (rejection rate on null replications, should be near 0.05), mean_p_alt, mean_p_null."
+  },
+  "factors": [
+    {
+      "name": "method",
+      "role": "treatment",
+      "levels": ["fixed_median", "bw_opt", "deep"],
+      "description": "Kernel on the DR pseudo-embedding: fixed Gaussian with median bandwidth, Gaussian with bandwidth chosen on the train half by the power criterion, or a deep kernel (MLP features plus characteristic component) trained on the criterion."
+    },
+    {
+      "name": "shift_dims",
+      "role": "context",
+      "levels": [1, 16],
+      "description": "Number of pixels over which the fixed-norm treatment shift is spread (1 = concentrated, 16 = diffuse)."
+    },
+    {
+      "name": "confounding",
+      "role": "context",
+      "levels": [0.5, 2.0],
+      "description": "Strength of covariate dependence of treatment assignment; higher means poorer overlap and noisier DR weights."
+    },
+    {
+      "name": "n",
+      "role": "context",
+      "levels": [160, 320],
+      "description": "Total number of units, split half into train (kernel learning and nuisances) and held-out test."
+    }
+  ],
+  "treatment": {"factor": "method", "paper": "deep", "baseline": "fixed_median"}
+}

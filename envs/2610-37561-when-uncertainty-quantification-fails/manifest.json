@@ -1,0 +1,28 @@
+{
+  "id": "2610-37561-when-uncertainty-quantification-fails",
+  "source": "arxiv",
+  "arxiv_id": "2610.37561",
+  "paper_title": "When uncertainty quantification fails: structural vulnerabilities and corrections for selective prediction under clinical class imbalance",
+  "published": "2026-10-27T17:08:31Z",
+  "synth": {
+    "backend": "claude",
+    "model": "sonnet",
+    "attempts": 1
+  },
+  "lab_sha256": "e07f577129b10c548ee35a2ac2e403b4854ad880ff341d4b3463e27445f25abe",
+  "seeds": 16,
+  "visible_seeds": 4,
+  "sweep": {
+    "env": "2610-37561-when-uncertainty-quantification-fails",
+    "runs_ok": 576,
+    "runs_failed": 0,
+    "wall_secs": 1.9,
+    "cpu_secs": 2.7,
+    "tasks": [
+      "claim",
+      "best"
+    ],
+    "errors": {},
+    "swept_at": "2026-10-29T00:36:29+00:00"
+  }
+}

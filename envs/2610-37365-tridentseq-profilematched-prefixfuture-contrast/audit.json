@@ -1,0 +1,20 @@
+{
+ "ok": true,
+ "auditor": "claude:opus",
+ "tests_core_claim": true,
+ "fidelity": "medium",
+ "baseline_fair": false,
+ "same_data_across_arms": true,
+ "metric_on_heldout": true,
+ "issues": [
+  "Scratch baseline likely undertrained: every arm gets FT_STEPS=60 Adam steps at a fixed lr of 3e-3 with no validation set or early stopping (about 6 epochs at label_frac=1.0). Pretrained arms start from an encoder with about 80 extra optimisation steps, so pretraining-vs-scratch gains may reflect optimisation budget rather than representation quality. The paper compares against architecture-matched scratch training with a fixed validation set, implying properly trained scratch models.",
+  "The count term in the profile is constant (np.full(len(la), math.log(1 + la.shape[1]))) because every history has T=20 events, so matching uses only summed amount and summed gap.",
+  "The line `M[only_self] = True` makes histories with no profile match fall back to all in-batch (random) candidates. The matched-candidate rate under EPS=1.0 is never logged, so the 'matched' arm may be partly random.",
+  "The dispersion term clamp(SIGMA0 - r.std(0).mean()) with SIGMA0=0.02 and weight 0.05 is probably inactive, so the dispersion component goes effectively untested.",
+  "recall_budget uses k=15 of 3000 test users with about 270 positives, so recall is capped near 5.6%. It is very coarse and not comparable to the paper's 24.62% vs 5.64%.",
+  "At label_frac=0.1 there are about 12 positives in 120 labelled users. Seed-to-seed AP variance may exceed min_effect=0.02, so many seeds are needed.",
+  "Pretraining encodes only the 12-event prefix, while fine-tuning and testing encode all 20 events. The activity-prediction target also uses the full history, future included. A minor train/use mismatch.",
+  "Absent from the miniature: Bloom-hash tokenisation of payment resources (the mechanism that exposes reuse and switching), the Transformer encoder, and real cross-business transfer. The 'shifted' domain is a single synthetic perturbation."
+ ],
+ "summary": "The lab tests the paper's core claim: it compares profile-matched candidates, random candidates and scratch training across label fractions, with activity-risk correlation and pretraining domain as context factors. Data, initialisation and fine-tuning batch order are identical across method arms for a given seed, and AP is computed on 3000 fresh held-out users. The main weakness is that the scratch baseline gets only 60 fine-tuning steps with no early stopping, so pretraining-vs-scratch gains may come from a better starting point under a tight budget rather than from better representations. The matched-vs-random comparison is cleaner. Smaller issues: the count term in the profile does nothing, unmatched rows silently use random candidates, the dispersion term is likely inactive, and recall at the 0.5% budget is capped at about 5.6% and very coarse."
+}

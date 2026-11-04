@@ -1,0 +1,42 @@
+{
+  "title": "Class-conditioned rejection under imbalance",
+  "setting": "Synthetic binary classification (make_classification, 5000 samples, 10 features) with a rare positive class; logistic regression trained on 60%, deferral thresholds calibrated on 20%, and everything measured on a held-out 20% test split. The decision threshold is set to the training prior. Selective prediction defers the most uncertain cases at a target coverage, and the metric is how unevenly minority and majority true-class patients are deferred.",
+  "paper": {
+    "title": "When uncertainty quantification fails: structural vulnerabilities and corrections for selective prediction under clinical class imbalance",
+    "arxiv_id": "2610.37561",
+    "claim": "Global Shannon-entropy deferral systematically defers minority patients under imbalance, while class-conditioned rejection with a threshold-aware ambiguity score balances deferral and protects minority sensitivity."
+  },
+  "metric": {
+    "name": "deferral_gap",
+    "goal": "min",
+    "min_effect": 0.03,
+    "description": "Absolute difference between the minority-class and majority-class deferral rates on the test set at fixed overall target coverage. Lower means less minority exclusion. Diagnostics: per-class deferral rates, minority sensitivity among accepted cases, and balanced accuracy on accepted cases."
+  },
+  "factors": [
+    {
+      "name": "method",
+      "role": "treatment",
+      "levels": ["global_entropy", "ccr_entropy", "ccr_h_tau"],
+      "description": "global_entropy: one Shannon-entropy threshold for all cases. ccr_entropy: per-predicted-class thresholds on standard entropy. ccr_h_tau: per-predicted-class thresholds on the threshold-aware score H_tau (entropy of probability warped so tau maps to 0.5)."
+    },
+    {
+      "name": "minority_frac",
+      "role": "context",
+      "levels": [0.5, 0.1, 0.02],
+      "description": "Proportion of the minority (positive) class in the data."
+    },
+    {
+      "name": "coverage",
+      "role": "context",
+      "levels": [0.7, 0.9],
+      "description": "Target fraction of cases accepted for automatic prediction (the rest are deferred)."
+    },
+    {
+      "name": "class_sep",
+      "role": "context",
+      "levels": [0.5, 1.5],
+      "description": "make_classification class separation; lower means more overlapping, ambiguous classes."
+    }
+  ],
+  "treatment": {"factor": "method", "paper": "ccr_h_tau", "baseline": "global_entropy"}
+}

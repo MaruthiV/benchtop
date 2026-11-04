@@ -1,0 +1,19 @@
+{
+ "ok": true,
+ "auditor": "claude:opus",
+ "tests_core_claim": true,
+ "fidelity": "high",
+ "baseline_fair": true,
+ "same_data_across_arms": true,
+ "metric_on_heldout": true,
+ "issues": [
+  "Perturbation is applied to bias vectors too (_perturbed over all 4 tensors), and Muon/NS orthogonalization is applied to the 64x10 output layer; the paper's method targets hidden matrix blocks and standard Muon uses AdamW for output/bias. Symmetric across arms, so minor.",
+  "Single fixed LR=0.05 for all methods with no per-method tuning; SAM variants often prefer different step sizes, so the comparison is untuned for every arm.",
+  "MuSAM is compared at equal steps rather than equal gradient evaluations, and no compute/wall-clock metric is recorded, so the efficiency side of the claim is not measured.",
+  "The paper's theoretical claim of more stable stochastic linearization is not measured directly (e.g., no check of how consistent the perturbation direction is across steps); only accuracy and a sharpness proxy are reported.",
+  "400 test samples means min_effect=0.01 is 4 samples; with 150 steps on a tiny MLP, seed variance is likely comparable to the effect, so many seeds are needed.",
+  "At t=0 the momentum is zero, so MoMuSAM applies no perturbation on the first step (consistent with the zero-direction convention, harmless).",
+  "Muon ignores rho, so muon runs are duplicated across both rho levels; analysis should not count them as independent."
+ ],
+ "summary": "The lab tests the paper's actual claim with high fidelity. Muon, MuSAM (perturbation along the normalized clean gradient, two gradient evaluations per step) and MoMuSAM (perturbation along the normalized previous momentum, one evaluation) differ only in where the update gradient is taken. All three share the same momentum, Newton\u2013Schulz orthogonalization, learning-rate schedule and step budget. For a fixed seed the split, minibatch sequence and init are identical across methods, and accuracy is measured on 400 held-out samples. Minor deviations: biases are perturbed and Muon is applied to the output layer; there is no per-method LR tuning; compute is not tracked, so the efficiency claim and the linearization-stability claim are not tested; and the small test set makes the 1% effect threshold noisy."
+}

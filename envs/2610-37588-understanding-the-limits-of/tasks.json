@@ -1,0 +1,44 @@
+[
+  {
+    "id": "claim",
+    "kind": "claim",
+    "answer": "paper_better",
+    "delta": 0.3002893518518519,
+    "se": 0.0035556150831726006,
+    "seed_std": 0.06828426383971135,
+    "top_share": 0.11353628183036567
+  },
+  {
+    "id": "where:horizon",
+    "kind": "where",
+    "factor": "horizon",
+    "answer": {
+      "1": "no_meaningful_difference",
+      "5": "paper_better",
+      "20": "paper_better"
+    },
+    "stats": {
+      "1": {
+        "delta": 0.005902777777777777,
+        "se": 0.0038129823663129742
+      },
+      "5": {
+        "delta": 0.3585069444444444,
+        "se": 0.007508828803201684
+      },
+      "20": {
+        "delta": 0.5364583333333334,
+        "se": 0.006546773484362779
+      }
+    },
+    "seed_std": 0.06828426383971135
+  },
+  {
+    "id": "best",
+    "kind": "best",
+    "answer": "{\"horizon\":5,\"method\":\"lrc\",\"nonlinearity\":0.0,\"obs_noise\":0.3}",
+    "best": 0.9510416666666668,
+    "median": 0.36197916666666663,
+    "seed_std": 0.06828426383971135
+  }
+]

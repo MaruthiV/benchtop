@@ -1,0 +1,29 @@
+{
+  "id": "2610-37588-understanding-the-limits-of",
+  "source": "arxiv",
+  "arxiv_id": "2610.37588",
+  "paper_title": "Understanding the limits of latent world models",
+  "published": "2026-10-27T17:25:50Z",
+  "synth": {
+    "backend": "claude",
+    "model": "sonnet",
+    "attempts": 1
+  },
+  "lab_sha256": "93e724e06c363e15e46d9905e75ef859402acde91360302e92a2dc7d117a7946",
+  "seeds": 16,
+  "visible_seeds": 4,
+  "sweep": {
+    "env": "2610-37588-understanding-the-limits-of",
+    "runs_ok": 576,
+    "runs_failed": 0,
+    "wall_secs": 3.8,
+    "cpu_secs": 22.0,
+    "tasks": [
+      "claim",
+      "where:horizon",
+      "best"
+    ],
+    "errors": {},
+    "swept_at": "2026-10-29T10:45:39+00:00"
+  }
+}

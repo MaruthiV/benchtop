@@ -1,0 +1,19 @@
+{
+ "ok": true,
+ "auditor": "claude:opus",
+ "tests_core_claim": true,
+ "fidelity": "medium",
+ "baseline_fair": true,
+ "same_data_across_arms": true,
+ "metric_on_heldout": true,
+ "issues": [
+  "Setting mismatch: the paper studies replay-free class-incremental learning, but the lab uses domain-incremental permuted digits with a single shared 10-way head. EWC behaves very differently in that regime, so a win or loss here does not carry over directly to the paper's main setting.",
+  "No shaping-only ablation: the arms are ewc, fs_ewc (shaping plus merging) and merge_only. Nothing applies FIM-trace shaping without trajectory merging, so the lab cannot show what shaping adds on its own. The paper's controlled studies emphasise exactly that ('shaping the solution itself improves subsequent retention').",
+  "The shaping weight ALPHA=0.2 is fixed and untuned, and rho only takes the values {0.05, 0.5}. With init parameter norm around 8, rho=0.05 is a tiny neighbourhood, so a null result for fs_ewc may just mean the hyperparameters are poor rather than that the method fails.",
+  "`torch.clamp(lam * L, max=0.9/LR)` caps the per-parameter EWC stiffness at 9. Because Lam is max-normalised to at most 1 (plus DAMP) per task, at ewc_lambda=100 most important weights hit the cap, so lambda=10 and lambda=100 are partly collapsed. This applies equally to all arms, so it is not rigging, but it weakens the lambda context factor.",
+  "Drift diagnostic: the perturbation is scaled by DRIFT_REL * ||theta||. Merging and SAM-style shaping can change ||theta||, so arms get different absolute drift magnitudes, which confounds the 'tolerance to drift' comparison. A fixed absolute radius would be cleaner.",
+  "Standardisation uses `sd = std + 1e-3`. Pixels that are always zero in the training split but nonzero in the test split become huge test inputs (~60 or more). This affects all arms equally, but it adds noise and can distort test accuracy and the drift diagnostic.",
+  "Training is short (60 steps, about 6 epochs) and the model is tiny (64-32-10), so plasticity pressure and capacity effects are only weakly reproduced. Lam also accumulates with no online decay factor (gamma=1). That is acceptable but worth stating."
+ ],
+ "summary": "The lab implements the paper's two mechanisms correctly. The analytic per-example gradient-norm formula for the empirical FIM trace is right for a 2-layer MLP. FS-EWC uses a SAM-style ascent on that trace within an L2 ball of radius rho, averages the last 10 iterates into the anchor, and estimates the diagonal empirical FIM at the retained anchor. All of this sits on top of the same online EWC baseline. Data split, permutations, init, minibatch sampling and drift noise all come from seed-determined RNGs and are consumed identically by every arm. The baseline shares the same EWC code path, step count, learning rate and lambda sweep, so it is not sabotaged. The metric is test-split accuracy on held-out data. Fidelity is medium for three reasons: it uses domain-incremental permuted MNIST-style digits instead of class-incremental, there is no shaping-only ablation, the shaping hyperparameters are untuned and rho is small, and the drift diagnostic is normalised by parameter norm. The lambda clamp also reduces how much the lambda levels differ."
+}

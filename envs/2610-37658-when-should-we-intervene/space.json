@@ -1,0 +1,42 @@
+{
+  "title": "PORTAL: label-efficient per-batch selection of a test-time intervention",
+  "setting": "A logistic regression is trained on a clean 10-d two-class Gaussian source, then deployed on a stream of 24 batches of 64 points under a feature-wise scale/offset shift. Three fixed candidates (source, batch-statistics normalization, and their mean-logit ensemble) have predictions fixed per batch. A controller spends a small label budget on a 32-point query pool of each batch to pick one candidate, which is scored on the other 32 held-out points. Batches arrive either class-mixed or in class-dominated (90/10) blocks, where batch-stat normalization tends to fail.",
+  "paper": {
+    "title": "When Should We Intervene at Test Time?",
+    "arxiv_id": "2610.37658",
+    "claim": "A controller that evaluates all candidates on each shared label, aims queries at rivals that can still overtake the leader and stops early (PORTAL) deploys better predictions than uniform-query ERM selection and avoids the failures of always applying an intervention."
+  },
+  "metric": {
+    "name": "deployed_acc",
+    "goal": "max",
+    "min_effect": 0.01,
+    "description": "Mean accuracy on the unlabeled deployment half of each batch using the candidate the controller chose, averaged over the stream. Diagnostics: oracle_gap (per-batch oracle minus deployed accuracy), labels_used (mean labels per batch), frac_bn (fraction of batches deploying batch-norm), p10_batch_acc (10th percentile batch accuracy)."
+  },
+  "factors": [
+    {
+      "name": "method",
+      "role": "treatment",
+      "levels": ["uniform_erm", "portal", "always_bn"],
+      "description": "uniform_erm: uniformly sampled labels, deploy the candidate with the fewest queried errors. portal: shared-label Dirichlet posterior over prediction-pattern strata, value-of-information query targeting, reachability and EVPI-bound stopping. always_bn: always deploy batch-stat normalization with no labels."
+    },
+    {
+      "name": "arrival",
+      "role": "context",
+      "levels": ["mixed", "class_block"],
+      "description": "mixed: each batch is class-balanced in expectation. class_block: batches arrive in blocks of 4 with a 90% dominant class that alternates between blocks."
+    },
+    {
+      "name": "shift",
+      "role": "context",
+      "levels": [0.5, 1.5],
+      "description": "Strength of the feature-wise scale and offset corruption applied to the stream. Mild shift leaves the source model decent; strong shift usually makes it poor."
+    },
+    {
+      "name": "budget",
+      "role": "context",
+      "levels": [2, 6, 16],
+      "description": "Maximum number of labels the controller may query per batch."
+    }
+  ],
+  "treatment": {"factor": "method", "paper": "portal", "baseline": "uniform_erm"}
+}

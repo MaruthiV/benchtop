@@ -1,0 +1,19 @@
+[
+  {
+    "id": "claim",
+    "kind": "claim",
+    "answer": "baseline_better",
+    "delta": -0.3650358264955382,
+    "se": 0.005932529726087289,
+    "seed_std": 0.0443544801121357,
+    "top_share": 0.15401904793765195
+  },
+  {
+    "id": "best",
+    "kind": "best",
+    "answer": "{\"ewc_lambda\":1,\"method\":\"ewc\",\"n_tasks\":3,\"rho\":0.05}",
+    "best": 0.7942955527040695,
+    "median": 0.4849246226044165,
+    "seed_std": 0.0443544801121357
+  }
+]

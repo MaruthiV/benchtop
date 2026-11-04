@@ -1,0 +1,20 @@
+{
+ "ok": true,
+ "auditor": "claude:opus",
+ "tests_core_claim": true,
+ "fidelity": "low",
+ "baseline_fair": true,
+ "same_data_across_arms": true,
+ "metric_on_heldout": true,
+ "issues": [
+  "The claim tested (LRC exposes unfaithfulness that one-step latent error misses) is the lab author's paraphrase. The excerpt compares LRC against state probes and task reward (Fig. 2) and applies it to DreamerV3/TD-MPC2/LeWM; it never compares LRC with one-step MSE.",
+  "Outcome largely fixed by construction: the 'unfaithful' model (_fit_unfaithful) is the least-squares minimiser of one-step error on the training pairs, so the one-step criterion is built to prefer it (expected rank_acc <= 0.5).",
+  "With noisy encoded inputs, least squares shrinks the fitted maps (errors-in-variables attenuation). These contractions collapse toward 0 over long rollouts while the Procrustes maps keep the norm, so LRC at H=5 or 20 favouring the orthogonal model follows analytically rather than being discovered.",
+  "'Faithful' is a label given to the Procrustes model class, not measured: true state-level equivariance f_hat(r(s),a) vs r(f(s,a)) is never checked, although Se and R_ALL are available. At nonlinearity=0.6 the linear PCA encoder can't invert the tanh mixing, so the orthogonal model isn't truly faithful, yet rank_acc still counts it as ground truth.",
+  "_fit_faithful uses U @ Vt without forcing det=+1, so the 'faithful' maps may be reflections rather than rotations.",
+  "At obs_noise=0.02 the two fitted models are nearly identical and the tie tolerance (~1e-9) is too tight to call a tie, so random noise decides the outcome; those cells mainly show near-chance noise.",
+  "At horizon=1 LRC equals the one-step criterion, so that level is a sanity check, not evidence.",
+  "The paper reports LRC as R^2 for actual world models; the lab uses pooled 1-R^2 as a ranking criterion between two fitted 2x2 linear maps, a different use of the metric."
+ ],
+ "summary": "The lab computes LRC correctly and handles data well: the same seeded data across both methods and all horizons, and both criteria scored on fresh held-out draws. But the 'LRC vs one-step MSE' comparison is not the comparison the paper makes, and the result is close to fixed by construction. The 'unfaithful' model is the one-step least-squares minimiser, so one-step error should prefer it, while its shrunken maps make long rollouts collapse, so LRC should prefer the orthogonal model. Also, 'faithful' is assigned to the Procrustes model by label rather than measured, which is wrong when nonlinearity=0.6. Fidelity to the paper's actual contribution (diagnosing real latent world models with LRC alongside state probes and reward) is low."
+}

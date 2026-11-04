@@ -1,0 +1,19 @@
+{
+ "ok": true,
+ "auditor": "claude:opus",
+ "tests_core_claim": true,
+ "fidelity": "medium",
+ "baseline_fair": true,
+ "same_data_across_arms": true,
+ "metric_on_heldout": true,
+ "issues": [
+  "Softmax ignores anything added equally to all K candidates, so the SFT gradient `Xw_mean - (p.reshape(-1) @ X2)/n` cancels the per-prompt `shared` features exactly as the DPO difference `Dm` does. The paper's parameter-level mechanism (shared tokens cancelling under DPO but not SFT) is therefore built into both arms and can't explain a DPO-vs-SFT difference.",
+  "Interference depends only on delta[48:80], and wA and wB are independent there, so the first-order change in task-B NLL has a random sign and the systematic part grows with ||delta_overlap||^2. The learning rate is chosen per method to maximise task-A reward, with no adjustment for update size or task-A gain, so the metric mostly compares the chosen step sizes rather than any sparsity structure.",
+  "The dpo_random null picks its learning rate by validation reward on flipped labels and will tend to pick a tiny step, giving near-zero interference. With goal=min, a method that learns nothing can 'win'. Interference should be reported at matched heldout_reward_gain.",
+  "top10_mass uses coefficients at the end of training (beta*sigmoid(-m), or 1-p[w] for SFT), not the time-integrated A_i(T) the paper uses (Remark 1). The SFT per-example quantity is not a dual coefficient, so the comparison between arms on this diagnostic isn't like-for-like.",
+  "The interference measure differs from the paper's: the paper measures cross-task inner products between task vectors each trained by the same method. Here only task A is trained and the loss increase on an untrained task B is measured, which is closer to forgetting than to merging.",
+  "DPO's effective step scales with beta^2, so at beta=0.1 the shared LR grid's effective range for DPO shifts by 100x compared with SFT. The grid is probably wide enough, but this should be checked.",
+  "Dead code: `_train` is never used, and `flip = rng.random(n) < 0.0` is a no-op (it keeps the random stream stable). Harmless."
+ ],
+ "summary": "This is a linear softmax-policy miniature where DPO and SFT get identical data, the same starting point and the same LR grid with validation-based selection, and interference is measured on fresh task-B samples. Fidelity is medium. Softmax over shared per-prompt features cancels them for SFT as well, so the paper's parameter-level cancellation mechanism doesn't separate the arms. Interference mostly tracks update size on the shared coordinates, which comes from the per-method LR choice, and it isn't normalised by task-A gain, so the random-label null can win by barely moving. The support-pair diagnostic uses end-of-training coefficients rather than the time-integrated weights the paper uses."
+}

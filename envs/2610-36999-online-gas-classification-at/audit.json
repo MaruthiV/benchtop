@@ -1,0 +1,19 @@
+{
+ "ok": true,
+ "auditor": "claude:opus",
+ "tests_core_claim": true,
+ "fidelity": "medium",
+ "baseline_fair": true,
+ "same_data_across_arms": true,
+ "metric_on_heldout": true,
+ "issues": [
+  "Claim misattribution: space.json says the binary Hebbian network 'roughly matches an optimised non-linear SVM', but in the paper the 1-bit Hebbian readout gets 0.645 vs 0.800 for the RBF SVM on mixtures; the near-match (0.791 vs 0.800) is the 64-bit gradient-descent readout, which the lab omits. The Hebbian-vs-RBF comparison therefore tests something the paper never claimed.",
+  "Input differs from the paper: the lab classifies the whole flattened 8x12 transient (Xtr.reshape(n,-1)) instead of per-timestep 136-dim features (derivatives, 56 pairwise differences, 56 ratios), which the paper says drive the quality of the induced kernel.",
+  "Not a stream: no random 600/300 presentation sequences and no accuracy over exposure time; the preceding-stimulus starting state is faked as _steady(prev)*uniform(0.3,1); the sensor data is synthetic rather than real MOX recordings.",
+  "Metric is narrower than the paper's: mixture_acc = correct[yte>=N_GAS].mean() counts only mixture classes, while the paper reports overall accuracy on the mixture dataset; a method biased toward predicting mixture labels is rewarded. overall_acc is reported and should be checked too.",
+  "_hebb_predict divides overlap by sqrt(W.sum(1)+1), a normalisation not described in the excerpt that may favour or penalise classes whose weights saturate quickly (e.g. mixtures).",
+  "With n_per_class=5 the p hold-out uses nv=int(0.3*30)=9 validation samples, so the choice of p is very noisy, while the SVMs get 3-fold CV.",
+  "Minor: LinearSVC(dual=True, max_iter=3000) runs with warnings suppressed, so convergence failures go unnoticed; hyperparameter grids are small for both SVMs."
+ ],
+ "summary": "The data handling is sound: data and model randomness are identical across method arms for a given seed, the test set is freshly sampled and drawn independently of training size, and the SVM baselines are tuned with care comparable to the Hebbian network's p search. The Hebbian-vs-linear-SVM comparison on mixtures is a faithful test of the paper's main claim. However, the stated claim wrongly says the 1-bit Hebbian network matches the RBF SVM (in the paper that was the 64-bit readout, which the lab omits). The lab also departs from the paper in its input (flattened whole transients instead of engineered per-timestep features), in being synthetic and not streamed, and in scoring only mixture classes. Fidelity is medium."
+}

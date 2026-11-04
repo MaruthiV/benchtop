@@ -1,0 +1,20 @@
+{
+ "ok": true,
+ "auditor": "claude:opus",
+ "tests_core_claim": true,
+ "fidelity": "medium",
+ "baseline_fair": true,
+ "same_data_across_arms": true,
+ "metric_on_heldout": true,
+ "issues": [
+  "Uses a K=2 Gaussian mixture instead of the paper's normalizing flow; a 2-component mixture with spread-out initial means (torch.randn*1.5) has exactly the right number of components for two modes, which may push baseline collapse well below what a flow would show.",
+  "Because G=(theta1^2, theta2), the true posterior is exactly sign-symmetric (true_minority_mass ~0.5 always). At separation=0.5, y[0]=0.25+sigma*noise is often near zero or negative, giving a single mode centred at theta1=0, so 'collapse' by theta1 sign is not mode collapse there.",
+  "The Renyi term D_alpha(prior||q) with LAMBDA=1 rewards matching the broad, symmetric N(0,2^2) prior, which puts mass on both signs automatically; collapse_frac does not penalize this smearing. The accuracy cost appears only in the sym_kl/mode_mass_err diagnostics.",
+  "LAMBDA is fixed at 1.0 with no sensitivity check, so the size of the improvement depends on an arbitrary weight.",
+  "With R=8 restarts, per-run collapse_frac moves in steps of 0.125, coarser than min_effect=0.05; comparisons need averaging over many seeds.",
+  "The alpha factor has no effect for method=kl, so baseline runs are repeated three times; analyses pooling over alpha triple-count the baseline.",
+  "The evaluation grid stops at +/-5 and is renormalized; q mass outside it (more likely under the prior-covering regularizer) is silently dropped.",
+  "Minor: the Renyi estimator is the log of a Monte Carlo mean, giving slightly biased gradients; q is checked only on the grid, never against samples drawn from q."
+ ],
+ "summary": "The lab tests the paper's main contribution: adding a Renyi regularizer toward the prior to the VI objective (expected Tikhonov loss minus entropy) to reduce near-collapse onto one mode of a sign-symmetric bimodal posterior. The math is correct (stratified log E_q[(pi/q)^alpha] estimator with the right 1/(alpha-1) scaling), both methods share initialization, noise draws and budget, and scoring is against an exact grid posterior. Fidelity is medium: a 2-component Gaussian mixture stands in for the flow and may make the baseline look less prone to collapse. The sign-mass metric can reward smearing toward the symmetric prior, and the separation=0.5 setting is often unimodal, so the sym_kl diagnostic should be read alongside collapse_frac."
+}

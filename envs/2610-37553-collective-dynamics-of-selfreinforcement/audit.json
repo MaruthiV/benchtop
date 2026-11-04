@@ -1,0 +1,18 @@
+{
+ "ok": true,
+ "auditor": "claude:opus",
+ "tests_core_claim": true,
+ "fidelity": "high",
+ "baseline_fair": true,
+ "same_data_across_arms": true,
+ "metric_on_heldout": true,
+ "issues": [
+  "The no_shared arm makes collapse impossible by construction. `lam = 0.0 if method == \"no_shared\"` removes all coupling, so each problem only sharpens independently and accuracy tends toward Q_CORRECT. In the toy model the comparison against plain is therefore close to tautological. The paper's non-trivial version of this ablation, the antisymmetric readout in a Transformer, where shared parameters still exist, is not reproduced. The lab only re-tests the solvable many-problem model, not Section 6.",
+  "Under no_shared the `lam` context factor is ignored, so the lam=0.2 and lam=0.4 cells are exact duplicates for each seed. This inflates the apparent replication of that arm and gives no new information.",
+  "The primary metric is computed on the training problems' hidden labels. It is an analytic expectation, `np.mean(_sig(y * z))`, so it measures accuracy on fresh samples and the labels never reach training. This matches the transductive/TTRL setting, but it is not held out at the problem level. `fresh_problem_accuracy` is only a diagnostic, and it applies the training-set `v` to untrained `u_t`.",
+  "The common-random-numbers design keeps `idx` and `uni` identical across arms. However, k = (uni < p) depends on each arm's own p, so the sampled answers diverge after step 1. This is expected and harmless, but the comment 'streams match across arms' only holds at the level of the uniform random numbers.",
+  "The shared-mode seed has two sources: `v = 0.01*N(0,1)` and the finite-N imbalance of the random leans. The leans are balanced only in expectation, with lean imbalance ~1/sqrt(N). So the effective \u03b4 varies with N and seed and is not the controlled \u03b4 assumed in N_c \u2248 ln(1/\u03b4)/(\u03bb\u00b2G). This is minor for a qualitative test.",
+  "Because T_STEPS=2500 is fixed, the outcome near N_c may partly reflect whether the run had enough time rather than the asymptotic fate, especially at N=300 where per-problem sharpening is slowest. The 'no collapse when confident' check (a=1.5) is also only tested at this horizon, not 'under much longer training' as the paper states."
+ ],
+ "summary": "The lab is a faithful, correctly implemented miniature of the paper's solvable many-problem model. Logits are z_i = u_i + \u03bbv. Training is minibatch REINFORCE on the K=3 majority-vote self-reward, and the gradient is checked correct: k(1-p)/K or -(K-k)p/K. Per-problem updates are effectively slowed by 1/N, while the shared parameter gets a \u03bb\u00b2\u00b7mean(g) push that does not depend on N. The marginal-entropy bonus gradient has the correct scaling. The context grid straddles the predicted N_c. With \u03b4=0.01 and a=0.5, G\u22480.51, which gives N_c\u224856 at \u03bb=0.4 and \u2248225 at \u03bb=0.2, against N \u2208 {30,100,300}. It also includes a confident-init level (a=1.5), outside the unstable window. Data, initialisation and the sampling uniforms are identical across arms for a given seed. The baseline (plain) is not sabotaged. The main weakness is that the treatment arm (\u03bb=0) removes the coupling entirely, so 'no collapse without the shared direction' holds by construction in this toy model. The paper's non-trivial Transformer ablation is not tested. The metric is fresh-sample expected accuracy on training problems whose labels were never used. That is reasonable for label-free RL, but it is not a problem-level held-out set."
+}

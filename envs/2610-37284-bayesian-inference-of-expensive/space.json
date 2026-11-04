@@ -1,0 +1,42 @@
+{
+  "title": "Proxy vs scalar log-likelihood response in GP-BO posterior inference",
+  "setting": "A deterministic damped-sinusoid simulator maps 2 or 3 parameters in [0,1]^d to a T-point time series; the observation is the true output plus Gaussian noise, and the exact posterior is computed on a dense grid. A sequential GP-based Bayesian optimization loop (8 random initial points, 36 simulator calls total, uncertainty-sampling acquisition on the implied posterior) builds a surrogate of the likelihood either from the scalar log-likelihood or from the full output vector (proxy), with the same kernel, lengthscale selection and acquisition. The metric is the total-variation distance between the surrogate posterior and the exact grid posterior after all simulator calls.",
+  "paper": {
+    "title": "Bayesian Inference of Expensive Simulators: Survey and Comparison of Design Choices",
+    "arxiv_id": "2610.37284",
+    "claim": "Modeling a proxy variable that retains the simulator output vector gives more simulation-efficient posterior inference than modeling the scalar log-likelihood."
+  },
+  "metric": {
+    "name": "tv_final",
+    "goal": "min",
+    "min_effect": 0.02,
+    "description": "Total-variation distance (0 to 1) between the surrogate-based posterior and the exact grid reference posterior after 36 simulator calls. Diagnostics: tv_at_20 (TV after 20 calls), calls_to_thresh (calls until TV<0.25, capped at 36), mean_err (posterior-mean error in the unit cube)."
+  },
+  "factors": [
+    {
+      "name": "method",
+      "role": "treatment",
+      "levels": ["loglik", "proxy", "random"],
+      "description": "loglik: GP on the scalar log-likelihood with uncertainty-sampling acquisition; proxy: shared-kernel GP on the standardized output vector, likelihood computed from the predicted output; random: random design with the scalar log-likelihood GP as a sanity floor."
+    },
+    {
+      "name": "noise",
+      "role": "context",
+      "levels": [0.05, 0.2, 0.5],
+      "description": "Observation noise standard deviation; lower noise makes the posterior sharper and the log-likelihood surface more extreme."
+    },
+    {
+      "name": "T",
+      "role": "context",
+      "levels": [10, 50],
+      "description": "Number of observed time points (output dimension), i.e. how much information the scalar log-likelihood can discard."
+    },
+    {
+      "name": "dim",
+      "role": "context",
+      "levels": [2, 3],
+      "description": "Number of simulator parameters (3 adds a phase parameter); the search space is harder with 3."
+    }
+  ],
+  "treatment": {"factor": "method", "paper": "proxy", "baseline": "loglik"}
+}

@@ -1,0 +1,19 @@
+{
+ "ok": true,
+ "auditor": "claude:opus",
+ "tests_core_claim": true,
+ "fidelity": "medium",
+ "baseline_fair": true,
+ "same_data_across_arms": true,
+ "metric_on_heldout": false,
+ "issues": [
+  "Divergence is under-penalised. After a break, `losses` is padded with LOSS_CAP=20, so the trailing 20-step median reaches 20 within about 10 steps and later steps stop being flagged. A run that diverges early therefore adds only about 10*(20-m)/230 to `spike_burden`. That is not ordered sensibly against a run that stays spiky all the way through, which can swap rankings at lr=0.3. Divergence should be reported separately or charged a fixed maximal burden.",
+  "Finite losses above 20 are clipped (`if ... lv > LOSS_CAP: lv = LOSS_CAP`) but training continues. This hides the size of large spikes, which are exactly what the metric is meant to measure.",
+  "The primary metric comes from minibatch training loss, not held-out data. That matches the paper's definition, but late in training the loss is near zero (1200 samples, about 13 epochs), so the relative 1.5x-median threshold can flag ordinary batch-to-batch noise as 'spikes'. Absolute excess at those steps is small, but `spike_frac` will be inflated.",
+  "The uniform_scale control uses a fixed q=0.6 instead of matching EnergyCal's realised mean_q at each (lr, n_experts) cell. For 32x32 NS5 outputs, rho is usually near 0.8 to 1, so EnergyCal's q may often be close to 1. The control may then reduce update size much more than EnergyCal does, which confounds the comparison 'energy-dependent vs. simple shrinkage'. It would be better to set UNIFORM_Q to EnergyCal's measured mean_q.",
+  "Stand-in setting: one residual MoE layer with ReLU two-matrix experts (no separate gate/up SwiGLU matrices), d=32 instead of 256, FP32 Newton-Schulz instead of BF16 (BF16 rounding shifts the finite-step energy rho), digit classification instead of LM pretraining, no Hyperball/MuonH arm, and no attention or shared experts. Instabilities at high lr in this toy may be generic rather than MoE-routing-specific.",
+  "Plain Muon here uses s_W=1 and a global clip-to-1 gradient norm. This is consistent with the paper but means the base update is tiny for small matrices. The 'spike-prone' lr=0.3 behaviour depends on these choices, and the lab never checks that spikes actually occur in the baseline.",
+  "Minor: `mx` (max loss/median ratio) is computed in `_spike_burden` but discarded, so `run` returns only burden and frac."
+ ],
+ "summary": "The lab tests the paper's actual plain-Muon claim: EnergyCal's per-matrix coefficient q=clip((||D||_F^2/(d*rho_ref))^p,0,1) is applied only to the routed-expert matrices W1/W2. It uses the same Nesterov momentum, NS5 and weight-decay path as the baseline, at matched nominal learning rate, and keeps the paper's behaviour that q=0 still applies weight decay. Data split, batch order and initialisation come from seed-only random generators, so they are identical across the method arms; init shapes change only with the context factor n_experts. The lab also adds a uniform-scaling control that the paper itself lacks. Fidelity is medium because the setting is a toy stand-in for a 4B-parameter MoE language model. On held-out data: only the endpoint checks (test loss and accuracy) use the test set. The primary metric, spike_burden, is computed on minibatch training loss, as the paper defines it. Its relative threshold can flag noise when the loss is near zero, and padding diverged runs with the cap value under-penalises divergence. The fixed 0.6 uniform control is not matched to EnergyCal's realised mean_q, which weakens the comparison between energy-dependent scaling and simple shrinkage."
+}

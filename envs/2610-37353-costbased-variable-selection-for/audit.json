@@ -1,0 +1,18 @@
+{
+ "ok": true,
+ "auditor": "claude:opus",
+ "tests_core_claim": true,
+ "fidelity": "high",
+ "baseline_fair": true,
+ "same_data_across_arms": true,
+ "metric_on_heldout": true,
+ "issues": [
+  "The primary metric (held-out NB minus summed harm) is the same quantity cost_nb maximizes during selection, so cost_nb's advantage when the expensive variable is weak and costly is close to guaranteed. The informative cells are the ones where it might not win (e.g. expensive_coef=1.0, expensive_harm=0.005). The paper's own comparison shares this structure.",
+  "Exhaustive search over only 6 predictors: the paper's backward-elimination extension for many predictors is not implemented, there are no real case studies, and calibration is not measured.",
+  "The backward-elimination baseline uses CV log-loss and removes a variable on ties (`if ll <= cur_ll`). The paper's 'traditional' backward elimination probably used p-values or AIC, so results may differ somewhat. A reasonable stand-in, not sabotage.",
+  "LASSO uses liblinear, which penalizes the intercept. This only affects which variables are selected, since the final model is refit without a penalty.",
+  "cost_nb chooses the best of 64 subsets by pooled out-of-fold net benefit at one threshold (a step-like, noisy score) with no 1-SE rule, so it can overfit to CV noise. This is a property of the method, not a bug, but expect high variance across seeds.",
+  "The default pt=0.2 is not one of the grid levels {0.1, 0.35}. This only matters if a run's config omits pt."
+ ],
+ "summary": "The lab tests the paper's main claim faithfully. It compares exhaustive CV net-benefit-minus-harm selection with cost-blind backward elimination and CV-tuned LASSO on synthetic logistic data, varying how costly and how predictive the expensive predictor is and the decision threshold. Data, split and folds are identical across methods for a given seed, and the metric is computed on 4,000 held-out rows after refitting on the training data. Baselines get the same folds and refitting procedure. I found no bugs or leaks. Caveats: the metric equals the paper method's own selection objective, so its advantage is partly built in; the setting is small (6 predictors, no backward-elimination extension, no real data); and the backward-elimination criterion (CV log-loss) may differ from the paper's."
+}

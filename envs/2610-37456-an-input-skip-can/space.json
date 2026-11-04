@@ -1,0 +1,42 @@
+{
+  "title": "Input skip: lower MSE, same generator?",
+  "setting": "Synthetic low-rank sinusoidal Gaussian data (32 coordinates, 4 latent factors, plus a mean offset) is fit with a small linear Gaussian VAE (8 latents, full-batch Adam, 400 steps, gradient clipping). Arms differ in the constant input skip alpha and in the observation variance, which is anchored to a PPCA noise estimate. The metric is the energy score of 256 generated samples against 200 held-out observations, per sqrt(dim). Diagnostics are held-out reconstruction MSE and exact Gaussian NLL per coordinate.",
+  "paper": {
+    "title": "An Input Skip Can Reparameterize a VAE Without Improving the Generator",
+    "arxiv_id": "2610.37456",
+    "claim": "A constant input skip lowers reconstruction MSE by b^2 but does not improve generative quality, and changing skip and observation variance together worsens energy score and NLL."
+  },
+  "metric": {
+    "name": "energy_score",
+    "goal": "min",
+    "min_effect": 0.02,
+    "description": "Energy score of model samples versus held-out observations, averaged over test points and divided by sqrt(dim). Lower is better."
+  },
+  "factors": [
+    {
+      "name": "method",
+      "role": "treatment",
+      "levels": ["no_skip", "skip_same_var", "skip_resid_var"],
+      "description": "no_skip: alpha=0 at base (PPCA) observation variance. skip_same_var: skip alpha with the same observation variance, so residual variance is b^2 times base and the model is separately trained. skip_resid_var: skip alpha with residual variance kept at base, so observation variance is base/b^2, as in the paper's joint-change comparison."
+    },
+    {
+      "name": "alpha",
+      "role": "context",
+      "levels": [0.3, 0.6, 0.8],
+      "description": "Skip weight used by the skip arms (ignored by no_skip)."
+    },
+    {
+      "name": "n_train",
+      "role": "context",
+      "levels": [200, 1000],
+      "description": "Number of training observations."
+    },
+    {
+      "name": "noise_sd",
+      "role": "context",
+      "levels": [0.25, 0.5],
+      "description": "Standard deviation of the true observation noise."
+    }
+  ],
+  "treatment": {"factor": "method", "paper": "skip_resid_var", "baseline": "no_skip"}
+}

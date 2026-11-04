@@ -1,0 +1,44 @@
+[
+  {
+    "id": "claim",
+    "kind": "claim",
+    "answer": "paper_better",
+    "delta": 0.14919029284820973,
+    "se": 0.005521997148208814,
+    "seed_std": 0.07896244700279105,
+    "top_share": 0.1098586494329881
+  },
+  {
+    "id": "where:group",
+    "kind": "where",
+    "factor": "group",
+    "answer": {
+      "\"S3\"": "paper_better",
+      "\"S4\"": "paper_better",
+      "\"Z4\"": "no_meaningful_difference"
+    },
+    "stats": {
+      "\"S3\"": {
+        "delta": 0.18746418473007567,
+        "se": 0.010958125218655771
+      },
+      "\"S4\"": {
+        "delta": 0.26010669381455354,
+        "se": 0.012423830497704682
+      },
+      "\"Z4\"": {
+        "delta": 0.0,
+        "se": 0.0
+      }
+    },
+    "seed_std": 0.07896244700279105
+  },
+  {
+    "id": "best",
+    "kind": "best",
+    "answer": "{\"corruption\":0.2,\"edge_prob\":0.15,\"group\":\"S4\",\"method\":\"holonomy\"}",
+    "best": 1.0,
+    "median": 0.9488385460522947,
+    "seed_std": 0.07896244700279105
+  }
+]

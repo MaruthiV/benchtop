@@ -1,0 +1,19 @@
+{
+ "ok": true,
+ "auditor": "claude:opus",
+ "tests_core_claim": true,
+ "fidelity": "medium",
+ "baseline_fair": true,
+ "same_data_across_arms": true,
+ "metric_on_heldout": true,
+ "issues": [
+  "Stand-in setting: a 10-d Gaussian logistic regression with 'batch-norm' implemented as per-batch input standardization (`z = (x - x.mean(0)) / (x.std(0)+1e-6) * src_std + src_mean`), and only binary classes. This keeps the class-block failure mode of BN, but strata, Dirichlet posteriors and the VoI computation all collapse to 2-class cases. Effects from multi-class shared errors (C>2), which the paper stresses, are not exercised.",
+  "Only per-batch selection is tested. The paper's other claimed pieces are not implemented: reusing past counts across batches, periodic refresh checks, and training stronger candidates from the acquired labels. Each batch starts again from a flat prior (`alpha = np.full((S, 2), PRIOR)`).",
+  "deployed_acc does not charge for labels. uniform_erm always spends the full budget while PORTAL can stop early (`if U <= LABEL_COST: break`). This tilts the primary metric toward the baseline rather than rigging it for PORTAL, but label efficiency only shows up in the labels_used diagnostic.",
+  "PORTAL builds its strata weights from unlabeled deployment predictions (`np.unique(codes[E], ...)`), and query points whose pattern never appears in E are silently dropped from `remaining`. This matches the paper's transductive w_s definition, but ERM can query those points and PORTAL cannot. The difference is small and both arms see the same query pool Q.",
+  "Tie-breaking defaults to candidate index 0 (source) in both arms, through argmax and argmin. This is consistent across arms and matches the paper's 'designated fixed candidate breaks ties'.",
+  "Noise: only 32 deployment points per batch and 24 batches. With the min_effect of 0.01, the result needs several seeds, and the number of seeds isn't specified in the lab.",
+  "Checked and found correct: the greedy increment in max_adv, (n-dd)/((n+k)(n+k+1)), matches Eq. 3. The paired variance pi_a+pi_j-(pi_a-pi_j)^2 matches Sigma_aa+Sigma_jj-2Sigma_aj from Eq. 2, and the V_s computation matches Eq. 4. The T_s fallback approximates variance reduction as w^2 v/((n+1)(n+2)), which is an approximation of the paper's Appendix S definition and not verified against it."
+ ],
+ "summary": "The lab tests the paper's central claim: per-batch selection among fixed candidates, with shared labels, a stratified Dirichlet posterior, VoI-targeted queries, reachability stopping and EVPI-bound stopping. It compares this against uniform-query ERM and always-BN, with arrival order (mixed vs. class-block) as context. The data stream and the query permutation come from seeds that don't depend on the method, so all arms see the same data, splits and query order. The primary metric is computed only on the deployment half E, whose labels are never queried. The baseline is fair and even gets the full label budget free of charge. Fidelity is medium for three reasons: it uses a toy binary linear model with input standardization standing in for BN; temporal reuse, refresh checks and learned candidates are not implemented; and per-batch evaluation noise is high. I found no leaks or rigging."
+}

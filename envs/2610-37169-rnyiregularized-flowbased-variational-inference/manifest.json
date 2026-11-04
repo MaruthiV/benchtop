@@ -1,0 +1,29 @@
+{
+  "id": "2610-37169-rnyiregularized-flowbased-variational-inference",
+  "source": "arxiv",
+  "arxiv_id": "2610.37169",
+  "paper_title": "R\u00e8nyi-Regularized Flow-Based Variational Inference for Bayesian Calibration",
+  "published": "2026-10-27T12:57:10Z",
+  "synth": {
+    "backend": "claude",
+    "model": "sonnet",
+    "attempts": 1
+  },
+  "lab_sha256": "63727c2e72f1d9e6ee84356a3f882468a95bcd352ad004ce812b1db74270e274",
+  "seeds": 16,
+  "visible_seeds": 4,
+  "sweep": {
+    "env": "2610-37169-rnyiregularized-flowbased-variational-inference",
+    "runs_ok": 576,
+    "runs_failed": 0,
+    "wall_secs": 15.1,
+    "cpu_secs": 82.7,
+    "tasks": [
+      "where:noise",
+      "where:alpha",
+      "best"
+    ],
+    "errors": {},
+    "swept_at": "2026-10-29T06:08:57+00:00"
+  }
+}

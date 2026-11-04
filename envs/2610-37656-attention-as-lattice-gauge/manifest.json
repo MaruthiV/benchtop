@@ -1,0 +1,29 @@
+{
+  "id": "2610-37656-attention-as-lattice-gauge",
+  "source": "arxiv",
+  "arxiv_id": "2610.37656",
+  "paper_title": "Attention as Lattice Gauge Theory: Relations Interact Only Through Wilson Loops",
+  "published": "2026-10-27T17:58:48Z",
+  "synth": {
+    "backend": "claude",
+    "model": "sonnet",
+    "attempts": 1
+  },
+  "lab_sha256": "292c3be13e0484c468781e515fe24764ee484c6380cee7b7da3c28416693906d",
+  "seeds": 16,
+  "visible_seeds": 4,
+  "sweep": {
+    "env": "2610-37656-attention-as-lattice-gauge",
+    "runs_ok": 576,
+    "runs_failed": 0,
+    "wall_secs": 2.2,
+    "cpu_secs": 8.4,
+    "tasks": [
+      "claim",
+      "where:group",
+      "best"
+    ],
+    "errors": {},
+    "swept_at": "2026-10-29T12:23:07+00:00"
+  }
+}

@@ -1,0 +1,19 @@
+{
+ "ok": true,
+ "auditor": "claude:opus",
+ "tests_core_claim": true,
+ "fidelity": "medium",
+ "baseline_fair": true,
+ "same_data_across_arms": true,
+ "metric_on_heldout": true,
+ "issues": [
+  "The primary metric (deferral_gap, the per-true-class deferral-rate gap) is nearly guaranteed for any CCR variant. CCR sets `thr = _thr(u_ca[m_ca], c)` separately for each predicted class, so it defers about 1-c of each predicted class whatever the score is. Random within-class deferral would score just as well. The metric rewards the quota, not whether the deferred cases are actually ambiguous.",
+  "The paper's core ablation (CCR+H_tau beats CCR+entropy because entropy breaks within-class monotonicity when tau != 0.5) cannot show up in deferral_gap, since the two CCR arms defer the same per-class fractions. Evidence for it would sit only in the minority_sens_accepted and balanced_acc_accepted diagnostics, which are not the primary metric.",
+  "The paper's evaluation tools are missing: no generalized risk-coverage curve, AUGRC or ccAUGRC. Only two fixed coverage points are used, and the paper's 'bounded, balanced risk' is never measured.",
+  "The margin-based uncertainty baseline the paper discusses (the asymmetric spatial penalty failure mode) is missing, so the claim that 'global metrics protect the minority at the expense of the majority' is not tested.",
+  "_h_tau is a piecewise-linear warp to q followed by Shannon entropy. It is a plausible stand-in with the stated properties (continuity, within-class monotonicity, reduces to entropy at tau=0.5), but it may not be the paper's exact 'empirically validated geometric construction'.",
+  "At minority_frac=0.02 the 1000-case test split holds only about 20 minority cases. minority_deferral moves in steps of about 0.05, so min_effect=0.03 is below the noise level for a single seed.",
+  "If a predicted class has fewer than 5 calibration cases, the code falls back to the global threshold g_thr. That quietly changes the method under extreme imbalance and low separation."
+ ],
+ "summary": "For a fixed seed, all three arms share the same data, split and classifier. Thresholds are calibrated on a separate split and results are measured on held-out test data, and the global-entropy baseline is a faithful version of the paper's baseline. The weakness is the primary metric: deferral_gap is largely guaranteed by CCR's per-predicted-class quota, so it mostly measures 'CCR vs global'. It barely reflects the paper's actual contribution, which is that threshold-aware H_tau restores within-class monotonicity and protects minority sensitivity better than CCR with entropy. The ccAUGRC/risk evaluation and the margin baseline are also missing. Fidelity: medium."
+}

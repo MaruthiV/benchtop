@@ -1,0 +1,42 @@
+{
+  "title": "Collective collapse of label-free majority-vote RL",
+  "setting": "N binary problems, each with a hidden true answer, share one parameter v through logits z_i = u_i + lam*v. The initial lean is correct for 65% of problems, and leans are balanced across the two answers. The learner is trained for a fixed 2500 steps of minibatch REINFORCE on the K=3 majority-vote self-reward, with no labels. The metric is the expected accuracy on the problems' hidden true answers under fresh samples; labels are never used in training.",
+  "paper": {
+    "title": "Collective Dynamics of Self-Reinforcement: How Cross-Task Coupling Drives Policy Collapse in Unsupervised RLVR",
+    "arxiv_id": "2610.37553",
+    "claim": "Collapse of self-rewarded training onto one answer appears only when the number of problems exceeds a critical size that shrinks as the shared coupling grows, and it vanishes when the shared direction is removed or when the initial model is confident."
+  },
+  "metric": {
+    "name": "accuracy",
+    "goal": "max",
+    "min_effect": 0.02,
+    "description": "Expected probability of the true answer (averaged over problems) under the final policy, i.e. accuracy on fresh samples. Sharpening alone lifts it to about the 0.65 initial-majority accuracy. Collapse to a single answer drives it toward 0.5."
+  },
+  "factors": [
+    {
+      "name": "method",
+      "role": "treatment",
+      "levels": ["plain", "no_shared", "entropy_bonus"],
+      "description": "plain: majority-vote self-training with the shared direction active. no_shared: the shared direction is removed (lam=0), so each problem trains independently. entropy_bonus: plain training plus a batch-level marginal-entropy bonus (weight 0.75) that damps the uniform shared mode."
+    },
+    {
+      "name": "N",
+      "role": "context",
+      "levels": [30, 100, 300],
+      "description": "Number of training problems. Sharpening of each problem is slowed by 1/N, while the shared mode grows independently of N."
+    },
+    {
+      "name": "lam",
+      "role": "context",
+      "levels": [0.2, 0.4],
+      "description": "Strength of the shared coupling: how strongly each problem's logit loads on the shared parameter. Ignored by no_shared. The critical N scales roughly as lam^-2."
+    },
+    {
+      "name": "a",
+      "role": "context",
+      "levels": [0.5, 1.5],
+      "description": "Initial logit magnitude (confidence) of each problem. 0.5 is inside the unstable window (|z| < 1.317). 1.5 is outside it, where the theory predicts the shared perturbation decays."
+    }
+  ],
+  "treatment": {"factor": "method", "paper": "no_shared", "baseline": "plain"}
+}

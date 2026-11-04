@@ -1,0 +1,28 @@
+{
+  "id": "2610-37145-beyond-parameter-protection-fishershaped",
+  "source": "arxiv",
+  "arxiv_id": "2610.37145",
+  "paper_title": "Beyond Parameter Protection: Fisher-Shaped EWC for Replay-Free Continual Learning",
+  "published": "2026-10-27T12:42:27Z",
+  "synth": {
+    "backend": "claude",
+    "model": "sonnet",
+    "attempts": 1
+  },
+  "lab_sha256": "6c3d41b15eba172b20b2b7749e20fa64c9e08e26be9bbb5716a7d0255b1277cb",
+  "seeds": 16,
+  "visible_seeds": 4,
+  "sweep": {
+    "env": "2610-37145-beyond-parameter-protection-fishershaped",
+    "runs_ok": 576,
+    "runs_failed": 0,
+    "wall_secs": 16.7,
+    "cpu_secs": 80.8,
+    "tasks": [
+      "claim",
+      "best"
+    ],
+    "errors": {},
+    "swept_at": "2026-10-29T00:44:37+00:00"
+  }
+}

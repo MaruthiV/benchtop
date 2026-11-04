@@ -1,0 +1,21 @@
+{
+ "ok": true,
+ "auditor": "claude:opus",
+ "tests_core_claim": true,
+ "fidelity": "low",
+ "baseline_fair": true,
+ "same_data_across_arms": true,
+ "metric_on_heldout": true,
+ "issues": [
+  "Complementarity hinge terms are mis-masked: `tC = torch.relu(-RC) * mC` and `tS = torch.relu(RS) * mS` penalize violations in the regions where RC^2*mC and RS^2*mS already force equality, so they add nothing. The real inequality constraints (V<=G in continuation, LV+c*pi>=0 in stopping) would be relu(RS)*mC and relu(-RC)*mS. Only the unmasked Fischer-Burmeister `phi` term actually enforces complementarity, so the pinn_qd vs pinn_no_complementarity ablation measures FB alone.",
+  "The reference boundary comes from the same first-order upwind policy-iteration scheme as the fd_coarse baseline (`_reference` -> `_fd_solve(N_REF, ...)`). The baseline is scored only on grid resolution, never on the scheme's own bias, which favors fd_coarse. A closed-form Shiryaev solution would be a neutral reference. Scheme bias at 800 nodes is roughly 1e-3, below min_effect=0.01, so this is moderate.",
+  "1D in posterior-probability space only. The paper's contribution (n-dimensional correlated Brownian/OU diffusions, cross-derivative coupling, Kolmogorov-transform smooth fit in the original state space, scaling to n=1000) is absent. In 1D, finite differences are cheap and near-exact, so the PINN-vs-grid comparison does not probe the curse-of-dimensionality motivation.",
+  "The boundary network is replaced by a single learnable scalar `raw`/`s`. There is no dual-network boundary function.",
+  "Collocation points are drawn uniformly once and never resampled. The paper's sampling concentrated near the boundary is not implemented.",
+  "No uncertainty quantification (deep ensembles, MC dropout), which the paper's abstract stresses.",
+  "The PINN gets a small fixed budget (STEPS=200, HIDDEN=16) while FD policy iteration runs to convergence. Matching n_col to the number of FD grid nodes is not an equivalent compute budget, and this biases results against the PINN rather than for it.",
+  "The region mask uses `s.detach()`, so the boundary only gets gradient from the value-matching and smooth-fit terms. Defensible, but undocumented.",
+  "The FD boundary readout `k = int(np.argmax(stop))` assumes the stopping region is one interval up to pi=1. This holds for Shiryaev but is not checked."
+ ],
+ "summary": "The lab re-tests 'PINN recovers the quickest-detection stopping boundary close to a reference', but only in the classical 1D Shiryaev problem in posterior space. It drops the paper's actual contribution: high-dimensional correlated diffusions, the boundary network, Kolmogorov-transform smooth fit, sampling near the boundary, and uncertainty quantification. The FD baseline is correct and not sabotaged, but the reference uses the same FD scheme, which favors it. Data and initialization are shared across PINN arms, and evaluation uses an independent reference and fixed evaluation points. A real bug: the hinge complementarity terms are applied in the wrong regions, so only the Fischer-Burmeister term enforces complementarity and the ablation is weaker than described. Fidelity is low."
+}

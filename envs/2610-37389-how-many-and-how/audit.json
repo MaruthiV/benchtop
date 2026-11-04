@@ -1,0 +1,20 @@
+{
+ "ok": true,
+ "auditor": "claude:opus",
+ "tests_core_claim": true,
+ "fidelity": "medium",
+ "baseline_fair": true,
+ "same_data_across_arms": true,
+ "metric_on_heldout": true,
+ "issues": [
+  "Main comparison is against uniform weighting only. The paper's motivation and its weighting baseline is Self-Adv (Sun et al.). A `method == \"selfadv\"` branch (`logits = 1.0 * s`) exists but is not a level in space.json. So any MRR gain from the weighting could be generic hard-negative weighting, not the dispersion+concentration calibration the paper proposes.",
+  "The treatment changes both components together (budget allocation and calibrated weighting), with no ablation. The lab cannot say whether the 'how many' strategy, the 'how much' strategy, or both drive any effect. The fn_rate reduction comes only from the budget part.",
+  "The risk model is a heuristic, not the paper's derivation. The paper turns a stochastic partial-observation model into a false-negative probability as a function of observed degree. The lab uses `w = (d.min() / d) ** GAMMA` (inverse degree) with a hand-set GAMMA and cap CAP_MULT*K.",
+  "The budget is not per anchor. `d = 0.5 * (d_tail[r,h] + d_head[r,t])` averages the degrees of the (h,r) and (r,t) anchors. Each negative then picks a corruption side at random (`side = rng_s.random(...) < 0.5`). The paper's risk depends on the anchor, so tail corruptions of a high-degree (h,r) are not specifically protected.",
+  "The synthetic world builds in the paper's premise. Popularity `pop` drives both observed degree and the number of unobserved true triples, so inverse-degree budgeting will help by construction. This is a reasonable test of the mechanism, but not independent evidence that degree tracks false-negative risk in real KGs.",
+  "RADAR-only hyperparameters (GAMMA=1.0, BETA0=1.5, CAP_MULT=4, the clip range [0.25,4] for sh, the offsets 0.5+sh and 0.5+c) are fixed constants. There is no validation split to show they weren't tuned against the test MRR. The baseline has no matching knobs.",
+  "Training is very short (EPOCHS=10 x BATCHES=4 = 40 Adam steps) and the graph is small (80 entities, N_TEST=300). MRR differences around min_effect=0.01 may be noise unless many seeds are used.",
+  "fn_rate is a ratio (true-in-closed-world sampled negatives / valid sampled negatives). The paper reports a reduction in the number of sampled false negatives. Valid negatives per positive also differ between arms because observed triples are dropped (`~obs[rr,nh,nt]`), so neg_used_per_pos should be checked alongside fn_rate."
+ ],
+ "summary": "The lab tests the paper's claim: inverse-degree negative budgets under a matched total budget, plus entropy/dispersion-calibrated weighting, versus fixed-K uniform sampling, in a synthetic world with partial observation. Data, test set, init and sampling draws are identical across arms for a seed. Weights are scaled so total negative gradient mass matches between arms. MRR is filtered against the closed world and computed on held-out unobserved true triples. Gradients and the budget bisection look correct. Fidelity is medium for four reasons: the risk model is a heuristic rather than the paper's derived probability, budgets average over both anchors instead of being set per anchor, the two components are tested together with no ablation, and Self-Adv is missing as a baseline, which makes it hard to credit the calibrated weighting itself. The world also bakes in the link between degree and false-negative risk, and training is short."
+}

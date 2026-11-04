@@ -1,0 +1,19 @@
+{
+ "ok": true,
+ "auditor": "claude:opus",
+ "tests_core_claim": true,
+ "fidelity": "high",
+ "baseline_fair": true,
+ "same_data_across_arms": true,
+ "metric_on_heldout": true,
+ "issues": [
+  "The outcome is nearly fixed by the maths. Clean triangles score tr(H)/d = 1 exactly, and one corrupted edge always gives H != I, so holonomy AUC sits close to its ceiling (about 0.99 per the paper; only cancelling multi-corruption triangles tie). For S4, the commuting AUC equals 0.5*(1+12/23) \u2248 0.76 by construction. The lab checks closed-form ceilings rather than producing an empirical discovery.",
+  "The paper says 'any commuting score' is capped, but the lab tests only the sign character (det of H). This is justified, because for S3 and S4 every abelian representation factors through the abelianization Z2. But this is an argument, not something the lab shows.",
+  "Z4 control: s_com = s_hol is set by assignment (`if abelian: s_com = s_hol`), so a zero gap there is guaranteed and gives no evidence.",
+  "At edge_prob=0.15 with N=30, a graph has only about 14 triangles on average. AUC will be noisy, and if a draw has no corrupted (or no clean) triangles, `_auc` returns 0.5 for both arms. That pulls the effect towards zero in a context-dependent way.",
+  "The recovery diagnostic uses one round of composition with a direct snap. The paper uses four rounds with polar projection, so recovery_acc is not comparable to the paper's Table 1 (this is a diagnostic only). The commuting recovery predicts the first group element with the voted sign, which by design is capped at about 1/12 for S4.",
+  "Code hygiene: there are many dead `... if False else ...` lines in the computation of tri and V (one builds `A[None,:,:].transpose(0,1,2) * 0 == 0`). The final expressions are correct (tri = A_ij & A_ik & A_jk & i<j<k; V[i,j,k] = A_ik & A_kj), but the clutter makes the code hard to verify.",
+  "The default config edge_prob=0.3 is not one of the declared levels (0.15, 0.5). This only matters if a config ever leaves edge_prob unset."
+ ],
+ "summary": "The lab directly tests the paper's corrupted-triangle detection claim: Wilson-loop scores reach near-ceiling AUC, while the best commuting score is capped. The data generation is correct. Edge relations are T_ij = g_i g_j^-1, with inverses kept consistent. Corruption always swaps in a different group element. Holonomy is tr(T_ij T_jk T_ki)/d, and triangle labels come from the corruption mask, which is never used in scoring. All data comes from one seeded rng and does not depend on the method. Both AUCs are computed on the same draws, and the method factor only picks which one is reported, so the arms are perfectly paired. The commuting baseline uses the product of determinant signs, which is the strongest abelian score for S3 and S4, so the comparison is fair. The tie-aware AUC (average ranks) matches the paper's cap formula. I found no bugs, leaks or rigging. The main caveats are that the result is close to analytically determined, the Z4 gap is zero by assignment, sparse graphs (p=0.15) give few triangles and noisy AUC, and the recovery diagnostic is simpler than the paper's four-round holonomy attention."
+}

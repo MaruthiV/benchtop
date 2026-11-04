@@ -1,0 +1,42 @@
+{
+  "title": "Algorithmic monoculture in model adoption across farms",
+  "setting": "Nine synthetic model families with different predictive risks make correlated recommendation errors across 1000 farms. Each error is a model-common shock (share rho=0.25, with cross-model correlation kappa) plus a farm-specific error. Each farm adopts one model, and the allocation rule sets adoption shares: the best-risk model for all farms, a uniform split, or a convex portfolio that minimizes modeled social loss subject to an average private-regret cap. Risks are estimated from a noisy benchmark, and social loss (private squared error plus a quadratic penalty on the aggregate error, lambda=20) is measured on fresh simulated error draws.",
+  "paper": {
+    "title": "Algorithmic Monoculture in Machine Learning-based Site-Specific Fertilizer Recommendation",
+    "arxiv_id": "2610.36941",
+    "claim": "A regret-capped diversified adoption portfolio lowers social loss relative to accuracy-driven monoculture, but correlated errors across models attenuate the benefit, and uniform allocation can breach the regret cap."
+  },
+  "metric": {
+    "name": "social_loss",
+    "goal": "min",
+    "min_effect": 0.01,
+    "description": "Mean social loss on fresh error draws: 0.5 * mean squared (normalized) farm error plus 0.5 * lambda * squared norm of the across-farm mean error. Lower is better. Diagnostics: private_loss, system_loss, regret (average private regret relative to the true best model), cap_ok (1 if regret is within the cap)."
+  },
+  "factors": [
+    {
+      "name": "method",
+      "role": "treatment",
+      "levels": ["monoculture", "portfolio", "uniform"],
+      "description": "Adoption rule: all farms use the model with the lowest estimated risk; a regret-capped loss-minimizing convex portfolio (paper method); or equal shares across all nine models."
+    },
+    {
+      "name": "kappa",
+      "role": "context",
+      "levels": [0.0, 0.5, 0.95],
+      "description": "Pairwise correlation between model-common shocks of different model families."
+    },
+    {
+      "name": "gap",
+      "role": "context",
+      "levels": ["small", "large"],
+      "description": "Spread of true model risks relative to the best model: small means the other models are within about 8% of the best risk, large means up to about 2x."
+    },
+    {
+      "name": "cap",
+      "role": "context",
+      "levels": [0.05, 0.25],
+      "description": "Allowed average private regret (delta) of the portfolio relative to the best estimated model's risk."
+    }
+  ],
+  "treatment": {"factor": "method", "paper": "portfolio", "baseline": "monoculture"}
+}

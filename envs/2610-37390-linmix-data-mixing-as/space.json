@@ -1,0 +1,42 @@
+{
+  "title": "Vertex vs Dirichlet proxy-mix design for linear domain attribution",
+  "setting": "A synthetic oracle maps a data mix over d domains (capped simplex with uniform caps 1/K) to a performance score in [0,1] through a sparse hidden linear attribution, an optional random pairwise-interaction term and a sigmoid. A budget of 4d noisy proxy evaluations is spent on a design (random capped-simplex vertices, or Dirichlet mixes around a skewed prior), a surrogate is fit (OLS or gradient boosting), and the selected mix is scored on the noise-free oracle. The metric is regret against a local-search near-optimal mix.",
+  "paper": {
+    "title": "LinMix: Data Mixing as Linear Domain Attribution",
+    "arxiv_id": "2610.37390",
+    "claim": "Sampling proxy mixes at capped-simplex vertices supports a reliable linear fit and better mix selection than Dirichlet sampling (even with a nonlinear surrogate), especially with many domains and when Dirichlet mixes concentrate near the prior."
+  },
+  "metric": {
+    "name": "true_regret",
+    "goal": "min",
+    "min_effect": 0.01,
+    "description": "Noise-free oracle score of a near-optimal reference mix minus the oracle score of the mix selected by the method (clipped at 0). Lower is better. Diagnostics: sign_agree, coef_corr, chosen_perf, ref_perf."
+  },
+  "factors": [
+    {
+      "name": "method",
+      "role": "treatment",
+      "levels": ["dirichlet_gbm", "linmix", "dirichlet_ols"],
+      "description": "dirichlet_gbm: Dirichlet-sampled mixes, gradient-boosting surrogate, top-10 average over a 3000-candidate Dirichlet pool (RegMix-style). linmix: paired greedy-fill vertex design with OLS and top-K cap-saturating LP solution. dirichlet_ols: Dirichlet design with OLS and the same LP solution."
+    },
+    {
+      "name": "n_domains",
+      "role": "context",
+      "levels": [10, 40, 100],
+      "description": "Number of domains d; proxy budget is 4d runs and K=round(d/4) domains fit in the budget."
+    },
+    {
+      "name": "nonlinearity",
+      "role": "context",
+      "levels": [0.0, 1.0],
+      "description": "Weight of the random pairwise-interaction term in the oracle (0 = linear before the sigmoid)."
+    },
+    {
+      "name": "concentration",
+      "role": "context",
+      "levels": [0.3, 30.0],
+      "description": "Per-domain Dirichlet concentration (total = value*d, log-uniform jitter): 0.3 gives sparse spread-out mixes, 30 gives mixes tightly concentrated near the prior. Ignored by linmix."
+    }
+  ],
+  "treatment": {"factor": "method", "paper": "linmix", "baseline": "dirichlet_gbm"}
+}

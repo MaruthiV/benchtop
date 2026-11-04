@@ -1,0 +1,21 @@
+{
+ "ok": true,
+ "auditor": "claude:opus",
+ "tests_core_claim": true,
+ "fidelity": "medium",
+ "baseline_fair": true,
+ "same_data_across_arms": true,
+ "metric_on_heldout": true,
+ "issues": [
+  "The landscape generator departs from the paper in a way that likely helps the GP. The paper draws widths from U(0,0.1) and steepness from U(0,1). The lab uses `\"w\": rng.uniform(0.05, 0.25, J)` and `\"s\": rng.uniform(-0.5, 1.0, J)`. Wider bumps make the landscapes smoother, which suits a GP with fixed length scale `_ELL = 0.5`. Rougher paper-style landscapes are where the epsilon-greedy baseline could plausibly compete.",
+  "The action space is coarser than the paper's. The lab uses a 0.1 grid (10 levels, 271 arms) with a one-step limit. The paper uses a 0.05 grid (19 levels, roughly 6,859 configurations before the anchor constraint) with \u0394max=0.10 (two increments). The sparsity that the paper says breaks independent-arm methods is far weaker here. space.json does disclose this.",
+  "Reward is `(SHARE * R[AR3, ARMS]).sum(1)`, which evaluates each segment curve at its raw weight \u03bb_i and weights the result by the share. In the paper, segment spend comes from proportional allocation X_i = X\u00b7\u03bb_i/\u03a3\u03bb. Under the lab's form, configurations that are scalar multiples of each other are not reward-equivalent, so it does not fully reproduce the coupling that motivates the paper's anchor constraint.",
+  "The GP is given the true noise variance: `s2 = max(sigma, 0.05) ** 2`. This is oracle knowledge of the noise level that a production GP would have to estimate. Epsilon-greedy needs no such input, so this is a small built-in advantage for the treatment.",
+  "Kernel hyperparameters (`_ELL=0.5`, `_AMP2=0.25**2`, linear variance 0.5**2) are hand-picked and identical for the Mat\u00e9rn+Linear and RBF arms. Only the beta scale is tuned. The paper's claim that Mat\u00e9rn+Linear is the most robust kernel is tested against a single RBF-only ablation with a shared length scale. There is no Mat\u00e9rn-only or RBF+Linear arm, so the benefit of the composite kernel itself cannot be isolated.",
+  "The epsilon grid `EPS_GRID = (0.1, 0.25, 0.5, 1.0)` combined with the decay `hp * t^(-1/3) * log(t)^(1/3)` caps exploration at about 0.4\u20130.6 and never includes pure greedy (eps=0). Both methods get 4-value grids on the same 4 tuning seeds, so tuning budgets are comparable, but the epsilon grid is somewhat narrow.",
+  "Under the one-step limit, epsilon-greedy's exploration is a uniformly random neighbor and its exploitation targets the best sample mean, usually from a single noisy observation. It therefore behaves like a noisy local hill-climber. This is a reasonable reading of 'standard epsilon-greedy', but the baseline is weak by construction.",
+  "Tuning seeds 10001\u201310004 (agent seed = s+500) are disjoint from evaluation only if evaluation seeds avoid 10001\u201310004. That is not enforced, although the agent seeds would still differ (+1_000_003 vs +500).",
+  "In the reactive environment, the adversary picks the pool landscape whose minimum lies nearest the agent's previous arm. This is a reasonable stand-in for the paper's reactive dynamics, which the excerpt does not fully specify, but it is the lab's own invention."
+ ],
+ "summary": "The lab tests the paper's main claim: GP-UCB with a Mat\u00e9rn+Linear kernel against tuned epsilon-greedy, measured by cumulative regret on sparse, noisy, step-limited allocation over stationary, drifting and reactive environments. Within each seed, the landscape, the noise sequence (pre-drawn from the data RNG) and the agent RNG are identical across methods. Regret is computed from noise-free expected rewards on a freshly drawn landscape, and hyperparameters are tuned on separate seeds. Fidelity is medium. The grid is coarser (271 arms vs thousands), the reward ignores proportional-spend coupling, and the landscapes are smoother than the paper's (bump widths up to 0.25 vs \u22640.1), which likely favors the GP. The GP also gets the true noise variance, and the kernel-robustness part of the claim is covered only by a single RBF ablation with a shared, untuned length scale. The baseline has no sign of sabotage and gets a comparable tuning budget, but it is a weak local hill-climber by design."
+}

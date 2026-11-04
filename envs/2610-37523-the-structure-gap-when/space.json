@@ -1,0 +1,42 @@
+{
+  "title": "Structure gap in a Gaussian linear inverse problem",
+  "setting": "A random ill-conditioned operator A (16x16, condition number about 100) and an anisotropic Gaussian prior generate pairs y = Ax + noise. The structure-agnostic learner sees only n (y, x) pairs and fits a dense linear map (ridge with cross-validated penalty, or plain least squares); the structured method is the Wiener solver built from the known A, prior covariance and noise level. The metric is the exact population risk (per dimension, on fresh Gaussian draws) of the estimator minus the Bayes risk of the Wiener solver using the true A.",
+  "paper": {
+    "title": "The Structure Gap: When More Data Cannot Replace Structured Reasoning",
+    "arxiv_id": "2610.37523",
+    "claim": "A solver that knows the governing operator beats a dense learner with the same linear hypothesis class trained on finite examples, with the gap vanishing only as n grows."
+  },
+  "metric": {
+    "name": "excess_risk",
+    "goal": "min",
+    "min_effect": 0.01,
+    "description": "Population MSE per dimension of the estimator minus the Bayes risk (Wiener with the true operator). Zero is optimal; the Wiener solver with an exactly known operator attains 0, while a misspecified operator gives positive excess."
+  },
+  "factors": [
+    {
+      "name": "method",
+      "role": "treatment",
+      "levels": ["ridge_cv", "wiener", "ols"],
+      "description": "ridge_cv: dense linear learner from examples only, penalty chosen by 5-fold CV (baseline); wiener: known-operator Bayes solver (paper method); ols: unregularized least squares learner."
+    },
+    {
+      "name": "n_per_d",
+      "role": "context",
+      "levels": [1.5, 5, 40],
+      "description": "Number of training pairs as a multiple of the dimension 16."
+    },
+    {
+      "name": "noise",
+      "role": "context",
+      "levels": [0.1, 1.0],
+      "description": "Measurement noise standard deviation."
+    },
+    {
+      "name": "operator_error",
+      "role": "context",
+      "levels": [0.0, 0.3],
+      "description": "Relative Frobenius error in the operator given to the Wiener solver (0 = exact structure, 0.3 = misspecified structure). The learner is unaffected."
+    }
+  ],
+  "treatment": {"factor": "method", "paper": "wiener", "baseline": "ridge_cv"}
+}

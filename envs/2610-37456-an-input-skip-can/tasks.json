@@ -1,0 +1,58 @@
+[
+  {
+    "id": "claim",
+    "kind": "claim",
+    "answer": "baseline_better",
+    "delta": -0.04087133912576569,
+    "se": 0.0017743553437752774,
+    "seed_std": 0.017748075831568965
+  },
+  {
+    "id": "where:alpha",
+    "kind": "where",
+    "factor": "alpha",
+    "answer": {
+      "0.6": "no_meaningful_difference",
+      "0.8": "baseline_better"
+    },
+    "stats": {
+      "0.6": {
+        "delta": -0.0063936586181322745,
+        "se": 0.0030572278014130063
+      },
+      "0.8": {
+        "delta": -0.13040545831123987,
+        "se": 0.0031647721335793665
+      }
+    },
+    "seed_std": 0.017748075831568965
+  },
+  {
+    "id": "where:noise_sd",
+    "kind": "where",
+    "factor": "noise_sd",
+    "answer": {
+      "0.25": "no_meaningful_difference",
+      "0.5": "baseline_better"
+    },
+    "stats": {
+      "0.25": {
+        "delta": 0.008262010912100473,
+        "se": 0.0034930819488455424
+      },
+      "0.5": {
+        "delta": -0.09000468916363186,
+        "se": 0.0006258802142462728
+      }
+    },
+    "seed_std": 0.017748075831568965
+  },
+  {
+    "id": "best",
+    "kind": "best",
+    "answer": "{\"alpha\":0.3,\"method\":\"skip_resid_var\",\"n_train\":1000,\"noise_sd\":0.25}",
+    "best": -0.5659135778745016,
+    "median": -0.6376844694217046,
+    "seed_std": 0.017748075831568965
+  }
+]

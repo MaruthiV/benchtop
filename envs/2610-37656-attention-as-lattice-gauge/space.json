@@ -1,0 +1,42 @@
+{
+  "title": "Wilson-loop (holonomy) vs commuting triangle scores for corrupted-relation detection",
+  "setting": "30 entities carry hidden random frames drawn from S3, S4 or Z4 (permutation matrices), and observed edges on an Erdos-Renyi graph carry relations T_ij = g_i g_j^-1, with a fraction of edges replaced by random group elements. Each triangle is scored without training from its holonomy H = T_ij T_jk T_ki: the holonomy method uses the full class function tr(H)/d, while the commuting baseline sees only the abelianization (the determinant/sign for S3 and S4, and the full group for Z4). The metric is the AUC for separating triangles containing a corrupted edge from clean triangles; the diagnostics also report one-round recovery of unobserved pairs.",
+  "paper": {
+    "title": "Attention as Lattice Gauge Theory: Relations Interact Only Through Wilson Loops",
+    "arxiv_id": "2610.37656",
+    "claim": "Wilson-loop (holonomy) scores flag corrupted triangles at much higher AUC than any commuting (abelian-sector) score, whose AUC is capped by the group's commutator structure."
+  },
+  "metric": {
+    "name": "auc",
+    "goal": "max",
+    "min_effect": 0.02,
+    "description": "ROC AUC of the chosen method's triangle score for detecting triangles that contain at least one corrupted edge (computed on all observed triangles; labels come from the corruption mask, not used in scoring). Diagnostics: auc_holonomy, auc_commuting (both computed on the same draws), recovery_acc (accuracy on unobserved pairs via one round of composition, using holonomy-weighted or abelian-only aggregation), and n_triangles."
+  },
+  "factors": [
+    {
+      "name": "method",
+      "role": "treatment",
+      "levels": ["commuting", "holonomy"],
+      "description": "commuting: triangle score and composition use only the abelianized edge operators (sign for S3/S4); holonomy: full class-function tr(H)/d score and Wilson-loop-weighted composition."
+    },
+    {
+      "name": "corruption",
+      "role": "context",
+      "levels": [0.1, 0.2, 0.3],
+      "description": "Probability that an observed edge is replaced by a different uniformly random group element."
+    },
+    {
+      "name": "edge_prob",
+      "role": "context",
+      "levels": [0.15, 0.5],
+      "description": "Erdos-Renyi edge probability; controls how many triangles (cycles) exist."
+    },
+    {
+      "name": "group",
+      "role": "context",
+      "levels": ["S3", "S4", "Z4"],
+      "description": "Group of the hidden frames; Z4 is an abelian control where the commuting score loses nothing, so the gap should vanish."
+    }
+  ],
+  "treatment": {"factor": "method", "paper": "holonomy", "baseline": "commuting"}
+}

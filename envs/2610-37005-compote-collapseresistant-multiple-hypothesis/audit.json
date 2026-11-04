@@ -1,0 +1,19 @@
+{
+ "ok": true,
+ "auditor": "claude:opus",
+ "tests_core_claim": true,
+ "fidelity": "medium",
+ "baseline_fair": true,
+ "same_data_across_arms": true,
+ "metric_on_heldout": true,
+ "issues": [
+  "Different architecture: the paper's heads output a query vector h_j that is scored by cosine similarity against one shared item-embedding table E, with temperature \u03b2. The lab instead uses `out = torch.nn.Linear(hid, heads * N)`, which gives every head its own independent output weights for all 64 items. This removes the single-query-vector bottleneck that makes a single-head model average between modes. It weakens the test of why COMPOTE should beat a single head.",
+  "The single-head baseline is a softmax over all items with a wide hidden layer (hid \u2248 100\u2013480) and no low-dimensional bottleneck. Cross-entropy then targets the Bayes ranking directly, so on this synthetic task 'single' is close to optimal in principle. The baseline is strong, not sabotaged. But a COMPOTE-vs-single result says little about the paper's mechanism (a single query vector conflating intents).",
+  "No transformer, no sequence order and no learned item-ID embeddings. The input is the noisy ground-truth 2-d latent coordinates of 3 items (`x = item_emb[hist].reshape(n, HIST * 2)`), so the region structure is handed to the model. The history is an unordered bag from one region, so 'sequential' recommendation is not really exercised.",
+  "The parameter-matching formula `hid = round((HIDDEN*d_in + (HIDDEN+1)*H*N - N)/(d_in+N))` leaves out the trunk bias terms (HIDDEN vs hid). The mismatch is small but nonzero. The single model also has a different hidden width, so its initialization necessarily differs from the multi-head arms (unavoidable, but worth noting).",
+  "The collapse diagnostic `win = lp.argmax(1)` is misleading for the 'uniform' arm. Collapsed heads that are nearly identical will still split wins by tiny numerical differences, so active_heads and win_entropy can report several 'active' heads even when they are functionally collapsed. A diversity measure between heads (e.g. agreement of their top-k items) would be more informative.",
+  "The paper's normalizer-free max-similarity inference rule and the confidence head \u03b3\u0302 are not implemented. Only softmax max-pooling (Eq. 1) is tested. That is acceptable for the stated claim but is a partial reproduction.",
+  "All arms share one learning rate (0.02) and 300 steps with no tuning. The wider single-head model and the hard-WTA arm might benefit from different settings. This is shared-budget fairness rather than rigging."
+ ],
+ "summary": "The lab tests the central claim directly: an annealed uniform-to-WTA multi-head objective (implemented correctly as aMCL with a stop-gradient on the softmax weights, which by Corollary 3 has the same gradient as \u2113_\u03c4) against single-head, uniform multi-head and hard-WTA training. Ambiguity (k_true) and head count (H) are varied, and Recall@5 with max-pooling is measured on fresh held-out samples. For a given seed, data are identical across methods because _make_data depends only on seed and k_true, and the evaluation is clean. Fidelity is medium. The model is a 1-hidden-layer MLP with a separate linear output layer per head, not a transformer with shared item embeddings scored by cosine similarity. As a result, the single-head baseline has no query-vector bottleneck and is close to Bayes-optimal by construction. This makes the comparison with the single head a weak probe of the paper's mechanism, though not an unfair one. The comparisons of COMPOTE with uniform and hard-WTA multi-head training are the more informative part. The active_heads diagnostic can overstate how many heads are really in use in the uniform arm."
+}

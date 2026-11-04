@@ -1,0 +1,20 @@
+{
+ "ok": true,
+ "auditor": "claude:opus",
+ "tests_core_claim": true,
+ "fidelity": "medium",
+ "baseline_fair": true,
+ "same_data_across_arms": true,
+ "metric_on_heldout": true,
+ "issues": [
+  "Missing the paper's 'no skip, high variance' cell (alpha=0 with obs variance sigma0^2/b^2); without it the skip_resid_var vs no_skip comparison cannot tell the variance effect from the skip effect, which is the paper's central point.",
+  "Treatment outcome is largely built in: skip_resid_var sets sr2_factor=1.0 so obs variance sx2=s02/b^2 is fixed above the noise level in ~28 of 32 noise-only directions, guaranteeing excess sample spread and worse energy score/NLL regardless of training (the paper admits this noise floor; the lab presents it as an empirical finding).",
+  "Proposition 1 (exact rescaling preserves generator and scores while MSE scales by b^2) is never checked: no arm rescales the fitted no_skip model (W*b, sr2*b^2) and compares ES/NLL.",
+  "recon_mse is measured in residual coordinates (res = Xte - a*Xte - ...), so the b^2 reduction is mostly a coordinate effect; no observation-coordinate MSE (divided by b^2) is reported for contrast.",
+  "Base variance _ppca_noise_var(Xtr_np, H) uses q=H=8 rather than the true rank 4, biasing sigma0^2 slightly low.",
+  "Loss leaves out the constant Jacobian term d*log b; it doesn't affect gradients, but training losses aren't comparable across arms.",
+  "Only 400 full-batch Adam steps; with W0*b scaling and per-parameter Adam steps the skip arms move faster in observation coordinates (intended, but nothing separates the optimisation effect from the variance choice).",
+  "No PPCA baseline arm, though the paper's results include PPCA beating all neural fits; DART, IW log-density and variance re-estimation parts are not represented."
+ ],
+ "summary": "The lab is a clean linear-Gaussian VAE re-test of the paper's headline comparison: no skip at the PPCA variance vs. skip with residual variance kept, so observation variance is inflated by 1/b^2. Data, starting weights in observation coordinates, encoder noise and generation draws are shared across arms. The metric is an unbiased energy score on held-out test points plus exact NLL. The baseline gets the same budget. However, the treatment arm's worse score is mostly fixed by the inflated variance (the noise floor). The lab leaves out the no-skip/high-variance cell needed to tell variance apart from skip, and never checks the exact-rescaling result. Fidelity is medium."
+}

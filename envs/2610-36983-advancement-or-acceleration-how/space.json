@@ -1,0 +1,42 @@
+{
+  "title": "Advancement vs acceleration: target-aware selection under a train-target gap",
+  "setting": "Teacher-student binary classification with 20-d Gaussian inputs: a pool is labeled by a source teacher, while evaluation uses fresh samples labeled by a target teacher rotated by a gap angle (optionally with label noise). An L2-regularized logistic regression is fit to convergence on the pool (uncurated), on a random half, or on a half selected using a probe trained on 40 labeled target examples (drops target-conflicting labels, keeps near-boundary points). The metric is accuracy on 4000 fresh target samples against clean target labels.",
+  "paper": {
+    "title": "Advancement or Acceleration? How Data Curation Improves LLM Training",
+    "arxiv_id": "2610.36983",
+    "claim": "Curation improves the attainable (converged) target performance only when there is a correctable train-target gap (Delta > 0); with no gap it cannot beat the uncurated baseline at large budget."
+  },
+  "metric": {
+    "name": "target_acc",
+    "goal": "max",
+    "min_effect": 0.01,
+    "description": "Accuracy on fresh target-distribution samples (clean target-teacher labels) of the model trained on the chosen data. Diagnostics: target_logloss, baseline_target_acc, delta_test (|target loss - train loss| of the uncurated model), n_kept."
+  },
+  "factors": [
+    {
+      "name": "method",
+      "role": "treatment",
+      "levels": ["uniform", "target_select", "random_select"],
+      "description": "uniform: train on the full pool; target_select: keep half the pool chosen with a probe fit on a small labeled target set; random_select: keep a random half (controls for the loss of sample size)."
+    },
+    {
+      "name": "gap_deg",
+      "role": "context",
+      "levels": [0, 30, 60],
+      "description": "Angle in degrees between source and target teachers (train-target gap); 0 means train and target objectives coincide."
+    },
+    {
+      "name": "n_pool",
+      "role": "context",
+      "levels": [200, 2000],
+      "description": "Pool size, standing in for the training budget; larger pools approach the converged endpoint."
+    },
+    {
+      "name": "label_noise",
+      "role": "context",
+      "levels": [0.0, 0.2],
+      "description": "Probability of flipping labels in the pool and in the small labeled target set; noise makes the target probe less reliable."
+    }
+  ],
+  "treatment": {"factor": "method", "paper": "target_select", "baseline": "uniform"}
+}

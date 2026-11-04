@@ -1,0 +1,39 @@
+[
+  {
+    "id": "claim",
+    "kind": "claim",
+    "answer": "baseline_better",
+    "delta": -0.017534722884496055,
+    "se": 0.0010978133705448403,
+    "seed_std": 0.013972221500024574,
+    "top_share": 0.2031250436557468
+  },
+  {
+    "id": "where:rho",
+    "kind": "where",
+    "factor": "rho",
+    "answer": {
+      "0.05": "no_meaningful_difference",
+      "0.3": "baseline_better"
+    },
+    "stats": {
+      "0.05": {
+        "delta": -0.0013541703422864275,
+        "se": 0.000780565920570438
+      },
+      "0.3": {
+        "delta": -0.03371527542670568,
+        "se": 0.002052192395910314
+      }
+    },
+    "seed_std": 0.013972221500024574
+  },
+  {
+    "id": "best",
+    "kind": "best",
+    "answer": "{\"batch_size\":256,\"method\":\"musam\",\"rho\":0.05,\"train_n\":1000}",
+    "best": 0.9772916833559672,
+    "median": 0.9391666625936825,
+    "seed_std": 0.013972221500024574
+  }
+]

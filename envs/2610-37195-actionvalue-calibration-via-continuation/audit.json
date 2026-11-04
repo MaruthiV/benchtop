@@ -1,0 +1,18 @@
+{
+ "ok": true,
+ "auditor": "claude:opus",
+ "tests_core_claim": true,
+ "fidelity": "medium",
+ "baseline_fair": true,
+ "same_data_across_arms": true,
+ "metric_on_heldout": true,
+ "issues": [
+  "Environment is a time-layered Markov MDP with a uniform behaviour policy, so the continuation value after (s_t,a_t,s_{t+1}) depends only on s_{t+1} and pooling never adds bias. This structurally favours concal and especially 'pooled', and cannot reproduce the history-dependent setting that motivates keeping each visit's own estimate. The paper's ablation (own-estimate retention helps) is therefore not testable here.",
+  "Evaluation averages per-visit estimates over each (task,step,state,action) cell (E = sums/cn). All visits in the pool C(z_{t+1}) share (s_t,a_t), so the first-level blend (1-\u03b1)Y + \u03b1\u00b7\u03bc averages to mean(Y): \u03b1 drops out at the top level. ConCal's gains, and concal-vs-pooled differences, come only from deeper recursion levels.",
+  "Baseline is not exactly GiGPO: it averages returns per (s,a) before differencing instead of using per-visit returns with anchor-group mean/scale normalisation. This is arguably generous to the baseline, but it is not the paper's exact quantity.",
+  "'kendall_tau' is mislabelled: it is the mean of sign(de)*sign(dq) over action pairs, ties count as 0, and it is not Kendall's tau.",
+  "With group_size=4 few (state, action-pair) cells have both actions observed, so diff_mae is noisy. n_pairs is identical across arms, so the comparison stays fair.",
+  "Only the diagnostic claim (lower within-group value-difference error) is tested, not the downstream RL success-rate gains. This is acceptable scope but should be stated."
+ ],
+ "summary": "The lab tests the paper's main diagnostic claim: ConCal's recursive pooling over matched incoming transitions gives lower error in within-state action-value differences than single-continuation returns. The estimator is implemented correctly (key encoding, recursion depth H-t-1, blend weight n/(n+1)). Data and rollouts come from one seeded generator before estimation, so all arms are identical. Error is measured against exact values from backward dynamic programming. The main weakness is the fully Markov tabular environment with a uniform policy, where pooling is unbiased by construction. That favours ConCal and the fully pooled variant and can't capture the history-dependence that motivates partial sharing. Also, the per-cell averaging used for evaluation cancels the blend at the first recursion level. Fidelity is medium."
+}

@@ -1,0 +1,42 @@
+{
+  "title": "Expand-and-sparsify gas classification vs SVMs on transient mixtures",
+  "setting": "Synthetic 8-sensor gas array with first-order transients (random previous-stimulus initial state, gain jitter, noise) for 3 single gases and their 3 binary mixtures (6 classes), with a tunable saturating/interactive mixture nonlinearity. Methods classify the raw flattened transient: a LinearSVC, a CV-tuned RBF SVM, or a fixed random sparse binary expansion (D=2000, k-WTA 5%) with a one-pass binary Hebbian readout (potentiation probability chosen by hold-out). The metric is accuracy on held-out mixture transients (6-way decision).",
+  "paper": {
+    "title": "Online gas classification at the edge",
+    "arxiv_id": "2610.36999",
+    "claim": "A binary-weight Hebbian expand-and-sparsify network outperforms a linear SVM on gas mixtures and roughly matches an optimised non-linear SVM."
+  },
+  "metric": {
+    "name": "mixture_acc",
+    "goal": "max",
+    "min_effect": 0.02,
+    "description": "Fraction of held-out mixture-class transients (300 fresh samples) classified correctly among the 6 classes."
+  },
+  "factors": [
+    {
+      "name": "method",
+      "role": "treatment",
+      "levels": ["linear_svm", "expand_sparsify", "rbf_svm"],
+      "description": "linear_svm: standardized LinearSVC with CV-tuned C (baseline). expand_sparsify: random sparse binary expansion + k-WTA + binary Hebbian readout (paper). rbf_svm: CV-tuned RBF SVM (optimised non-linear reference)."
+    },
+    {
+      "name": "mixture_nonlinearity",
+      "role": "context",
+      "levels": [0.0, 0.5, 1.0],
+      "description": "Strength of sensor saturation and mixture interaction terms; 0 means purely additive mixtures."
+    },
+    {
+      "name": "sensor_noise",
+      "role": "context",
+      "levels": [0.1, 0.4],
+      "description": "Std of additive per-sample sensor noise (plus baseline offset noise) relative to signal scale around 1."
+    },
+    {
+      "name": "n_per_class",
+      "role": "context",
+      "levels": [5, 40],
+      "description": "Labelled training exposures per class (few-shot recalibration vs moderate data)."
+    }
+  ],
+  "treatment": {"factor": "method", "paper": "expand_sparsify", "baseline": "linear_svm"}
+}

@@ -1,0 +1,22 @@
+{
+  "title": "Rényi-regularized mixture VI on a bimodal calibration twin",
+  "setting": "A two-parameter twin experiment with forward model G(theta)=(theta1^2, theta2), a Gaussian prior and Gaussian observation noise, so the posterior has a sign-symmetric pair of modes in theta1 whose separation is set by the true theta1. A 2-component Gaussian mixture is fitted by Adam from 8 random restarts per run, minimizing expected Tikhonov loss minus entropy, optionally plus a sampled Rényi divergence D_alpha(prior||q). The metric is the fraction of restarts that put less than 10% of q's mass on the minority half (theta1 sign) of the posterior, measured against a 2D grid ground-truth posterior.",
+  "paper": {
+    "title": "Rènyi-Regularized Flow-Based Variational Inference for Bayesian Calibration",
+    "arxiv_id": "2610.37169",
+    "claim": "A Rényi-divergence regularizer toward the prior reduces near-collapse onto one mode of a well-separated bimodal posterior, at some cost in approximation accuracy."
+  },
+  "metric": {
+    "name": "collapse_frac",
+    "goal": "min",
+    "min_effect": 0.05,
+    "description": "Fraction of the 8 restarts in which the fitted mixture places less than 10% of its mass on the minority mode (theta1 sign) of the grid posterior. Diagnostics: mode_mass_err (|q mass on theta1>0 minus truth|), sym_kl (symmetric KL to grid posterior), mean_minority_mass, true_minority_mass."
+  },
+  "factors": [
+    {"name": "method", "role": "treatment", "levels": ["kl", "renyi"], "description": "kl: expected Tikhonov minus entropy (standard VI objective). renyi: same plus lambda=1 times the Rényi divergence D_alpha(prior||q) estimated from samples."},
+    {"name": "separation", "role": "context", "levels": [0.5, 1.5, 3.0], "description": "True theta1 (modes at +/- this value); larger means better-separated modes."},
+    {"name": "noise", "role": "context", "levels": [0.6, 1.5], "description": "Observation noise standard deviation; affects how sharply the modes are defined."},
+    {"name": "alpha", "role": "context", "levels": [0.5, 2.0, 5.0], "description": "Rényi order used by the regularizer (no effect for the kl method)."}
+  ],
+  "treatment": {"factor": "method", "paper": "renyi", "baseline": "kl"}
+}

@@ -1,0 +1,22 @@
+{
+  "title": "DPO vs SFT dual sparsity and cross-task interference in a linear softmax policy",
+  "setting": "A linear softmax policy over K=4 candidate responses per prompt with sparse binary features (d=128). Task A pairs are labeled by a noisy hidden linear reward. Each policy is trained from a random reference by full-batch GD for 300 steps, with the learning rate chosen from a shared 9-value grid on a validation set of fresh task-A prompts. Interference is the increase in NLL of preferred responses on fresh task-B samples, whose feature coordinates partly overlap with task A. A third arm trains DPO on randomly flipped labels as a null.",
+  "paper": {
+    "title": "On the Sparsity of Direct Preference Optimization: Weight Disentanglement in the NTK Regime",
+    "arxiv_id": "2610.37085",
+    "claim": "DPO updates are dual-sparse (concentrated on few support pairs, sparse in parameters) and so cause less cross-task interference than SFT updates."
+  },
+  "metric": {
+    "name": "interference",
+    "goal": "min",
+    "min_effect": 0.01,
+    "description": "Mean NLL of preferred responses on fresh task-B samples after training on task A, minus the same NLL at the reference parameters (nats). Lower means less cross-task interference. Diagnostics: top10_mass (share of total per-pair coefficient mass held by the top 10% of pairs), param_sparsity (fraction of task-A coordinates with |delta| < 5% of max), heldout_reward_gain (gain in expected true reward on fresh task-A prompts), overlap_norm (norm of the update on coordinates shared with task B)."
+  },
+  "factors": [
+    {"name": "method", "role": "treatment", "levels": ["sft", "dpo", "dpo_random"], "description": "SFT on chosen responses, DPO on preference pairs, or DPO on randomly flipped labels (null)."},
+    {"name": "density", "role": "context", "levels": [0.05, 0.15, 0.5], "description": "Bernoulli density of the binary response features; dense features weaken gradient cancellation and sparsity."},
+    {"name": "beta", "role": "context", "levels": [0.1, 2.0], "description": "DPO temperature, which sets the logistic margin scale and how quickly pairs saturate (ignored by SFT)."},
+    {"name": "n_pairs", "role": "context", "levels": [60, 400], "description": "Number of training preference pairs on task A."}
+  ],
+  "treatment": {"factor": "method", "paper": "dpo", "baseline": "sft"}
+}

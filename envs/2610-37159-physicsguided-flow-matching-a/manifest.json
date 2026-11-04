@@ -1,0 +1,28 @@
+{
+  "id": "2610-37159-physicsguided-flow-matching-a",
+  "source": "arxiv",
+  "arxiv_id": "2610.37159",
+  "paper_title": "Physics-Guided Flow Matching: A Generative AI Framework for Global Total Electron Content Forecasting",
+  "published": "2026-10-27T12:53:18Z",
+  "synth": {
+    "backend": "claude",
+    "model": "sonnet",
+    "attempts": 1
+  },
+  "lab_sha256": "2394b757c5a38a718f78433a6a6f10cc7d610f7fb71172e68bcace06d70e0470",
+  "seeds": 16,
+  "visible_seeds": 4,
+  "sweep": {
+    "env": "2610-37159-physicsguided-flow-matching-a",
+    "runs_ok": 576,
+    "runs_failed": 0,
+    "wall_secs": 18.3,
+    "cpu_secs": 101.9,
+    "tasks": [
+      "claim",
+      "best"
+    ],
+    "errors": {},
+    "swept_at": "2026-10-29T00:45:16+00:00"
+  }
+}

@@ -1,0 +1,17 @@
+{
+ "ok": true,
+ "auditor": "claude:opus",
+ "tests_core_claim": true,
+ "fidelity": "high",
+ "baseline_fair": true,
+ "same_data_across_arms": true,
+ "metric_on_heldout": true,
+ "issues": [
+  "Near-tautological: evaluation errors are generated from exactly the model the portfolio optimizes (_model_loss with true RHO, kappa, LAM, n); the only mismatch is noise in the risk estimates (r_hat) and Monte Carlo noise. The lab tests internal consistency, not robustness to model misspecification.",
+  "Candidate set differs from the paper: the paper limits portfolio and uniform to the 3 lowest-risk models per crop; the lab uses all K=9. Uniform over nine models with gap='large' breaches the cap almost automatically, inflating support for the 'uniform breaches cap' claim; with gap='small' and cap=0.25 uniform can never breach.",
+  "Benchmark noise chisquare(150)/150 (~11.5% sd) exceeds the 'small' gap spread (<=8%), so ranking the models is close to random in that setting; the regret-cap results there mostly reflect estimation noise.",
+  "The cap is enforced against the best estimated risk (r_hat.min()) but regret/cap_ok is measured against the best true risk (r_true.min()), so cap_ok can fail for the portfolio (and for monoculture) because of estimation error. This is consistent with space.json but should be read with that in mind.",
+  "Scale and calibration differ: n=1000 farms instead of 10,000, and synthetic risks instead of the Moroccan benchmark; absolute reductions are not comparable to the paper's 10.89-41.53%."
+ ],
+ "summary": "The lab implements the paper's core model faithfully: model-common shocks with share rho and cross-model correlation kappa, farm-specific errors, and social loss = private loss + 0.5*lambda*||mean error||^2. It compares lowest-estimated-risk monoculture, a regret-capped convex portfolio and uniform allocation on shared fresh error draws, with true risks, noisy estimates and evaluation draws all seeded independently of method. The baseline is fair and no leaks were found. The main caveats: the simulation matches the optimizer's own model exactly, so the result is close to circular apart from estimation noise; the candidate set is all nine models rather than the paper's top three, which makes uniform's cap breach easier to show; and in the small-gap setting, risk-estimate noise exceeds the gap."
+}

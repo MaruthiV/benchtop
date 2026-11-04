@@ -1,0 +1,42 @@
+{
+  "title": "Expectile vs mean neighbor aggregation on a tail-shifted contextual SBM",
+  "setting": "Synthetic 2-class stochastic block graph (600 nodes, average degree 10) with tunable homophily. Node features are 6-dimensional; class 1 has an upper-tail mixture while class 0 is Gaussian, with mean and variance matched across classes plus a tiny class shift, so class information in neighborhoods lies mostly in skew/tail shape. Per-node neighbor aggregation (with self-loop; mean or expectile via 20 fixed-point iterations) is concatenated with the node's own features and fed to a logistic regression (C chosen on validation) on a 60/20/20 split; the metric is test accuracy.",
+  "paper": {
+    "title": "Graph Representation Learning via Adaptive Expectile Aggregation",
+    "arxiv_id": "2610.37450",
+    "claim": "Expectile aggregation can exploit class-dependent distributional differences (e.g., tail/scale) in heterophilic neighborhoods to beat mean aggregation, with mean as the tau=0.5 special case."
+  },
+  "metric": {
+    "name": "test_acc",
+    "goal": "max",
+    "min_effect": 0.01,
+    "description": "Accuracy on held-out test nodes (20% of nodes) of the logistic readout on [self features, aggregated neighbor features]."
+  },
+  "factors": [
+    {
+      "name": "method",
+      "role": "treatment",
+      "levels": ["mean", "expectile", "expectile_fixed"],
+      "description": "mean: mean aggregation. expectile: tau selected on validation accuracy from {0.5,0.1,0.25,0.75,0.9} (stand-in for learnable tau; ties go to the mean). expectile_fixed: tau=0.9 without selection."
+    },
+    {
+      "name": "homophily",
+      "role": "context",
+      "levels": [0.2, 0.5, 0.8],
+      "description": "Probability that a neighbor shares the node's class. 0.5 makes neighbor class labels uninformative; 0.2 and 0.8 are heterophilic and homophilic."
+    },
+    {
+      "name": "tail_frac",
+      "role": "context",
+      "levels": [0.05, 0.3],
+      "description": "Fraction of class-1 feature values drawn from the large positive mode (strength of the tail signal)."
+    },
+    {
+      "name": "noise",
+      "role": "context",
+      "levels": [0.0, 1.0],
+      "description": "Std of Gaussian corruption added to all node features."
+    }
+  ],
+  "treatment": {"factor": "method", "paper": "expectile", "baseline": "mean"}
+}

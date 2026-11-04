@@ -1,0 +1,19 @@
+[
+  {
+    "id": "claim",
+    "kind": "claim",
+    "answer": "paper_better",
+    "delta": 0.2673611111111111,
+    "se": 0.02165873333132379,
+    "seed_std": 0.17028377154247412,
+    "top_share": 0.18831168831168837
+  },
+  {
+    "id": "best",
+    "kind": "best",
+    "answer": "{\"confounding\":0.5,\"method\":\"deep\",\"n\":320,\"shift_dims\":1}",
+    "best": 1.0,
+    "median": 0.6319444444444444,
+    "seed_std": 0.17028377154247412
+  }
+]

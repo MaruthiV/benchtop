@@ -1,0 +1,42 @@
+{
+  "title": "QD-PINN: 1D Shiryaev quickest-detection free boundary",
+  "setting": "The posterior probability pi of a change point follows a 1D diffusion with hazard rate 1, signal-to-noise rho = 1/sigma^2, running cost c*pi and terminal penalty 1-pi. This gives a free-boundary variational inequality min{LV + c*pi, (1-pi) - V} = 0. A small tanh MLP for V plus a learnable scalar boundary s is trained for 200 Adam steps on random collocation points, using PDE, value-matching, smooth-fit and (optionally) Fischer-Burmeister complementarity losses. The baseline is a finite-difference policy-iteration solver whose number of grid nodes equals the collocation count. Both are scored against a fine-grid (800-node) finite-difference reference boundary.",
+  "paper": {
+    "title": "QD-PINN: A Physics-Informed Neural Network Approach to Bayesian Quickest Detection in High-Dimensional Diffusions",
+    "arxiv_id": "2610.37473",
+    "claim": "A PINN with a complementarity-enforcing unified loss recovers the optimal stopping boundary of the quickest-detection free-boundary problem in close agreement with reference numerical solutions."
+  },
+  "metric": {
+    "name": "boundary_abs_error",
+    "goal": "min",
+    "min_effect": 0.01,
+    "description": "Absolute error of the estimated stopping boundary pi* (stop when posterior >= pi*) against the fine-grid finite-difference reference boundary. Diagnostics: value_mae (mean abs error of V on 200 held-out points), pi_star, ref_boundary."
+  },
+  "factors": [
+    {
+      "name": "method",
+      "role": "treatment",
+      "levels": ["fd_coarse", "pinn_qd", "pinn_no_complementarity"],
+      "description": "fd_coarse: finite-difference policy iteration on a grid with n_col nodes (traditional baseline). pinn_qd: PINN with the full loss including max/min and Fischer-Burmeister complementarity terms. pinn_no_complementarity: the same PINN without the complementarity terms (ablation)."
+    },
+    {
+      "name": "c",
+      "role": "context",
+      "levels": [0.25, 1.0, 4.0],
+      "description": "Running delay cost rate; moves the true boundary from near 1 (low c) to small values (high c)."
+    },
+    {
+      "name": "sigma",
+      "role": "context",
+      "levels": [0.5, 2.0],
+      "description": "Observation noise scale; signal-to-noise rho = 1/sigma^2 sets the diffusion strength of the posterior and the curvature of V."
+    },
+    {
+      "name": "n_col",
+      "role": "context",
+      "levels": [64, 512],
+      "description": "Collocation points for the PINN, and the matched number of grid nodes for the finite-difference baseline."
+    }
+  ],
+  "treatment": {"factor": "method", "paper": "pinn_qd", "baseline": "fd_coarse"}
+}

@@ -1,0 +1,28 @@
+{
+  "id": "2610-36994-callm-continual-adaptation-of",
+  "source": "arxiv",
+  "arxiv_id": "2610.36994",
+  "paper_title": "CaLLM: Continual Adaptation of LLMs via Non-Parametric Adapter Routing",
+  "published": "2026-10-27T10:41:56Z",
+  "synth": {
+    "backend": "claude",
+    "model": "sonnet",
+    "attempts": 1
+  },
+  "lab_sha256": "7a1a0677fe6cac97a87325a05cb379d7f72245f3a1a83850f4039e64b173c7fd",
+  "seeds": 16,
+  "visible_seeds": 4,
+  "sweep": {
+    "env": "2610-36994-callm-continual-adaptation-of",
+    "runs_ok": 576,
+    "runs_failed": 0,
+    "wall_secs": 10.2,
+    "cpu_secs": 45.6,
+    "tasks": [
+      "claim",
+      "best"
+    ],
+    "errors": {},
+    "swept_at": "2026-10-29T00:39:47+00:00"
+  }
+}

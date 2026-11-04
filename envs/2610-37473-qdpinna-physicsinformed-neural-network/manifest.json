@@ -1,0 +1,28 @@
+{
+  "id": "2610-37473-qdpinna-physicsinformed-neural-network",
+  "source": "arxiv",
+  "arxiv_id": "2610.37473",
+  "paper_title": "QD-PINN:A Physics-Informed Neural Network Approach to Bayesian Quickest Detection in High-Dimensional Diffusions",
+  "published": "2026-10-27T16:05:13Z",
+  "synth": {
+    "backend": "claude",
+    "model": "sonnet",
+    "attempts": 2
+  },
+  "lab_sha256": "04021dea392b5bfa8622489a31c6196d6f18a073a78f7e583527b98b1fb0039a",
+  "seeds": 16,
+  "visible_seeds": 4,
+  "sweep": {
+    "env": "2610-37473-qdpinna-physicsinformed-neural-network",
+    "runs_ok": 576,
+    "runs_failed": 0,
+    "wall_secs": 24.7,
+    "cpu_secs": 135.6,
+    "tasks": [
+      "claim",
+      "best"
+    ],
+    "errors": {},
+    "swept_at": "2026-10-29T00:58:35+00:00"
+  }
+}

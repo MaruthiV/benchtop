@@ -1,0 +1,19 @@
+{
+ "ok": true,
+ "auditor": "claude:opus",
+ "tests_core_claim": true,
+ "fidelity": "medium",
+ "baseline_fair": false,
+ "same_data_across_arms": true,
+ "metric_on_heldout": true,
+ "issues": [
+  "Prototypes and adapters are built from ground-truth task partitions (`protos = np.stack([Ztr[ix].mean(0) for ix in tr_idx])`), one per task. The paper's novelty-based spawning, pool-capacity limit and least-used repurposing are absent, so zero-shot expert assignment during training and the pooling/constructive-interference claim are never tested.",
+  "Test chunks are pure single-task (`for k, ix in enumerate(te_idx): ... chunks.append((k, p[s:s+cs]))`), so the router gets task identity from batch-mean embeddings over up to 32 same-task samples, while shared_replay classifies each sample alone (`pred[ix]`). That is an information asymmetry in the router's favor; mixed or interleaved chunks, closer to the paper's online stream, are never tested.",
+  "Learner and budget mismatch: adapters are LogisticRegression(max_iter=200) fit to convergence per task, while the baseline is an MLP with a fixed 80 full-batch Adam steps per task (STEPS_PER_TASK=80, lr=0.01). Replay buffer size, steps and lr are untuned, so the baseline may be undertrained or forget more than necessary.",
+  "Memory isn't matched: the routing arm stores T full classifiers plus prototypes; replay keeps only 20 samples per past task (REPLAY_PER_TASK=20). No check of whether a larger buffer closes the gap.",
+  "No LLM/LoRA: a 32-d PCA embedding of digits with linear adapters cannot test the LLM-specific or constant-compute claims.",
+  "At task_count=10 each adapter is a constant predictor ('const'), so the routing arm's accuracy is just routing accuracy and the comparison with replay says little about the adapters themselves.",
+  "Minor: the last chunk of each task can be smaller than chunk_size, which adds routing noise; harmless but undocumented."
+ ],
+ "summary": "The lab tests the core mechanism (training-free cosine nearest-prototype routing of batches to per-task adapters vs a replay baseline and an oracle router) on held-out data, and the data are identical across arms for a fixed seed. Fidelity is only medium: it is digits/PCA/logistic regression rather than an LLM with LoRA, prototypes come from known task labels, and adapter spawning/repurposing, pool capacity and the online interleaved regime are missing. The comparison favors the routing arm: it routes pure single-task chunks while the replay MLP classifies samples individually, it uses a different learner fit to convergence vs a fixed 80-step untuned MLP, and memory isn't matched (full per-task models vs 20 samples per task)."
+}

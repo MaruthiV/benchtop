@@ -1,0 +1,17 @@
+{
+ "ok": true,
+ "auditor": "claude:opus",
+ "tests_core_claim": true,
+ "fidelity": "medium",
+ "baseline_fair": true,
+ "same_data_across_arms": true,
+ "metric_on_heldout": true,
+ "issues": [
+  "Mismatched posterior estimators: the proxy arm returns the expected log-likelihood (`ll = -0.5*(sum(r*r) + var*sum(sy**2))/sigma**2`), which penalises its own uncertainty. The loglik arm uses only the GP mean (`mu[:,0]*s + m`). This is a second difference besides the response variable, and it favours the proxy.",
+  "GRID_N[3]=12 gives only 1,728 grid points. At noise=0.05 with T=50, the reference posterior may sit almost entirely on one grid cell, so tv_final becomes close to an all-or-nothing score.",
+  "Simulator calls and acquisition candidates are both limited to the same grid used for the reference posterior (`Yg[idx]` lookup). A method can sample the exact mode cell, which flatters both arms compared with a continuous search.",
+  "Minimal GP: fixed unit signal variance after standardisation, no learned noise, and only 5 lengthscales (LS_GRID). This is the same in both arms, but it may exaggerate how badly the loglik GP fits sharp likelihood surfaces.",
+  "Only one proxy (the raw standardised output vector) is tested. The paper's broader concept of custom proxy variables is not explored."
+ ],
+ "summary": "The lab directly compares GP-based Bayesian optimisation on the scalar log-likelihood against a GP on the full simulator output vector. Kernel, lengthscale selection, starting points, the uncertainty-sampling acquisition rule and the data (true parameters, observation, grid) are the same in both arms. The metric is total-variation distance to an exact grid posterior. Fidelity is medium: the simulator is a toy, candidates are limited to a grid that is coarse with 3 parameters, the GP is simple, and only one proxy is tried. One asymmetry favours the proxy: it uses the expected log-likelihood, while the baseline uses its mean prediction. Nothing looks rigged."
+}

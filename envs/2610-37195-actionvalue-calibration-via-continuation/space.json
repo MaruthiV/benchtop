@@ -1,0 +1,42 @@
+{
+  "title": "Continuation sharing for within-state action-value differences",
+  "setting": "Each seed draws 4 random tabular episodic MDPs (horizon 6, 3 actions, time-layered states, sparse rewards) and samples G uniform-policy rollouts per task. Action values per (task, step, state, action) are estimated either from each visit's own sampled return (GiGPO-style) or by ConCal's recursive calibration, which matches visits by incoming state-action-state transition and blends pooled and own estimates. The metric is the error of estimated within-state pairwise action-value differences against exact values from backward dynamic programming.",
+  "paper": {
+    "title": "Action-Value Calibration via Continuation Sharing for Long-Horizon Agentic Reinforcement Learning",
+    "arxiv_id": "2610.37195",
+    "claim": "Pooling continuation evidence across matched visits (ConCal) gives lower error in within-group action-value differences than single-sampled-continuation estimates, without extra rollouts."
+  },
+  "metric": {
+    "name": "diff_mae",
+    "goal": "min",
+    "min_effect": 0.01,
+    "description": "Mean absolute error between estimated and exact pairwise action-value differences Q(s,a1)-Q(s,a2), over all (task, step, state) groups where both actions were observed in the batch. Diagnostics: kendall_tau (mean sign agreement of action orderings), n_pairs, mean_pool_size (average number of visits sharing an incoming transition)."
+  },
+  "factors": [
+    {
+      "name": "method",
+      "role": "treatment",
+      "levels": ["gigpo", "concal", "pooled"],
+      "description": "gigpo: each action value is the visit's own sampled discounted return, averaged over visits of the same (state, action). concal: recursive calibration with blend weight n/(n+1) between pooled and own transition estimate. pooled: fully pooled variant (weight 1, no retention of own estimate)."
+    },
+    {
+      "name": "states_per_step",
+      "role": "context",
+      "levels": [24, 8, 3],
+      "description": "Number of states per time layer; fewer states means more revisits and larger sharing pools (near-tree at 24, dense at 3)."
+    },
+    {
+      "name": "noise",
+      "role": "context",
+      "levels": [0.0, 0.4],
+      "description": "Probability that a transition jumps to a uniformly random state instead of the action's nominal successor."
+    },
+    {
+      "name": "group_size",
+      "role": "context",
+      "levels": [4, 16],
+      "description": "Number of rollouts G per task in the batch."
+    }
+  ],
+  "treatment": {"factor": "method", "paper": "concal", "baseline": "gigpo"}
+}
