@@ -61,4 +61,4 @@ Capability URLs are credentials. Keep raw configurations and transcripts private
 
 Regression coverage checks absent and incorrect capabilities, cross-episode access, forged episode headers, ID collisions, eviction, admin authentication, Host/Origin checks, redaction, local credential permissions, and adapter configuration. A real two-listener test exercises the trusted client, scoped MCP observations and submission, private grading, socket-based routing, and graceful shutdown cleanup. Model CLI adapters are tested with substituted runners; this checkpoint makes no real model calls.
 
-Qualia connectivity remains unverified. Episode mutation serialization, frozen charging costs, live-cache hardening, and unsupported-sandbox rejection remain separate foundation work. These access checks do not establish that those parts are finished.
+Qualia connectivity remains unverified. [Frozen charging and serialized episode operations](BUDGETS.md) are now implemented across both interfaces. Live-cache input versioning, stale-data rejection, and unsupported-sandbox rejection remain open foundation work.

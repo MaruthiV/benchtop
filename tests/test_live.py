@@ -50,8 +50,7 @@ def test_identical_requests_share_one_run(tmp_path):
         hub = Hub(tmp_path / "envs", live=True, live_workers=2)
         eps = [hub.create("toy", "claim", seed=7, budget_frac=1.0) for _ in range(20)]
         configs = [{"method": "new", "x": 1}, {"method": "base", "x": 1}]
-        await asyncio.gather(*(hub.prepare(ep, configs, 2) for ep in eps))
-        outs = [ep.run(configs, 2) for ep in eps]
+        outs = await asyncio.gather(*(hub.run(ep, configs, 2) for ep in eps))
         stats = hub.stores["toy"].stats
         await hub.stores["toy"].close()
         return outs, stats

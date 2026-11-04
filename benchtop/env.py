@@ -1,12 +1,14 @@
 import hashlib
 import json
+import math
 import statistics
 from dataclasses import dataclass
 from pathlib import Path
+from types import MappingProxyType
 
 import numpy as np
 
-from benchtop.space import Space, config_key
+from benchtop.space import Space, canon, config_key
 from benchtop.stats import GRADER_ID, LEGACY_GRADER_ID
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -56,20 +58,23 @@ class Table:
     def __init__(self, space: Space, rows: list[dict]):
         self.space = space
         self.cells: dict[str, dict[int, dict]] = {}
-        self.secs: dict[str, list[float]] = {}
+        self.secs: dict[str, dict[int, float]] = {}
         self._cost: dict[str, float] = {}
         self._total: float | None = None
+        self._charges = None
+        self._charge_seeds = None
+        self.charging_id: str | None = None
         for row in rows:
             if not row.get("ok"):
                 continue
             key = config_key(space.normalize(row["config"]))
             self.cells.setdefault(key, {})[int(row["seed"])] = row["metrics"]
-            self.secs.setdefault(key, []).append(float(row["secs"]))
+            self.secs.setdefault(key, {})[int(row["seed"])] = float(row["secs"])
 
     def add(self, config: dict, seed: int, metrics: dict, secs: float) -> None:
         key = config_key(config)
         self.cells.setdefault(key, {})[int(seed)] = metrics
-        self.secs.setdefault(key, []).append(float(secs))
+        self.secs.setdefault(key, {})[int(seed)] = float(secs)
         self._cost.pop(key, None)
         self._total = None
 
@@ -89,7 +94,7 @@ class Table:
 
     def cost_key(self, key: str) -> float:
         if key not in self._cost:
-            secs = self.secs.get(key)
+            secs = list(self.secs.get(key, {}).values())
             self._cost[key] = statistics.median(secs) if secs else 1.0
         return self._cost[key]
 
@@ -97,6 +102,26 @@ class Table:
         if self._total is None:
             self._total = sum(self.cost(c) for c in self.space.configs())
         return self._total
+
+    def freeze_costs(self, seeds: list[int] | None = None):
+        source = tuple(sorted(seeds)) if seeds is not None else None
+        if self._charges is not None:
+            if source != self._charge_seeds:
+                raise ValueError("the charging seed source is already frozen")
+            return self._charges, self.charging_id
+        costs = {}
+        for config in self.space.configs():
+            key = config_key(config)
+            timings = self.secs.get(key, {})
+            values = list(timings.values()) if source is None else [timings[s] for s in source if s in timings]
+            cost = float(statistics.median(values)) if values else 1.0
+            if not math.isfinite(cost) or cost <= 0:
+                raise ValueError(f"configuration cost must be finite and positive: {key}")
+            costs[key] = cost
+        self._charge_seeds = source
+        self.charging_id = hashlib.sha256(canon({"costs": costs, "seed_ids": source}).encode()).hexdigest()
+        self._charges = MappingProxyType(costs)
+        return self._charges, self.charging_id
 
     def missing(self, seeds: list[int]) -> list[tuple[dict, int]]:
         return [(c, s) for c in self.space.configs() for s in seeds if self.get(c, s) is None]
@@ -153,6 +178,12 @@ class Env:
     @property
     def grader_id(self) -> str:
         return self.manifest["grader_id"]
+
+    def charging_schedule(self):
+        seeds = None
+        if self.grader_id == GRADER_ID:
+            seeds = self.tasks[0].get("seed_ids", self.heldout_seeds) if self.tasks else self.heldout_seeds
+        return self.table.freeze_costs(seeds)
 
     @property
     def visible_seeds(self) -> list[int]:

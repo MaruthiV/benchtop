@@ -1,4 +1,5 @@
 import json
+import math
 import secrets
 import time
 
@@ -34,11 +35,18 @@ class Episode:
         self.show_paper = show_paper
         self.max_calls = max_calls
         visible = env.visible_seeds
-        self.full_cost = env.table.total_cost() * len(visible)
+        budget_frac = float(budget_frac)
+        if not math.isfinite(budget_frac) or not 0 <= budget_frac <= 1:
+            raise ValueError("budget_frac must be finite and between zero and one")
+        if not visible:
+            raise ValueError("an episode requires visible seeds")
+        self.costs, self.charging_id = env.charging_schedule()
+        self.full_cost = sum(self.costs.values()) * len(visible)
         self.budget = budget_frac * self.full_cost
         self.spent = 0.0
         self.calls = 0
         self.used: dict[str, int] = {}
+        self.replicates: dict[str, set[int]] = {}
         # each episode sees the visible seeds in its own order
         self.order = [int(s) for s in np.random.default_rng(self.seed).permutation(visible)]
         self.log: list[dict] = []
@@ -50,30 +58,34 @@ class Episode:
         return self.result is not None
 
     def avg_cost(self) -> float:
-        return self.full_cost / (self.env.space.size() * len(self.env.visible_seeds))
+        return self.full_cost / (len(self.costs) * len(self.order))
 
     def plan(self, configs: list[dict], seeds: int) -> tuple[list[tuple[dict, str, int, int]], list[str]]:
         space, notes = self.env.space, []
-        spent, used, steps = self.spent, dict(self.used), []
+        spent, used, steps = self.spent, {key: set(values) for key, values in self.replicates.items()}, []
         seeds = max(1, min(int(seeds), len(self.order)))
         for raw in configs:
             config = space.normalize(raw)
             key = config_key(config)
             for _ in range(seeds):
-                k = used.get(key, 0)
-                if k >= len(self.order):
+                seen = used.setdefault(key, set())
+                replicate = next((i for i in range(1, len(self.order) + 1) if i not in seen), None)
+                if replicate is None:
                     notes.append(f"no fresh seeds left for {key}")
                     break
-                cost = self.env.table.cost_key(key)
-                if spent + cost > self.budget + 1e-9:
+                cost = self.costs[key]
+                total = spent + cost
+                if total > self.budget and not math.isclose(total, self.budget, rel_tol=1e-12, abs_tol=0):
                     notes.append("budget exhausted")
                     return steps, notes
-                steps.append((config, key, self.order[k], k + 1))
-                used[key] = k + 1
-                spent += cost
+                steps.append((config, key, self.order[replicate - 1], replicate))
+                seen.add(replicate)
+                spent = min(total, self.budget)
         return steps, notes
 
     def pending(self, configs, seeds) -> list[tuple[dict, int]]:
+        if self.done or self.calls >= self.max_calls:
+            return []
         try:
             configs, seeds = clean_request(configs, seeds)
             steps, _ = self.plan(configs, seeds)
@@ -81,7 +93,7 @@ class Episode:
             return []
         return [(c, s) for c, _, s, _ in steps]
 
-    def run(self, configs: list[dict], seeds: int = 1) -> dict:
+    def begin_run(self, configs, seeds: int = 1) -> dict:
         if self.done:
             return {"error": "episode is finished"}
         if self.calls >= self.max_calls:
@@ -92,41 +104,67 @@ class Episode:
         except (TypeError, ValueError) as e:
             return {"error": str(e)}
         self.calls += 1
+        entry = {
+            "t": time.time() - self.started,
+            "action": "run",
+            "configs": configs,
+            "seeds": seeds,
+            "attempted": [[key, seed] for _, key, seed, _ in steps],
+            "ran": [],
+            "notes": notes,
+            "status": "running",
+        }
+        self.log.append(entry)
+        return {"steps": steps, "notes": notes, "log": entry}
+
+    def finish_run(self, request: dict, failures: dict | None = None) -> dict:
+        if request["log"]["status"] != "running":
+            raise ValueError("run is already completed")
+        failures = failures or {}
+        notes = list(request["notes"])
         results = []
-        for config, key, seed, replicate in steps:
+        errors = []
+        ran = []
+        for config, key, seed, replicate in request["steps"]:
             metrics = self.env.table.cells.get(key, {}).get(seed)
-            if metrics is None:
-                notes.append(f"missing result for {key}")
+            error = failures.get((key, seed))
+            if error is None and metrics is None:
+                error = {"code": "missing_result", "retryable": False}
+            if error is not None:
+                errors.append({"config": config, "replicate": replicate, "error": error})
+                notes.append("experiment failed")
                 continue
-            cost = self.env.table.cost_key(key)
-            self.spent += cost
-            self.used[key] = replicate
+            cost = self.costs[key]
+            self.spent = min(self.budget, self.spent + cost)
+            seen = self.replicates.setdefault(key, set())
+            seen.add(replicate)
+            self.used[key] = len(seen)
+            ran.append([key, seed])
             results.append(
                 {
                     "config": config,
                     "replicate": replicate,
                     "metrics": {k: round(v, 6) for k, v in metrics.items()},
-                    "cost": round(cost, 4),
+                    "cost": cost,
                 }
             )
-        self.log.append(
-            {
-                "t": time.time() - self.started,
-                "action": "run",
-                "configs": configs,
-                "seeds": seeds,
-                "ran": [[key, s] for _, key, s, _ in steps],
-                "notes": notes,
-            }
-        )
-        return {"results": results, "notes": sorted(set(notes)), "budget": self.budget_left()}
+        status = ("partial" if results else "failed") if errors else "complete"
+        request["log"].update(ran=ran, notes=sorted(set(notes)), errors=errors, status=status)
+        return {"results": results, "errors": errors, "notes": sorted(set(notes)), "budget": self.budget_left()}
+
+    def abort_run(self, request: dict, reason: str) -> None:
+        request["log"].update(status=reason, notes=sorted(set([*request["notes"], reason])))
+
+    def run(self, configs: list[dict], seeds: int = 1) -> dict:
+        request = self.begin_run(configs, seeds)
+        return request if "error" in request else self.finish_run(request)
 
     def budget_left(self) -> dict:
         left = max(0.0, self.budget - self.spent)
         return {
-            "spent": round(self.spent, 3),
-            "left": round(left, 3),
-            "total": round(self.budget, 3),
+            "spent": self.spent,
+            "left": left,
+            "total": self.budget,
             "runs_left_approx": int(left / self.avg_cost()),
             "calls_left": self.max_calls - self.calls,
         }
@@ -184,9 +222,10 @@ class Episode:
             },
             "question": self.question(),
             "answer_format": self.answer_format(),
+            "pricing": {"schedule_id": self.charging_id, "unit": "compute_seconds", "by_config": dict(self.costs)},
             "rules": [
                 f"each run is one config and one seed; at most {len(self.order)} seeds per config",
-                f"budget is {self.budget:.1f} compute-seconds, about {int(self.budget / self.avg_cost())} runs",
+                f"budget is {self.budget:.6g} compute-seconds, about {int(self.budget / self.avg_cost())} runs",
                 f"at most {self.max_calls} run_experiments calls",
                 f"{space.metric}: {goal}; a difference only counts if it is at least {space.min_effect:g}",
                 "your answer is graded on fresh seeds you never see, so account for noise",
@@ -237,6 +276,7 @@ class Episode:
             "env": self.env.id,
             "task": self.task["id"],
             "grader_id": self.env.grader_id,
+            "charging_id": self.charging_id,
             "seed": self.seed,
             "show_paper": self.show_paper,
             "budget": self.budget,

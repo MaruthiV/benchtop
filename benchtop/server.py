@@ -1,3 +1,4 @@
+import asyncio
 import json
 import re
 import secrets
@@ -45,15 +46,49 @@ class Hub:
         self.agent_base = url_base(agent_base)
         self.admin_token = secrets.token_urlsafe(32)
         self.capabilities: dict[str, str] = {}
+        self.locks: dict[str, asyncio.Lock] = {}
 
-    async def prepare(self, ep: Episode, configs, seeds) -> None:
-        # live mode runs whatever the table is missing before the episode reads it
-        if not self.live:
-            return
-        pairs = ep.pending(configs, seeds)
-        if pairs:
-            store = self.stores.setdefault(ep.env.id, LiveStore(ep.env, workers=self.live_workers))
-            await store.ensure(pairs)
+    async def run(self, ep: Episode, configs, seeds=1) -> dict:
+        async with self.locks[ep.id]:
+            request = ep.begin_run(configs, seeds)
+            if "error" in request:
+                return request
+            try:
+                failures = {}
+                if self.live and request["steps"]:
+                    store = self.stores.get(ep.env.id)
+                    if store is None:
+                        store = LiveStore(ep.env, workers=self.live_workers)
+                        self.stores[ep.env.id] = store
+                    pairs = [(config, seed) for config, _, seed, _ in request["steps"]]
+                    outcomes = await store.ensure(pairs)
+                    failures = {
+                        (key, seed): outcome["error"]
+                        for (_, key, seed, _), outcome in zip(request["steps"], outcomes, strict=True)
+                        if not outcome["ok"]
+                    }
+                return ep.finish_run(request, failures)
+            except asyncio.CancelledError:
+                ep.abort_run(request, "cancelled")
+                raise
+            except Exception:
+                ep.abort_run(request, "failed")
+                raise
+
+    async def submit(self, ep: Episode, answer, confidence=None) -> dict:
+        async with self.locks[ep.id]:
+            return ep.submit(answer, confidence)
+
+    async def describe(self, ep: Episode) -> dict:
+        async with self.locks[ep.id]:
+            return {**ep.describe(), "budget": ep.budget_left()}
+
+    async def summary(self, ep: Episode) -> dict:
+        async with self.locks[ep.id]:
+            return ep.summary()
+
+    async def close(self):
+        await asyncio.gather(*(store.close() for store in self.stores.values()))
 
     def env(self, env_id: str) -> Env:
         if env_id not in self.envs:
@@ -83,9 +118,11 @@ class Hub:
             ep.id = secrets.token_hex(6)
         self.episodes[ep.id] = ep
         self.capabilities[ep.id] = secrets.token_urlsafe(32)
+        self.locks[ep.id] = asyncio.Lock()
         while len(self.episodes) > MAX_EPISODES:
             expired, _ = self.episodes.popitem(last=False)
             self.capabilities.pop(expired)
+            self.locks.pop(expired)
         return ep
 
     def agent_url(self, ep: Episode) -> str:
@@ -111,9 +148,9 @@ def build_app(
     @mcp.tool(
         description="Read the lab: setting, factors and levels, metric, budget, rules, and the question you must answer."
     )
-    def describe_lab(ctx: Context) -> dict[str, Any]:
+    async def describe_lab(ctx: Context) -> dict[str, Any]:
         ep = episode_of(ctx)
-        return {**ep.describe(), "budget": ep.budget_left()}
+        return await hub.describe(ep)
 
     @mcp.tool(
         description=(
@@ -123,8 +160,7 @@ def build_app(
     )
     async def run_experiments(configs: list[dict[str, Any]], ctx: Context, seeds: int = 1) -> dict[str, Any]:
         ep = episode_of(ctx)
-        await hub.prepare(ep, configs, seeds)
-        return ep.run(configs, seeds)
+        return await hub.run(ep, configs, seeds)
 
     @mcp.tool(
         description=(
@@ -132,10 +168,10 @@ def build_app(
             "(0 to 1) that the answer is right."
         )
     )
-    def submit_answer(
+    async def submit_answer(
         answer: str | dict[str, Any], ctx: Context, confidence: float | None = None
     ) -> dict[str, Any]:
-        out = episode_of(ctx).submit(answer, confidence)
+        out = await hub.submit(episode_of(ctx), answer, confidence)
         # don't leak the grade to the agent mid-run
         return {"received": True} if out.get("done") else out
 
@@ -166,6 +202,8 @@ def build_admin_app(hub: Hub):
             )
         except KeyError as e:
             return JSONResponse({"error": str(e)}, status_code=404)
+        except (TypeError, ValueError) as e:
+            return JSONResponse({"error": str(e)}, status_code=400)
         return JSONResponse({"id": ep.id, "describe": ep.describe(), "budget": ep.budget_left(), "mcp_url": hub.agent_url(ep)})
 
     async def show(request: Request):
@@ -173,7 +211,7 @@ def build_admin_app(hub: Hub):
             ep = hub.get(request.path_params["eid"])
         except KeyError as e:
             return JSONResponse({"error": str(e)}, status_code=404)
-        return JSONResponse(ep.summary())
+        return JSONResponse(await hub.summary(ep))
 
     async def run(request: Request):
         body = await request.json()
@@ -182,8 +220,7 @@ def build_admin_app(hub: Hub):
         except KeyError as e:
             return JSONResponse({"error": str(e)}, status_code=404)
         configs, seeds = body.get("configs", []), body.get("seeds", 1)
-        await hub.prepare(ep, configs, seeds)
-        return JSONResponse(ep.run(configs, seeds))
+        return JSONResponse(await hub.run(ep, configs, seeds))
 
     async def submit(request: Request):
         body = await request.json()
@@ -191,7 +228,7 @@ def build_admin_app(hub: Hub):
             ep = hub.get(request.path_params["eid"])
         except KeyError as e:
             return JSONResponse({"error": str(e)}, status_code=404)
-        return JSONResponse(ep.submit(body.get("answer"), body.get("confidence")))
+        return JSONResponse(await hub.submit(ep, body.get("answer"), body.get("confidence")))
 
     async def episodes(request: Request):
         rows = [
@@ -266,16 +303,20 @@ class EpisodePaths:
 
 
 class PortApps:
-    def __init__(self, admin, agent, admin_port, cleanup):
+    def __init__(self, admin, agent, admin_port, cleanup, hub):
         self.admin, self.agent, self.admin_port = admin, agent, admin_port
         self.cleanup = cleanup
+        self.hub = hub
 
     async def __call__(self, scope, receive, send):
         if scope["type"] == "lifespan":
             try:
                 await self.agent(scope, receive, send)
             finally:
-                self.cleanup()
+                try:
+                    await self.hub.close()
+                finally:
+                    self.cleanup()
             return
         app = self.admin if scope["server"][1] == self.admin_port else self.agent
         await app(scope, receive, send)
@@ -318,7 +359,7 @@ def serve(
                 pass
 
         try:
-            app = PortApps(admin, agent, port, cleanup)
+            app = PortApps(admin, agent, port, cleanup, hub)
             config = uvicorn.Config(app, log_level=log_level, access_log=False, proxy_headers=False, timeout_keep_alive=75)
             uvicorn.Server(config).run(sockets=sockets)
         finally:

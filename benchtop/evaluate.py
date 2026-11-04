@@ -57,6 +57,7 @@ def run_baselines(episodes: int = 50, budget_frac: float = 0.25, name: str = "ba
                         "n": episodes,
                         "budget_frac": budget_frac,
                         "grader_id": env.grader_id,
+                        "charging_id": env.charging_schedule()[1],
                     }
                 )
     RESULTS.mkdir(exist_ok=True)
