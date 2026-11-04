@@ -1,0 +1,18 @@
+[
+  {
+    "id": "claim",
+    "kind": "claim",
+    "answer": "paper_better",
+    "delta": 0.01681944231192271,
+    "se": 0.001008878156972375,
+    "seed_std": 0.026895160986702332
+  },
+  {
+    "id": "best",
+    "kind": "best",
+    "answer": "{\"hidden\":256,\"label_noise\":0.0,\"method\":\"label_smoothing\",\"n_train\":1000}",
+    "best": 0.981333335240682,
+    "median": 0.9141666690508525,
+    "seed_std": 0.026895160986702332
+  }
+]

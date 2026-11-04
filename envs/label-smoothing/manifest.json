@@ -1,0 +1,19 @@
+{
+  "id": "label-smoothing",
+  "lab_sha256": "befb15e5b25bf4a6fec589e447ed90c69b07a3defa569660b74af6f1d4241e54",
+  "seeds": 16,
+  "visible_seeds": 4,
+  "sweep": {
+    "env": "label-smoothing",
+    "runs_ok": 384,
+    "runs_failed": 0,
+    "wall_secs": 10.4,
+    "cpu_secs": 157.0,
+    "tasks": [
+      "claim",
+      "best"
+    ],
+    "errors": {},
+    "swept_at": "2026-10-29T00:18:16+00:00"
+  }
+}

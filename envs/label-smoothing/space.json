@@ -1,0 +1,13 @@
+{
+  "title": "Label smoothing under label noise",
+  "setting": "A two-layer MLP trained with Adam for 150 full-batch steps on the 8x8 digits dataset. A fraction of training labels can be replaced with random classes. Test accuracy is measured on 500 clean held-out images.",
+  "paper": {"title": "Does label smoothing mitigate label noise?", "arxiv_id": "2003.02819", "claim": "Label smoothing is competitive with loss-correction methods under label noise."},
+  "metric": {"name": "test_acc", "goal": "max", "min_effect": 0.01, "description": "accuracy on 500 clean test images"},
+  "factors": [
+    {"name": "method", "role": "treatment", "levels": ["cross_entropy", "label_smoothing"], "description": "training loss: plain cross entropy or cross entropy with label smoothing 0.2"},
+    {"name": "label_noise", "role": "context", "levels": [0.0, 0.2, 0.4], "description": "fraction of training labels replaced with a random class"},
+    {"name": "n_train", "role": "context", "levels": [200, 1000], "description": "number of training images"},
+    {"name": "hidden", "role": "context", "levels": [32, 256], "description": "hidden layer width"}
+  ],
+  "treatment": {"factor": "method", "paper": "label_smoothing", "baseline": "cross_entropy"}
+}
