@@ -1,0 +1,1874 @@
+[
+ {
+  "env": "2610-36935-gaussian-process-bandits-for",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "prior",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-36935-gaussian-process-bandits-for",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "random",
+  "mean": 0.98,
+  "n": 50
+ },
+ {
+  "env": "2610-36935-gaussian-process-bandits-for",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "uniform",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-36935-gaussian-process-bandits-for",
+  "task": "best",
+  "kind": "best",
+  "agent": "prior",
+  "mean": 0.763517266736916,
+  "n": 50
+ },
+ {
+  "env": "2610-36935-gaussian-process-bandits-for",
+  "task": "best",
+  "kind": "best",
+  "agent": "random",
+  "mean": 0.804628796865512,
+  "n": 50
+ },
+ {
+  "env": "2610-36935-gaussian-process-bandits-for",
+  "task": "best",
+  "kind": "best",
+  "agent": "uniform",
+  "mean": 0.8262973826741414,
+  "n": 50
+ },
+ {
+  "env": "2610-36941-algorithmic-monoculture-in-machine",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "prior",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-36941-algorithmic-monoculture-in-machine",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "random",
+  "mean": 0.98,
+  "n": 50
+ },
+ {
+  "env": "2610-36941-algorithmic-monoculture-in-machine",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "uniform",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-36941-algorithmic-monoculture-in-machine",
+  "task": "where:kappa",
+  "kind": "where",
+  "agent": "prior",
+  "mean": 0.6666666666666665,
+  "n": 50
+ },
+ {
+  "env": "2610-36941-algorithmic-monoculture-in-machine",
+  "task": "where:kappa",
+  "kind": "where",
+  "agent": "random",
+  "mean": 0.7666666666666666,
+  "n": 50
+ },
+ {
+  "env": "2610-36941-algorithmic-monoculture-in-machine",
+  "task": "where:kappa",
+  "kind": "where",
+  "agent": "uniform",
+  "mean": 0.9266666666666665,
+  "n": 50
+ },
+ {
+  "env": "2610-36941-algorithmic-monoculture-in-machine",
+  "task": "best",
+  "kind": "best",
+  "agent": "prior",
+  "mean": 0.7953056853556139,
+  "n": 50
+ },
+ {
+  "env": "2610-36941-algorithmic-monoculture-in-machine",
+  "task": "best",
+  "kind": "best",
+  "agent": "random",
+  "mean": 0.9886225379343015,
+  "n": 50
+ },
+ {
+  "env": "2610-36941-algorithmic-monoculture-in-machine",
+  "task": "best",
+  "kind": "best",
+  "agent": "uniform",
+  "mean": 0.9971114866186146,
+  "n": 50
+ },
+ {
+  "env": "2610-36983-advancement-or-acceleration-how",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "prior",
+  "mean": 0.0,
+  "n": 50
+ },
+ {
+  "env": "2610-36983-advancement-or-acceleration-how",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "random",
+  "mean": 0.26,
+  "n": 50
+ },
+ {
+  "env": "2610-36983-advancement-or-acceleration-how",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "uniform",
+  "mean": 0.42,
+  "n": 50
+ },
+ {
+  "env": "2610-36983-advancement-or-acceleration-how",
+  "task": "where:gap_deg",
+  "kind": "where",
+  "agent": "prior",
+  "mean": 0.5,
+  "n": 50
+ },
+ {
+  "env": "2610-36983-advancement-or-acceleration-how",
+  "task": "where:gap_deg",
+  "kind": "where",
+  "agent": "random",
+  "mean": 0.85,
+  "n": 50
+ },
+ {
+  "env": "2610-36983-advancement-or-acceleration-how",
+  "task": "where:gap_deg",
+  "kind": "where",
+  "agent": "uniform",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-36983-advancement-or-acceleration-how",
+  "task": "where:label_noise",
+  "kind": "where",
+  "agent": "prior",
+  "mean": 0.5,
+  "n": 50
+ },
+ {
+  "env": "2610-36983-advancement-or-acceleration-how",
+  "task": "where:label_noise",
+  "kind": "where",
+  "agent": "random",
+  "mean": 0.53,
+  "n": 50
+ },
+ {
+  "env": "2610-36983-advancement-or-acceleration-how",
+  "task": "where:label_noise",
+  "kind": "where",
+  "agent": "uniform",
+  "mean": 0.76,
+  "n": 50
+ },
+ {
+  "env": "2610-36983-advancement-or-acceleration-how",
+  "task": "best",
+  "kind": "best",
+  "agent": "prior",
+  "mean": 0.6399290706164584,
+  "n": 50
+ },
+ {
+  "env": "2610-36983-advancement-or-acceleration-how",
+  "task": "best",
+  "kind": "best",
+  "agent": "random",
+  "mean": 0.9380682173776989,
+  "n": 50
+ },
+ {
+  "env": "2610-36983-advancement-or-acceleration-how",
+  "task": "best",
+  "kind": "best",
+  "agent": "uniform",
+  "mean": 0.9917158652341712,
+  "n": 50
+ },
+ {
+  "env": "2610-36994-callm-continual-adaptation-of",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "prior",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-36994-callm-continual-adaptation-of",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "random",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-36994-callm-continual-adaptation-of",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "uniform",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-36994-callm-continual-adaptation-of",
+  "task": "best",
+  "kind": "best",
+  "agent": "prior",
+  "mean": 0.015364080478486405,
+  "n": 50
+ },
+ {
+  "env": "2610-36994-callm-continual-adaptation-of",
+  "task": "best",
+  "kind": "best",
+  "agent": "random",
+  "mean": 0.9899054076760546,
+  "n": 50
+ },
+ {
+  "env": "2610-36994-callm-continual-adaptation-of",
+  "task": "best",
+  "kind": "best",
+  "agent": "uniform",
+  "mean": 0.9899054076760546,
+  "n": 50
+ },
+ {
+  "env": "2610-36999-online-gas-classification-at",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "prior",
+  "mean": 0.0,
+  "n": 50
+ },
+ {
+  "env": "2610-36999-online-gas-classification-at",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "random",
+  "mean": 0.98,
+  "n": 50
+ },
+ {
+  "env": "2610-36999-online-gas-classification-at",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "uniform",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-36999-online-gas-classification-at",
+  "task": "best",
+  "kind": "best",
+  "agent": "prior",
+  "mean": 0.0,
+  "n": 50
+ },
+ {
+  "env": "2610-36999-online-gas-classification-at",
+  "task": "best",
+  "kind": "best",
+  "agent": "random",
+  "mean": 0.9776533907427343,
+  "n": 50
+ },
+ {
+  "env": "2610-36999-online-gas-classification-at",
+  "task": "best",
+  "kind": "best",
+  "agent": "uniform",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37005-compote-collapseresistant-multiple-hypothesis",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "prior",
+  "mean": 0.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37005-compote-collapseresistant-multiple-hypothesis",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "random",
+  "mean": 0.46,
+  "n": 50
+ },
+ {
+  "env": "2610-37005-compote-collapseresistant-multiple-hypothesis",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "uniform",
+  "mean": 0.5,
+  "n": 50
+ },
+ {
+  "env": "2610-37005-compote-collapseresistant-multiple-hypothesis",
+  "task": "where:n_hyp",
+  "kind": "where",
+  "agent": "prior",
+  "mean": 0.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37005-compote-collapseresistant-multiple-hypothesis",
+  "task": "where:n_hyp",
+  "kind": "where",
+  "agent": "random",
+  "mean": 0.6199999999999999,
+  "n": 50
+ },
+ {
+  "env": "2610-37005-compote-collapseresistant-multiple-hypothesis",
+  "task": "where:n_hyp",
+  "kind": "where",
+  "agent": "uniform",
+  "mean": 0.8799999999999999,
+  "n": 50
+ },
+ {
+  "env": "2610-37005-compote-collapseresistant-multiple-hypothesis",
+  "task": "best",
+  "kind": "best",
+  "agent": "prior",
+  "mean": 0.9924853853635054,
+  "n": 50
+ },
+ {
+  "env": "2610-37005-compote-collapseresistant-multiple-hypothesis",
+  "task": "best",
+  "kind": "best",
+  "agent": "random",
+  "mean": 0.9867854317570043,
+  "n": 50
+ },
+ {
+  "env": "2610-37005-compote-collapseresistant-multiple-hypothesis",
+  "task": "best",
+  "kind": "best",
+  "agent": "uniform",
+  "mean": 0.9878987071884251,
+  "n": 50
+ },
+ {
+  "env": "2610-37062-energycal-taming-loss-spikes",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "prior",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37062-energycal-taming-loss-spikes",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "random",
+  "mean": 0.78,
+  "n": 50
+ },
+ {
+  "env": "2610-37062-energycal-taming-loss-spikes",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "uniform",
+  "mean": 0.9,
+  "n": 50
+ },
+ {
+  "env": "2610-37062-energycal-taming-loss-spikes",
+  "task": "where:lr",
+  "kind": "where",
+  "agent": "prior",
+  "mean": 0.6666666666666665,
+  "n": 50
+ },
+ {
+  "env": "2610-37062-energycal-taming-loss-spikes",
+  "task": "where:lr",
+  "kind": "where",
+  "agent": "random",
+  "mean": 0.62,
+  "n": 50
+ },
+ {
+  "env": "2610-37062-energycal-taming-loss-spikes",
+  "task": "where:lr",
+  "kind": "where",
+  "agent": "uniform",
+  "mean": 0.8199999999999998,
+  "n": 50
+ },
+ {
+  "env": "2610-37062-energycal-taming-loss-spikes",
+  "task": "best",
+  "kind": "best",
+  "agent": "prior",
+  "mean": 0.9326264123270894,
+  "n": 50
+ },
+ {
+  "env": "2610-37062-energycal-taming-loss-spikes",
+  "task": "best",
+  "kind": "best",
+  "agent": "random",
+  "mean": 0.9790704269572178,
+  "n": 50
+ },
+ {
+  "env": "2610-37062-energycal-taming-loss-spikes",
+  "task": "best",
+  "kind": "best",
+  "agent": "uniform",
+  "mean": 0.9821124750564334,
+  "n": 50
+ },
+ {
+  "env": "2610-37085-on-the-sparsity-of",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "prior",
+  "mean": 0.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37085-on-the-sparsity-of",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "random",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37085-on-the-sparsity-of",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "uniform",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37085-on-the-sparsity-of",
+  "task": "where:beta",
+  "kind": "where",
+  "agent": "prior",
+  "mean": 0.5,
+  "n": 50
+ },
+ {
+  "env": "2610-37085-on-the-sparsity-of",
+  "task": "where:beta",
+  "kind": "where",
+  "agent": "random",
+  "mean": 0.56,
+  "n": 50
+ },
+ {
+  "env": "2610-37085-on-the-sparsity-of",
+  "task": "where:beta",
+  "kind": "where",
+  "agent": "uniform",
+  "mean": 0.6,
+  "n": 50
+ },
+ {
+  "env": "2610-37085-on-the-sparsity-of",
+  "task": "best",
+  "kind": "best",
+  "agent": "prior",
+  "mean": 0.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37085-on-the-sparsity-of",
+  "task": "best",
+  "kind": "best",
+  "agent": "random",
+  "mean": 0.6640855910804144,
+  "n": 50
+ },
+ {
+  "env": "2610-37085-on-the-sparsity-of",
+  "task": "best",
+  "kind": "best",
+  "agent": "uniform",
+  "mean": 0.8813023806760745,
+  "n": 50
+ },
+ {
+  "env": "2610-37145-beyond-parameter-protection-fishershaped",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "prior",
+  "mean": 0.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37145-beyond-parameter-protection-fishershaped",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "random",
+  "mean": 0.98,
+  "n": 50
+ },
+ {
+  "env": "2610-37145-beyond-parameter-protection-fishershaped",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "uniform",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37145-beyond-parameter-protection-fishershaped",
+  "task": "best",
+  "kind": "best",
+  "agent": "prior",
+  "mean": 0.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37145-beyond-parameter-protection-fishershaped",
+  "task": "best",
+  "kind": "best",
+  "agent": "random",
+  "mean": 0.983477216054428,
+  "n": 50
+ },
+ {
+  "env": "2610-37145-beyond-parameter-protection-fishershaped",
+  "task": "best",
+  "kind": "best",
+  "agent": "uniform",
+  "mean": 0.9939088598091854,
+  "n": 50
+ },
+ {
+  "env": "2610-37159-physicsguided-flow-matching-a",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "prior",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37159-physicsguided-flow-matching-a",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "random",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37159-physicsguided-flow-matching-a",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "uniform",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37159-physicsguided-flow-matching-a",
+  "task": "best",
+  "kind": "best",
+  "agent": "prior",
+  "mean": 0.7308641231641984,
+  "n": 50
+ },
+ {
+  "env": "2610-37159-physicsguided-flow-matching-a",
+  "task": "best",
+  "kind": "best",
+  "agent": "random",
+  "mean": 0.9808813194288881,
+  "n": 50
+ },
+ {
+  "env": "2610-37159-physicsguided-flow-matching-a",
+  "task": "best",
+  "kind": "best",
+  "agent": "uniform",
+  "mean": 0.9774221484681007,
+  "n": 50
+ },
+ {
+  "env": "2610-37169-rnyiregularized-flowbased-variational-inference",
+  "task": "where:noise",
+  "kind": "where",
+  "agent": "prior",
+  "mean": 0.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37169-rnyiregularized-flowbased-variational-inference",
+  "task": "where:noise",
+  "kind": "where",
+  "agent": "random",
+  "mean": 0.58,
+  "n": 50
+ },
+ {
+  "env": "2610-37169-rnyiregularized-flowbased-variational-inference",
+  "task": "where:noise",
+  "kind": "where",
+  "agent": "uniform",
+  "mean": 0.76,
+  "n": 50
+ },
+ {
+  "env": "2610-37169-rnyiregularized-flowbased-variational-inference",
+  "task": "where:alpha",
+  "kind": "where",
+  "agent": "prior",
+  "mean": 0.5,
+  "n": 50
+ },
+ {
+  "env": "2610-37169-rnyiregularized-flowbased-variational-inference",
+  "task": "where:alpha",
+  "kind": "where",
+  "agent": "random",
+  "mean": 0.66,
+  "n": 50
+ },
+ {
+  "env": "2610-37169-rnyiregularized-flowbased-variational-inference",
+  "task": "where:alpha",
+  "kind": "where",
+  "agent": "uniform",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37169-rnyiregularized-flowbased-variational-inference",
+  "task": "best",
+  "kind": "best",
+  "agent": "prior",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37169-rnyiregularized-flowbased-variational-inference",
+  "task": "best",
+  "kind": "best",
+  "agent": "random",
+  "mean": 0.9892682926829268,
+  "n": 50
+ },
+ {
+  "env": "2610-37169-rnyiregularized-flowbased-variational-inference",
+  "task": "best",
+  "kind": "best",
+  "agent": "uniform",
+  "mean": 0.9795121951219512,
+  "n": 50
+ },
+ {
+  "env": "2610-37195-actionvalue-calibration-via-continuation",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "prior",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37195-actionvalue-calibration-via-continuation",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "random",
+  "mean": 0.88,
+  "n": 50
+ },
+ {
+  "env": "2610-37195-actionvalue-calibration-via-continuation",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "uniform",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37195-actionvalue-calibration-via-continuation",
+  "task": "best",
+  "kind": "best",
+  "agent": "prior",
+  "mean": 0.019136302174934696,
+  "n": 50
+ },
+ {
+  "env": "2610-37195-actionvalue-calibration-via-continuation",
+  "task": "best",
+  "kind": "best",
+  "agent": "random",
+  "mean": 0.9259312000739829,
+  "n": 50
+ },
+ {
+  "env": "2610-37195-actionvalue-calibration-via-continuation",
+  "task": "best",
+  "kind": "best",
+  "agent": "uniform",
+  "mean": 0.9868133880005294,
+  "n": 50
+ },
+ {
+  "env": "2610-37225-sharpnessaware-muon-matrixaware-optimization",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "prior",
+  "mean": 0.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37225-sharpnessaware-muon-matrixaware-optimization",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "random",
+  "mean": 0.86,
+  "n": 50
+ },
+ {
+  "env": "2610-37225-sharpnessaware-muon-matrixaware-optimization",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "uniform",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37225-sharpnessaware-muon-matrixaware-optimization",
+  "task": "where:rho",
+  "kind": "where",
+  "agent": "prior",
+  "mean": 0.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37225-sharpnessaware-muon-matrixaware-optimization",
+  "task": "where:rho",
+  "kind": "where",
+  "agent": "random",
+  "mean": 0.96,
+  "n": 50
+ },
+ {
+  "env": "2610-37225-sharpnessaware-muon-matrixaware-optimization",
+  "task": "where:rho",
+  "kind": "where",
+  "agent": "uniform",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37225-sharpnessaware-muon-matrixaware-optimization",
+  "task": "best",
+  "kind": "best",
+  "agent": "prior",
+  "mean": 0.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37225-sharpnessaware-muon-matrixaware-optimization",
+  "task": "best",
+  "kind": "best",
+  "agent": "random",
+  "mean": 0.8767211678647638,
+  "n": 50
+ },
+ {
+  "env": "2610-37225-sharpnessaware-muon-matrixaware-optimization",
+  "task": "best",
+  "kind": "best",
+  "agent": "uniform",
+  "mean": 0.8492894602564597,
+  "n": 50
+ },
+ {
+  "env": "2610-37227-doubly-robust-deep-kernel",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "prior",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37227-doubly-robust-deep-kernel",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "random",
+  "mean": 0.98,
+  "n": 50
+ },
+ {
+  "env": "2610-37227-doubly-robust-deep-kernel",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "uniform",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37227-doubly-robust-deep-kernel",
+  "task": "best",
+  "kind": "best",
+  "agent": "prior",
+  "mean": 0.6226415094339621,
+  "n": 50
+ },
+ {
+  "env": "2610-37227-doubly-robust-deep-kernel",
+  "task": "best",
+  "kind": "best",
+  "agent": "random",
+  "mean": 0.7781132075471701,
+  "n": 50
+ },
+ {
+  "env": "2610-37227-doubly-robust-deep-kernel",
+  "task": "best",
+  "kind": "best",
+  "agent": "uniform",
+  "mean": 0.6777358490566039,
+  "n": 50
+ },
+ {
+  "env": "2610-37284-bayesian-inference-of-expensive",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "prior",
+  "mean": 0.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37284-bayesian-inference-of-expensive",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "random",
+  "mean": 0.86,
+  "n": 50
+ },
+ {
+  "env": "2610-37284-bayesian-inference-of-expensive",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "uniform",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37284-bayesian-inference-of-expensive",
+  "task": "best",
+  "kind": "best",
+  "agent": "prior",
+  "mean": 0.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37284-bayesian-inference-of-expensive",
+  "task": "best",
+  "kind": "best",
+  "agent": "random",
+  "mean": 0.6256842665662542,
+  "n": 50
+ },
+ {
+  "env": "2610-37284-bayesian-inference-of-expensive",
+  "task": "best",
+  "kind": "best",
+  "agent": "uniform",
+  "mean": 0.5019177731988925,
+  "n": 50
+ },
+ {
+  "env": "2610-37353-costbased-variable-selection-for",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "prior",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37353-costbased-variable-selection-for",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "random",
+  "mean": 0.76,
+  "n": 50
+ },
+ {
+  "env": "2610-37353-costbased-variable-selection-for",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "uniform",
+  "mean": 0.74,
+  "n": 50
+ },
+ {
+  "env": "2610-37353-costbased-variable-selection-for",
+  "task": "where:expensive_harm",
+  "kind": "where",
+  "agent": "prior",
+  "mean": 0.6666666666666665,
+  "n": 50
+ },
+ {
+  "env": "2610-37353-costbased-variable-selection-for",
+  "task": "where:expensive_harm",
+  "kind": "where",
+  "agent": "random",
+  "mean": 0.76,
+  "n": 50
+ },
+ {
+  "env": "2610-37353-costbased-variable-selection-for",
+  "task": "where:expensive_harm",
+  "kind": "where",
+  "agent": "uniform",
+  "mean": 0.8866666666666666,
+  "n": 50
+ },
+ {
+  "env": "2610-37353-costbased-variable-selection-for",
+  "task": "best",
+  "kind": "best",
+  "agent": "prior",
+  "mean": 0.6996680092193792,
+  "n": 50
+ },
+ {
+  "env": "2610-37353-costbased-variable-selection-for",
+  "task": "best",
+  "kind": "best",
+  "agent": "random",
+  "mean": 0.9814227085418947,
+  "n": 50
+ },
+ {
+  "env": "2610-37353-costbased-variable-selection-for",
+  "task": "best",
+  "kind": "best",
+  "agent": "uniform",
+  "mean": 0.9904554280259821,
+  "n": 50
+ },
+ {
+  "env": "2610-37365-tridentseq-profilematched-prefixfuture-contrast",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "prior",
+  "mean": 0.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37365-tridentseq-profilematched-prefixfuture-contrast",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "random",
+  "mean": 0.82,
+  "n": 50
+ },
+ {
+  "env": "2610-37365-tridentseq-profilematched-prefixfuture-contrast",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "uniform",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37365-tridentseq-profilematched-prefixfuture-contrast",
+  "task": "best",
+  "kind": "best",
+  "agent": "prior",
+  "mean": 0.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37365-tridentseq-profilematched-prefixfuture-contrast",
+  "task": "best",
+  "kind": "best",
+  "agent": "random",
+  "mean": 0.9860067820958386,
+  "n": 50
+ },
+ {
+  "env": "2610-37365-tridentseq-profilematched-prefixfuture-contrast",
+  "task": "best",
+  "kind": "best",
+  "agent": "uniform",
+  "mean": 0.9941822713722992,
+  "n": 50
+ },
+ {
+  "env": "2610-37373-euclidean-crowdingdriven-adaptive-euclideanhyperbolic",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "prior",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37373-euclidean-crowdingdriven-adaptive-euclideanhyperbolic",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "random",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37373-euclidean-crowdingdriven-adaptive-euclideanhyperbolic",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "uniform",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37373-euclidean-crowdingdriven-adaptive-euclideanhyperbolic",
+  "task": "best",
+  "kind": "best",
+  "agent": "prior",
+  "mean": 0.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37373-euclidean-crowdingdriven-adaptive-euclideanhyperbolic",
+  "task": "best",
+  "kind": "best",
+  "agent": "random",
+  "mean": 0.876167940503834,
+  "n": 50
+ },
+ {
+  "env": "2610-37373-euclidean-crowdingdriven-adaptive-euclideanhyperbolic",
+  "task": "best",
+  "kind": "best",
+  "agent": "uniform",
+  "mean": 0.8398851073508422,
+  "n": 50
+ },
+ {
+  "env": "2610-37388-paragaussian-approximations-of-random",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "prior",
+  "mean": 0.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37388-paragaussian-approximations-of-random",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "random",
+  "mean": 0.9,
+  "n": 50
+ },
+ {
+  "env": "2610-37388-paragaussian-approximations-of-random",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "uniform",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37388-paragaussian-approximations-of-random",
+  "task": "where:width",
+  "kind": "where",
+  "agent": "prior",
+  "mean": 0.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37388-paragaussian-approximations-of-random",
+  "task": "where:width",
+  "kind": "where",
+  "agent": "random",
+  "mean": 0.5333333333333333,
+  "n": 50
+ },
+ {
+  "env": "2610-37388-paragaussian-approximations-of-random",
+  "task": "where:width",
+  "kind": "where",
+  "agent": "uniform",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37388-paragaussian-approximations-of-random",
+  "task": "best",
+  "kind": "best",
+  "agent": "prior",
+  "mean": 0.29570510120084004,
+  "n": 50
+ },
+ {
+  "env": "2610-37388-paragaussian-approximations-of-random",
+  "task": "best",
+  "kind": "best",
+  "agent": "random",
+  "mean": 0.9885979129605676,
+  "n": 50
+ },
+ {
+  "env": "2610-37388-paragaussian-approximations-of-random",
+  "task": "best",
+  "kind": "best",
+  "agent": "uniform",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37389-how-many-and-how",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "prior",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37389-how-many-and-how",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "random",
+  "mean": 0.9,
+  "n": 50
+ },
+ {
+  "env": "2610-37389-how-many-and-how",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "uniform",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37389-how-many-and-how",
+  "task": "where:p",
+  "kind": "where",
+  "agent": "prior",
+  "mean": 0.6666666666666665,
+  "n": 50
+ },
+ {
+  "env": "2610-37389-how-many-and-how",
+  "task": "where:p",
+  "kind": "where",
+  "agent": "random",
+  "mean": 0.6666666666666665,
+  "n": 50
+ },
+ {
+  "env": "2610-37389-how-many-and-how",
+  "task": "where:p",
+  "kind": "where",
+  "agent": "uniform",
+  "mean": 0.5666666666666667,
+  "n": 50
+ },
+ {
+  "env": "2610-37389-how-many-and-how",
+  "task": "where:model",
+  "kind": "where",
+  "agent": "prior",
+  "mean": 0.5,
+  "n": 50
+ },
+ {
+  "env": "2610-37389-how-many-and-how",
+  "task": "where:model",
+  "kind": "where",
+  "agent": "random",
+  "mean": 0.57,
+  "n": 50
+ },
+ {
+  "env": "2610-37389-how-many-and-how",
+  "task": "where:model",
+  "kind": "where",
+  "agent": "uniform",
+  "mean": 0.65,
+  "n": 50
+ },
+ {
+  "env": "2610-37389-how-many-and-how",
+  "task": "best",
+  "kind": "best",
+  "agent": "prior",
+  "mean": 0.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37389-how-many-and-how",
+  "task": "best",
+  "kind": "best",
+  "agent": "random",
+  "mean": 0.6816576794192207,
+  "n": 50
+ },
+ {
+  "env": "2610-37389-how-many-and-how",
+  "task": "best",
+  "kind": "best",
+  "agent": "uniform",
+  "mean": 0.6608555684013393,
+  "n": 50
+ },
+ {
+  "env": "2610-37390-linmix-data-mixing-as",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "prior",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37390-linmix-data-mixing-as",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "random",
+  "mean": 0.98,
+  "n": 50
+ },
+ {
+  "env": "2610-37390-linmix-data-mixing-as",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "uniform",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37390-linmix-data-mixing-as",
+  "task": "best",
+  "kind": "best",
+  "agent": "prior",
+  "mean": 0.9483452004746482,
+  "n": 50
+ },
+ {
+  "env": "2610-37390-linmix-data-mixing-as",
+  "task": "best",
+  "kind": "best",
+  "agent": "random",
+  "mean": 0.8524337369259871,
+  "n": 50
+ },
+ {
+  "env": "2610-37390-linmix-data-mixing-as",
+  "task": "best",
+  "kind": "best",
+  "agent": "uniform",
+  "mean": 0.5602402000024661,
+  "n": 50
+ },
+ {
+  "env": "2610-37450-graph-representation-learning-via",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "prior",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37450-graph-representation-learning-via",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "random",
+  "mean": 0.9,
+  "n": 50
+ },
+ {
+  "env": "2610-37450-graph-representation-learning-via",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "uniform",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37450-graph-representation-learning-via",
+  "task": "best",
+  "kind": "best",
+  "agent": "prior",
+  "mean": 0.444444444444444,
+  "n": 50
+ },
+ {
+  "env": "2610-37450-graph-representation-learning-via",
+  "task": "best",
+  "kind": "best",
+  "agent": "random",
+  "mean": 0.6828148148148143,
+  "n": 50
+ },
+ {
+  "env": "2610-37450-graph-representation-learning-via",
+  "task": "best",
+  "kind": "best",
+  "agent": "uniform",
+  "mean": 0.7226666666666663,
+  "n": 50
+ },
+ {
+  "env": "2610-37456-an-input-skip-can",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "prior",
+  "mean": 0.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37456-an-input-skip-can",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "random",
+  "mean": 0.56,
+  "n": 50
+ },
+ {
+  "env": "2610-37456-an-input-skip-can",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "uniform",
+  "mean": 0.88,
+  "n": 50
+ },
+ {
+  "env": "2610-37456-an-input-skip-can",
+  "task": "where:alpha",
+  "kind": "where",
+  "agent": "prior",
+  "mean": 0.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37456-an-input-skip-can",
+  "task": "where:alpha",
+  "kind": "where",
+  "agent": "random",
+  "mean": 0.61,
+  "n": 50
+ },
+ {
+  "env": "2610-37456-an-input-skip-can",
+  "task": "where:alpha",
+  "kind": "where",
+  "agent": "uniform",
+  "mean": 0.96,
+  "n": 50
+ },
+ {
+  "env": "2610-37456-an-input-skip-can",
+  "task": "where:noise_sd",
+  "kind": "where",
+  "agent": "prior",
+  "mean": 0.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37456-an-input-skip-can",
+  "task": "where:noise_sd",
+  "kind": "where",
+  "agent": "random",
+  "mean": 0.62,
+  "n": 50
+ },
+ {
+  "env": "2610-37456-an-input-skip-can",
+  "task": "where:noise_sd",
+  "kind": "where",
+  "agent": "uniform",
+  "mean": 0.84,
+  "n": 50
+ },
+ {
+  "env": "2610-37456-an-input-skip-can",
+  "task": "best",
+  "kind": "best",
+  "agent": "prior",
+  "mean": 0.9894611460733739,
+  "n": 50
+ },
+ {
+  "env": "2610-37456-an-input-skip-can",
+  "task": "best",
+  "kind": "best",
+  "agent": "random",
+  "mean": 0.9809055164893133,
+  "n": 50
+ },
+ {
+  "env": "2610-37456-an-input-skip-can",
+  "task": "best",
+  "kind": "best",
+  "agent": "uniform",
+  "mean": 0.9923501955688232,
+  "n": 50
+ },
+ {
+  "env": "2610-37473-qdpinna-physicsinformed-neural-network",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "prior",
+  "mean": 0.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37473-qdpinna-physicsinformed-neural-network",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "random",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37473-qdpinna-physicsinformed-neural-network",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "uniform",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37473-qdpinna-physicsinformed-neural-network",
+  "task": "best",
+  "kind": "best",
+  "agent": "prior",
+  "mean": 0.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37473-qdpinna-physicsinformed-neural-network",
+  "task": "best",
+  "kind": "best",
+  "agent": "random",
+  "mean": 0.9977478761346882,
+  "n": 50
+ },
+ {
+  "env": "2610-37473-qdpinna-physicsinformed-neural-network",
+  "task": "best",
+  "kind": "best",
+  "agent": "uniform",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37523-the-structure-gap-when",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "prior",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37523-the-structure-gap-when",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "random",
+  "mean": 0.72,
+  "n": 50
+ },
+ {
+  "env": "2610-37523-the-structure-gap-when",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "uniform",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37523-the-structure-gap-when",
+  "task": "where:n_per_d",
+  "kind": "where",
+  "agent": "prior",
+  "mean": 0.5,
+  "n": 50
+ },
+ {
+  "env": "2610-37523-the-structure-gap-when",
+  "task": "where:n_per_d",
+  "kind": "where",
+  "agent": "random",
+  "mean": 0.87,
+  "n": 50
+ },
+ {
+  "env": "2610-37523-the-structure-gap-when",
+  "task": "where:n_per_d",
+  "kind": "where",
+  "agent": "uniform",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37523-the-structure-gap-when",
+  "task": "where:operator_error",
+  "kind": "where",
+  "agent": "prior",
+  "mean": 0.5,
+  "n": 50
+ },
+ {
+  "env": "2610-37523-the-structure-gap-when",
+  "task": "where:operator_error",
+  "kind": "where",
+  "agent": "random",
+  "mean": 0.72,
+  "n": 50
+ },
+ {
+  "env": "2610-37523-the-structure-gap-when",
+  "task": "where:operator_error",
+  "kind": "where",
+  "agent": "uniform",
+  "mean": 0.98,
+  "n": 50
+ },
+ {
+  "env": "2610-37523-the-structure-gap-when",
+  "task": "best",
+  "kind": "best",
+  "agent": "prior",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37523-the-structure-gap-when",
+  "task": "best",
+  "kind": "best",
+  "agent": "random",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37523-the-structure-gap-when",
+  "task": "best",
+  "kind": "best",
+  "agent": "uniform",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37553-collective-dynamics-of-selfreinforcement",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "prior",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37553-collective-dynamics-of-selfreinforcement",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "random",
+  "mean": 0.6,
+  "n": 50
+ },
+ {
+  "env": "2610-37553-collective-dynamics-of-selfreinforcement",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "uniform",
+  "mean": 0.92,
+  "n": 50
+ },
+ {
+  "env": "2610-37553-collective-dynamics-of-selfreinforcement",
+  "task": "where:a",
+  "kind": "where",
+  "agent": "prior",
+  "mean": 0.5,
+  "n": 50
+ },
+ {
+  "env": "2610-37553-collective-dynamics-of-selfreinforcement",
+  "task": "where:a",
+  "kind": "where",
+  "agent": "random",
+  "mean": 0.73,
+  "n": 50
+ },
+ {
+  "env": "2610-37553-collective-dynamics-of-selfreinforcement",
+  "task": "where:a",
+  "kind": "where",
+  "agent": "uniform",
+  "mean": 0.99,
+  "n": 50
+ },
+ {
+  "env": "2610-37561-when-uncertainty-quantification-fails",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "prior",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37561-when-uncertainty-quantification-fails",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "random",
+  "mean": 0.94,
+  "n": 50
+ },
+ {
+  "env": "2610-37561-when-uncertainty-quantification-fails",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "uniform",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37561-when-uncertainty-quantification-fails",
+  "task": "best",
+  "kind": "best",
+  "agent": "prior",
+  "mean": 0.7593054324618284,
+  "n": 50
+ },
+ {
+  "env": "2610-37561-when-uncertainty-quantification-fails",
+  "task": "best",
+  "kind": "best",
+  "agent": "random",
+  "mean": 0.6782903473139079,
+  "n": 50
+ },
+ {
+  "env": "2610-37561-when-uncertainty-quantification-fails",
+  "task": "best",
+  "kind": "best",
+  "agent": "uniform",
+  "mean": 0.6776855421650848,
+  "n": 50
+ },
+ {
+  "env": "2610-37588-understanding-the-limits-of",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "prior",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37588-understanding-the-limits-of",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "random",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37588-understanding-the-limits-of",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "uniform",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37588-understanding-the-limits-of",
+  "task": "where:horizon",
+  "kind": "where",
+  "agent": "prior",
+  "mean": 0.6666666666666665,
+  "n": 50
+ },
+ {
+  "env": "2610-37588-understanding-the-limits-of",
+  "task": "where:horizon",
+  "kind": "where",
+  "agent": "random",
+  "mean": 0.9533333333333335,
+  "n": 50
+ },
+ {
+  "env": "2610-37588-understanding-the-limits-of",
+  "task": "where:horizon",
+  "kind": "where",
+  "agent": "uniform",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37588-understanding-the-limits-of",
+  "task": "best",
+  "kind": "best",
+  "agent": "prior",
+  "mean": 0.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37588-understanding-the-limits-of",
+  "task": "best",
+  "kind": "best",
+  "agent": "random",
+  "mean": 0.975207780725022,
+  "n": 50
+ },
+ {
+  "env": "2610-37588-understanding-the-limits-of",
+  "task": "best",
+  "kind": "best",
+  "agent": "uniform",
+  "mean": 0.9921485411140583,
+  "n": 50
+ },
+ {
+  "env": "2610-37656-attention-as-lattice-gauge",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "prior",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37656-attention-as-lattice-gauge",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "random",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37656-attention-as-lattice-gauge",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "uniform",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37656-attention-as-lattice-gauge",
+  "task": "where:group",
+  "kind": "where",
+  "agent": "prior",
+  "mean": 0.6666666666666665,
+  "n": 50
+ },
+ {
+  "env": "2610-37656-attention-as-lattice-gauge",
+  "task": "where:group",
+  "kind": "where",
+  "agent": "random",
+  "mean": 0.9533333333333333,
+  "n": 50
+ },
+ {
+  "env": "2610-37656-attention-as-lattice-gauge",
+  "task": "where:group",
+  "kind": "where",
+  "agent": "uniform",
+  "mean": 1.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37656-attention-as-lattice-gauge",
+  "task": "best",
+  "kind": "best",
+  "agent": "prior",
+  "mean": 0.18558478206549392,
+  "n": 50
+ },
+ {
+  "env": "2610-37656-attention-as-lattice-gauge",
+  "task": "best",
+  "kind": "best",
+  "agent": "random",
+  "mean": 0.4959765156097476,
+  "n": 50
+ },
+ {
+  "env": "2610-37656-attention-as-lattice-gauge",
+  "task": "best",
+  "kind": "best",
+  "agent": "uniform",
+  "mean": 0.3305565998262032,
+  "n": 50
+ },
+ {
+  "env": "2610-37658-when-should-we-intervene",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "prior",
+  "mean": 0.0,
+  "n": 50
+ },
+ {
+  "env": "2610-37658-when-should-we-intervene",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "random",
+  "mean": 0.74,
+  "n": 50
+ },
+ {
+  "env": "2610-37658-when-should-we-intervene",
+  "task": "claim",
+  "kind": "claim",
+  "agent": "uniform",
+  "mean": 0.78,
+  "n": 50
+ },
+ {
+  "env": "2610-37658-when-should-we-intervene",
+  "task": "best",
+  "kind": "best",
+  "agent": "prior",
+  "mean": 0.6021505376344125,
+  "n": 50
+ },
+ {
+  "env": "2610-37658-when-should-we-intervene",
+  "task": "best",
+  "kind": "best",
+  "agent": "random",
+  "mean": 0.5068817204301098,
+  "n": 50
+ },
+ {
+  "env": "2610-37658-when-should-we-intervene",
+  "task": "best",
+  "kind": "best",
+  "agent": "uniform",
+  "mean": 0.5313978494623676,
+  "n": 50
+ }
+]
