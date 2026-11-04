@@ -135,6 +135,8 @@ uv run benchtop report
 
 `uv run benchtop episode <env> <task>` prints a capability URL on the agent port, scoped to one episode. Administrative operations use a separate local credential; grades are not available through the agent app. Host and Origin checks stay enabled, with explicit settings for external clients. See [agent and evaluator access](benchmarks/release_v1/ACCESS.md) for setup, grading, and tunnel configuration.
 
+For Qualia, the [integration guide](benchmarks/release_v1/QUALIA.md) covers private configuration, preflight, invocation accounting, and evidence capture. Public MCP preflight has passed; an actual Qualia conversation remains unverified.
+
 In-process, for an RL loop:
 
 ```python

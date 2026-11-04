@@ -4,7 +4,7 @@ import re
 import secrets
 import socket
 import time
-from collections import OrderedDict
+from collections import OrderedDict, deque
 from contextlib import ExitStack
 from pathlib import Path
 from typing import Any
@@ -51,6 +51,22 @@ class Hub:
         self.admin_token = secrets.token_urlsafe(32)
         self.capabilities: dict[str, str] = {}
         self.locks: dict[str, asyncio.Lock] = {}
+        self.mcp_traces: dict[str, dict] = {}
+        self.submission_sources: dict[str, str] = {}
+
+    def record_mcp(self, ep: Episode, tool: str, response: dict):
+        trace = self.mcp_traces.setdefault(ep.id, {"total": 0, "events": deque(maxlen=256)})
+        trace["events"].append({
+            "index": trace["total"], "tool": tool, "at_seconds": round(time.time() - ep.started, 6),
+            "response_keys": sorted(response), "error": "error" in response,
+            "receipt_only": response == {"received": True},
+        })
+        trace["total"] += 1
+
+    def mcp_trace(self, ep: Episode):
+        trace = self.mcp_traces.get(ep.id, {"total": 0, "events": []})
+        return {"total": trace["total"], "events": list(trace["events"]),
+                "submission_source": self.submission_sources.get(ep.id)}
 
     async def run(self, ep: Episode, configs, seeds=1) -> dict:
         async with self.locks[ep.id]:
@@ -83,9 +99,13 @@ class Hub:
                 ep.abort_run(request, "failed")
                 raise
 
-    async def submit(self, ep: Episode, answer, confidence=None) -> dict:
+    async def submit(self, ep: Episode, answer, confidence=None, *, source="admin") -> dict:
         async with self.locks[ep.id]:
-            return ep.submit(answer, confidence)
+            was_done = ep.done
+            out = ep.submit(answer, confidence)
+            if not was_done and ep.done:
+                self.submission_sources[ep.id] = source
+            return out
 
     async def describe(self, ep: Episode) -> dict:
         async with self.locks[ep.id]:
@@ -134,6 +154,8 @@ class Hub:
             expired, _ = self.episodes.popitem(last=False)
             self.capabilities.pop(expired)
             self.locks.pop(expired)
+            self.mcp_traces.pop(expired, None)
+            self.submission_sources.pop(expired, None)
         return ep
 
     def agent_url(self, ep: Episode) -> str:
@@ -161,7 +183,9 @@ def build_app(
     )
     async def describe_lab(ctx: Context) -> dict[str, Any]:
         ep = episode_of(ctx)
-        return await hub.describe(ep)
+        out = await hub.describe(ep)
+        hub.record_mcp(ep, "describe_lab", out)
+        return out
 
     @mcp.tool(
         description=(
@@ -171,7 +195,9 @@ def build_app(
     )
     async def run_experiments(configs: list[dict[str, Any]], ctx: Context, seeds: int = 1) -> dict[str, Any]:
         ep = episode_of(ctx)
-        return await hub.run(ep, configs, seeds)
+        out = await hub.run(ep, configs, seeds)
+        hub.record_mcp(ep, "run_experiments", out)
+        return out
 
     @mcp.tool(
         description=(
@@ -182,9 +208,12 @@ def build_app(
     async def submit_answer(
         answer: str | dict[str, Any], ctx: Context, confidence: float | None = None
     ) -> dict[str, Any]:
-        out = await hub.submit(episode_of(ctx), answer, confidence)
+        ep = episode_of(ctx)
+        out = await hub.submit(ep, answer, confidence, source="mcp")
         # don't leak the grade to the agent mid-run
-        return {"received": True} if out.get("done") else out
+        out = {"received": True} if out.get("done") else out
+        hub.record_mcp(ep, "submit_answer", out)
+        return out
 
     hosts = ["127.0.0.1:*", "localhost:*", "[::1]:*", urlsplit(hub.agent_base).netloc, *(allowed_hosts or [])]
     origins = ["http://127.0.0.1:*", "http://localhost:*", *(allowed_origins or [])]
@@ -223,6 +252,13 @@ def build_admin_app(hub: Hub):
         except KeyError as e:
             return JSONResponse({"error": str(e)}, status_code=404)
         return JSONResponse(await hub.summary(ep))
+
+    async def mcp_trace(request: Request):
+        try:
+            ep = hub.get(request.path_params["eid"])
+        except KeyError as error:
+            return JSONResponse({"error": str(error)}, status_code=404)
+        return JSONResponse(hub.mcp_trace(ep))
 
     async def run(request: Request):
         body = await request.json()
@@ -265,6 +301,7 @@ def build_admin_app(hub: Hub):
         Route("/episodes", create, methods=["POST"]),
         Route("/episodes", episodes, methods=["GET"]),
         Route("/episodes/{eid}", show, methods=["GET"]),
+        Route("/episodes/{eid}/mcp-trace", mcp_trace, methods=["GET"]),
         Route("/episodes/{eid}/run", run, methods=["POST"]),
         Route("/episodes/{eid}/submit", submit, methods=["POST"]),
     ]

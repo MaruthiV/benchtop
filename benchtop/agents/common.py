@@ -39,7 +39,14 @@ class Client:
         return r.json()
 
     def summary(self, eid: str) -> dict:
-        return self.http.get(f"/episodes/{eid}").json()
+        response = self.http.get(f"/episodes/{eid}")
+        response.raise_for_status()
+        return response.json()
+
+    def mcp_trace(self, eid: str) -> dict:
+        response = self.http.get(f"/episodes/{eid}/mcp-trace")
+        response.raise_for_status()
+        return response.json()
 
     def run(self, eid: str, configs: list[dict], seeds: int = 1) -> dict:
         return self.http.post(f"/episodes/{eid}/run", json={"configs": configs, "seeds": seeds}).json()
@@ -94,17 +101,27 @@ class LabClient:
         self.url = url
         self.http = httpx.Client(timeout=60)
 
-    def call(self, name: str, arguments: dict | None = None) -> dict:
+    def rpc(self, method: str, params: dict | None = None) -> dict:
         response = self.http.post(
             self.url,
             headers={"accept": "application/json, text/event-stream", "mcp-protocol-version": "2025-06-18"},
-            json={"jsonrpc": "2.0", "id": 1, "method": "tools/call", "params": {"name": name, "arguments": arguments or {}}},
+            json={"jsonrpc": "2.0", "id": 1, "method": method, "params": params or {}},
         )
         response.raise_for_status()
         body = response.json()
         if "error" in body:
             raise RuntimeError(body["error"]["message"])
-        result = body["result"]
+        return body["result"]
+
+    def initialized(self):
+        response = self.http.post(
+            self.url, headers={"accept": "application/json, text/event-stream", "mcp-protocol-version": "2025-06-18"},
+            json={"jsonrpc": "2.0", "method": "notifications/initialized"},
+        )
+        response.raise_for_status()
+
+    def call(self, name: str, arguments: dict | None = None) -> dict:
+        result = self.rpc("tools/call", {"name": name, "arguments": arguments or {}})
         if result.get("isError"):
             return {"error": result["content"][0]["text"]}
         return json.loads(result["content"][0]["text"])

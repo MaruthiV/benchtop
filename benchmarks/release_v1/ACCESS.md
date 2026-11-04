@@ -43,6 +43,8 @@ PY
 
 All administrative HTTP routes require the admin credential. An episode capability cannot authenticate to them. Administrative requests with an Origin header or a non-loopback Host are rejected. Direct unauthenticated curl requests no longer read grades. Graceful shutdown removes the matching credential profile; starting a server rotates its credentials.
 
+The authenticated `/episodes/ID/mcp-trace` route exposes bounded MCP activity for [operator-assisted integration capture](QUALIA.md). It is absent from the agent app. Events record tool names and response metadata, without credentials or tool arguments. They are separate from immutable final episode results and repeated-submission receipts.
+
 ## External MCP clients
 
 Host and Origin checks remain enabled. `--any-host` has been removed. An explicit `--agent-base` advertises the external agent origin and allows its Host header. Additional exact hosts or origins can be supplied with repeated `--allowed-host` and `--allowed-origin` flags; custom wildcards are rejected.
@@ -61,4 +63,4 @@ Capability URLs are credentials. Keep raw configurations and transcripts private
 
 Regression coverage checks absent and incorrect capabilities, cross-episode access, forged episode headers, ID collisions, eviction, admin authentication, Host/Origin checks, redaction, local credential permissions, and adapter configuration. A real two-listener test exercises the trusted client, scoped MCP observations and submission, private grading, socket-based routing, and graceful shutdown cleanup. Model CLI adapters are tested with substituted runners; this checkpoint makes no real model calls.
 
-Qualia connectivity remains unverified. [Frozen charging and serialized episode operations](BUDGETS.md), [cache input versioning and unsupported-sandbox rejection](CACHE.md), and [foundation reproduction](REPRODUCTION.md) are implemented. The actual Qualia smoke is the remaining foundation gate.
+Qualia connectivity remains unverified. [Frozen charging and serialized episode operations](BUDGETS.md), [cache input versioning and unsupported-sandbox rejection](CACHE.md), and [foundation reproduction](REPRODUCTION.md) are implemented. [Qualia preparation and evidence capture](QUALIA.md) now support the actual UI test, which remains the final foundation gate.

@@ -116,6 +116,27 @@ def cmd_verify(a):
                      indent=2, allow_nan=False))
 
 
+def cmd_integration(a):
+    from benchtop.access import redact
+    from benchtop.agents.common import Client
+    from benchtop.integration import begin, collect, prepare
+
+    client = Client(a.base)
+    try:
+        if a.action == "prepare":
+            result = prepare(client, env=a.env, task=a.task)
+        elif a.action == "begin":
+            result = begin(client, a.episode, client_name=a.client, requested_model=a.requested_model,
+                           reported_model=a.reported_model, restrictions=a.restrictions)
+        else:
+            result = collect(client, a.episode, client_observed=a.client_observed, output=a.output)
+        print(json.dumps(redact(result), indent=2, allow_nan=False))
+    except Exception as error:
+        raise SystemExit(f"integration failed: {redact(str(error))}") from None
+    finally:
+        client.http.close()
+
+
 def main(argv=None):
     p = argparse.ArgumentParser(prog="benchtop")
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -190,6 +211,25 @@ def main(argv=None):
     s.add_argument("--live", action="store_true", help="also sweep a small synthetic fixture in the macOS sandbox")
     s.add_argument("--output", default="artifacts/foundation_check.json")
     s.set_defaults(fn=cmd_verify)
+
+    s = sub.add_parser("integration", help="prepare and record an operator-assisted Qualia connectivity check")
+    actions = s.add_subparsers(dest="action", required=True)
+    prepare = actions.add_parser("prepare")
+    prepare.add_argument("--env", default="2610-36983-advancement-or-acceleration-how")
+    prepare.add_argument("--task", default="where:gap_deg")
+    begin = actions.add_parser("begin")
+    begin.add_argument("episode")
+    begin.add_argument("--client", choices=["qualia-cloud", "qualia-desktop"], required=True)
+    begin.add_argument("--requested-model", required=True)
+    begin.add_argument("--reported-model", default="not_reported")
+    begin.add_argument("--restrictions", default="not_verified")
+    collect = actions.add_parser("collect")
+    collect.add_argument("episode")
+    collect.add_argument("--client-observed", action="store_true", help="attest that the calls were observed in the actual Qualia UI")
+    collect.add_argument("--output", default=None)
+    for action in (prepare, begin, collect):
+        action.add_argument("--base", default="http://127.0.0.1:8787")
+        action.set_defaults(fn=cmd_integration)
 
     a = p.parse_args(argv)
     a.fn(a)
