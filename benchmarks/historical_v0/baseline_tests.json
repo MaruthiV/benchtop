@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "baseline_id": "historical_v0",
+  "command": ".venv/bin/python -m pytest -q",
+  "runs": [
+    {
+      "execution_context": "outer agent sandbox",
+      "exit_code": 1,
+      "passed": 13,
+      "failed": 2,
+      "pytest_reported_seconds": 0.83,
+      "failed_tests": [
+        "tests/test_core.py::test_sandbox_blocks_network_and_writes",
+        "tests/test_live.py::test_identical_requests_share_one_run"
+      ],
+      "failure": "macOS sandbox workers exited during startup"
+    },
+    {
+      "execution_context": "outside outer agent sandbox; lab workers still use macOS sandbox-exec",
+      "started_at_utc": "2026-11-04T19:03:41.247Z",
+      "finished_at_utc": "2026-11-04T19:03:50.993Z",
+      "exit_code": 0,
+      "passed": 15,
+      "failed": 0,
+      "pytest_reported_seconds": 4.46,
+      "stdout": "...............                                                          [100%]\n15 passed in 4.46s\n"
+    }
+  ],
+  "coverage_note": "The existing suite does not cover the confirmed submission leak, private-state discovery dependency, or shared-seed uncertainty issue.",
+  "snapshot_verification": {
+    "archive_and_current_files": "passed: 241 files match",
+    "extracted_files": "passed: 241 files match",
+    "modified_grader": "passed: changed grader detected",
+    "corrupted_archive": "passed: archive checksum mismatch detected",
+    "missing_member": "passed: inventory mismatch detected after updating archive checksum",
+    "ruff_check": "passed for verify.py"
+  }
+}

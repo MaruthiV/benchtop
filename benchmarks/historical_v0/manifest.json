@@ -1,0 +1,1071 @@
+{
+  "schema_version": 1,
+  "baseline_id": "historical_v0",
+  "captured_at_utc": "2026-11-04T19:06:24.715651+00:00",
+  "purpose": "Preserve the existing prototype before release correctness fixes; development evidence only.",
+  "archive": {
+    "path": "snapshot.tar.gz",
+    "sha256": "ae9ad8a8e3f2ed3d4d1cb8664d49adeb24d942686ffe88981628e97bad0a79ae",
+    "bytes": 1398297,
+    "file_count": 241
+  },
+  "grader": {
+    "id": "historical_v0",
+    "source_paths": [
+      "benchtop/stats.py",
+      "benchtop/tasks.py"
+    ],
+    "normal_multiplier": 1.96,
+    "contrast": "Equal-weight mean across context-specific paired differences.",
+    "uncertainty": "Square root of summed context variances divided by context count; ignores covariance across contexts sharing seeds.",
+    "label_rule": "Improvement or harm requires the normal interval beyond the meaningful-effect margin; equivalence requires the interval inside that margin; otherwise no settled label.",
+    "best_task_rule": "Best observed held-out mean, admitted by range against the meaningful-effect margin; not a confidence-qualified optimum.",
+    "seed_partition": "Per-environment manifest; current labs use 16 total seeds, first 4 visible and remaining 12 held out."
+  },
+  "known_issues": [
+    "Repeated MCP submission can return private grading fields.",
+    "Administrative and agent routes share the same server.",
+    "Accepted-environment discovery depends on ignored pipeline state.",
+    "Contrast uncertainty ignores covariance between contexts sharing seeds.",
+    "Automated audit membership does not certify scientific fidelity."
+  ],
+  "collection": {
+    "paper_environment_ids": [
+      "2610-36935-gaussian-process-bandits-for",
+      "2610-36941-algorithmic-monoculture-in-machine",
+      "2610-36983-advancement-or-acceleration-how",
+      "2610-36994-callm-continual-adaptation-of",
+      "2610-36999-online-gas-classification-at",
+      "2610-37005-compote-collapseresistant-multiple-hypothesis",
+      "2610-37062-energycal-taming-loss-spikes",
+      "2610-37085-on-the-sparsity-of",
+      "2610-37145-beyond-parameter-protection-fishershaped",
+      "2610-37159-physicsguided-flow-matching-a",
+      "2610-37169-rnyiregularized-flowbased-variational-inference",
+      "2610-37195-actionvalue-calibration-via-continuation",
+      "2610-37225-sharpnessaware-muon-matrixaware-optimization",
+      "2610-37227-doubly-robust-deep-kernel",
+      "2610-37284-bayesian-inference-of-expensive",
+      "2610-37353-costbased-variable-selection-for",
+      "2610-37365-tridentseq-profilematched-prefixfuture-contrast",
+      "2610-37373-euclidean-crowdingdriven-adaptive-euclideanhyperbolic",
+      "2610-37388-paragaussian-approximations-of-random",
+      "2610-37389-how-many-and-how",
+      "2610-37390-linmix-data-mixing-as",
+      "2610-37450-graph-representation-learning-via",
+      "2610-37456-an-input-skip-can",
+      "2610-37473-qdpinna-physicsinformed-neural-network",
+      "2610-37523-the-structure-gap-when",
+      "2610-37553-collective-dynamics-of-selfreinforcement",
+      "2610-37561-when-uncertainty-quantification-fails",
+      "2610-37588-understanding-the-limits-of",
+      "2610-37656-attention-as-lattice-gauge",
+      "2610-37658-when-should-we-intervene"
+    ],
+    "paper_environments": 30,
+    "paper_tasks": 78,
+    "paper_tasks_by_kind": {
+      "best": 29,
+      "claim": 29,
+      "where": 20
+    },
+    "example_environment_ids": [
+      "label-smoothing"
+    ],
+    "example_tasks": 2,
+    "rollout_rows": 833,
+    "rollout_rows_by_agent": {
+      "claude:haiku": 379,
+      "claude:opus": 41,
+      "claude:sonnet": 152,
+      "codex:default": 104,
+      "ollama:qwen3:4b-instruct": 157
+    }
+  },
+  "runtime": {
+    "python_version": "3.12.11",
+    "system": "Darwin",
+    "system_version": "14.5",
+    "machine": "arm64",
+    "installed_packages": {
+      "numpy": "2.5.4",
+      "scipy": "1.18.1",
+      "scikit-learn": "1.9.1",
+      "torch": "2.15.0",
+      "mcp": "2.3.0",
+      "starlette": "1.10.0",
+      "uvicorn": "0.54.0",
+      "httpx": "0.28.1",
+      "matplotlib": "3.11.2",
+      "pytest": "9.2.0",
+      "ruff": "0.17.3"
+    }
+  },
+  "test_evidence": "baseline_tests.json",
+  "files": {
+    ".gitignore": {
+      "sha256": "c8cdcba3a2187d929aee00eb80630851417b4a4e395d13ebd283713c890d00c9",
+      "bytes": 92
+    },
+    "README.md": {
+      "sha256": "75eb6e7da7daa0d1e4039447a1cd31ea6c88e853d89a509c4e69e07220c19593",
+      "bytes": 9124
+    },
+    "assets/budget.png": {
+      "sha256": "502ade6d6af5d9cf1921433727cf1e083c591ef9a6f03ae50bf5906775b38b80",
+      "bytes": 57389
+    },
+    "assets/budget.svg": {
+      "sha256": "9b507c4e4a7b1937630a334eedb1d76090ab0bcc47b1b604b56268be4c771102",
+      "bytes": 13271
+    },
+    "assets/funnel.png": {
+      "sha256": "8e3498b2e67f6437ad6d09c6788e0a03ced414b361ebbb60b51783dd3c0caad7",
+      "bytes": 26031
+    },
+    "assets/funnel.svg": {
+      "sha256": "f9099cb2e8ee9fadd30ecbd0c1e18c035eddf24b97e503fa015626654ad6131a",
+      "bytes": 4669
+    },
+    "assets/scale.png": {
+      "sha256": "8478b881aae0cbad351710edc504f0368371a41caea5afe2df38194c1701fd32",
+      "bytes": 56679
+    },
+    "assets/scale.svg": {
+      "sha256": "d6801fb26c54587f2c1a3e77c80ea4912fcf3ad145bc3ed02e40b041eaa68ef0",
+      "bytes": 11467
+    },
+    "assets/scores.png": {
+      "sha256": "7d2ad5df250269164fbbe9753bdc4c7a278167164b86ce0a1bac9fe35195c19c",
+      "bytes": 107736
+    },
+    "assets/scores.svg": {
+      "sha256": "49beabee85ad0ff81f4c89525cca7fec8fbbfe3dd70d08e0168f4ff6c574e58c",
+      "bytes": 29480
+    },
+    "assets/trust.png": {
+      "sha256": "958cbdf47ba9d2e95e2ab54f4cda2291730909a80bd198d5c4d4d6ffb6f449be",
+      "bytes": 78677
+    },
+    "assets/trust.svg": {
+      "sha256": "becea248f236d2be8758f12b31206c2222dc8fdac84a08f671c1e532aa0af12d",
+      "bytes": 18634
+    },
+    "benchtop/__init__.py": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "benchtop/_worker.py": {
+      "sha256": "01ba6942a6a56212f04642db91544429b9dd2a610dacba7008c13ca601baca8c",
+      "bytes": 2675
+    },
+    "benchtop/agents/__init__.py": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "benchtop/agents/baselines.py": {
+      "sha256": "607fa4ef604cd3f8c53adb4c55702cc3d3cf065f774220b0c3d4c96eb3c73071",
+      "bytes": 4970
+    },
+    "benchtop/agents/claude.py": {
+      "sha256": "811246008ad4081b2794d10cf67277ef5fcddb35d026c0fdf6c74d1812ebbf88",
+      "bytes": 2403
+    },
+    "benchtop/agents/codex.py": {
+      "sha256": "37199019f9187128888494045fba5ce4202f67383bf6829b809216b83d426a6c",
+      "bytes": 2243
+    },
+    "benchtop/agents/common.py": {
+      "sha256": "dc08286a0b40d790723593e7da1e76d01a9b1c50b59ee68c49d16d5152627b4d",
+      "bytes": 3768
+    },
+    "benchtop/agents/ollama.py": {
+      "sha256": "c9e3c3fd376316fb22625a261c5709360b9eab3de1113da61a93b6477caf5d6e",
+      "bytes": 4609
+    },
+    "benchtop/analysis.py": {
+      "sha256": "5271dfbccc03cd08933c7aeab46079bcd4eb5d20e52318f96da0aaa99be70aa1",
+      "bytes": 2859
+    },
+    "benchtop/arxiv.py": {
+      "sha256": "fe77990ac36c1a950a595db63dcebfa583ec62dbc60c7f3fadd61bbdb4e9ff68",
+      "bytes": 4410
+    },
+    "benchtop/audit.py": {
+      "sha256": "47125ee8a8a7b08a5a79f01243085ed673381c78c87a94768ce245e1bc1f6831",
+      "bytes": 3252
+    },
+    "benchtop/cli.py": {
+      "sha256": "2d759ce11ee524f143784ce8dc080e6285b0aa05d90a4c1e1f0f534bb40e772e",
+      "bytes": 5889
+    },
+    "benchtop/env.py": {
+      "sha256": "390fb7edebb08b3869d42feef2ca2989466e9e6be7eea215485dc4700ad51cec",
+      "bytes": 4031
+    },
+    "benchtop/episode.py": {
+      "sha256": "9ac4192e9e959544e86873e16d9e4927a9fbaa88cd6eb6df29efce2daa308276",
+      "bytes": 10509
+    },
+    "benchtop/evaluate.py": {
+      "sha256": "1f9379c6bdb5d47bad86e65b52852b25345b9fb487033e732bb94b0db0b9cfaf",
+      "bytes": 4223
+    },
+    "benchtop/gym.py": {
+      "sha256": "57fc433405d1713c4f456da0596c253700df40ae99ed818b8d66df6d43470200",
+      "bytes": 2016
+    },
+    "benchtop/live.py": {
+      "sha256": "e1cc3fb1ba33e2ca604ca822d7a771af03e343c2d0c9339582093631b8471ee9",
+      "bytes": 2390
+    },
+    "benchtop/llm.py": {
+      "sha256": "668b381131cbe63c1394fcce561f28d7f8a09b3179ab9483b1fdc9dcbd98c8cd",
+      "bytes": 5382
+    },
+    "benchtop/loadtest.py": {
+      "sha256": "c88959191af5d35cae63c2ea41c2b345f77fdd21e40b7e5d005e96a729c05ad6",
+      "bytes": 8185
+    },
+    "benchtop/pipeline.py": {
+      "sha256": "292f18fac9a39f8715415b14bf5482fb41f8ec3d6abac6a178441871a77d49c2",
+      "bytes": 3079
+    },
+    "benchtop/report.py": {
+      "sha256": "28526df242b72fff816210868f59a5ee557128ee25d4279ff09f44e2e7f91fea",
+      "bytes": 24010
+    },
+    "benchtop/sandbox.py": {
+      "sha256": "f960c51e97f42768cd5d0344386b3514823873d44fcb8c716ad479ee31dc2ad3",
+      "bytes": 6580
+    },
+    "benchtop/server.py": {
+      "sha256": "e2e678f2703d9eafb6b6ba73c3af85d0a823807bf05721532ac33e18f3c7c5a3",
+      "bytes": 8504
+    },
+    "benchtop/space.py": {
+      "sha256": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+      "bytes": 6172
+    },
+    "benchtop/stats.py": {
+      "sha256": "c2a910a3e068412ba49ae5a4524142f4d1f73d40f419f7725f23057d738aa12b",
+      "bytes": 1876
+    },
+    "benchtop/sweep.py": {
+      "sha256": "48497d6caf9fe3414e1e0365c00325c53da749533445798f0d40abbadb9f0a67",
+      "bytes": 3442
+    },
+    "benchtop/synth.py": {
+      "sha256": "36d8c1a5ee553a39c8ada848ca6c8b586bf0beee6881f25d4f51d369899dab09",
+      "bytes": 6629
+    },
+    "benchtop/tasks.py": {
+      "sha256": "490a19f67aafec1a74a74e1a4f1c43d5ee1c8a7488e62b18424bf5b80e0b538d",
+      "bytes": 6969
+    },
+    "benchtop/triage.py": {
+      "sha256": "7cd35a425cba065ca273f45583f954f30d13c11f7a7b9a3fd721bfa66ff7a9da",
+      "bytes": 4278
+    },
+    "benchtop/validate.py": {
+      "sha256": "0fd4bf8da2c2acad4f7dc8a1686a8848970dd82337abf8a2ca89e475cb81c9a9",
+      "bytes": 5355
+    },
+    "envs/2610-36935-gaussian-process-bandits-for/audit.json": {
+      "sha256": "8f3c6e1449b27d735e1b2469de017131779cac94c2b90840498ce9ea64b7217b",
+      "bytes": 4307
+    },
+    "envs/2610-36935-gaussian-process-bandits-for/lab.py": {
+      "sha256": "f4a4bb7156cc0c081f90ed8703629f44ed2530854a1342f75e0d38434e62e117",
+      "bytes": 6777
+    },
+    "envs/2610-36935-gaussian-process-bandits-for/manifest.json": {
+      "sha256": "11a547c2bf83d8dc84a3c9d3d17d3a2fc7f972591168405933ddbb1e0e20829f",
+      "bytes": 706
+    },
+    "envs/2610-36935-gaussian-process-bandits-for/results.jsonl": {
+      "sha256": "55345c42a55484affcee7719c50ea1beac1d5f252d624b458cd4da4ed83fa48c",
+      "bytes": 188534
+    },
+    "envs/2610-36935-gaussian-process-bandits-for/space.json": {
+      "sha256": "7f0f1b901b8a3024401bbaa41a7921b2705d5df82fec6d890c0440ddc521068f",
+      "bytes": 2859
+    },
+    "envs/2610-36935-gaussian-process-bandits-for/tasks.json": {
+      "sha256": "13aa494a03bdc2247c1a064782e6e178faf3712b3b5f95db437407eba2ce4fdc",
+      "bytes": 471
+    },
+    "envs/2610-36941-algorithmic-monoculture-in-machine/audit.json": {
+      "sha256": "423222ca188e1f544de4786e19360cc659a510443bae48696d58ca47a08f0c58",
+      "bytes": 2356
+    },
+    "envs/2610-36941-algorithmic-monoculture-in-machine/lab.py": {
+      "sha256": "7c8409f65a9b54ace947f5b4c4dfb6dfd710011e3fe9b9186789988a712bd6ca",
+      "bytes": 3426
+    },
+    "envs/2610-36941-algorithmic-monoculture-in-machine/manifest.json": {
+      "sha256": "8e5f93cae5564cc5f6d3f64ce7ae495b4cc1bbd636143c8eae87fb4fb739d112",
+      "bytes": 759
+    },
+    "envs/2610-36941-algorithmic-monoculture-in-machine/results.jsonl": {
+      "sha256": "097628d7ba7dd3bfba154cb82d6b8a0949031c92f65c5e6d3b6d9f5e887347d8",
+      "bytes": 170543
+    },
+    "envs/2610-36941-algorithmic-monoculture-in-machine/space.json": {
+      "sha256": "c23314ce85b12b01540087b6517c5e23b92d80a4ea74eff7793759b3012de684",
+      "bytes": 2640
+    },
+    "envs/2610-36941-algorithmic-monoculture-in-machine/tasks.json": {
+      "sha256": "b2109d4308b6a7c2d83d0fbb4efa1c4fa550558ef064eedfcc699f076458dac6",
+      "bytes": 1012
+    },
+    "envs/2610-36983-advancement-or-acceleration-how/audit.json": {
+      "sha256": "1e414a2bda6e020f9d4debb4b94667497c4a13abd5968f0a083e945b40a4c385",
+      "bytes": 3337
+    },
+    "envs/2610-36983-advancement-or-acceleration-how/lab.py": {
+      "sha256": "c87e4977489dc420e06af0cbb0dce7100a91d4e25b8940761f2beee60b0b5980",
+      "bytes": 2891
+    },
+    "envs/2610-36983-advancement-or-acceleration-how/manifest.json": {
+      "sha256": "cafcb203d138d4699e43f2fd9b8914d7fc06dff3a3968682545df121cb89736f",
+      "bytes": 761
+    },
+    "envs/2610-36983-advancement-or-acceleration-how/results.jsonl": {
+      "sha256": "38f7b346f5a98a2e65450140704a8f3ce5c33271c10a300f688979df07aa5419",
+      "bytes": 172161
+    },
+    "envs/2610-36983-advancement-or-acceleration-how/space.json": {
+      "sha256": "04b2e9698f4295cfc7797be8fe320512dcab0616facbe0796cb871903b618a7a",
+      "bytes": 2477
+    },
+    "envs/2610-36983-advancement-or-acceleration-how/tasks.json": {
+      "sha256": "3090d2ad1db6a11727665300fea1dd5f9428c5fe09bb9f3f38f545b0f47070ea",
+      "bytes": 1317
+    },
+    "envs/2610-36994-callm-continual-adaptation-of/audit.json": {
+      "sha256": "ca0cc5c51f6582006147331f417874a287bf2987e2c10c3c3b6957561bdba0aa",
+      "bytes": 2686
+    },
+    "envs/2610-36994-callm-continual-adaptation-of/lab.py": {
+      "sha256": "7a1a0677fe6cac97a87325a05cb379d7f72245f3a1a83850f4039e64b173c7fd",
+      "bytes": 4414
+    },
+    "envs/2610-36994-callm-continual-adaptation-of/manifest.json": {
+      "sha256": "2e5cc473bc9987d79166d665da9d5a3c888d1183febe70181f183f51dd5d8a14",
+      "bytes": 711
+    },
+    "envs/2610-36994-callm-continual-adaptation-of/results.jsonl": {
+      "sha256": "51234adf71fe2289b4bbc1162f43b9234e2a899150d7515b910dd9ceae0f21c6",
+      "bytes": 195298
+    },
+    "envs/2610-36994-callm-continual-adaptation-of/space.json": {
+      "sha256": "62eed32b6a8b34c680c24c447d87fa83f34032b420a4e667262d6ca13dbeb282",
+      "bytes": 2527
+    },
+    "envs/2610-36994-callm-continual-adaptation-of/tasks.json": {
+      "sha256": "0a4a82111b623fe923655117475f16ac6f402a14b42b53363a21ec48bcfef0b2",
+      "bytes": 477
+    },
+    "envs/2610-36999-online-gas-classification-at/audit.json": {
+      "sha256": "6e1a35aed3ddae119c42b9fee03c614aa52ef1bcb23f8960b549ab0ff5291db8",
+      "bytes": 2604
+    },
+    "envs/2610-36999-online-gas-classification-at/lab.py": {
+      "sha256": "17416fac829a820d6b7fd7dc87c71696804a2f6dde543f99fb54ecb124c1e310",
+      "bytes": 5019
+    },
+    "envs/2610-36999-online-gas-classification-at/manifest.json": {
+      "sha256": "89ea5e4df8bf2d23733508e56a2dc90f65ec5d1b2aa6e6667fa0176a4aa94bd4",
+      "bytes": 675
+    },
+    "envs/2610-36999-online-gas-classification-at/results.jsonl": {
+      "sha256": "0cbd031773bf7d14a7b0ac8830a3b1766ab256b4e5ed674d9568d013ac14114d",
+      "bytes": 163790
+    },
+    "envs/2610-36999-online-gas-classification-at/space.json": {
+      "sha256": "14879744ff2efaadfa1d86eecc00e5881ad013ed120171eb4aac99828c74dd89",
+      "bytes": 2233
+    },
+    "envs/2610-36999-online-gas-classification-at/tasks.json": {
+      "sha256": "8430352dd32785e8e53a447e81ca2633fe46662bc8b69bcae1d622263de5356c",
+      "bytes": 488
+    },
+    "envs/2610-37005-compote-collapseresistant-multiple-hypothesis/audit.json": {
+      "sha256": "27b71a6d96f853c58fe1364b71c75adaa48f60fa743ae3ecc2b86aa5176fe2e8",
+      "bytes": 3767
+    },
+    "envs/2610-37005-compote-collapseresistant-multiple-hypothesis/lab.py": {
+      "sha256": "21b6d5f3f925026927dadaadfc124bc8720fadc7034efe95bbe9c62c650fed39",
+      "bytes": 3955
+    },
+    "envs/2610-37005-compote-collapseresistant-multiple-hypothesis/manifest.json": {
+      "sha256": "515dd78668a988c9863a3a99e8ee2b041dcd414b0bca6b1c500a70a14881760f",
+      "bytes": 782
+    },
+    "envs/2610-37005-compote-collapseresistant-multiple-hypothesis/results.jsonl": {
+      "sha256": "dc8cf80efe4c1dda54b1d606c4c678a3188109e49795a3dab0f9c11f9e47c7d5",
+      "bytes": 158439
+    },
+    "envs/2610-37005-compote-collapseresistant-multiple-hypothesis/space.json": {
+      "sha256": "bd2f579ef8e004bf144265312db922acdd7c89e930dd464c34004d8bdbae0079",
+      "bytes": 2185
+    },
+    "envs/2610-37005-compote-collapseresistant-multiple-hypothesis/tasks.json": {
+      "sha256": "a739c4444172eb385df37017251252bde6d8e4997c2e7b22ead386525d050ba6",
+      "bytes": 995
+    },
+    "envs/2610-37062-energycal-taming-loss-spikes/audit.json": {
+      "sha256": "93338452a324d889a16ba8add8979fcf025cdaabcd6ceac17323cff18d26c578",
+      "bytes": 3691
+    },
+    "envs/2610-37062-energycal-taming-loss-spikes/lab.py": {
+      "sha256": "8df749ee6010cafecad7f0713ed7bb1fed2801ae1cce1d2e5378161c7e03b692",
+      "bytes": 5692
+    },
+    "envs/2610-37062-energycal-taming-loss-spikes/manifest.json": {
+      "sha256": "407ac5b6eb02f2b325ceadb73f59fd5d9f59eac49db2da02700ee8255af6c347",
+      "bytes": 737
+    },
+    "envs/2610-37062-energycal-taming-loss-spikes/results.jsonl": {
+      "sha256": "661d30eb97fc99632e992d279e2366233fe8aa64bf77efb6ca025d834718aeb0",
+      "bytes": 127404
+    },
+    "envs/2610-37062-energycal-taming-loss-spikes/space.json": {
+      "sha256": "445696bce498cb8e3c4331559cf6714b428d28b021e516b03e2b6b75ba6da246",
+      "bytes": 2456
+    },
+    "envs/2610-37062-energycal-taming-loss-spikes/tasks.json": {
+      "sha256": "b26394f16662ecadc0b1865a218ea22053fd4dab6389042532e131efc23f5b31",
+      "bytes": 996
+    },
+    "envs/2610-37085-on-the-sparsity-of/audit.json": {
+      "sha256": "4f342ad5bd2f5cbb27316e6d024de87df8f71d281577a9a002ec21868660f7d9",
+      "bytes": 2854
+    },
+    "envs/2610-37085-on-the-sparsity-of/lab.py": {
+      "sha256": "6749f8566da6f8cad80b356e9e293c30727593e038bbfbe5e8d75da149e9267f",
+      "bytes": 5327
+    },
+    "envs/2610-37085-on-the-sparsity-of/manifest.json": {
+      "sha256": "ba657f354c706cc3718b96962344b5263e0bcd9b123ce4d7b1cabdc91a066bf6",
+      "bytes": 730
+    },
+    "envs/2610-37085-on-the-sparsity-of/results.jsonl": {
+      "sha256": "66072f862aa136974c5a8bd894971880d7b9c493e9ffdd3bab6fe6f0728727fb",
+      "bytes": 183559
+    },
+    "envs/2610-37085-on-the-sparsity-of/space.json": {
+      "sha256": "6a35a40d2448b613a173471234c6283753f733a1307a5a71b5905b0f3db0feea",
+      "bytes": 2375
+    },
+    "envs/2610-37085-on-the-sparsity-of/tasks.json": {
+      "sha256": "fa06d32f35e2aace007da2e3d253d1297cbdee35f50b7e94f35c39117ddcdc85",
+      "bytes": 867
+    },
+    "envs/2610-37145-beyond-parameter-protection-fishershaped/audit.json": {
+      "sha256": "e88cff212cc939d9df5dd360c45f3f16502a77c6022cef96f618665bca237104",
+      "bytes": 3301
+    },
+    "envs/2610-37145-beyond-parameter-protection-fishershaped/lab.py": {
+      "sha256": "6c3d41b15eba172b20b2b7749e20fa64c9e08e26be9bbb5716a7d0255b1277cb",
+      "bytes": 5131
+    },
+    "envs/2610-37145-beyond-parameter-protection-fishershaped/manifest.json": {
+      "sha256": "17159bee9a89f9e86b34d7f71edc875170181937198ce5f6481a4b8d7b5ec43e",
+      "bytes": 744
+    },
+    "envs/2610-37145-beyond-parameter-protection-fishershaped/results.jsonl": {
+      "sha256": "31cc43e3ebe05db1b875dfb5f2b15237696d4cc0763c19ee1240697668967311",
+      "bytes": 190138
+    },
+    "envs/2610-37145-beyond-parameter-protection-fishershaped/space.json": {
+      "sha256": "d668d19e68cbfac92f52401cb70830355f798eeb55e123b233703ddcbebb48c8",
+      "bytes": 2239
+    },
+    "envs/2610-37145-beyond-parameter-protection-fishershaped/tasks.json": {
+      "sha256": "9635cb5ff1d2c1374b52787439b930eac67e3202d1c2dda35df5a4e00c5c4f7a",
+      "bytes": 454
+    },
+    "envs/2610-37159-physicsguided-flow-matching-a/audit.json": {
+      "sha256": "30a0a669f978cfd7be59928d7effc4f813c72a7869cb520d5a95a2f15acb522e",
+      "bytes": 2370
+    },
+    "envs/2610-37159-physicsguided-flow-matching-a/lab.py": {
+      "sha256": "2394b757c5a38a718f78433a6a6f10cc7d610f7fb71172e68bcace06d70e0470",
+      "bytes": 5535
+    },
+    "envs/2610-37159-physicsguided-flow-matching-a/manifest.json": {
+      "sha256": "b3ed0a6ed8e9c27dbab2b7fb492e88428d9c89d4a3b8807576ffa1f277f8131d",
+      "bytes": 743
+    },
+    "envs/2610-37159-physicsguided-flow-matching-a/results.jsonl": {
+      "sha256": "0305df2f39c5cbc1eb65bd4df5c8f55009f2750a50cf72ef13de8df57abdf880",
+      "bytes": 178727
+    },
+    "envs/2610-37159-physicsguided-flow-matching-a/space.json": {
+      "sha256": "0e0dc618db06b9662b487bc477411f806a8b8ef4a1a250191f59b4e1e03295a5",
+      "bytes": 2481
+    },
+    "envs/2610-37159-physicsguided-flow-matching-a/tasks.json": {
+      "sha256": "e876e88da093f8864631f0a73a9ba07065fbbf66952634c563f1d0c86cfe8ecf",
+      "bytes": 462
+    },
+    "envs/2610-37169-rnyiregularized-flowbased-variational-inference/audit.json": {
+      "sha256": "32fe081f8eddf51cca97d4ecd93e6691c79b9d672d7cb010f321005a6efdef0a",
+      "bytes": 2509
+    },
+    "envs/2610-37169-rnyiregularized-flowbased-variational-inference/lab.py": {
+      "sha256": "63727c2e72f1d9e6ee84356a3f882468a95bcd352ad004ce812b1db74270e274",
+      "bytes": 4052
+    },
+    "envs/2610-37169-rnyiregularized-flowbased-variational-inference/manifest.json": {
+      "sha256": "62d91739d2b2794f193c7d3779ce5ff45accb4aba742eb8c9948c50fb5ce350a",
+      "bytes": 784
+    },
+    "envs/2610-37169-rnyiregularized-flowbased-variational-inference/results.jsonl": {
+      "sha256": "ebfdf8ba7af15cfadad6c485c44c16898fb88080bb12373cd0d0119d5847aa96",
+      "bytes": 183182
+    },
+    "envs/2610-37169-rnyiregularized-flowbased-variational-inference/space.json": {
+      "sha256": "daaebc02a06fab25dcc69739e49e198df9fdccdd779347424d03d583051ad158",
+      "bytes": 2246
+    },
+    "envs/2610-37169-rnyiregularized-flowbased-variational-inference/tasks.json": {
+      "sha256": "13ac3f023e4ef2a4466ac94369f5760a38cbedaaf5ab9e6bc5047179c14b74a5",
+      "bytes": 1059
+    },
+    "envs/2610-37195-actionvalue-calibration-via-continuation/audit.json": {
+      "sha256": "1e036bc638ca1849f800a15edad0d35205d0324932923a7670b43c698c07b984",
+      "bytes": 2552
+    },
+    "envs/2610-37195-actionvalue-calibration-via-continuation/lab.py": {
+      "sha256": "bcdaaa3d75d96cb241dae69ac1045e11cfa27256ca61b5eafafbbafe2a0fe991",
+      "bytes": 4262
+    },
+    "envs/2610-37195-actionvalue-calibration-via-continuation/manifest.json": {
+      "sha256": "4e4fb0a36bd4fb8104d6f1edfb53a34a75c5243e05eac07562b585e7352564a8",
+      "bytes": 758
+    },
+    "envs/2610-37195-actionvalue-calibration-via-continuation/results.jsonl": {
+      "sha256": "b9bc3396b29f5cd8d8592013ca6c4af88bf490240b70f2d222869b5268753ea3",
+      "bytes": 153087
+    },
+    "envs/2610-37195-actionvalue-calibration-via-continuation/space.json": {
+      "sha256": "6e80de65038be182e10422b976657a51e2afbe9677fb0e2cb24c894abcfc7289",
+      "bytes": 2595
+    },
+    "envs/2610-37195-actionvalue-calibration-via-continuation/tasks.json": {
+      "sha256": "233a33256a881fe3f02057adcf7a38483c67ab42f05216fd3bf73d7fbb9950d5",
+      "bytes": 469
+    },
+    "envs/2610-37225-sharpnessaware-muon-matrixaware-optimization/audit.json": {
+      "sha256": "eee8dabe588be3a644d237aa9e8ed2d3d282b9dcab532f9fbea6f229510886a1",
+      "bytes": 2297
+    },
+    "envs/2610-37225-sharpnessaware-muon-matrixaware-optimization/lab.py": {
+      "sha256": "bbbebfd531fe48bbd2333ff068cf6f009d41b73d938d12c084f7f7c23ba481fd",
+      "bytes": 3658
+    },
+    "envs/2610-37225-sharpnessaware-muon-matrixaware-optimization/manifest.json": {
+      "sha256": "2692c9a073181b625d4e8a47563893ae1c214789a8de339a788073e3c7a100b5",
+      "bytes": 772
+    },
+    "envs/2610-37225-sharpnessaware-muon-matrixaware-optimization/results.jsonl": {
+      "sha256": "17a5abefb0898cb87bd32a794be69005e49c257582430ac1f03b2ea5f76ee5cf",
+      "bytes": 172888
+    },
+    "envs/2610-37225-sharpnessaware-muon-matrixaware-optimization/space.json": {
+      "sha256": "7444b8b8e857e9c613f629b6aefa4400462aed93e702dda06d311523f46b9820",
+      "bytes": 2128
+    },
+    "envs/2610-37225-sharpnessaware-muon-matrixaware-optimization/tasks.json": {
+      "sha256": "21a798cb75d65453ef42c19d9acc65f2b40c26d054652f23ca05a8bad3e30d41",
+      "bytes": 894
+    },
+    "envs/2610-37227-doubly-robust-deep-kernel/audit.json": {
+      "sha256": "3fdf92fecec9f2ca52e4d429250a87adc90b4aa6176f7bdc1b9e8eff0380c1a5",
+      "bytes": 3909
+    },
+    "envs/2610-37227-doubly-robust-deep-kernel/lab.py": {
+      "sha256": "2097f3d0b394219eb7d8c1f7ff95073c9d1bf890e8d96643b40055edd2ac2b2c",
+      "bytes": 5705
+    },
+    "envs/2610-37227-doubly-robust-deep-kernel/manifest.json": {
+      "sha256": "824193a6d7c4d1da63775ce052321729f624fd03553701a53ebe71465065c399",
+      "bytes": 689
+    },
+    "envs/2610-37227-doubly-robust-deep-kernel/results.jsonl": {
+      "sha256": "0cf8a21de1037d8258f2ce70a23f8beaf3769ab325ab73d18766cc8c13d88fa1",
+      "bytes": 99360
+    },
+    "envs/2610-37227-doubly-robust-deep-kernel/space.json": {
+      "sha256": "d78e455846b87e8c0a306f455a0ba5605526ee39167b72b5b59033dff64b9153",
+      "bytes": 2668
+    },
+    "envs/2610-37227-doubly-robust-deep-kernel/tasks.json": {
+      "sha256": "769e9dceb9724c8508e989e093a765c1603f5dc5c7b8dbd6e2fa5a9d4605994d",
+      "bytes": 440
+    },
+    "envs/2610-37284-bayesian-inference-of-expensive/audit.json": {
+      "sha256": "1e15fb7d76d44068d8208cd5c15057cd9dd1c5dd26574155d8ade6987bc5a283",
+      "bytes": 1988
+    },
+    "envs/2610-37284-bayesian-inference-of-expensive/lab.py": {
+      "sha256": "2c9346f33c8bc37d21a6bf5a792dab8dab08d351c6647a789ff448b5a73a3344",
+      "bytes": 4269
+    },
+    "envs/2610-37284-bayesian-inference-of-expensive/manifest.json": {
+      "sha256": "1cef34db88542d9b787c2814a0f8d8d200535844a8ca06893768463fa5ab1025",
+      "bytes": 727
+    },
+    "envs/2610-37284-bayesian-inference-of-expensive/results.jsonl": {
+      "sha256": "f47ab04e62f43ceaf414904272251c65ba670157c0e72a6378530b34ab401177",
+      "bytes": 146358
+    },
+    "envs/2610-37284-bayesian-inference-of-expensive/space.json": {
+      "sha256": "997eb048bbdaad5aea6f6ff7eb69986b1f8269d053aa87e7b9f7af6bb48d4008",
+      "bytes": 2646
+    },
+    "envs/2610-37284-bayesian-inference-of-expensive/tasks.json": {
+      "sha256": "c8378b1d00e3898f1e7ff4d5f2e1a3553dd78238d59483b60584d142d2dbee0a",
+      "bytes": 454
+    },
+    "envs/2610-37353-costbased-variable-selection-for/audit.json": {
+      "sha256": "661dc3eb6f55e3a260670f54fe620a3c854b9ada2f6889e80064f5aba2762e5d",
+      "bytes": 2343
+    },
+    "envs/2610-37353-costbased-variable-selection-for/lab.py": {
+      "sha256": "91681e29ab276d05905c86e38afbd359bbe626be0a98f6e4ae2ba44a2663db1b",
+      "bytes": 3742
+    },
+    "envs/2610-37353-costbased-variable-selection-for/manifest.json": {
+      "sha256": "f2a9bf8d7b575849e15c7972312864a8c3b348167ab9233c66cb9a9a099f0b6c",
+      "bytes": 729
+    },
+    "envs/2610-37353-costbased-variable-selection-for/results.jsonl": {
+      "sha256": "6b0e83e380c6bdff47d2ef6acb42f4dcb97709731f1d596d6c0ddb8064849326",
+      "bytes": 179151
+    },
+    "envs/2610-37353-costbased-variable-selection-for/space.json": {
+      "sha256": "b699a6a0368ad536ea3f43af643856a5fa8add0b4f4d672cfe35c46ee0c0b2a1",
+      "bytes": 2121
+    },
+    "envs/2610-37353-costbased-variable-selection-for/tasks.json": {
+      "sha256": "cdf279b988051db7532765ed0530bb52d2f3c44349852d4ace37b9afb9befe09",
+      "bytes": 1064
+    },
+    "envs/2610-37365-tridentseq-profilematched-prefixfuture-contrast/audit.json": {
+      "sha256": "0de5f56b1c052b7f8fc9674199c38af950718b2a3e56d5265f43e02e61056dee",
+      "bytes": 2915
+    },
+    "envs/2610-37365-tridentseq-profilematched-prefixfuture-contrast/lab.py": {
+      "sha256": "a74a4ead94dd2a39c281434e46bdb9369ee2e1416137c8055d95bcb2f02a3664",
+      "bytes": 6826
+    },
+    "envs/2610-37365-tridentseq-profilematched-prefixfuture-contrast/manifest.json": {
+      "sha256": "0638c4683da94d83396aa69a77ca280c51ed970d07351599ed756447557dc982",
+      "bytes": 772
+    },
+    "envs/2610-37365-tridentseq-profilematched-prefixfuture-contrast/results.jsonl": {
+      "sha256": "e7784911e3b61c273d813015ae58637124e1f96231746f2097d309afb0771d68",
+      "bytes": 186329
+    },
+    "envs/2610-37365-tridentseq-profilematched-prefixfuture-contrast/space.json": {
+      "sha256": "0870f893b1ef52df361cd6345c9d28377e52e8fa4b4a2f231600f3eaeb305d42",
+      "bytes": 2520
+    },
+    "envs/2610-37365-tridentseq-profilematched-prefixfuture-contrast/tasks.json": {
+      "sha256": "dd360b615f9cad48e81b555ffccba85d775786967d7793c80d7d3d36fd364796",
+      "bytes": 499
+    },
+    "envs/2610-37373-euclidean-crowdingdriven-adaptive-euclideanhyperbolic/audit.json": {
+      "sha256": "7c7882502faebca26e7a262e68c473170c2a8e5be58ca5db23b804824624cc27",
+      "bytes": 3880
+    },
+    "envs/2610-37373-euclidean-crowdingdriven-adaptive-euclideanhyperbolic/lab.py": {
+      "sha256": "f8e0384151d26eb66095ca8c8f9fb0a1032cf6902a400d291e0d900f3eb9273f",
+      "bytes": 4450
+    },
+    "envs/2610-37373-euclidean-crowdingdriven-adaptive-euclideanhyperbolic/manifest.json": {
+      "sha256": "14ec42ed109bfb652146b918f7de762f366362dcca92ef62ffc6f51d3aaefb0f",
+      "bytes": 758
+    },
+    "envs/2610-37373-euclidean-crowdingdriven-adaptive-euclideanhyperbolic/results.jsonl": {
+      "sha256": "420460d9c051c037262e0e8f3f60f1bb299e82d57dccdef29ec9360d26e51a48",
+      "bytes": 192494
+    },
+    "envs/2610-37373-euclidean-crowdingdriven-adaptive-euclideanhyperbolic/space.json": {
+      "sha256": "484e011d64138478659d18c449bcfdb5c3a4c35bc38f40d204263c13fc642e57",
+      "bytes": 2054
+    },
+    "envs/2610-37373-euclidean-crowdingdriven-adaptive-euclideanhyperbolic/tasks.json": {
+      "sha256": "5b5739688c23c8af1332bbb14ac303605dd3b2759c080f1543924373f775c0cf",
+      "bytes": 454
+    },
+    "envs/2610-37388-paragaussian-approximations-of-random/audit.json": {
+      "sha256": "bf3e12500603d862327d52cfe164a81b7e736c354a474030e7dea2c0327661e3",
+      "bytes": 2258
+    },
+    "envs/2610-37388-paragaussian-approximations-of-random/lab.py": {
+      "sha256": "7052c19137f4091b2bc0548a2d55d6205a7ad989f0f9ec8baf0b8d545fe0e442",
+      "bytes": 2847
+    },
+    "envs/2610-37388-paragaussian-approximations-of-random/manifest.json": {
+      "sha256": "7e12305713779fc7b84a237317228262a2871faee57071f583a761813d9a1e17",
+      "bytes": 738
+    },
+    "envs/2610-37388-paragaussian-approximations-of-random/results.jsonl": {
+      "sha256": "557f3f36ef5c86d8a6bae7a082a082eb8f69552a5b86d3822554168ebe553e11",
+      "bytes": 189004
+    },
+    "envs/2610-37388-paragaussian-approximations-of-random/space.json": {
+      "sha256": "217281d0e851da2c8b778249e9dc2e9a1a04b53f74323c03d046048efc2bc500",
+      "bytes": 2453
+    },
+    "envs/2610-37388-paragaussian-approximations-of-random/tasks.json": {
+      "sha256": "b2784910fdd2e8be26d96040e74bd8462c0aaae497c68bc959063c1f2f5b3c2d",
+      "bytes": 1029
+    },
+    "envs/2610-37389-how-many-and-how/audit.json": {
+      "sha256": "5ca4730d056ff5f8af22ea21efafe980db8b27de1fd9c2015963681afa513909",
+      "bytes": 3535
+    },
+    "envs/2610-37389-how-many-and-how/lab.py": {
+      "sha256": "4c0381a9bf8e38c44251bdb118c30010dde17788e99da6abec522401dfa8273e",
+      "bytes": 7555
+    },
+    "envs/2610-37389-how-many-and-how/manifest.json": {
+      "sha256": "eefd36a77d99ffc99f0c83ccdea0eedb6e7547623278a36e2ee3f3c6d387749f",
+      "bytes": 749
+    },
+    "envs/2610-37389-how-many-and-how/results.jsonl": {
+      "sha256": "4849045b83739910dbb30d2b3dc997285a996abc8b341f628c986533adcf8d8e",
+      "bytes": 162756
+    },
+    "envs/2610-37389-how-many-and-how/space.json": {
+      "sha256": "5f401313e9bea9a2869d54f8ea525752cf31d8925112975d4b99918d9bc17180",
+      "bytes": 2591
+    },
+    "envs/2610-37389-how-many-and-how/tasks.json": {
+      "sha256": "c4a2d2229cea58dc543b9c581705177caf6bc553899a7632333a9deb72b14aa9",
+      "bytes": 1458
+    },
+    "envs/2610-37390-linmix-data-mixing-as/audit.json": {
+      "sha256": "8e09ade64e205ef717c9226cc48b4063f72efb8be7ef88604ae948c76d201cc0",
+      "bytes": 3584
+    },
+    "envs/2610-37390-linmix-data-mixing-as/lab.py": {
+      "sha256": "4ea05b47c51c5fa12c8d577a2b103465a919dcddde9684fbcaa20367d0bcc3a6",
+      "bytes": 5287
+    },
+    "envs/2610-37390-linmix-data-mixing-as/manifest.json": {
+      "sha256": "e2cb0e0d05728f32e6ecd2da60ccf5c33a3dbf1da2be97f59997aca7256cea7d",
+      "bytes": 672
+    },
+    "envs/2610-37390-linmix-data-mixing-as/results.jsonl": {
+      "sha256": "ca8dd12b03805db82f778609509bbe8f0a6a38f8907cac499e58bad1ac2d57ef",
+      "bytes": 188664
+    },
+    "envs/2610-37390-linmix-data-mixing-as/space.json": {
+      "sha256": "d86fb3e0d429819dd96de0573d48b7470663a0227a53bf75e4ee1b82fe1d2b5e",
+      "bytes": 2582
+    },
+    "envs/2610-37390-linmix-data-mixing-as/tasks.json": {
+      "sha256": "dd4f98e9637273d17487208478f72b3810f5e913173b3a7d89b51f13bc3001b7",
+      "bytes": 482
+    },
+    "envs/2610-37450-graph-representation-learning-via/audit.json": {
+      "sha256": "bd2efc898422ed4428b568086ca9fac86c2f1855de9090402731cb06e27f768d",
+      "bytes": 2116
+    },
+    "envs/2610-37450-graph-representation-learning-via/lab.py": {
+      "sha256": "fdd274d7e43c097fc679c688c0f87cff3bf0a4ca9987d0652bc1a22e4158b765",
+      "bytes": 3202
+    },
+    "envs/2610-37450-graph-representation-learning-via/manifest.json": {
+      "sha256": "aa2576fe48cfe3bf5f4fd426d005ed8924b8a895a5f651ca0e858c6c11ee74c8",
+      "bytes": 713
+    },
+    "envs/2610-37450-graph-representation-learning-via/results.jsonl": {
+      "sha256": "13e1dd89b84ec98508efcd7fd63afe654cf70e0003c8bfbb489ed9311a9f06b4",
+      "bytes": 168713
+    },
+    "envs/2610-37450-graph-representation-learning-via/space.json": {
+      "sha256": "004f9a45538e144299f7f34d624d7b2b053fe396a542810fb0b5d522740265be",
+      "bytes": 2337
+    },
+    "envs/2610-37450-graph-representation-learning-via/tasks.json": {
+      "sha256": "ac31ce4494ad86d70700a785915ac8cd9eeb08af1cfde2a159f0f8af865817ef",
+      "bytes": 467
+    },
+    "envs/2610-37456-an-input-skip-can/audit.json": {
+      "sha256": "780ea60f3ae31e588a5ab748242e73a59e25ad380e6332fc823f69f2c8500877",
+      "bytes": 2496
+    },
+    "envs/2610-37456-an-input-skip-can/lab.py": {
+      "sha256": "3b327eefd8fda90173080d3add0bfa1969b6db636be5799e4756827ebbe70a48",
+      "bytes": 4246
+    },
+    "envs/2610-37456-an-input-skip-can/manifest.json": {
+      "sha256": "c6a70556b798a4f4a72dd4dae95b3fea7d428af5493b88aebe8949fd1d13e457",
+      "bytes": 733
+    },
+    "envs/2610-37456-an-input-skip-can/results.jsonl": {
+      "sha256": "07f8085ee9e4a19a680ba4fd9144df2259d8d983a181ef87f96e4bbae2c9ead6",
+      "bytes": 163766
+    },
+    "envs/2610-37456-an-input-skip-can/space.json": {
+      "sha256": "821382363fca98b3ec1edba1439db4f8c55b357d0212dc93a6f4d3956c9de28f",
+      "bytes": 2230
+    },
+    "envs/2610-37456-an-input-skip-can/tasks.json": {
+      "sha256": "7fae9a863392b43e7d03c8f70bf5104bd7d8a7fefcb9abc66c63cba43d6662fb",
+      "bytes": 1308
+    },
+    "envs/2610-37473-qdpinna-physicsinformed-neural-network/audit.json": {
+      "sha256": "8dc30d3e787cda24ff0e0f2c5053f39d5e577eda51538bd27a8ce546a447e796",
+      "bytes": 3196
+    },
+    "envs/2610-37473-qdpinna-physicsinformed-neural-network/lab.py": {
+      "sha256": "04021dea392b5bfa8622489a31c6196d6f18a073a78f7e583527b98b1fb0039a",
+      "bytes": 4807
+    },
+    "envs/2610-37473-qdpinna-physicsinformed-neural-network/manifest.json": {
+      "sha256": "392810eec33615c5b4c80672a9eb0c578739aa02a5c2f33d864073d6fdf9ee9b",
+      "bytes": 772
+    },
+    "envs/2610-37473-qdpinna-physicsinformed-neural-network/results.jsonl": {
+      "sha256": "0d838741f58d72a78b299ae6412ec0cffa1e3a2a362112a3a4eafe41cca622bd",
+      "bytes": 166230
+    },
+    "envs/2610-37473-qdpinna-physicsinformed-neural-network/space.json": {
+      "sha256": "960565d16e46d8b4087d6d3e214e774ba8a5f72ed2b2e6b734d2a09e05a60682",
+      "bytes": 2695
+    },
+    "envs/2610-37473-qdpinna-physicsinformed-neural-network/tasks.json": {
+      "sha256": "2348619aa360acac2cbe4510148786093fa4714f7ac4e4e7d8e0c2a538e2819f",
+      "bytes": 428
+    },
+    "envs/2610-37523-the-structure-gap-when/audit.json": {
+      "sha256": "8d84ce4ffc45f61d8e3406dca745f29e0c23fba26ffcd8c9d5b862479fddb3cb",
+      "bytes": 2638
+    },
+    "envs/2610-37523-the-structure-gap-when/lab.py": {
+      "sha256": "d8fdfa28ddcfbba6014223a43e4793d9c9e3ba294ebef476f13f76f94398de8e",
+      "bytes": 2532
+    },
+    "envs/2610-37523-the-structure-gap-when/manifest.json": {
+      "sha256": "c8436b22934b560b4bdb850e2f6ed9073b1b16f4656f2619fc5c6244352878a8",
+      "bytes": 747
+    },
+    "envs/2610-37523-the-structure-gap-when/results.jsonl": {
+      "sha256": "3c3a4dc7253a0b095f95ec743ba1c9b4d6f27a4657df040050a78c2b76ded8b6",
+      "bytes": 164553
+    },
+    "envs/2610-37523-the-structure-gap-when/space.json": {
+      "sha256": "9c761dc50cc604548920939e39f357b9079722066320f1962a63a6957fe9e779",
+      "bytes": 2299
+    },
+    "envs/2610-37523-the-structure-gap-when/tasks.json": {
+      "sha256": "57f9ba7ccdb5a2843d8852d6ee03b91f1e16106b2e4541e0132396f87dbb54e6",
+      "bytes": 1286
+    },
+    "envs/2610-37553-collective-dynamics-of-selfreinforcement/audit.json": {
+      "sha256": "dba12495407d4150183f77b1684fe55f6bb269daf5126ac039c0d45cb1f92af0",
+      "bytes": 3600
+    },
+    "envs/2610-37553-collective-dynamics-of-selfreinforcement/lab.py": {
+      "sha256": "7998230da6e08a6f4cffef5358bab6adbfbcb007a8f66d346ee9348ec83c933d",
+      "bytes": 3070
+    },
+    "envs/2610-37553-collective-dynamics-of-selfreinforcement/manifest.json": {
+      "sha256": "da9b8300e132a71a82bc7cb54a217923595f27e7831af5ac6c8bd8b090893622",
+      "bytes": 775
+    },
+    "envs/2610-37553-collective-dynamics-of-selfreinforcement/results.jsonl": {
+      "sha256": "ce9b9f7b6146de0a10d8ccd3a5a80da65028da17c2c044f7578e36d1935a1d09",
+      "bytes": 175324
+    },
+    "envs/2610-37553-collective-dynamics-of-selfreinforcement/space.json": {
+      "sha256": "ce6ae6374fa2fc1379686ad29deb0c09fffaa51ac3ef10486d4ebcfe4e3348a6",
+      "bytes": 2647
+    },
+    "envs/2610-37553-collective-dynamics-of-selfreinforcement/tasks.json": {
+      "sha256": "44f02d586e53a0141790595eda07a41cc5e067066e4901164102eca6dfdd180d",
+      "bytes": 638
+    },
+    "envs/2610-37561-when-uncertainty-quantification-fails/audit.json": {
+      "sha256": "1b2ee3e93e36e3a131b17da31c4ad8974f31a4005adf0e10fa600eac8d74b4e0",
+      "bytes": 2728
+    },
+    "envs/2610-37561-when-uncertainty-quantification-fails/lab.py": {
+      "sha256": "e07f577129b10c548ee35a2ac2e403b4854ad880ff341d4b3463e27445f25abe",
+      "bytes": 2803
+    },
+    "envs/2610-37561-when-uncertainty-quantification-fails/manifest.json": {
+      "sha256": "4ae111bd2d4a6367efba499563a62b01096a5a0a8560166a42b09d09a39e6739",
+      "bytes": 792
+    },
+    "envs/2610-37561-when-uncertainty-quantification-fails/results.jsonl": {
+      "sha256": "f1f45f1c26e297226ce4eae7c5dff5c496df6b3b3ab3672b715efadafba902b0",
+      "bytes": 212244
+    },
+    "envs/2610-37561-when-uncertainty-quantification-fails/space.json": {
+      "sha256": "9380f7da038534107f2d878aca164adb8384ab5ecb3e02cdb33f0de71af82078",
+      "bytes": 2463
+    },
+    "envs/2610-37561-when-uncertainty-quantification-fails/tasks.json": {
+      "sha256": "ac1f7ec62a1ef71d7d5873efd947899f82a208bf3ac1647cd0b99bfe76873413",
+      "bytes": 477
+    },
+    "envs/2610-37588-understanding-the-limits-of/audit.json": {
+      "sha256": "a23ea79b1feb42f9d731de00292e06720cb41ac4fc2bc9ef6a9090aae26769bb",
+      "bytes": 2711
+    },
+    "envs/2610-37588-understanding-the-limits-of/lab.py": {
+      "sha256": "93e724e06c363e15e46d9905e75ef859402acde91360302e92a2dc7d117a7946",
+      "bytes": 4813
+    },
+    "envs/2610-37588-understanding-the-limits-of/manifest.json": {
+      "sha256": "74f90e3a508ed9c81a69408a6a6bd35e1bec4a74f41ba41448b94a145332b047",
+      "bytes": 706
+    },
+    "envs/2610-37588-understanding-the-limits-of/results.jsonl": {
+      "sha256": "553e6f374f3cda5874929653f14ce80ea45482e4d968f7c48d9fe599ef4919dc",
+      "bytes": 168277
+    },
+    "envs/2610-37588-understanding-the-limits-of/space.json": {
+      "sha256": "7337f19157252688afe940c7015650bea74f7ca44c4888504067000a9f5dbd01",
+      "bytes": 2622
+    },
+    "envs/2610-37588-understanding-the-limits-of/tasks.json": {
+      "sha256": "ae3f3c83e96e8d115ec6e6a9ce0c330fefa9949ab0c5fab311f7c575144ac3ab",
+      "bytes": 1004
+    },
+    "envs/2610-37656-attention-as-lattice-gauge/audit.json": {
+      "sha256": "702c5c720b77b2fd2b9a22f4b14068ba456f715abdc333ed5356cf358476fdd0",
+      "bytes": 3185
+    },
+    "envs/2610-37656-attention-as-lattice-gauge/lab.py": {
+      "sha256": "292c3be13e0484c468781e515fe24764ee484c6380cee7b7da3c28416693906d",
+      "bytes": 5627
+    },
+    "envs/2610-37656-attention-as-lattice-gauge/manifest.json": {
+      "sha256": "45b77b17ba169a85551078c78b99a569a4b3dc7da6e083dcc75205dca3e611ec",
+      "bytes": 733
+    },
+    "envs/2610-37656-attention-as-lattice-gauge/results.jsonl": {
+      "sha256": "2cd32e9f62962ed7a7b363ff2ba24bc07050b59ff3ca274996ded029f5991d64",
+      "bytes": 169280
+    },
+    "envs/2610-37656-attention-as-lattice-gauge/space.json": {
+      "sha256": "224dbcf2b63bf68a036773a3395fe8d4ccf100f940e2dc78ccf8bd531bf774bf",
+      "bytes": 2691
+    },
+    "envs/2610-37656-attention-as-lattice-gauge/tasks.json": {
+      "sha256": "a5b2ae2e0adbdd107f0b5236d0ec052c0e6aace9bfbdd790fd6287effea49127",
+      "bytes": 985
+    },
+    "envs/2610-37658-when-should-we-intervene/audit.json": {
+      "sha256": "a527925a1c4c557f594e8c01a434438187a703a0bfb143d710dcb150c09f0012",
+      "bytes": 3269
+    },
+    "envs/2610-37658-when-should-we-intervene/lab.py": {
+      "sha256": "f17fbfae8d4c86daa5b7637169c082fbceb9c5a5194499e7b707953a4db82a5c",
+      "bytes": 6291
+    },
+    "envs/2610-37658-when-should-we-intervene/manifest.json": {
+      "sha256": "116894a8e1c9f39fc77cb4c33e123d05d7b599c799bbd000d98c144dbac72a67",
+      "bytes": 667
+    },
+    "envs/2610-37658-when-should-we-intervene/results.jsonl": {
+      "sha256": "974344f6eecb2ed17e03f1a22d15f71266c0a102262d9147bd32dee792e16d3c",
+      "bytes": 165633
+    },
+    "envs/2610-37658-when-should-we-intervene/space.json": {
+      "sha256": "6524e912edfe25460e0623b98a9844d7011c52561e9939755e7cc5ada51fb9b1",
+      "bytes": 2783
+    },
+    "envs/2610-37658-when-should-we-intervene/tasks.json": {
+      "sha256": "732255db10f4b98229981c4d81f381ba34f19799353407887fba695cc5813327",
+      "bytes": 480
+    },
+    "envs/label-smoothing/lab.py": {
+      "sha256": "befb15e5b25bf4a6fec589e447ed90c69b07a3defa569660b74af6f1d4241e54",
+      "bytes": 1510
+    },
+    "envs/label-smoothing/manifest.json": {
+      "sha256": "b58c283a38d5eb9a1b9fa90888e8c096e8fc80caf6b259feb821ab3b3416f494",
+      "bytes": 399
+    },
+    "envs/label-smoothing/results.jsonl": {
+      "sha256": "29deeaef7408e2e36f65ea804d82c0fd8e31f8312d924d014be1bac406f6c783",
+      "bytes": 112954
+    },
+    "envs/label-smoothing/space.json": {
+      "sha256": "14b5a12d7343a1e1004d84cd3beecbc25ca3158f1a6bb6264bc17912a2aa039c",
+      "bytes": 1245
+    },
+    "envs/label-smoothing/tasks.json": {
+      "sha256": "3065f02b31e9748f85ff4c9477beff3ab4a7467b7cb10e959da6db088a7aed56",
+      "bytes": 436
+    },
+    "examples/label_smoothing/lab.py": {
+      "sha256": "befb15e5b25bf4a6fec589e447ed90c69b07a3defa569660b74af6f1d4241e54",
+      "bytes": 1510
+    },
+    "examples/label_smoothing/space.json": {
+      "sha256": "14b5a12d7343a1e1004d84cd3beecbc25ca3158f1a6bb6264bc17912a2aa039c",
+      "bytes": 1245
+    },
+    "pyproject.toml": {
+      "sha256": "477b2b87ac2f85d1413d36944fe4a25f6ac75bcaca270bc3bf87c2704ab0c939",
+      "bytes": 784
+    },
+    "results/baselines.json": {
+      "sha256": "5de108a314fd3220156ec98c472386511026ab458497e1812970d673bd284e2f",
+      "bytes": 35837
+    },
+    "results/baselines_tight.json": {
+      "sha256": "1ec7be0baa25ceab43f53323b777ef137434f9f9466cf2ca68fa1b69e4e8079c",
+      "bytes": 41331
+    },
+    "results/rollouts.jsonl": {
+      "sha256": "d38eaec1b89806bf26eefae81b1cbe4016a9d76804755ba5c4626b19635ac42a",
+      "bytes": 2056780
+    },
+    "results/scale.json": {
+      "sha256": "f665a7ed95583003a5941915e3c3257fb667afdcad45f249220a08dd21350103",
+      "bytes": 2282
+    },
+    "results/summary.json": {
+      "sha256": "b4ee90e943aa0870b3390c66a2e4fdfa94c52cdada3e989738f3bb36e1f0944f",
+      "bytes": 14452
+    },
+    "tests/__init__.py": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "tests/test_analysis.py": {
+      "sha256": "d5d5c2412f54e1c709e93f9e9a77a2e46ec02a296ea403fcbd0e21ef78f9c98e",
+      "bytes": 1970
+    },
+    "tests/test_core.py": {
+      "sha256": "ad7ce49c047c1e6c45f472e2c7a729ed77e88e45c86752012cba9eb3657f8495",
+      "bytes": 5556
+    },
+    "tests/test_live.py": {
+      "sha256": "53becf00993526f8a407529362dd932f7fd9a0bb40af8f31798c3ca6ba4e7e4e",
+      "bytes": 2203
+    },
+    "tests/test_server.py": {
+      "sha256": "d757b61077930faf0dacb9c3df864879a96fc83e0c0cb33e75a6c3c579e3d9d9",
+      "bytes": 3195
+    },
+    "uv.lock": {
+      "sha256": "d6d7f8311351bf868bdd30b4dc18dfb0586637dc3bc2c98c18af6b8957795334",
+      "bytes": 160629
+    }
+  }
+}
