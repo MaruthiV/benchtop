@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "id": "historical_prototype_v0",
+  "description": "Historical evaluation membership, preserved before the new release admission and corrected grading.",
+  "grader_id": "historical_v0",
+  "provenance": {
+    "membership": "benchmarks/historical_v0/manifest.json: collection.paper_environment_ids",
+    "funnel": "Frozen results/summary.json, with totals confirmed against the historical pipeline at migration",
+    "summary_sha256": "b4ee90e943aa0870b3390c66a2e4fdfa94c52cdada3e989738f3bb36e1f0944f"
+  },
+  "environments": [
+    "2610-36935-gaussian-process-bandits-for",
+    "2610-36941-algorithmic-monoculture-in-machine",
+    "2610-36983-advancement-or-acceleration-how",
+    "2610-36994-callm-continual-adaptation-of",
+    "2610-36999-online-gas-classification-at",
+    "2610-37005-compote-collapseresistant-multiple-hypothesis",
+    "2610-37062-energycal-taming-loss-spikes",
+    "2610-37085-on-the-sparsity-of",
+    "2610-37145-beyond-parameter-protection-fishershaped",
+    "2610-37159-physicsguided-flow-matching-a",
+    "2610-37169-rnyiregularized-flowbased-variational-inference",
+    "2610-37195-actionvalue-calibration-via-continuation",
+    "2610-37225-sharpnessaware-muon-matrixaware-optimization",
+    "2610-37227-doubly-robust-deep-kernel",
+    "2610-37284-bayesian-inference-of-expensive",
+    "2610-37353-costbased-variable-selection-for",
+    "2610-37365-tridentseq-profilematched-prefixfuture-contrast",
+    "2610-37373-euclidean-crowdingdriven-adaptive-euclideanhyperbolic",
+    "2610-37388-paragaussian-approximations-of-random",
+    "2610-37389-how-many-and-how",
+    "2610-37390-linmix-data-mixing-as",
+    "2610-37450-graph-representation-learning-via",
+    "2610-37456-an-input-skip-can",
+    "2610-37473-qdpinna-physicsinformed-neural-network",
+    "2610-37523-the-structure-gap-when",
+    "2610-37553-collective-dynamics-of-selfreinforcement",
+    "2610-37561-when-uncertainty-quantification-fails",
+    "2610-37588-understanding-the-limits-of",
+    "2610-37656-attention-as-lattice-gauge",
+    "2610-37658-when-should-we-intervene"
+  ],
+  "funnel": {
+    "screened": 74,
+    "selected": 35,
+    "built": 35,
+    "lab_written": 33,
+    "accepted": 30,
+    "outcomes": {
+      "accepted": 30,
+      "no_settled_question": 3,
+      "synth_failed": 2
+    },
+    "blockers": {
+      "none": 35,
+      "needs_pretrained_or_large_model": 27,
+      "not_empirical": 3,
+      "needs_external_data": 4,
+      "other": 2,
+      "needs_large_compute": 3
+    },
+    "median_build_secs": 115.8,
+    "first_try": 27
+  }
+}

@@ -25,6 +25,30 @@ def read_jsonl(path: Path) -> list[dict]:
     return [json.loads(line) for line in path.read_text().splitlines() if line.strip()]
 
 
+def load_catalog(envs_dir: Path) -> dict:
+    path = Path(envs_dir) / "catalog.json"
+    catalog = json.loads(path.read_text())
+    if not isinstance(catalog, dict) or type(catalog.get("schema_version")) is not int or catalog["schema_version"] != 1:
+        raise ValueError(f"unsupported environment catalog schema: {path}")
+    if not isinstance(catalog.get("id"), str) or not catalog["id"]:
+        raise ValueError(f"environment catalog needs an id: {path}")
+    ids = catalog.get("environments")
+    if not isinstance(ids, list) or not ids:
+        raise ValueError(f"environment catalog needs a nonempty environments list: {path}")
+    for name in ids:
+        if not isinstance(name, str) or not name or name in (".", "..") or "/" in name or "\\" in name:
+            raise ValueError(f"invalid environment identity in catalog: {name!r}")
+    if len(set(ids)) != len(ids):
+        raise ValueError(f"duplicate environment identity in catalog: {path}")
+    funnel = catalog.get("funnel")
+    counts = ("screened", "selected", "built", "lab_written", "accepted")
+    if not isinstance(funnel, dict) or any(type(funnel.get(k)) is not int or funnel[k] < 0 for k in counts):
+        raise ValueError(f"environment catalog needs recorded funnel counts: {path}")
+    if funnel["accepted"] != len(ids):
+        raise ValueError(f"catalog membership and accepted funnel count differ: {path}")
+    return catalog
+
+
 class Table:
     def __init__(self, space: Space, rows: list[dict]):
         self.space = space

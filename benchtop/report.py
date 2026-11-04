@@ -6,7 +6,8 @@ from pathlib import Path
 import numpy as np
 
 from benchtop.agents.common import RESULTS
-from benchtop.env import ENVS, ROOT, STATE, Env
+from benchtop.env import ENVS, ROOT, STATE, Env, load_catalog
+from benchtop.evaluate import all_envs
 
 os.environ.setdefault("MPLBACKEND", "Agg")
 os.environ.setdefault("MPLCONFIGDIR", str(STATE / "mpl"))
@@ -55,7 +56,7 @@ def read_jsonl(path: Path) -> list[dict]:
 
 
 def env_index() -> dict[str, Env]:
-    return {p.parent.name: Env.load(p.parent) for p in sorted(ENVS.glob("*/tasks.json"))}
+    return {env.id: env for env in all_envs(envs_dir=ENVS)}
 
 
 def task_kind(envs, env_id, task_id) -> str | None:
@@ -315,40 +316,13 @@ def clean_envs(envs: dict[str, Env]) -> set[str]:
 
 
 def funnel_stats() -> dict:
-    from benchtop.pipeline import FUNNEL
-    from benchtop.triage import OUT as TRIAGE
-    from benchtop.triage import selected
-
-    cards = [json.loads(p.read_text()) for p in sorted(TRIAGE.glob("*.json"))]
-    rows = read_jsonl(FUNNEL)
-    latest = {}
-    for r in rows:
-        latest[r["id"]] = r
-    rows = list(latest.values())
-    outcomes = defaultdict(int)
-    for r in rows:
-        outcomes[r["outcome"]] += 1
-    blockers = defaultdict(int)
-    for c in cards:
-        blockers[c.get("blocker", "error")] += 1
-    return {
-        "screened": len(cards),
-        "selected": sum(map(selected, cards)),
-        "built": len(rows),
-        "lab_written": sum(r["synth_ok"] for r in rows),
-        "accepted": outcomes["accepted"],
-        "outcomes": dict(outcomes),
-        "blockers": dict(blockers),
-        "median_build_secs": float(np.median([r["secs"] for r in rows])) if rows else None,
-        "first_try": sum(1 for r in rows if r.get("synth_ok") and r.get("attempts") == 1),
-    }
+    return load_catalog(ENVS)["funnel"]
 
 
 def build_report(tag: str | None = "main") -> dict:
     from benchtop.analysis import calibration, decompose
-    from benchtop.evaluate import accepted_ids
 
-    envs = {k: v for k, v in env_index().items() if k in accepted_ids()}
+    envs = env_index()
     base_rows = (
         [r for r in json.loads((RESULTS / "baselines.json").read_text()) if r["env"] in envs]
         if (RESULTS / "baselines.json").exists()

@@ -1,25 +1,34 @@
 import json
 from concurrent.futures import ThreadPoolExecutor
+from pathlib import Path
 
 import numpy as np
 
 from benchtop.agents import baselines
 from benchtop.agents.common import RESULTS, Client, record
-from benchtop.env import ENVS, Env
+from benchtop.env import ENVS, Env, load_catalog
 from benchtop.episode import Episode
 
 
 def accepted_ids() -> set[str]:
-    from benchtop.pipeline import FUNNEL
-
-    rows = [json.loads(x) for x in FUNNEL.read_text().splitlines()] if FUNNEL.exists() else []
-    return {r["env"] for r in rows if r["outcome"] == "accepted"}
+    return set(load_catalog(ENVS)["environments"])
 
 
-def all_envs(only_accepted: bool = True) -> list[Env]:
-    ok = accepted_ids()
-    dirs = [p.parent for p in sorted(ENVS.glob("*/tasks.json"))]
-    return [Env.load(d) for d in dirs if not only_accepted or d.name in ok]
+def all_envs(only_accepted: bool = True, envs_dir: Path | None = None) -> list[Env]:
+    root = Path(envs_dir) if envs_dir is not None else ENVS
+    if not only_accepted:
+        return [Env.load(p.parent) for p in sorted(root.glob("*/tasks.json"))]
+    envs = []
+    for name in load_catalog(root)["environments"]:
+        path = root / name
+        for artifact in ("lab.py", "space.json", "manifest.json", "tasks.json", "results.jsonl"):
+            if not (path / artifact).is_file():
+                raise FileNotFoundError(f"catalog environment {name!r} is missing {artifact}")
+        env = Env.load(path)
+        if env.id != name:
+            raise ValueError(f"catalog identity {name!r} differs from environment identity {env.id!r}")
+        envs.append(env)
+    return envs
 
 
 def run_baselines(episodes: int = 50, budget_frac: float = 0.25, name: str = "baselines.json") -> list[dict]:
