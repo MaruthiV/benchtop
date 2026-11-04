@@ -9,6 +9,7 @@ import time
 import httpx
 import numpy as np
 
+from benchtop.access import admin_headers
 from benchtop.env import ENVS, Env
 from benchtop.episode import Episode
 
@@ -25,6 +26,7 @@ def env_tasks() -> list[tuple[str, str, list[dict]]]:
 class RawPool:
     # tiny keep-alive http/1.1 client; httpx costs more cpu than the server it's testing
     def __init__(self, base: str, size: int = 256):
+        self.authorization = admin_headers(base)["authorization"]
         hostport = base.split("//", 1)[1]
         self.host, port = hostport.split(":")
         self.port = int(port)
@@ -50,7 +52,7 @@ class RawPool:
         reader, writer = await self._conn()
         try:
             writer.write(
-                f"{method} {url} HTTP/1.1\r\nHost: {self.host}\r\nContent-Type: application/json\r\n"
+                f"{method} {url} HTTP/1.1\r\nHost: {self.host}\r\nAuthorization: {self.authorization}\r\nContent-Type: application/json\r\n"
                 f"Content-Length: {len(body)}\r\n\r\n".encode()
                 + body
             )
@@ -147,7 +149,7 @@ def http_load(bases: list[str], agents: int, steps: int, think: float, procs: in
         parts = pool.map(_proc, [(bases, n, steps, think, ramp, i) for i, n in enumerate(per)])
     lat = np.array([x for p in parts for x in p["lat"]])
     wall = max(p["wall"] for p in parts)
-    on_server = sum(httpx.get(f"{b}/health").json()["episodes"] for b in bases)
+    on_server = sum(httpx.get(f"{b}/health", headers=admin_headers(b)).json()["episodes"] for b in bases)
     return {
         "agents": agents,
         "servers": len(bases),

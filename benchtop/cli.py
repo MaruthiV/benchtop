@@ -56,7 +56,11 @@ def cmd_serve(a):
     from benchtop.env import ENVS
     from benchtop.server import serve
 
-    serve(port=a.port, envs_dir=Path(a.envs_dir) if a.envs_dir else ENVS, live=a.live, any_host=a.any_host)
+    serve(
+        port=a.port, envs_dir=Path(a.envs_dir) if a.envs_dir else ENVS, live=a.live,
+        agent_port=a.agent_port, agent_base=a.agent_base,
+        allowed_hosts=a.allowed_host, allowed_origins=a.allowed_origin,
+    )
 
 
 def cmd_baselines(a):
@@ -84,9 +88,9 @@ def cmd_episode(a):
     c = Client(a.base)
     ep = c.create(a.env, a.task, show_paper=not a.no_paper)
     print(f"episode {ep['id']}")
-    print(f"mcp url: {c.base}/e/{ep['id']}/mcp")
+    print(f"mcp url: {ep['mcp_url']}")
     print(f"question: {ep['describe']['question']}")
-    print(f"grade later with: curl -s {c.base}/episodes/{ep['id']}")
+    print(f"grade later with the authenticated admin Client at {c.base}, episode {ep['id']}")
 
 
 def cmd_report(a):
@@ -137,7 +141,10 @@ def main(argv=None):
     s.add_argument("--port", type=int, default=8787)
     s.add_argument("--envs-dir", default=None)
     s.add_argument("--live", action="store_true")
-    s.add_argument("--any-host", action="store_true")
+    s.add_argument("--agent-port", type=int, default=None)
+    s.add_argument("--agent-base", default=None)
+    s.add_argument("--allowed-host", action="append", default=[])
+    s.add_argument("--allowed-origin", action="append", default=[])
     s.set_defaults(fn=cmd_serve)
 
     s = sub.add_parser("baselines")

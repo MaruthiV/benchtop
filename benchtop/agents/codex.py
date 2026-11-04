@@ -28,7 +28,7 @@ def rollout(
         "read-only",
         "--json",
         "-c",
-        f'mcp_servers.benchtop.url="{client.base}/e/{eid}/mcp"',
+        f'mcp_servers.benchtop.url={json.dumps(ep["mcp_url"])}',
         "-c",
         'web_search="disabled"',
         "-c",

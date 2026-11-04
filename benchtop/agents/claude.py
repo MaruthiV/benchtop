@@ -20,7 +20,7 @@ def rollout(
 ) -> dict:
     ep = client.create(env, task, show_paper=show_paper, seed=seed, budget_frac=budget_frac)
     eid = ep["id"]
-    config = {"mcpServers": {"benchtop": {"type": "http", "url": f"{client.base}/e/{eid}/mcp"}}}
+    config = {"mcpServers": {"benchtop": {"type": "http", "url": ep["mcp_url"]}}}
     started = time.time()
     with tempfile.TemporaryDirectory(prefix="benchtop-agent-") as cwd:
         cfg = Path(cwd) / "mcp.json"

@@ -115,12 +115,12 @@ uv sync
 uv run benchtop fetch --n 200 --name today       # recent cs.LG + stat.ML
 uv run benchtop triage --listing today           # can it be miniaturized?
 uv run benchtop build --listing today --jobs 3   # write, check, sweep, keep or drop
-uv run benchtop serve                            # http://127.0.0.1:8787
+uv run benchtop serve                            # admin 8787, agent MCP 8788
 uv run benchtop rollouts --agent claude:sonnet   # or claude:haiku, ollama:qwen3:4b-instruct, codex:default
 uv run benchtop report
 ```
 
-Any MCP client can play an episode. `uv run benchtop episode <env> <task>` prints a URL like `http://127.0.0.1:8787/e/<id>/mcp`. The MCP SDK only accepts localhost Host and Origin headers by default, so for a client that connects through a tunnel or sends its own Origin, start the server with `--any-host`.
+`uv run benchtop episode <env> <task>` prints a capability URL on the agent port, scoped to one episode. Administrative operations use a separate local credential; grades are not available through the agent app. Host and Origin checks stay enabled, with explicit settings for external clients. See [agent and evaluator access](benchmarks/release_v1/ACCESS.md) for setup, grading, and tunnel configuration.
 
 In-process, for an RL loop:
 

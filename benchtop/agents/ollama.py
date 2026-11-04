@@ -3,7 +3,7 @@ import time
 
 import httpx
 
-from benchtop.agents.common import SYSTEM, Client, first_message, outcome, transcript_dir
+from benchtop.agents.common import SYSTEM, Client, LabClient, first_message, outcome, transcript_dir
 
 OLLAMA = "http://127.0.0.1:11434"
 
@@ -71,6 +71,7 @@ def rollout(
 ) -> dict:
     ep = client.create(env, task, show_paper=show_paper, seed=seed, budget_frac=budget_frac)
     eid = ep["id"]
+    lab = LabClient(ep["mcp_url"])
     messages = [
         {"role": "system", "content": SYSTEM},
         {"role": "user", "content": first_message(ep["describe"], ep["budget"])},
@@ -109,14 +110,12 @@ def rollout(
             name, args = call["function"]["name"], _args(call["function"].get("arguments"))
             tool_uses += 1
             if name == "describe_lab":
-                summary = client.summary(eid)
-                result = {"note": "see the first message", "calls_used": summary["calls"]}
+                result = lab.call("describe_lab")
             elif name == "run_experiments":
-                result = client.run(eid, args.get("configs") or [], args.get("seeds", 1))
+                result = lab.call(name, {"configs": args.get("configs") or [], "seeds": args.get("seeds", 1)})
             elif name == "submit_answer":
-                result = client.submit(eid, args.get("answer"), args.get("confidence"))
-                done = bool(result.get("done"))
-                result = {"received": True} if done else result
+                result = lab.call(name, {"answer": args.get("answer"), "confidence": args.get("confidence")})
+                done = bool(result.get("received"))
             else:
                 result = {"error": f"unknown tool {name}"}
             messages.append({"role": "tool", "tool_name": name, "content": json.dumps(result)})
@@ -130,4 +129,6 @@ def rollout(
         "api_equiv_usd": 0.0,
         "error": error if not done else None,
     }
+    lab.http.close()
+    http.close()
     return outcome(client.summary(eid), f"ollama:{model}", extra)

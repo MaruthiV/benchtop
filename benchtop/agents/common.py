@@ -5,6 +5,7 @@ from pathlib import Path
 
 import httpx
 
+from benchtop.access import admin_headers, redact
 from benchtop.env import ROOT, STATE
 
 RESULTS = ROOT / "results"
@@ -28,9 +29,9 @@ def first_message(describe: dict, budget: dict) -> str:
 
 
 class Client:
-    def __init__(self, base: str = "http://127.0.0.1:8787"):
+    def __init__(self, base: str = "http://127.0.0.1:8787", token: str | None = None):
         self.base = base.rstrip("/")
-        self.http = httpx.Client(base_url=self.base, timeout=60)
+        self.http = httpx.Client(base_url=self.base, timeout=60, headers=admin_headers(self.base, token))
 
     def create(self, env: str, task: str, **kw) -> dict:
         r = self.http.post("/episodes", json={"env": env, "task": task, **kw})
@@ -51,7 +52,7 @@ class Client:
 
 def record(row: dict, name: str = "rollouts.jsonl") -> None:
     RESULTS.mkdir(exist_ok=True)
-    row = {"at": datetime.now(UTC).isoformat(timespec="seconds"), **row}
+    row = redact({"at": datetime.now(UTC).isoformat(timespec="seconds"), **row})
     with (RESULTS / name).open("a") as f:
         f.write(json.dumps(row, default=str) + "\n")
 
@@ -64,7 +65,7 @@ def transcript_dir(agent: str) -> Path:
 
 def outcome(summary: dict, agent: str, extra: dict) -> dict:
     result = summary.get("result") or {}
-    return {
+    return redact({
         "agent": agent,
         "env": summary["env"],
         "task": summary["task"],
@@ -81,7 +82,28 @@ def outcome(summary: dict, agent: str, extra: dict) -> dict:
         "ran": [pair for e in summary["log"] if e["action"] == "run" for pair in e["ran"]],
         "episode_seed": summary["seed"],
         **extra,
-    }
+    })
+
+
+class LabClient:
+    def __init__(self, url: str):
+        self.url = url
+        self.http = httpx.Client(timeout=60)
+
+    def call(self, name: str, arguments: dict | None = None) -> dict:
+        response = self.http.post(
+            self.url,
+            headers={"accept": "application/json, text/event-stream", "mcp-protocol-version": "2025-06-18"},
+            json={"jsonrpc": "2.0", "id": 1, "method": "tools/call", "params": {"name": name, "arguments": arguments or {}}},
+        )
+        response.raise_for_status()
+        body = response.json()
+        if "error" in body:
+            raise RuntimeError(body["error"]["message"])
+        result = body["result"]
+        if result.get("isError"):
+            return {"error": result["content"][0]["text"]}
+        return json.loads(result["content"][0]["text"])
 
 
 def run_cmd(cmd: list[str], cwd: str, timeout: float) -> tuple[str, str, bool]:
