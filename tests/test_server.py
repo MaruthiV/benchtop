@@ -1,5 +1,6 @@
 import json
 
+import pytest
 from starlette.testclient import TestClient
 
 from benchtop.server import Hub, build_app
@@ -65,6 +66,56 @@ def test_mcp_episode_roundtrip(tmp_path):
         summary = client.get(f"/episodes/{eid}").json()
         assert summary["result"]["score"] == 1.0
         assert summary["calls"] == 1
+
+
+@pytest.mark.parametrize("transport", ["mcp", "http"])
+@pytest.mark.parametrize(
+    ("answers", "score"),
+    [
+        (["paper_better"], 0.0),
+        (["no_meaningful_difference"], 1.0),
+        (["maybe", "paper_better"], 0.0),
+        (["maybe", "no_meaningful_difference"], 1.0),
+        (["maybe", "still maybe"], 0.0),
+    ],
+)
+def test_submission_receipts_keep_grades_private(tmp_path, transport, answers, score):
+    toy_env(tmp_path)
+    app, _ = build_app(Hub(tmp_path))
+    with TestClient(app, base_url="http://127.0.0.1:8787") as client:
+        eid = client.post("/episodes", json={"env": "toy", "task": "claim", "seed": 4}).json()["id"]
+        receipt = {"received": True} if transport == "mcp" else {"done": True}
+
+        def submit(answer, confidence):
+            arguments = {"answer": answer, "confidence": confidence}
+            if transport == "http":
+                response = client.post(f"/episodes/{eid}/submit", json=arguments)
+                assert response.status_code == 200
+                return response.json()
+            result = rpc(client, eid, "tools/call", {"name": "submit_answer", "arguments": arguments})["result"]
+            payload = json.loads(result["content"][0]["text"])
+            if "structuredContent" in result:
+                assert result["structuredContent"] == payload
+            return payload
+
+        for index, answer in enumerate(answers):
+            payload = submit(answer, 0.8)
+            if index < len(answers) - 1:
+                assert set(payload) == {"error", "hint"}
+                assert client.get(f"/episodes/{eid}").json()["result"] is None
+            else:
+                assert payload == receipt
+
+        saved = client.get(f"/episodes/{eid}").json()
+        assert saved["result"]["score"] == score
+        assert saved["result"]["confidence"] == 0.8
+        submissions = [entry for entry in saved["log"] if entry["action"] == "submit"]
+        assert len(submissions) == 1
+        assert submissions[0]["answer"] == answers[-1]
+
+        for answer in ["paper_better", "no_meaningful_difference", "maybe"]:
+            assert submit(answer, 0.01) == receipt
+            assert client.get(f"/episodes/{eid}").json() == saved
 
 
 def test_any_host_lets_tunnels_and_app_origins_in(tmp_path):

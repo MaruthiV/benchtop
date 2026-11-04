@@ -51,4 +51,4 @@ The 28-start reserve covers at most six smoke episodes, two integration episodes
 
 The specification was checked for valid JSON, disjoint seed splits, resource arithmetic, consistent group sizes, required lock gates, unique reference identities, and agreement with the historical archive checksum. No fresh papers were fetched, model episodes run, or application behavior changed for this checkpoint.
 
-The next implementation is the repeated-submission grading leak regression and fix. This protocol does not mark that bug, the corrected grader, or the new execution harness as implemented.
+Submission responses now return completion receipts without grading details, including repeated submissions and exhausted format corrections. Regression coverage checks MCP and HTTP and confirms that later answers cannot replace the committed result. Administrative routes still require separation from agent access. The corrected grader and new execution harness remain unimplemented. The next checkpoint is manifest-based environment discovery.

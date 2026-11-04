@@ -133,7 +133,7 @@ class Episode:
 
     def submit(self, answer, confidence: float | None = None) -> dict:
         if self.done:
-            return {"error": "already submitted", **self.result}
+            return {"done": True}
         graded = grade(self.env, self.task, answer)
         bad_format = "error" in graded and "given" not in graded
         # bad format gets one more try instead of a silent zero
@@ -163,7 +163,7 @@ class Episode:
                 "score": graded["score"],
             }
         )
-        return {"done": True, "score": graded["score"]}
+        return {"done": True}
 
     def describe(self) -> dict:
         env, space = self.env, self.env.space
