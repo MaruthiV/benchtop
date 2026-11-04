@@ -66,7 +66,7 @@ class Worker:
         if hashlib.sha256(lab_copy.read_bytes()).hexdigest() != self.expected_sha:
             await self.stop()
             raise RuntimeError("lab changed before sandbox worker startup")
-        cmd = [sys.executable, "-I", "-m", "benchtop._worker", str(lab_copy)]
+        cmd = [sys.executable, "-I", str(Path(__file__).with_name("_worker.py")), str(lab_copy)]
         if self.mode == "macos":
             deny = "\n".join(f'(deny file-read* (subpath "{os.path.realpath(d)}"))' for d in self.deny_reads)
             cmd = ["sandbox-exec", "-p", PROFILE.format(tmp=tmp, deny_reads=deny)] + cmd

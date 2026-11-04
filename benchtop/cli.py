@@ -49,7 +49,7 @@ def cmd_build(a):
 def cmd_sweep(a):
     from benchtop.sweep import sweep
 
-    sweep(Path(a.env), workers=a.workers)
+    sweep(Path(a.env), workers=a.workers, seeds=a.seeds)
 
 
 def cmd_serve(a):
@@ -105,6 +105,17 @@ def cmd_report(a):
     )
 
 
+def cmd_verify(a):
+    from benchtop.verify import verify_foundation
+
+    try:
+        result = verify_foundation(live=a.live, output=Path(a.output))
+    except (OSError, ValueError, RuntimeError) as error:
+        raise SystemExit(f"verification failed: {error}") from error
+    print(json.dumps({key: value for key, value in result.items() if key not in ("input_sha256", "runtime")},
+                     indent=2, allow_nan=False))
+
+
 def main(argv=None):
     p = argparse.ArgumentParser(prog="benchtop")
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -135,6 +146,7 @@ def main(argv=None):
     s = sub.add_parser("sweep")
     s.add_argument("env")
     s.add_argument("--workers", type=int, default=8)
+    s.add_argument("--seeds", type=int, default=None, help="total seeds; defaults to the manifest, or 16 for a new lab")
     s.set_defaults(fn=cmd_sweep)
 
     s = sub.add_parser("serve")
@@ -173,6 +185,11 @@ def main(argv=None):
     s = sub.add_parser("report")
     s.add_argument("--tag", default="main")
     s.set_defaults(fn=cmd_report)
+
+    s = sub.add_parser("verify", help="reproduce foundation checks in a temporary copy without private state")
+    s.add_argument("--live", action="store_true", help="also sweep a small synthetic fixture in the macOS sandbox")
+    s.add_argument("--output", default="artifacts/foundation_check.json")
+    s.set_defaults(fn=cmd_verify)
 
     a = p.parse_args(argv)
     a.fn(a)

@@ -1,5 +1,4 @@
 import json
-import os
 import shutil
 import subprocess
 import sys
@@ -94,49 +93,24 @@ def test_selected_lab_identity_must_match_catalog(catalog_tree):
 
 
 def test_fresh_copy_discovers_labs_and_rebuilds_report(tmp_path):
-    copy = tmp_path / "checkout"
-    copy.mkdir()
-    for name in ["benchtop", "envs", "results"]:
-        shutil.copytree(ROOT / name, copy / name, ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
-    (copy / "results/summary.json").unlink()
-    (copy / "assets").mkdir()
-    assert not (copy / ".state").exists()
-    script = """
-import json
-import sys
-from pathlib import Path
-
-root = Path.cwd().resolve()
-sys.path.insert(0, str(root))
-from benchtop.env import ROOT
-from benchtop.evaluate import all_envs, episode_list
-from benchtop.report import build_report
-
-assert ROOT == root
-envs = all_envs()
-assert len(envs) == 30
-assert len(episode_list()) == 78
-summary = build_report()
-assert summary['envs'] == 30
-assert summary['episodes'] == 78
-assert summary['grader_ids'] == ['historical_v0']
-assert summary['funnel'] == json.loads((root / 'envs/catalog.json').read_text())['funnel']
-assert len(list((root / 'assets').glob('*.svg'))) == 5
-assert len(list((root / 'assets').glob('*.png'))) == 5
-assert json.loads((root / 'results/summary.json').read_text())['envs'] == 30
-assert not (root / '.state').exists()
-print(json.dumps({'ids': [env.id for env in envs], 'episodes': summary['episodes']}))
-"""
+    output = tmp_path / "foundation.json"
     result = subprocess.run(
-        [sys.executable, "-I", "-c", script],
-        cwd=copy,
-        env={**os.environ, "MPLCONFIGDIR": str(tmp_path / "matplotlib"), "PYTHONDONTWRITEBYTECODE": "1"},
-        capture_output=True,
-        text=True,
-        timeout=60,
+        [sys.executable, "-m", "benchtop.cli", "verify", "--output", str(output)],
+        cwd=ROOT, capture_output=True, text=True, timeout=60,
     )
     assert result.returncode == 0, result.stdout + result.stderr
     actual = json.loads(result.stdout)
+    saved = json.loads(output.read_text())
+    assert actual == {key: value for key, value in saved.items() if key not in ("input_sha256", "runtime")}
+    assert saved["input_sha256"] and saved["runtime"]
     baseline = json.loads((ROOT / "benchmarks/historical_v0/manifest.json").read_text())
-    assert actual["ids"] == baseline["collection"]["paper_environment_ids"]
-    assert actual["episodes"] == baseline["collection"]["paper_tasks"]
+    assert actual["offline"]["labs"] == len(baseline["collection"]["paper_environment_ids"])
+    assert actual["offline"]["questions"] == baseline["collection"]["paper_tasks"]
+    assert actual["offline"]["historical_summary_fields_compared"] == 20
+    assert actual["offline"]["private_state_absent"]
+    assert actual["offline"]["figure_counts"] == {"svg": 5, "png": 5}
+    assert actual["source_inputs_unchanged"]
+    assert actual["original_data_files_verified"] == 200
+    assert actual["archive_files_verified"] == 241
+    assert actual["model_sessions"] == 0
+    assert actual["live"]["status"] == "not_requested"

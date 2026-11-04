@@ -40,12 +40,14 @@ For new live work, create a separate directory with reviewed `lab.py`, `space.js
 uv run benchtop sweep /path/to/new-lab
 ```
 
-The sweep initializes provenance before collecting results and writes corrected tasks afterward. Later sweeps resume only under matching execution inputs. Stale caches raise errors without deleting old data or relabeling it. Preserve the old directory and rebuild under a new version. The fresh three-part seed harness and release lock gates remain pending.
+The sweep initializes provenance before collecting results and writes corrected tasks afterward. Without `--seeds`, the CLI preserves the manifest's total seed count; a new lab without a count defaults to 16. Later sweeps resume only under matching execution inputs. Stale caches raise errors without deleting old data or relabeling it. Preserve the old directory and rebuild under a new version. The fresh three-part seed harness and release lock gates remain pending.
 
 ## Supported sandbox and evidence
 
 Physical execution requires macOS with `sandbox-exec`. Automatic and explicit mode selection, live-server startup, live-store creation, sweeps with missing jobs, and worker startup reject unsupported execution. Linux, missing `sandbox-exec`, `none`, and unknown modes have no unisolated fallback. Cached replay does not require this backend.
 
-Workers retain network/write restrictions. Their actual lab directory is added to read denials, including for custom `--envs` locations, so they cannot open its result files. A worker verifies its private lab copy against the pool's original code digest. Startup failures clean up partially created workers.
+Workers retain network/write restrictions. Their actual lab directory is added to read denials, including for custom `--envs` locations, so they cannot open its result files. A worker verifies its private lab copy against the pool's original code digest and executes the worker script from the selected checkout. Startup failures clean up partially created workers.
 
 Regression evidence covers changed execution/generator inputs, corrupt and mixed rows, stale labels, non-destructive sweep rejection, active and in-flight file changes, read-only replay, historical verification, unsupported execution, changed worker copies, real live/cache equality, custom-directory read denial, and a fresh sweep with execution-free resume. No model sessions or fresh paper generation are needed for these checks.
+
+The [foundation reproduction command](REPRODUCTION.md) now checks the documented CLI and in-process paths in a temporary public tree, with an optional new synthetic sweep. Real Qualia connectivity remains unverified.

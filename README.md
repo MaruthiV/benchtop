@@ -111,8 +111,20 @@ The load generator ran on the same 11-core laptop as the servers. The servers lo
 
 ## Use it
 
+Reproduce the existing report and check the interfaces without model calls:
+
 ```sh
-uv sync
+uv sync --frozen
+.venv/bin/python -m benchtop.cli verify
+# macOS: also exercise a new synthetic sweep and cached resume
+.venv/bin/python -m benchtop.cli verify --live --output artifacts/foundation_live.json
+```
+
+The checker uses a disposable copy without private state and preserves the original data. See [foundation reproduction](benchmarks/release_v1/REPRODUCTION.md) for proof fields, trainer semantics, and remaining gates.
+
+The generation and model-run commands are separate:
+
+```sh
 uv run benchtop fetch --n 200 --name today       # recent cs.LG + stat.ML
 uv run benchtop triage --listing today           # can it be miniaturized?
 uv run benchtop build --listing today --jobs 3   # write, check, sweep, keep or drop

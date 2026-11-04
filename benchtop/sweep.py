@@ -23,7 +23,7 @@ from benchtop.tasks import build_task_set
 
 def sweep(
     env_dir: Path,
-    seeds: int = SEEDS,
+    seeds: int | None = None,
     workers: int = 8,
     timeout: float = 60.0,
     sandbox: str = "auto",
@@ -35,6 +35,7 @@ def sweep(
     results_path = env_dir / "results.jsonl"
     manifest_path = env_dir / "manifest.json"
     manifest = json.loads(manifest_path.read_text()) if manifest_path.exists() else {}
+    seeds = manifest.get("seeds", SEEDS) if seeds is None else seeds
 
     manifest = {**manifest, "seeds": seeds, "visible_seeds": manifest.get("visible_seeds", VISIBLE)}
     original_rows = read_jsonl(results_path)
