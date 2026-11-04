@@ -6,7 +6,7 @@ import numpy as np
 
 from benchtop.env import Env
 from benchtop.space import Space, canon
-from benchtop.stats import LABELS, average_contrast, label, pooled_seed_std
+from benchtop.stats import GRADER_ID, LABELS, average_contrast, pooled_seed_std, summarize_contrast
 
 COMPONENT_LABELS = {
     "paper_better": "helps",
@@ -28,18 +28,21 @@ def sign(space: Space) -> float:
     return 1.0 if space.goal == "max" else -1.0
 
 
-def contrast(env: Env, factor: str, a, b, seeds: list[int], fixed: dict | None = None):
+def contrast_pairs(env: Env, factor: str, a, b, seeds: list[int], fixed: dict | None = None):
     space = env.space
     pairs = []
     k = sign(space)
     for ctx in grid_over(space, [factor], fixed):
         va = {s: v * k for s, v in env.table.by_seed({**ctx, factor: a}, seeds).items()}
         vb = {s: v * k for s, v in env.table.by_seed({**ctx, factor: b}, seeds).items()}
-        if va and vb:
-            pairs.append((va, vb))
-    if not pairs:
-        return None
-    return average_contrast(pairs)
+        if set(va) != set(seeds) or set(vb) != set(seeds):
+            raise ValueError("incomplete qualification seed grid")
+        pairs.append((va, vb))
+    return pairs
+
+
+def contrast(env: Env, factor: str, a, b, seeds: list[int], fixed: dict | None = None):
+    return average_contrast(contrast_pairs(env, factor, a, b, seeds, fixed))
 
 
 def top_share(env: Env, factor: str, a, b, seeds: list[int]) -> float:
@@ -63,35 +66,68 @@ def config_means(env: Env, seeds: list[int]) -> dict[str, float]:
     return means
 
 
-def build_tasks(env: Env) -> list[dict]:
-    space, held = env.space, env.heldout_seeds
+def build_task_set(env: Env, seeds: list[int] | None = None) -> dict:
+    space = env.space
+    held = list(env.heldout_seeds if seeds is None else seeds)
+    tasks, diagnostics = [], []
+    report = {
+        "schema_version": 1,
+        "grader_id": GRADER_ID,
+        "seed_ids": held,
+        "interval_method": "student_t_95",
+        "status": "complete",
+        "issues": [],
+        "tasks": tasks,
+        "contrasts": diagnostics,
+    }
+    if len(held) < 2 or len(set(held)) != len(held):
+        report.update(status="incomplete", issues=[{"kind": "insufficient_or_duplicate_seeds"}])
+        return report
+    missing = env.table.missing(held)
+    if missing:
+        report.update(status="incomplete", issues=[{"kind": "missing_results", "count": len(missing)}])
+        return report
+    try:
+        values = np.array(
+            [env.table.get(c, s)[space.metric] for c in space.configs() for s in held], dtype=float
+        )
+    except (KeyError, TypeError, ValueError):
+        report.update(status="invalid", issues=[{"kind": "invalid_metric"}])
+        return report
+    if not np.isfinite(values).all():
+        report.update(status="invalid", issues=[{"kind": "nonfinite_metric"}])
+        return report
+
+    def estimate(task_id, factor, a, b, fixed=None, level=None):
+        out = summarize_contrast(contrast_pairs(env, factor, a, b, held, fixed), space.min_effect)
+        diagnostics.append({"task_id": task_id, **({"level": level} if level is not None else {}), **out})
+        return out
+
     t, p, b = space.treatment, space.paper_level, space.baseline_level
     noise = pooled_seed_std([env.table.values(c, held) for c in space.configs()])
-    tasks = []
 
-    est = contrast(env, t, p, b, held)
-    if est:
-        truth = label(*est, space.min_effect)
-        if truth:
-            tasks.append(
-                {
-                    "id": "claim",
-                    "kind": "claim",
-                    "answer": truth,
-                    "delta": est[0],
-                    "se": est[1],
-                    "seed_std": noise,
-                    "top_share": top_share(env, t, p, b, held),
-                }
-            )
+    est = estimate("claim", t, p, b)
+    if est["label"] is not None:
+        tasks.append(
+            {
+                "id": "claim",
+                "kind": "claim",
+                "answer": est["label"],
+                "delta": est["delta"],
+                "se": est["se"],
+                "interval": est["interval"],
+                "seed_std": noise,
+                "top_share": top_share(env, t, p, b, held),
+            }
+        )
 
     for f in space.context_factors():
         per_level, stats = {}, {}
         for level in f.levels:
-            est = contrast(env, t, p, b, held, fixed={f.name: level})
-            if est and (lab := label(*est, space.min_effect)):
-                per_level[canon(level)] = lab
-                stats[canon(level)] = {"delta": est[0], "se": est[1]}
+            est = estimate(f"where:{f.name}", t, p, b, fixed={f.name: level}, level=canon(level))
+            stats[canon(level)] = est
+            if est["label"] is not None:
+                per_level[canon(level)] = est["label"]
         if len(per_level) >= 2 and len(set(per_level.values())) >= 2:
             tasks.append(
                 {
@@ -107,16 +143,17 @@ def build_tasks(env: Env) -> list[dict]:
     for f in space.component_factors():
         if len(f.levels) != 2:
             continue
-        est = contrast(env, f.name, f.levels[1], f.levels[0], held)
-        if est and (lab := label(*est, space.min_effect)):
+        est = estimate(f"component:{f.name}", f.name, f.levels[1], f.levels[0])
+        if est["label"] is not None:
             tasks.append(
                 {
                     "id": f"component:{f.name}",
                     "kind": "component",
                     "factor": f.name,
-                    "answer": COMPONENT_LABELS[lab],
-                    "delta": est[0],
-                    "se": est[1],
+                    "answer": COMPONENT_LABELS[est["label"]],
+                    "delta": est["delta"],
+                    "se": est["se"],
+                    "interval": est["interval"],
                     "seed_std": noise,
                 }
             )
@@ -131,12 +168,22 @@ def build_tasks(env: Env) -> list[dict]:
                     "id": "best",
                     "kind": "best",
                     "answer": best_key,
+                    "grading_rule": "heldout_best_mean",
                     "best": float(values.max()),
                     "median": float(np.median(values)),
                     "seed_std": noise,
                 }
             )
-    return tasks
+    for task in tasks:
+        task.update(grader_id=GRADER_ID, seed_ids=held)
+    return report
+
+
+def build_tasks(env: Env, seeds: list[int] | None = None) -> list[dict]:
+    report = build_task_set(env, seeds)
+    if report["status"] != "complete":
+        raise ValueError(f"qualification data is {report['status']}: {report['issues']}")
+    return report["tasks"]
 
 
 def norm_label(text) -> str:
@@ -173,7 +220,7 @@ def grade(env: Env, task: dict, answer) -> dict:
             config = env.space.normalize(answer if isinstance(answer, dict) else {})
         except ValueError as e:
             return {"score": 0.0, "error": str(e)}
-        means = config_means(env, env.heldout_seeds)
+        means = config_means(env, task.get("seed_ids", env.heldout_seeds))
         got = means[canon(config)]
         spread = task["best"] - task["median"]
         score = float(np.clip((got - task["median"]) / spread, 0.0, 1.0))

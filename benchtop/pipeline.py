@@ -14,6 +14,8 @@ MAX_SWEEP_CPU = 1200
 def accept(env: Env, summary: dict) -> tuple[bool, str]:
     if summary["runs_failed"]:
         return False, f"sweep_failures: {summary['runs_failed']} runs failed ({list(summary['errors'])[:1]})"
+    if summary.get("task_status", "complete") != "complete":
+        return False, f"invalid_qualification: {summary['task_status']}"
     kinds = {t["kind"] for t in env.tasks}
     if not kinds & {"claim", "where", "component"}:
         return False, "no_settled_question: held-out seeds can't settle any claim or where question"

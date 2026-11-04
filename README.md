@@ -2,6 +2,8 @@
 
 benchtop turns new arXiv papers into small runnable labs that work as RL environments for research taste. An agent gets a question about a paper's claim, spends a compute budget on experiments, and is graded on seeds it never saw.
 
+The results below use `historical_v0` labels. A [corrected grading review](benchmarks/release_v1/GRADING.md) retains 75 of the original 78 questions; new agent evaluations are pending.
+
 ```mermaid
 flowchart LR
     A[new arXiv papers] --> B[triage<br/>Haiku]
@@ -18,13 +20,13 @@ flowchart LR
 
 Training a model on research judgment needs environments that are cheap to run, have a verifiable reward, and keep coming. Hand-built evals like TasteVal ([2610.06824](https://arxiv.org/abs/2610.06824)) spend about 40 H100-hours per run on 8 hidden tasks. That's fine for measurement, but too slow and too few for RL.
 
-benchtop goes the other way. Each lab is a miniature of one paper's central comparison that runs in milliseconds on a laptop CPU. The whole grid is swept ahead of time, so every episode step is a lookup and every grade is exact.
+benchtop goes the other way. Each lab is a miniature of one paper's central comparison that runs in milliseconds on a laptop CPU. The whole grid is swept ahead of time, so cached episode steps are lookups. Grading uses labels estimated from held-out runs.
 
 ## One day of arXiv
 
 ![funnel](assets/funnel.svg)
 
-- 74 cs.LG and stat.ML papers from Oct 27, 2026, months after the Claude models' training cutoff, so nothing to memorize
+- 74 cs.LG and stat.ML papers from Oct 27, 2026
 - 30 became labs, 26 of them on the lab writer's first try. Median build time was about 100 s, and the total cost was about $7 at API prices ($0.24 per lab, $0 on a subscription)
 - the most common reason a paper didn't make it: it needs a pretrained LLM (27 papers)
 - an independent Opus audit passed 25 labs. 2 had unfair baselines and 3 were low fidelity. One more is outlier-dominated (one setting drives the whole average), which leaves a clean set of 24
@@ -48,7 +50,7 @@ Example, [2610.36983](https://arxiv.org/abs/2610.36983) "Advancement or Accelera
 - three question types: *does it help?* (averaged over settings), *where does it help?* (per level of one setting), and *best config*
 - 16 seeds per config: 4 visible to the agent, 12 held out for grading
 - both arms share seeds (same data split, same init), so paired comparisons work
-- a question only exists if the held-out seeds settle it at 95% confidence
+- claim and where questions require a settled interval-based label; historical and corrected interval rules differ (see the grading review above)
 - the budget is a quarter of the visible grid (6% in the tight runs), charged at each config's real runtime
 - agents get three tools and nothing else: `describe_lab`, `run_experiments`, `submit_answer`
 - labs run under macOS `sandbox-exec` with no network, no writes outside a temp dir, and no reads of results or docs

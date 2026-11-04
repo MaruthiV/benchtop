@@ -8,6 +8,7 @@ import numpy as np
 from benchtop.agents.common import RESULTS
 from benchtop.env import ENVS, ROOT, STATE, Env, load_catalog
 from benchtop.evaluate import all_envs
+from benchtop.stats import LEGACY_GRADER_ID
 
 os.environ.setdefault("MPLBACKEND", "Agg")
 os.environ.setdefault("MPLCONFIGDIR", str(STATE / "mpl"))
@@ -319,10 +320,23 @@ def funnel_stats() -> dict:
     return load_catalog(ENVS)["funnel"]
 
 
+def check_grading(envs: dict[str, Env]) -> None:
+    for name in ("baselines.json", "baselines_tight.json", "rollouts.jsonl"):
+        path = RESULTS / name
+        if not path.exists():
+            continue
+        rows = read_jsonl(path) if path.suffix == ".jsonl" else json.loads(path.read_text())
+        for row in rows:
+            env = envs.get(row["env"])
+            if env is not None and row.get("grader_id", LEGACY_GRADER_ID) != env.grader_id:
+                raise ValueError(f"result grader differs from task grader in {name}: {env.id}")
+
+
 def build_report(tag: str | None = "main") -> dict:
     from benchtop.analysis import calibration, decompose
 
     envs = env_index()
+    check_grading(envs)
     base_rows = (
         [r for r in json.loads((RESULTS / "baselines.json").read_text()) if r["env"] in envs]
         if (RESULTS / "baselines.json").exists()
@@ -396,6 +410,7 @@ def build_report(tag: str | None = "main") -> dict:
 
     audits = [audit_of(e) for e in envs.values()]
     summary = {
+        "grader_ids": sorted({env.grader_id for env in envs.values()}),
         "envs": len(envs),
         "episodes": sum(len(e.tasks) for e in envs.values()),
         "clean_envs": len(clean),

@@ -19,7 +19,8 @@ def all_envs(only_accepted: bool = True, envs_dir: Path | None = None) -> list[E
     if not only_accepted:
         return [Env.load(p.parent) for p in sorted(root.glob("*/tasks.json"))]
     envs = []
-    for name in load_catalog(root)["environments"]:
+    catalog = load_catalog(root)
+    for name in catalog["environments"]:
         path = root / name
         for artifact in ("lab.py", "space.json", "manifest.json", "tasks.json", "results.jsonl"):
             if not (path / artifact).is_file():
@@ -27,6 +28,10 @@ def all_envs(only_accepted: bool = True, envs_dir: Path | None = None) -> list[E
         env = Env.load(path)
         if env.id != name:
             raise ValueError(f"catalog identity {name!r} differs from environment identity {env.id!r}")
+        if catalog["grader_id"] != env.grader_id:
+            raise ValueError(f"catalog grader differs from task grader for {name!r}")
+        if not env.tasks:
+            raise ValueError(f"catalog environment {name!r} has no eligible tasks")
         envs.append(env)
     return envs
 
@@ -51,6 +56,7 @@ def run_baselines(episodes: int = 50, budget_frac: float = 0.25, name: str = "ba
                         "mean": float(np.mean(scores)),
                         "n": episodes,
                         "budget_frac": budget_frac,
+                        "grader_id": env.grader_id,
                     }
                 )
     RESULTS.mkdir(exist_ok=True)

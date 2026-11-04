@@ -8,6 +8,7 @@ from pathlib import Path
 import pytest
 
 from benchtop import evaluate, report
+from benchtop.stats import GRADER_ID
 from tests.test_core import toy_env
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -28,6 +29,7 @@ def catalog_tree(tmp_path, monkeypatch):
     catalog = {
         "schema_version": 1,
         "id": "test_cohort",
+        "grader_id": GRADER_ID,
         "environments": ["toy", "other"],
         "funnel": {"screened": 3, "selected": 2, "built": 2, "lab_written": 2, "accepted": 2},
     }
@@ -118,6 +120,7 @@ assert len(episode_list()) == 78
 summary = build_report()
 assert summary['envs'] == 30
 assert summary['episodes'] == 78
+assert summary['grader_ids'] == ['historical_v0']
 assert summary['funnel'] == json.loads((root / 'envs/catalog.json').read_text())['funnel']
 assert len(list((root / 'assets').glob('*.svg'))) == 5
 assert len(list((root / 'assets').glob('*.png'))) == 5

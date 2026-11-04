@@ -236,6 +236,7 @@ class Episode:
             "episode": self.id,
             "env": self.env.id,
             "task": self.task["id"],
+            "grader_id": self.env.grader_id,
             "seed": self.seed,
             "show_paper": self.show_paper,
             "budget": self.budget,

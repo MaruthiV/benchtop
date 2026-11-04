@@ -68,6 +68,7 @@ def outcome(summary: dict, agent: str, extra: dict) -> dict:
         "agent": agent,
         "env": summary["env"],
         "task": summary["task"],
+        "grader_id": summary["grader_id"],
         "episode": summary["episode"],
         "show_paper": summary["show_paper"],
         "score": result.get("score"),

@@ -8,7 +8,8 @@ from pathlib import Path
 from benchtop.env import SEEDS, STATE, VISIBLE, Env, lab_sha, read_jsonl
 from benchtop.sandbox import run_jobs
 from benchtop.space import Space, config_key
-from benchtop.tasks import build_tasks
+from benchtop.stats import GRADER_ID
+from benchtop.tasks import build_task_set
 
 
 def sweep(
@@ -81,8 +82,9 @@ def sweep(
     results_path.write_text("".join(json.dumps(r) + "\n" for r in rows.values()))
 
     env = Env.load(env_dir)
-    tasks = build_tasks(env)
-    (env_dir / "tasks.json").write_text(json.dumps(tasks, indent=2) + "\n")
+    task_set = build_task_set(env)
+    tasks = task_set["tasks"]
+    (env_dir / "tasks.json").write_text(json.dumps(task_set, indent=2) + "\n")
     ok = sum(1 for r in rows.values() if r.get("ok"))
     summary = {
         "env": env_dir.name,
@@ -91,10 +93,13 @@ def sweep(
         "wall_secs": round(wall, 1),
         "cpu_secs": round(sum(r.get("secs", 0) for r in rows.values()), 1),
         "tasks": [t["id"] for t in tasks],
+        "task_status": task_set["status"],
+        "grader_id": GRADER_ID,
         "errors": dict(errors.most_common(5)),
         "swept_at": datetime.now(UTC).isoformat(timespec="seconds"),
     }
     manifest["sweep"] = summary
+    manifest["grader_id"] = GRADER_ID
     manifest_path.write_text(json.dumps(manifest, indent=2) + "\n")
     log(f"sweep {env_dir.name}: {ok} ok, {len(rows) - ok} failed, {wall:.0f}s wall, tasks {summary['tasks']}")
     return summary

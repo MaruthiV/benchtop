@@ -55,10 +55,10 @@ def test_levels_match_loosely():
 
 
 def test_label_needs_confidence():
-    assert label(0.05, 0.005, 0.02) == "paper_better"
-    assert label(-0.05, 0.005, 0.02) == "baseline_better"
-    assert label(0.001, 0.002, 0.02) == "no_meaningful_difference"
-    assert label(0.021, 0.01, 0.02) is None
+    assert label(0.05, 0.005, 0.02, n=12) == "paper_better"
+    assert label(-0.05, 0.005, 0.02, n=12) == "baseline_better"
+    assert label(0.001, 0.002, 0.02, n=12) == "no_meaningful_difference"
+    assert label(0.021, 0.01, 0.02, n=12) is None
 
 
 def test_tasks_and_grading(tmp_path):

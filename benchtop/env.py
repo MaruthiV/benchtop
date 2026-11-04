@@ -7,6 +7,7 @@ from pathlib import Path
 import numpy as np
 
 from benchtop.space import Space, config_key
+from benchtop.stats import GRADER_ID, LEGACY_GRADER_ID
 
 ROOT = Path(__file__).resolve().parent.parent
 STATE = ROOT / ".state"
@@ -32,6 +33,8 @@ def load_catalog(envs_dir: Path) -> dict:
         raise ValueError(f"unsupported environment catalog schema: {path}")
     if not isinstance(catalog.get("id"), str) or not catalog["id"]:
         raise ValueError(f"environment catalog needs an id: {path}")
+    if catalog.get("grader_id") not in (GRADER_ID, LEGACY_GRADER_ID):
+        raise ValueError(f"environment catalog needs a supported grader_id: {path}")
     ids = catalog.get("environments")
     if not isinstance(ids, list) or not ids:
         raise ValueError(f"environment catalog needs a nonempty environments list: {path}")
@@ -117,13 +120,39 @@ class Env:
         manifest_path = env_dir / "manifest.json"
         manifest = json.loads(manifest_path.read_text()) if manifest_path.exists() else {}
         tasks_path = env_dir / "tasks.json"
-        tasks = json.loads(tasks_path.read_text()) if tasks_path.exists() else []
+        stored = json.loads(tasks_path.read_text()) if tasks_path.exists() else []
+        artifact_grader = None
+        if isinstance(stored, dict):
+            if type(stored.get("schema_version")) is not int or stored["schema_version"] != 1 or stored.get("grader_id") != GRADER_ID:
+                raise ValueError(f"unsupported task artifact: {tasks_path}")
+            artifact_grader = stored["grader_id"]
+            tasks = stored["tasks"]
+            if stored.get("status") != "complete" and tasks:
+                raise ValueError(f"incomplete task artifact contains eligible tasks: {tasks_path}")
+        else:
+            tasks = stored
+        if not isinstance(tasks, list):
+            raise ValueError(f"tasks must be a list: {tasks_path}")
+        versions = {task.get("grader_id", artifact_grader or LEGACY_GRADER_ID) for task in tasks}
+        if len(versions) > 1:
+            raise ValueError(f"mixed grader versions in tasks: {tasks_path}")
+        grader = next(iter(versions), artifact_grader or manifest.get("grader_id", LEGACY_GRADER_ID))
+        if grader not in (GRADER_ID, LEGACY_GRADER_ID):
+            raise ValueError(f"unknown task grader: {grader}")
+        if any(v is not None and v != grader for v in (artifact_grader, manifest.get("grader_id"))):
+            raise ValueError(f"task and manifest grader versions differ: {tasks_path}")
+        manifest = {**manifest, "grader_id": grader}
+        tasks = [{**task, "grader_id": grader} for task in tasks]
         table = Table(space, read_jsonl(env_dir / "results.jsonl"))
         return cls(env_dir, manifest.get("id", env_dir.name), space, raw, table, manifest, tasks)
 
     @property
     def seeds(self) -> int:
         return int(self.manifest.get("seeds", SEEDS))
+
+    @property
+    def grader_id(self) -> str:
+        return self.manifest["grader_id"]
 
     @property
     def visible_seeds(self) -> list[int]:
