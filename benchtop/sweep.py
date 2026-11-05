@@ -14,7 +14,7 @@ from benchtop.cache import (
     load_binding,
     seal_result,
 )
-from benchtop.env import SEEDS, STATE, VISIBLE, Env, lab_sha, read_jsonl
+from benchtop.env import SEEDS, STATE, VISIBLE, Env, lab_sha, read_jsonl, seed_groups
 from benchtop.sandbox import run_jobs, sandbox_mode
 from benchtop.space import Space, config_key
 from benchtop.stats import GRADER_ID
@@ -28,6 +28,7 @@ def sweep(
     timeout: float = 60.0,
     sandbox: str = "auto",
     log=print,
+    split: str | None = None,
 ) -> dict:
     env_dir = Path(env_dir)
     space = Space.load(env_dir / "space.json")
@@ -38,6 +39,13 @@ def sweep(
     seeds = manifest.get("seeds", SEEDS) if seeds is None else seeds
 
     manifest = {**manifest, "seeds": seeds, "visible_seeds": manifest.get("visible_seeds", VISIBLE)}
+    groups = seed_groups(manifest)
+    if split not in (None, "visible", "qualification"):
+        raise ValueError("sweep split must be visible or qualification; confirmation requires the future locked study runner")
+    if split is not None and groups is None:
+        raise ValueError("named sweep splits require an explicit three-part seed partition")
+    selected_seeds = (list(range(seeds)) if groups is None else groups[split] if split is not None
+                      else groups["visible"] + groups["qualification"])
     original_rows = read_jsonl(results_path)
     binding, status = load_binding(env_dir, manifest, space, original_rows)
     if status == "historical":
@@ -45,7 +53,7 @@ def sweep(
     done = {
         (config_key(space.normalize(r["config"])), r["seed"]) for r in original_rows if r.get("ok")
     }
-    jobs = [(c, s) for c in space.configs() for s in range(seeds) if (config_key(c), s) not in done]
+    jobs = [(c, s) for c in space.configs() for s in selected_seeds if (config_key(c), s) not in done]
     if jobs:
         sandbox_mode(sandbox)
     if status == "empty":
@@ -61,7 +69,7 @@ def sweep(
     )
     manifest_path.write_text(json.dumps(manifest, indent=2) + "\n")
     inputs = [env_dir / name for name in ("lab.py", "space.json", "manifest.json", "cache.json")]
-    inputs.extend(CODE / name for name in (*ENGINE_FILES, "tasks.py", "stats.py"))
+    inputs.extend(CODE / name for name in (*ENGINE_FILES, "tasks.py", "stats.py", "env.py", "sweep.py"))
     signatures = {path: file_signature(path) for path in inputs}
 
     def check_inputs():
@@ -84,7 +92,7 @@ def sweep(
         if not row["ok"]:
             errors[row["error"][:160]] += 1
 
-    log(f"sweep {env_dir.name}: {len(jobs)} runs to go ({space.size()} configs x {seeds} seeds)")
+    log(f"sweep {env_dir.name}: {len(jobs)} runs to go ({space.size()} configs x {len(selected_seeds)} selected seeds)")
     try:
         if jobs:
             asyncio.run(
@@ -126,6 +134,9 @@ def sweep(
         "errors": dict(errors.most_common(5)),
         "swept_at": datetime.now(UTC).isoformat(timespec="seconds"),
     }
+    if groups is not None:
+        summary.update(seed_stage=split or "visible_and_qualification", swept_seed_ids=selected_seeds,
+                       confirmation_evaluated=False)
     manifest["sweep"] = summary
     manifest["grader_id"] = GRADER_ID
     manifest_path.write_text(json.dumps(manifest, indent=2) + "\n")

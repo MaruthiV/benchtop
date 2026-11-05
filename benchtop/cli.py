@@ -49,7 +49,7 @@ def cmd_build(a):
 def cmd_sweep(a):
     from benchtop.sweep import sweep
 
-    sweep(Path(a.env), workers=a.workers, seeds=a.seeds)
+    sweep(Path(a.env), workers=a.workers, seeds=a.seeds, split=a.split)
 
 
 def cmd_serve(a):
@@ -190,6 +190,8 @@ def main(argv=None):
     s.add_argument("env")
     s.add_argument("--workers", type=int, default=8)
     s.add_argument("--seeds", type=int, default=None, help="total seeds; defaults to the manifest, or 16 for a new lab")
+    s.add_argument("--split", choices=("visible", "qualification"),
+                   help="fresh partition to sweep; default sweeps visible + qualification, reserving confirmation")
     s.set_defaults(fn=cmd_sweep)
 
     s = sub.add_parser("serve")

@@ -23,7 +23,7 @@ New sweeps persist a task object with schema version 1, grader ID, qualification
 
 New artifacts also carry [execution and qualification-data bindings](CACHE.md), generator source hashes, and payload checksums. Loading rejects stale generators, changed qualification observations, and altered task payloads. Visible appends do not change the qualification digest.
 
-The eligible-only `build_tasks` helper remains available and raises on incomplete or invalid data. `build_task_set` returns the full diagnostic artifact and accepts explicit seed IDs. The generation pipeline still defaults to its existing held-out split; the fresh three-part split and execution lock gates must be wired into the release harness before that study can run.
+The eligible-only `build_tasks` helper remains available and raises on incomplete or invalid data. `build_task_set` returns the full diagnostic artifact and accepts explicit seed IDs. With an explicit [fresh three-part partition](SEEDS.md), its default grading pool is qualification only; ordinary task loading rejects confirmation or mixed-partition artifacts. Legacy two-part manifests retain their existing held-out pool. The locked confirmation runner and independent stability/final-grading path remain pending before the fresh study can run.
 
 Historical unversioned task lists load as `historical_v0` without modifying their files. Mixed task graders and contradictions between the task artifact and environment manifest are errors. Catalogs must declare a supported grader; selected labs must match it and contain eligible tasks. Changing a catalog label alone cannot upgrade historical task labels.
 

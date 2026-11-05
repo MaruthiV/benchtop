@@ -293,10 +293,10 @@
   },
   "input_sha256": {
     "benchmarks/release_v1/admission/build_report.py": "ca627dd324b87a20eaa9d14837c0fd4066c79594e7651f61ef8160d7e5d843a7",
-    "benchmarks/release_v1/admission/screen.json": "1aa4eff93dc3602d2a21150a411b35fe023d0af1105bfcaf4af44437b0e4d009",
+    "benchmarks/release_v1/admission/screen.json": "4a4d31ff67f755512a6ceee47aa3be45b5adfeaaf177827dc031d9b8177a6b34",
     "benchmarks/release_v1/admission/check_references.py": "eda3ba292ffc522c471e15a4179a346f56fd640e9571adbec39f8dcca483a92f",
     "benchmarks/release_v1/admission/references/selection.json": "4b7b351e0feed3628d1c61fd4f3d7da384a85946bb5b6a1f95276cb864e69375",
-    "benchmarks/release_v1/admission/defects/report.json": "5d3483a83fb6efec51a02667f6b45a41b8cd38700cb47ba32df1d2ce15e7ec48",
+    "benchmarks/release_v1/admission/defects/report.json": "3cb1924f4096ea343fe9de82188533d53ec808e83c5fb2bae78dab7bd6e21192",
     "benchmarks/release_v1/admission/REVIEW.md": "0d76024dd0790fd192a04c163988b48c4eb253925eb19a57536c6ddd5e5cf10e",
     "envs/catalog.json": "7b914e699e6fa5cf3b6c8e25927542d6b31ca038fd59ccd31d49c7e6b7d8135c",
     "benchmarks/release_v1/spec.json": "7fe03af89514fba99f9c4164f438251498e90681b7f4ebc116614e5f7cb977d1",
@@ -316,7 +316,7 @@
     "envs/historical_cache.json": "7acfd0d5e66e76ab6af894a2d1e9e70ab3040fa54a8047a1e64e682c736d330d",
     "benchtop/admission.py": "399d9a0c99eaad4fd5cfd2b8309ab0308518e3141aa85bdce42c6d93ad9770e2",
     "benchtop/cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729",
-    "benchtop/env.py": "0ee1c53004af8750cfa6f625c13167406b137aa6e6e97f0900b81429cf79be1c",
+    "benchtop/env.py": "cc5db9ca8ea679d73679dffc42a9d4bb86def856c401fa031873a5276a4434bb",
     "benchtop/tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
     "benchtop/stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
     "benchtop/space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
@@ -2407,7 +2407,7 @@
       "runtime_evidence": {
         "status": "bounded",
         "source": "defects/report.json",
-        "checked_at_utc": "2026-11-05T02:09:00.715366+00:00",
+        "checked_at_utc": "2026-11-05T16:50:10.681783+00:00",
         "profile": {
           "env": "2610-37225-sharpnessaware-muon-matrixaware-optimization",
           "seeds": [
@@ -2888,8 +2888,8 @@
   ],
   "fixtures": {
     "source": "defects/report.json",
-    "sha256": "5d3483a83fb6efec51a02667f6b45a41b8cd38700cb47ba32df1d2ce15e7ec48",
-    "checked_at_utc": "2026-11-05T02:09:00.715366+00:00",
+    "sha256": "3cb1924f4096ea343fe9de82188533d53ec808e83c5fb2bae78dab7bd6e21192",
+    "checked_at_utc": "2026-11-05T16:50:10.681783+00:00",
     "status": "passed",
     "summary": {
       "cases": 16,

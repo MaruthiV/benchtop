@@ -19,6 +19,26 @@ SEEDS = 16
 VISIBLE = 4
 
 
+def seed_groups(manifest: dict) -> dict | None:
+    partition = cache.seed_partition(manifest)
+    groups = partition["seed_splits"]
+    if groups is None:
+        return None
+    if not isinstance(groups, dict) or set(groups) != {"visible", "qualification", "confirmation"}:
+        raise cache.CacheError("seed_splits must name visible, qualification, and confirmation")
+    if any(not isinstance(group, list) for group in groups.values()):
+        raise cache.CacheError("seed groups must be lists")
+    flat = [seed for group in groups.values() for seed in group]
+    if (any(type(seed) is not int for seed in flat) or len(set(flat)) != len(flat)
+            or set(flat) != set(range(partition["seeds"]))):
+        raise cache.CacheError("seed groups must be disjoint and cover the declared seeds")
+    if groups["visible"] != list(range(partition["visible_seeds"])):
+        raise cache.CacheError("visible seed group must match the declared visible prefix")
+    if any(len(groups[name]) < 2 for name in ("qualification", "confirmation")):
+        raise cache.CacheError("qualification and confirmation require at least two seeds each")
+    return {name: list(seeds) for name, seeds in groups.items()}
+
+
 def lab_sha(lab_path: Path) -> str:
     return hashlib.sha256(Path(lab_path).read_bytes()).hexdigest()
 
@@ -149,8 +169,12 @@ class Env:
         space = Space.from_dict(raw)
         manifest_path = env_dir / "manifest.json"
         manifest = json.loads(manifest_path.read_text()) if manifest_path.exists() else {}
+        groups = seed_groups(manifest)
         tasks_path = env_dir / "tasks.json"
         stored = json.loads(tasks_path.read_text()) if tasks_path.exists() and load_tasks else []
+        if (groups is not None and tasks_path.exists() and load_tasks
+                and (not isinstance(stored, dict) or stored.get("seed_ids") != groups["qualification"])):
+            raise cache.CacheError("fresh task artifacts must use exactly the qualification partition")
         artifact_grader = None
         if isinstance(stored, dict):
             if type(stored.get("schema_version")) is not int or stored["schema_version"] != 1 or stored.get("grader_id") != GRADER_ID:
@@ -188,6 +212,8 @@ class Env:
             for binding in bindings:
                 if not isinstance(binding, dict) or binding != cache.task_binding(env, binding.get("seed_ids", [])):
                     raise cache.CacheError("task cache inputs or generator changed; regenerate tasks from validated results")
+                if groups is not None and binding["seed_ids"] != groups["qualification"]:
+                    raise cache.CacheError("fresh task bindings must use exactly the qualification partition")
             if any(task.get("seed_ids") != task["binding"]["seed_ids"] for task in tasks):
                 raise cache.CacheError("task cache seed sources differ")
         env.task_version = cache.digest({"execution_id": env.execution_id, "grader_id": grader, "artifact": stored})
@@ -195,6 +221,8 @@ class Env:
         tracked.append(env_dir.parent / "historical_cache.json")
         if status in ("current", "empty"):
             tracked.extend(cache.CODE / name for name in (*cache.ENGINE_FILES, "tasks.py", "stats.py"))
+        if groups is not None:
+            tracked.append(Path(__file__))
         env._tracked = {path: cache.file_signature(path) for path in tracked}
         return env
 
@@ -234,7 +262,9 @@ class Env:
 
     def charging_schedule(self):
         seeds = None
-        if self.grader_id == GRADER_ID:
+        if seed_groups(self.manifest) is not None:
+            seeds = self.qualification_seeds
+        elif self.grader_id == GRADER_ID:
             seeds = self.tasks[0].get("seed_ids", self.heldout_seeds) if self.tasks else self.heldout_seeds
         return self.table.freeze_costs(seeds)
 
@@ -244,7 +274,18 @@ class Env:
 
     @property
     def heldout_seeds(self) -> list[int]:
-        return list(range(len(self.visible_seeds), self.seeds))
+        # existing task builders use this grading pool; fresh confirmation stays separate
+        return self.qualification_seeds
+
+    @property
+    def qualification_seeds(self) -> list[int]:
+        groups = seed_groups(self.manifest)
+        return groups["qualification"] if groups is not None else list(range(len(self.visible_seeds), self.seeds))
+
+    @property
+    def confirmation_seeds(self) -> list[int]:
+        groups = seed_groups(self.manifest)
+        return groups["confirmation"] if groups is not None else []
 
     @property
     def paper(self) -> dict:

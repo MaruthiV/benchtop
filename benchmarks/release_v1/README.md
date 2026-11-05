@@ -51,6 +51,8 @@ The 28-start reserve covers at most six smoke episodes, two integration episodes
 
 The [classical replay harness](REPLAY.md) now implements the three sanity controls, bound plans and slots, raw immutable attempt records, fixed visible ordering, resumable execution, and missing-outcome summaries. The actual reviewed 200-seed development comparison remains gated by six completed human records and four eligible claim labs. No model development or candidate lock is created by a classical plan.
 
+[Fresh seed partitions](SEEDS.md) now validate three separate groups and support staged visible/qualification sweeps. Qualification labels and prices exclude confirmation data, and ordinary sweeps reserve the confirmation group. The locked confirmation runner and full model evaluation remain pending.
+
 ## Validation of this checkpoint
 
 The specification was checked for valid JSON, disjoint seed splits, resource arithmetic, consistent group sizes, required lock gates, unique reference identities, and agreement with the historical archive checksum. No fresh papers were fetched, model episodes run, or application behavior changed for this checkpoint.
@@ -67,7 +69,7 @@ The [corrected grader and versioned task artifacts](GRADING.md) are implemented.
 
 [Cache provenance](CACHE.md) now binds execution inputs, result rows, qualification data, and task generators. Historical files remain verified snapshots; recorded replay cannot authorize live execution. Stale sweeps preserve old data, and unsupported live sandboxes fail closed.
 
-[Foundation reproduction](REPRODUCTION.md) now provides a CLI check in a disposable copy without private state, compares all saved historical report fields, and optionally exercises a new synthetic sweep and worker-free resume. The in-process adapter supports wrapped artifacts, catalog membership, recorded replay, and one terminal trainer reward. The next checkpoint is an actual Qualia smoke. The fresh three-part split and evaluation harness remain pending.
+[Foundation reproduction](REPRODUCTION.md) now provides a CLI check in a disposable copy without private state, compares all saved historical report fields, and optionally exercises a new synthetic sweep and worker-free resume. The in-process adapter supports wrapped artifacts, catalog membership, recorded replay, and one terminal trainer reward. Actual Qualia use and the locked model-evaluation harness remain pending.
 
 [Qualia integration preparation](QUALIA.md) now performs a non-model MCP preflight, saves private connection configuration, records up to two intended UI invocations, and captures MCP trace plus evaluator evidence. A successful public-tunnel preflight has been observed; the actual Qualia UI run is still pending. Preparation and surrogate test clients do not establish a Qualia pass.
 

@@ -40,7 +40,7 @@ For new live work, create a separate directory with reviewed `lab.py`, `space.js
 uv run benchtop sweep /path/to/new-lab
 ```
 
-The sweep initializes provenance before collecting results and writes corrected tasks afterward. Without `--seeds`, the CLI preserves the manifest's total seed count; a new lab without a count defaults to 16. Later sweeps resume only under matching execution inputs. Stale caches raise errors without deleting old data or relabeling it. Preserve the old directory and rebuild under a new version. The fresh three-part seed harness and release lock gates remain pending.
+The sweep initializes provenance before collecting results and writes corrected tasks afterward. Without `--seeds`, the CLI preserves the manifest's total seed count; a new lab without a count defaults to 16. Later sweeps resume only under matching execution inputs. Stale caches raise errors without deleting old data or relabeling it. Preserve the old directory and rebuild under a new version. [Fresh three-part manifests](SEEDS.md) now validate group membership and default to sweeping visible plus qualification, reserving confirmation. Named visible/qualification stages share the same bound execution cache; changing stage does not change membership. The locked confirmation runner and release lock enforcement remain pending.
 
 ## Supported sandbox and evidence
 

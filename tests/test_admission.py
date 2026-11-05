@@ -206,7 +206,9 @@ def test_explicit_qualification_ignores_confirmation_outcomes(tmp_path):
 
 def test_overlapping_seed_groups_cannot_enter_admission(tmp_path):
     splits = {"visible": [0, 1], "qualification": [1, 2, 3], "confirmation": [5, 6, 7]}
-    env = fixture(tmp_path, splits=splits)
+    env = fixture(tmp_path)
+    path = env / "manifest.json"
+    path.write_text(json.dumps({**json.loads(path.read_text()), "seed_splits": splits}))
     report = inspect_lab(env)
     assert report["decision"] == "rejected"
     assert report["qualification"]["status"] == "not_checked"

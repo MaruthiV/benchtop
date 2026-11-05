@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "suite_id": "reference_semantic_defects_v1",
-  "checked_at_utc": "2026-11-05T02:09:00.715366+00:00",
+  "checked_at_utc": "2026-11-05T16:50:10.681783+00:00",
   "status": "passed",
   "scope": "Deliberate mutations of reviewed reference code and counterfactual cached data; lab-specific engineering guards, not a general scientific-fidelity detector.",
   "analysis_runtime": {
@@ -311,7 +311,7 @@
     "envs/historical_cache.json": "7acfd0d5e66e76ab6af894a2d1e9e70ab3040fa54a8047a1e64e682c736d330d",
     "benchtop/admission.py": "399d9a0c99eaad4fd5cfd2b8309ab0308518e3141aa85bdce42c6d93ad9770e2",
     "benchtop/cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729",
-    "benchtop/env.py": "0ee1c53004af8750cfa6f625c13167406b137aa6e6e97f0900b81429cf79be1c",
+    "benchtop/env.py": "cc5db9ca8ea679d73679dffc42a9d4bb86def856c401fa031873a5276a4434bb",
     "benchtop/tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
     "benchtop/stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
     "benchtop/space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
