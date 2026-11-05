@@ -6,6 +6,8 @@ The results below use `historical_v0` labels. A [corrected grading review](bench
 
 The new [admission screen](benchmarks/release_v1/ADMISSION.md) separates mechanical validity, qualified questions, human review, and model difficulty. The historical catalog has 28 corrected claim candidates; scientific admission reviews are pending.
 
+The [consolidated evidence report](benchmarks/release_v1/admission/REPORT.md) brings six paper-to-code reviews, cached diagnostics, and bounded runtime evidence together. The [owner review guide](benchmarks/release_v1/admission/REVIEW.md) explains the remaining scientific decisions.
+
 A [controlled defect suite](benchmarks/release_v1/admission/defects/README.md) exercises six specific failure cases and ten valid controls, including disabled optimizer perturbations, test-set access, and mismatched shared inputs. These are lab-specific checks, with recorded sandbox evidence; they do not certify arbitrary generated science.
 
 ```mermaid

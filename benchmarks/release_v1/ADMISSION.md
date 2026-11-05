@@ -2,6 +2,8 @@
 
 The admission screen separates technical validity, question eligibility, human scientific review, and model difficulty. It reads cached artifacts without executing lab code or calling a model. A settled treatment effect and a favorable LLM audit do not approve a lab.
 
+Start with the [consolidated evidence report](admission/REPORT.md) for the six reference cases, the newer bounded Muon evidence, and all controlled fixture outcomes. The [owner review guide](admission/REVIEW.md) creates separate unassigned records and explains how to complete them. Assistant suggestions, actual human decisions, question eligibility, and runtime scope are displayed separately.
+
 ## Current historical screen
 
 [admission/screen.json](admission/screen.json) records the 30-lab historical catalog under `cached_admission_v1`:
@@ -79,4 +81,6 @@ The [six reference cases and cited assistant drafts](admission/references/README
 
 The [controlled semantic fixture suite](admission/defects/README.md) now exercises six named changes with ten valid controls: reversed accuracy direction, a disabled momentum perturbation, baseline access to test examples, mismatched paired inputs, stale cached source, and an ambiguous question. Twenty-four sandbox jobs observe a bounded Muon profile, with pristine-observer agreement, fresh-worker repetition, and zero-radius identity controls. Cached transformations stay separate from new executions. These lab-specific guards do not establish general scientific-defect recall or complete any human admission; ambiguous rewards make a question unavailable rather than rejecting the science. The cached screen above still runs no live probes.
 
-Human decisions, practical margin justifications, remaining runtime/reward-stability evidence, and a consolidated admission report remain pending. The actual Qualia UI check also remains open; preparation and generic MCP preflight do not complete it.
+The consolidated report can be regenerated offline with `python -m benchmarks.release_v1.admission.build_report --output-dir artifacts/admission_report`. It validates the stored catalog screen, reference bindings, and saved fixture input/accounting evidence without executing lab code or models. Provide `--reviews-dir PATH` to include separate owner records; malformed, stale, incomplete, and missing records remain visible. It creates no development lock. The original static drafts and recorded measurements are preserved.
+
+Human decisions, practical margin justifications, and remaining runtime/reward-stability evidence remain pending. The actual Qualia UI check also remains open; preparation and generic MCP preflight do not complete it.
