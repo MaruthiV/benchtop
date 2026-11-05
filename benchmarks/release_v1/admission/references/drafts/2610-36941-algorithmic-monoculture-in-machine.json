@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "subject": {
+    "contract": "cached_admission_v1",
+    "env": "2610-36941-algorithmic-monoculture-in-machine",
+    "execution_id": "historical_v0:f48ac9573d32b5d7ee29cdb520aa09d1ac4f3fc6773b4decb3ef6470f3e72763",
+    "lab_sha256": "7c8409f65a9b54ace947f5b4c4dfb6dfd710011e3fe9b9186789988a712bd6ca",
+    "space_sha256": "c23314ce85b12b01540087b6517c5e23b92d80a4ea74eff7793759b3012de684",
+    "qualification_artifact_sha256": "024357ea7785c318578f6f9c4d521ca255e6444fbebfc60d968eed87bf175b2f",
+    "charging_id": "0fb2deac69dc231d56840b7a49d3ff15675077cb976b563a7c87c9d3fedeed4b"
+  },
+  "decision": "needs_review",
+  "reviewer": {
+    "kind": "assistant",
+    "name": "Codex",
+    "reviewed_at_utc": "2026-11-05T01:43:52.805898+00:00"
+  },
+  "paper": {
+    "url": "https://arxiv.org/html/2610.36941v1",
+    "version": "2610.36941v1",
+    "sections": [
+      "3 Economic model, equations 1-4",
+      "3.2 Accuracy-constrained diversification, equation 7",
+      "4 Empirical calibration"
+    ]
+  },
+  "scope": {
+    "paper_mechanism": "A model-allocation portfolio trades private predictive risk against losses from correlated errors, with a cap on average predictive risk.",
+    "miniature_comparison": "Allocate 1,000 synthetic farms across nine error models using a constrained optimizer, uniform allocation, or the lowest estimated-risk model; score fresh simulated social loss.",
+    "preserved_assumptions": [
+      "Shared and idiosyncratic Gaussian errors with controllable cross-model correlation.",
+      "Simplex allocation and an average estimated-risk cap.",
+      "Fresh evaluation shocks are shared across methods."
+    ],
+    "simplifications": [
+      "Synthetic risks replace agricultural benchmark calibration.",
+      "Correlation and loss parameters are known to the portfolio optimizer.",
+      "Continuous weights are rounded into farm counts and benchmark risks are noisy."
+    ],
+    "unsupported_claims": [
+      "Observed crop-yield improvements or monetary/ecological welfare.",
+      "A cap guaranteed for each farm or for true risk under noisy estimated risks."
+    ]
+  },
+  "checks": {
+    "mechanism_fidelity": {
+      "status": "pass",
+      "evidence": [
+        {
+          "source": "https://arxiv.org/html/2610.36941v1#S3",
+          "locator": "3 equations 1-4; 3.2 equation 7",
+          "finding": "The source objective includes private risk, correlated systemic loss, and a population-average risk cap."
+        },
+        {
+          "source": "envs/2610-36941-algorithmic-monoculture-in-machine/lab.py",
+          "locator": "L24-L52",
+          "finding": "The objective and constraints implement that restricted modeled comparison, with estimated rather than true risks."
+        }
+      ]
+    },
+    "baseline_fairness": {
+      "status": "unresolved",
+      "evidence": [
+        {
+          "source": "envs/2610-36941-algorithmic-monoculture-in-machine/lab.py",
+          "locator": "L63-L86",
+          "finding": "All arms receive the same noisy risks. Portfolio optimization additionally assumes known correlation and loss parameters; scope that oracle information explicitly."
+        }
+      ]
+    },
+    "shared_randomness": {
+      "status": "pass",
+      "evidence": [
+        {
+          "source": "envs/2610-36941-algorithmic-monoculture-in-machine/lab.py",
+          "locator": "L63-L77",
+          "finding": "Risk, benchmark, and evaluation generators are separated and independent of method."
+        },
+        {
+          "source": "envs/2610-36941-algorithmic-monoculture-in-machine/lab.py",
+          "locator": "L88-L95",
+          "finding": "Underlying evaluation shocks are common; allocation changes which model-specific shocks reach each farm. Identical final errors are not expected."
+        }
+      ]
+    },
+    "heldout_metric": {
+      "status": "pass",
+      "evidence": [
+        {
+          "source": "envs/2610-36941-algorithmic-monoculture-in-machine/lab.py",
+          "locator": "L70-L77",
+          "finding": "Evaluation shocks are separate from benchmark risk-estimation noise."
+        },
+        {
+          "source": "envs/2610-36941-algorithmic-monoculture-in-machine/lab.py",
+          "locator": "L91-L103",
+          "finding": "The primary metric is average modeled private plus systemic loss; lower is better. cap_ok separately checks true risk."
+        }
+      ]
+    },
+    "meaningful_margin": {
+      "status": "unresolved",
+      "evidence": [
+        {
+          "source": "envs/2610-36941-algorithmic-monoculture-in-machine/space.json",
+          "locator": "/metric/min_effect",
+          "finding": "0.01 is in synthetic social-loss units; no external welfare meaning or signed threshold justification exists."
+        }
+      ]
+    },
+    "execution_behavior": {
+      "status": "unresolved",
+      "evidence": [
+        {
+          "source": "envs/2610-36941-algorithmic-monoculture-in-machine/lab.py",
+          "locator": "L39-L51",
+          "finding": "SLSQP results are clipped and checked for feasibility/objective improvement, with monoculture fallback. Convergence and repeated-worker behavior remain unprobed."
+        }
+      ]
+    },
+    "shortcut_audit": {
+      "status": "unresolved",
+      "evidence": [
+        {
+          "source": "envs/2610-36941-algorithmic-monoculture-in-machine/lab.py",
+          "locator": "L24-L28",
+          "finding": "The optimizer uses the same structural objective as the generator, so gains partly check model-consistent optimization."
+        },
+        {
+          "source": "envs/2610-36941-algorithmic-monoculture-in-machine/lab.py",
+          "locator": "L97-L103",
+          "finding": "True-risk regret can exceed the estimated-risk cap. Admission must inspect this diagnostic, not only the social-loss label."
+        }
+      ]
+    }
+  },
+  "rationale": "Assistant draft only. Separate modeled loss improvements from constraint satisfaction under noisy risks. Verify optimizer fallback/feasibility and justify the synthetic-unit margin.",
+  "assistant_assessment": {
+    "recommendation": "needs_review",
+    "evidence_scope": "Primary method sections and static implementation inspected; historical caches analyzed. No new lab executions, parameter probes, independent confirmation, or model evaluations.",
+    "blockers": [
+      "Separate modeled loss improvements from constraint satisfaction under noisy risks.",
+      "Verify optimizer fallback/feasibility and justify the synthetic-unit margin."
+    ],
+    "owner_actions": [
+      "Review the restricted model-consistency scope and known covariance assumptions.",
+      "Inspect cap_ok across contexts and seeds before making a constrained-benefit claim.",
+      "Probe SLSQP failure/fallback and shared exogenous shocks in versioned fixtures."
+    ]
+  }
+}

@@ -1,0 +1,153 @@
+{
+  "schema_version": 1,
+  "subject": {
+    "contract": "cached_admission_v1",
+    "env": "2610-36983-advancement-or-acceleration-how",
+    "execution_id": "historical_v0:944abb12e0a9018deefcd992b61836354c360f18c929c61e94c94de26711cf8f",
+    "lab_sha256": "c87e4977489dc420e06af0cbb0dce7100a91d4e25b8940761f2beee60b0b5980",
+    "space_sha256": "04b2e9698f4295cfc7797be8fe320512dcab0616facbe0796cb871903b618a7a",
+    "qualification_artifact_sha256": "aa273db8a5c35f3fb9b7fa1d0c1eff1017ed4b14baa01c74b4eb1964e0c32cc1",
+    "charging_id": "f104a5926887e92210011c97f66c0a48cdd0584a015748d9c57ae6f0a5c38f46"
+  },
+  "decision": "needs_review",
+  "reviewer": {
+    "kind": "assistant",
+    "name": "Codex",
+    "reviewed_at_utc": "2026-11-05T01:43:52.805898+00:00"
+  },
+  "paper": {
+    "url": "https://arxiv.org/html/2610.36983v1",
+    "version": "2610.36983v1",
+    "sections": [
+      "3.1 The Teacher-Student Curation Model",
+      "3.2 Advancement and Acceleration",
+      "3.3 Results, Figure 1e-f",
+      "4 The Delta-Test",
+      "A.2 Selection under Matched and Shifted Targets"
+    ]
+  },
+  "scope": {
+    "paper_mechanism": "Target-aware selection can correct a train-target gap; finite-budget gains and asymptotic improvements are distinct claims.",
+    "miniature_comparison": "Regularized logistic regression on all source samples or a target-probe-selected subset, across teacher angle, pool size, and label noise; random subsets are a control.",
+    "preserved_assumptions": [
+      "Gaussian examples labeled by rotated source and target teachers.",
+      "Selection favors agreement with a target proxy and small proxy margins.",
+      "Shared source pool and fresh target evaluation samples across arms."
+    ],
+    "simplifications": [
+      "20 dimensions and two finite pool sizes replace asymptotic analysis.",
+      "A probe fitted on 40 target labels replaces access to the target teacher.",
+      "Fixed L2 penalties and retention policy, with a fallback to full data; no mixture experiment."
+    ],
+    "unsupported_claims": [
+      "Asymptotic advancement or replication of LLM training results.",
+      "An equal-information selection advantage over a baseline trained only on source labels."
+    ]
+  },
+  "checks": {
+    "mechanism_fidelity": {
+      "status": "unresolved",
+      "evidence": [
+        {
+          "source": "https://arxiv.org/html/2610.36983v1#S3.SS1",
+          "locator": "3.1 selection; Figure 1e-f; A.2",
+          "finding": "The source studies target-aware selection and separates finite-budget from limiting behavior."
+        },
+        {
+          "source": "envs/2610-36983-advancement-or-acceleration-how/lab.py",
+          "locator": "L75-L87",
+          "finding": "A finite-sample target probe drives selection, with variable retained counts and a full-pool fallback; this is an approximation with a narrower claim."
+        }
+      ]
+    },
+    "baseline_fairness": {
+      "status": "unresolved",
+      "evidence": [
+        {
+          "source": "envs/2610-36983-advancement-or-acceleration-how/lab.py",
+          "locator": "L54-L77",
+          "finding": "Only target_select uses the 40 target labels through a fitted probe; uniform and random_select fit source labels. The extra supervision must be accounted for or explicitly scoped."
+        }
+      ]
+    },
+    "shared_randomness": {
+      "status": "pass",
+      "evidence": [
+        {
+          "source": "envs/2610-36983-advancement-or-acceleration-how/lab.py",
+          "locator": "L41-L60",
+          "finding": "Source pool, target probe set, and target test samples are drawn before the method branch, so matching seed/context shares these samples."
+        },
+        {
+          "source": "envs/2610-36983-advancement-or-acceleration-how/lab.py",
+          "locator": "L69-L74",
+          "finding": "Random-subset selection has its own generator and does not perturb the shared test draws."
+        }
+      ]
+    },
+    "heldout_metric": {
+      "status": "pass",
+      "evidence": [
+        {
+          "source": "envs/2610-36983-advancement-or-acceleration-how/lab.py",
+          "locator": "L54-L64",
+          "finding": "Target test features and labels are separate from pool and probe training. delta_test is test-derived auxiliary feedback, not a selector input in this implementation."
+        },
+        {
+          "source": "envs/2610-36983-advancement-or-acceleration-how/lab.py",
+          "locator": "L91-L97",
+          "finding": "Primary accuracy uses clean target-teacher labels and is higher-better. Test-derived diagnostics must not be used for internal fit selection in a repair."
+        }
+      ]
+    },
+    "meaningful_margin": {
+      "status": "unresolved",
+      "evidence": [
+        {
+          "source": "envs/2610-36983-advancement-or-acceleration-how/space.json",
+          "locator": "/metric/min_effect",
+          "finding": "0.01 means one percentage point of target accuracy. Whether that is a meaningful tolerance for this miniature still needs justification; cached equivalence alone cannot justify it."
+        }
+      ]
+    },
+    "execution_behavior": {
+      "status": "unresolved",
+      "evidence": [
+        {
+          "source": "envs/2610-36983-advancement-or-acceleration-how/lab.py",
+          "locator": "L13-L24",
+          "finding": "L-BFGS-B returns res.x without checking success or convergence. No new convergence, repeatability, or parameter-response probes were run."
+        }
+      ]
+    },
+    "shortcut_audit": {
+      "status": "unresolved",
+      "evidence": [
+        {
+          "source": "envs/2610-36983-advancement-or-acceleration-how/lab.py",
+          "locator": "L75-L87",
+          "finding": "Target supervision, variable subset size, and fallback can change the comparison."
+        },
+        {
+          "source": "benchmarks/release_v1/admission/references/selection.json",
+          "locator": "/cases/2610-36983-advancement-or-acceleration-how/diagnostics (lookup by env)",
+          "finding": "The near-zero average pools teacher angles; it does not show there is no conditional effect or establish the paper asymptotic claim."
+        }
+      ]
+    }
+  },
+  "rationale": "Assistant draft only. Resolve the target-label information asymmetry and limit the claim to a finite logistic-regression experiment. Check fit convergence, document the fallback, and justify the one-point margin.",
+  "assistant_assessment": {
+    "recommendation": "needs_review",
+    "evidence_scope": "Primary method sections and static implementation inspected; historical caches analyzed. No new lab executions, parameter probes, independent confirmation, or model evaluations.",
+    "blockers": [
+      "Resolve the target-label information asymmetry and limit the claim to a finite logistic-regression experiment.",
+      "Check fit convergence, document the fallback, and justify the one-point margin."
+    ],
+    "owner_actions": [
+      "Compare source Figure 1e-f/A.2 to the finite probe policy and decide what can be claimed.",
+      "Consider a target-informed baseline/control in a new version if claiming equal-information improvement.",
+      "Probe zero-gap and shifted-gap behavior, full-pool fallback, and optimizer failures."
+    ]
+  }
+}

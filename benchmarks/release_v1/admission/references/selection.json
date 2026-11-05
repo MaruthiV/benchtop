@@ -1,0 +1,625 @@
+{
+  "schema_version": 1,
+  "selection_id": "historical_reference_drafts_v1",
+  "selected_at_utc": "2026-11-05T01:43:52.805898+00:00",
+  "selector": {
+    "kind": "assistant",
+    "name": "Codex",
+    "human_approved": false
+  },
+  "protocol_sha256": "7fe03af89514fba99f9c4164f438251498e90681b7f4ebc116614e5f7cb977d1",
+  "diagnostics_generator_sha256": "eda3ba292ffc522c471e15a4179a346f56fd640e9571adbec39f8dcca483a92f",
+  "selection_basis": "Coverage-oriented engineering selection from the frozen historical catalog using paper/code inspection and corrected cached qualification diagnostics; before any new model scores. Not a representative sample or a development lock.",
+  "development_selection": "No development labs selected. Human admission plus corrected qualification must precede the first-four-in-ID-order rule; fewer than four requires a documented amendment before budget-selection model runs.",
+  "diagnostic_definitions": {
+    "effect": "Positive means treatment better, with equal weight across contexts; twelve historical held-out seed blocks (4-15).",
+    "se_ratio": "Seed-block SE divided by sqrt(sum of within-context sample variances / n_seeds) / n_contexts. The denominator assumes independent contexts and is diagnostic only. This ratio is not a correlation coefficient.",
+    "cost_max_over_min": "Frozen maximum charged configuration cost divided by minimum; not a new runtime measurement.",
+    "context_top_share": "Largest absolute context mean effect divided by sum of absolute context mean effects; not automatic rejection.",
+    "effects_by_context_factor": "Descriptive marginal effects within each level; not an independently confirmed interaction test."
+  },
+  "source_capture": "Exact v1 HTML fetched from arxiv.org; version marker verified and complete extracted text cached privately. Only metadata/hashes are bundled. Offline checking does not authenticate remote bytes or scientific judgments.",
+  "limits": [
+    "Assistant drafts cannot admit labs. No real human review is represented.",
+    "No lab code was executed for this selection; cached results are historical development evidence.",
+    "No independent confirmation, new model calls, fresh candidate generation, or outreach."
+  ],
+  "cases": [
+    {
+      "env": "2610-36935-gaussian-process-bandits-for",
+      "title": "Gaussian Process Bandits for Constraint Black Box Lever Optimization",
+      "coverage": [
+        "average_effect",
+        "unequal_cost",
+        "shared_seed_correlation"
+      ],
+      "selection_reason": "Allocation simulator with a settled cached average, materially unequal charges, and cross-context dependence within seeds.",
+      "draft_sha256": "287052905f51ba5750974ada30000c5e2e238ba8cbd1359888a9c8f2154ad910",
+      "paper_snapshot": {
+        "arxiv_id": "2610.36935",
+        "version": "2610.36935v1",
+        "url": "https://arxiv.org/html/2610.36935v1",
+        "final_url": "https://arxiv.org/html/2610.36935v1",
+        "status_code": 200,
+        "version_marker_verified": true,
+        "html_sha256": "041e204e663ca0a757dce0e473e26d526ce2347d2928e4c9ee98ca373724fd6c",
+        "text_sha256": "6f4d67da196f4a357210c38410bddc5a746e26e5780a40808a615429f809dcca",
+        "text_characters": 36496,
+        "retrieved_at_utc": "2026-11-05T01:31:50.227284+00:00"
+      },
+      "diagnostics": {
+        "seed_ids": [
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "claim": {
+          "task_id": "claim",
+          "delta": 3.9743306820708355,
+          "se": 0.6950639370342492,
+          "n_seeds": 12,
+          "interval": [
+            2.4445052713435844,
+            5.504156092798087
+          ],
+          "label": "paper_better",
+          "status": "settled",
+          "bootstrap_interval": [
+            2.7796924930995774,
+            5.421051771023393
+          ],
+          "bootstrap_label": "paper_better",
+          "diagnostic_disagreement": false
+        },
+        "min_effect": 0.3,
+        "contexts": 12,
+        "cost_max_over_min": 15.116655108539934,
+        "seed_block_se": 0.6950639370342492,
+        "context_independence_se": 0.3173518432044854,
+        "se_ratio": 2.190199779575206,
+        "context_top_share": 0.12132285925863155,
+        "effects_by_context_factor": {
+          "environment": [
+            {
+              "level": "stationary",
+              "delta": 5.331728913842265
+            },
+            {
+              "level": "drift",
+              "delta": 4.098438926774874
+            },
+            {
+              "level": "reactive",
+              "delta": 2.4928242055953653
+            }
+          ],
+          "noise_sd": [
+            {
+              "level": 0.1,
+              "delta": 4.189226593275838
+            },
+            {
+              "level": 0.3,
+              "delta": 3.7594347708658327
+            }
+          ],
+          "delay": [
+            {
+              "level": 0,
+              "delta": 4.414519150988086
+            },
+            {
+              "level": 3,
+              "delta": 3.5341422131535842
+            }
+          ]
+        }
+      }
+    },
+    {
+      "env": "2610-36941-algorithmic-monoculture-in-machine",
+      "title": "Algorithmic Monoculture in Machine Learning-based Site-Specific Fertilizer Recommendation",
+      "coverage": [
+        "average_effect",
+        "shared_seed_correlation"
+      ],
+      "selection_reason": "Synthetic portfolio allocation exposes strong dependence across contexts sharing seeds and an estimated-risk versus true-risk constraint distinction.",
+      "draft_sha256": "3e5e0f2740d1a286a4c199d72846efb704135a7d7fd030c345e4fec9c3134818",
+      "paper_snapshot": {
+        "arxiv_id": "2610.36941",
+        "version": "2610.36941v1",
+        "url": "https://arxiv.org/html/2610.36941v1",
+        "final_url": "https://arxiv.org/html/2610.36941v1",
+        "status_code": 200,
+        "version_marker_verified": true,
+        "html_sha256": "2f605e48403989b1cab20cb7333ed6011869f8ddab3b2a7df83f40ce200ca331",
+        "text_sha256": "0a7a0a10984040f0d615bc936177b366262b2911943339d82ffc14bfa3dfc6cd",
+        "text_characters": 29890,
+        "retrieved_at_utc": "2026-11-05T01:31:53.666088+00:00"
+      },
+      "diagnostics": {
+        "seed_ids": [
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "claim": {
+          "task_id": "claim",
+          "delta": 0.07586813814127655,
+          "se": 0.007290234036769324,
+          "n_seeds": 12,
+          "interval": [
+            0.059822441212752306,
+            0.09191383506980079
+          ],
+          "label": "paper_better",
+          "status": "settled",
+          "bootstrap_interval": [
+            0.06398207195452661,
+            0.09031849615596867
+          ],
+          "bootstrap_label": "paper_better",
+          "diagnostic_disagreement": false
+        },
+        "min_effect": 0.01,
+        "contexts": 12,
+        "cost_max_over_min": 4.178584876849774,
+        "seed_block_se": 0.007290234036769324,
+        "context_independence_se": 0.0030394769261225473,
+        "se_ratio": 2.398515999287238,
+        "context_top_share": 0.229470590581674,
+        "effects_by_context_factor": {
+          "kappa": [
+            {
+              "level": 0.0,
+              "delta": 0.1603588788005884
+            },
+            {
+              "level": 0.5,
+              "delta": 0.06599991695718035
+            },
+            {
+              "level": 0.95,
+              "delta": 0.0012456186660608885
+            }
+          ],
+          "gap": [
+            {
+              "level": "small",
+              "delta": 0.09222206829247
+            },
+            {
+              "level": "large",
+              "delta": 0.05951420799008308
+            }
+          ],
+          "cap": [
+            {
+              "level": 0.05,
+              "delta": 0.06324580907556908
+            },
+            {
+              "level": 0.25,
+              "delta": 0.08849046720698402
+            }
+          ]
+        }
+      }
+    },
+    {
+      "env": "2610-36983-advancement-or-acceleration-how",
+      "title": "Advancement or Acceleration? How Data Curation Improves LLM Training",
+      "coverage": [
+        "interaction",
+        "near_null"
+      ],
+      "selection_reason": "Corrected cached average lies inside the declared equivalence band, while effects vary by train-target teacher angle; this tests averaging and interaction scope.",
+      "draft_sha256": "3088db240732c7133b3fa17b2f74b59058297f5d48ad48a5696f6ef53b1a406c",
+      "paper_snapshot": {
+        "arxiv_id": "2610.36983",
+        "version": "2610.36983v1",
+        "url": "https://arxiv.org/html/2610.36983v1",
+        "final_url": "https://arxiv.org/html/2610.36983v1",
+        "status_code": 200,
+        "version_marker_verified": true,
+        "html_sha256": "38fe2eb534a241557c17b473cedc3eddf6883c0a723220939337022421d8f7d5",
+        "text_sha256": "d7e382a9e95f7b603cb4a71f6d6e099acc36b9bfce4edab48bc76409c87d1d30",
+        "text_characters": 106901,
+        "retrieved_at_utc": "2026-11-05T01:31:57.217121+00:00"
+      },
+      "diagnostics": {
+        "seed_ids": [
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "claim": {
+          "task_id": "claim",
+          "delta": -0.00027951388888889164,
+          "se": 0.004242589116344588,
+          "n_seeds": 12,
+          "interval": [
+            -0.009617389574329628,
+            0.009058361796551844
+          ],
+          "label": "no_meaningful_difference",
+          "status": "settled",
+          "bootstrap_interval": [
+            -0.008711979166666663,
+            0.007373784722222221
+          ],
+          "bootstrap_label": "no_meaningful_difference",
+          "diagnostic_disagreement": false
+        },
+        "min_effect": 0.01,
+        "contexts": 12,
+        "cost_max_over_min": 2.3607577752221265,
+        "seed_block_se": 0.004242589116344588,
+        "context_independence_se": 0.0038219391459690093,
+        "se_ratio": 1.110061922576459,
+        "context_top_share": 0.22704859757356127,
+        "effects_by_context_factor": {
+          "gap_deg": [
+            {
+              "level": 0,
+              "delta": -0.09394270833333333
+            },
+            {
+              "level": 30,
+              "delta": -0.003520833333333334
+            },
+            {
+              "level": 60,
+              "delta": 0.096625
+            }
+          ],
+          "n_pool": [
+            {
+              "level": 200,
+              "delta": 0.014152777777777778
+            },
+            {
+              "level": 2000,
+              "delta": -0.014711805555555561
+            }
+          ],
+          "label_noise": [
+            {
+              "level": 0.0,
+              "delta": 0.034236111111111106
+            },
+            {
+              "level": 0.2,
+              "delta": -0.0347951388888889
+            }
+          ]
+        }
+      }
+    },
+    {
+      "env": "2610-36994-callm-continual-adaptation-of",
+      "title": "CaLLM: Continual Adaptation of LLMs via Non-Parametric Adapter Routing",
+      "coverage": [
+        "known_fidelity_or_fairness_issue",
+        "unequal_cost"
+      ],
+      "selection_reason": "Known baseline-fairness concern can be traced directly to differing heads, capacity, optimization, and label-defined task batches despite a favorable cached contrast.",
+      "draft_sha256": "a45d0cc00e65defdfb1c9aa7e8431eaf18f14211c0c0827de86f287214461a4d",
+      "paper_snapshot": {
+        "arxiv_id": "2610.36994",
+        "version": "2610.36994v1",
+        "url": "https://arxiv.org/html/2610.36994v1",
+        "final_url": "https://arxiv.org/html/2610.36994v1",
+        "status_code": 200,
+        "version_marker_verified": true,
+        "html_sha256": "ac1c3107e69f7cf0bd1ef9fce709daf7828945469caa79d75bc738e3f34f6d03",
+        "text_sha256": "1f9cbe89fa426ada517995f8b73e65c36388326a04672fab2209418e3c649b75",
+        "text_characters": 94782,
+        "retrieved_at_utc": "2026-11-05T01:32:00.664373+00:00"
+      },
+      "diagnostics": {
+        "seed_ids": [
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "claim": {
+          "task_id": "claim",
+          "delta": 0.17612263505448342,
+          "se": 0.0031513651624055904,
+          "n_seeds": 12,
+          "interval": [
+            0.16918652709799895,
+            0.1830587430109679
+          ],
+          "label": "paper_better",
+          "status": "settled",
+          "bootstrap_interval": [
+            0.17029533865543017,
+            0.18209235386945757
+          ],
+          "bootstrap_label": "paper_better",
+          "diagnostic_disagreement": false
+        },
+        "min_effect": 0.02,
+        "contexts": 12,
+        "cost_max_over_min": 43.58078787332832,
+        "seed_block_se": 0.0031513651624055904,
+        "context_independence_se": 0.0019858977647625453,
+        "se_ratio": 1.586871800916902,
+        "context_top_share": 0.13968038084515563,
+        "effects_by_context_factor": {
+          "task_count": [
+            {
+              "level": 2,
+              "delta": 0.26822622336595936
+            },
+            {
+              "level": 5,
+              "delta": 0.15553186536464722
+            },
+            {
+              "level": 10,
+              "delta": 0.10460981643284366
+            }
+          ],
+          "task_grouping": [
+            {
+              "level": "clustered",
+              "delta": 0.17145909085269462
+            },
+            {
+              "level": "interleaved",
+              "delta": 0.18078617925627224
+            }
+          ],
+          "chunk_size": [
+            {
+              "level": 32,
+              "delta": 0.18372000143628497
+            },
+            {
+              "level": 4,
+              "delta": 0.16852526867268183
+            }
+          ]
+        }
+      }
+    },
+    {
+      "env": "2610-37225-sharpnessaware-muon-matrixaware-optimization",
+      "title": "Sharpness-Aware Muon: Matrix-Aware Optimization with Momentum-Guided Perturbations",
+      "coverage": [
+        "average_effect",
+        "unequal_cost",
+        "shared_seed_correlation"
+      ],
+      "selection_reason": "Optimization mechanism with shared splits, batches, and initialization; preserves an unfavorable historical treatment contrast and one-versus-two-gradient cost structure.",
+      "draft_sha256": "1466b1a5a8a44288cb05e0bf9b645b5156ecf7c76816a84186c66845c27e2eb1",
+      "paper_snapshot": {
+        "arxiv_id": "2610.37225",
+        "version": "2610.37225v1",
+        "url": "https://arxiv.org/html/2610.37225v1",
+        "final_url": "https://arxiv.org/html/2610.37225v1",
+        "status_code": 200,
+        "version_marker_verified": true,
+        "html_sha256": "386d3c5858bf9756db66ae4fdbea6de776c8026ee0f4526e0fe40f88a9f1f070",
+        "text_sha256": "91cf13f2b5ffd351ba75800f723b15813d5a547584953a7a117953075f1f0e50",
+        "text_characters": 103220,
+        "retrieved_at_utc": "2026-11-05T01:32:04.255849+00:00"
+      },
+      "diagnostics": {
+        "seed_ids": [
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "claim": {
+          "task_id": "claim",
+          "delta": -0.017534722884496052,
+          "se": 0.0018163594826676149,
+          "n_seeds": 12,
+          "interval": [
+            -0.021532503151239196,
+            -0.013536942617752906
+          ],
+          "label": "baseline_better",
+          "status": "settled",
+          "bootstrap_interval": [
+            -0.021163630630407066,
+            -0.014149307738989593
+          ],
+          "bootstrap_label": "baseline_better",
+          "diagnostic_disagreement": false
+        },
+        "min_effect": 0.01,
+        "contexts": 12,
+        "cost_max_over_min": 2.3563074171989773,
+        "seed_block_se": 0.0018163594826676149,
+        "context_independence_se": 0.0010978133705448403,
+        "se_ratio": 1.654524832181779,
+        "context_top_share": 0.2031250436557468,
+        "effects_by_context_factor": {
+          "batch_size": [
+            {
+              "level": 16,
+              "delta": -0.019531242549419403
+            },
+            {
+              "level": 64,
+              "delta": -0.01619792232910792
+            },
+            {
+              "level": 256,
+              "delta": -0.016875003774960835
+            }
+          ],
+          "rho": [
+            {
+              "level": 0.05,
+              "delta": -0.0013541703422864275
+            },
+            {
+              "level": 0.3,
+              "delta": -0.03371527542670568
+            }
+          ],
+          "train_n": [
+            {
+              "level": 200,
+              "delta": -0.014270832969082723
+            },
+            {
+              "level": 1000,
+              "delta": -0.020798612799909383
+            }
+          ]
+        }
+      }
+    },
+    {
+      "env": "2610-37388-paragaussian-approximations-of-random",
+      "title": "Para-Gaussian Approximations of Random Deep Neural Networks",
+      "coverage": [
+        "known_fidelity_or_fairness_issue",
+        "unequal_cost"
+      ],
+      "selection_reason": "Context-dominated contrast tests scientific-scope review: narrow/deep cases stress a signed cumulant approximation beyond a small depth-to-width regime.",
+      "draft_sha256": "d37def032ee5b26b252ea7f426366d933ccf0cc0d9ded82cfc901851d1dc6ec3",
+      "paper_snapshot": {
+        "arxiv_id": "2610.37388",
+        "version": "2610.37388v1",
+        "url": "https://arxiv.org/html/2610.37388v1",
+        "final_url": "https://arxiv.org/html/2610.37388v1",
+        "status_code": 200,
+        "version_marker_verified": true,
+        "html_sha256": "50e3d652699dae9bfcc7f3b27ee6ce0370bc478ed27473c1e612ffba12d339a8",
+        "text_sha256": "6eb8d74a6a4de8491f874aeb8e3f648a65049e2244eea24911007d41199980cc",
+        "text_characters": 143666,
+        "retrieved_at_utc": "2026-11-05T01:32:08.164851+00:00"
+      },
+      "diagnostics": {
+        "seed_ids": [
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "claim": {
+          "task_id": "claim",
+          "delta": -9.9372248252929,
+          "se": 0.0004540786553308466,
+          "n_seeds": 12,
+          "interval": [
+            -9.938224245674798,
+            -9.936225404911001
+          ],
+          "label": "baseline_better",
+          "status": "settled",
+          "bootstrap_interval": [
+            -9.938104137823267,
+            -9.93639443733686
+          ],
+          "bootstrap_label": "baseline_better",
+          "diagnostic_disagreement": false
+        },
+        "min_effect": 0.01,
+        "contexts": 12,
+        "cost_max_over_min": 42.23651620596661,
+        "seed_block_se": 0.0004540786553308466,
+        "context_independence_se": 0.000361674558979775,
+        "se_ratio": 1.2554896219732141,
+        "context_top_share": 0.9467958163116836,
+        "effects_by_context_factor": {
+          "width": [
+            {
+              "level": 4,
+              "delta": -29.299579930067356
+            },
+            {
+              "level": 12,
+              "delta": -0.5175348759925589
+            },
+            {
+              "level": 32,
+              "delta": 0.005440330181221384
+            }
+          ],
+          "depth": [
+            {
+              "level": 2,
+              "delta": -0.023809721245867124
+            },
+            {
+              "level": 8,
+              "delta": -19.85063992933993
+            }
+          ],
+          "activation": [
+            {
+              "level": "linear",
+              "delta": -0.6029268662402245
+            },
+            {
+              "level": "relu",
+              "delta": -19.271522784345574
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,159 @@
+{
+  "schema_version": 1,
+  "subject": {
+    "contract": "cached_admission_v1",
+    "env": "2610-37388-paragaussian-approximations-of-random",
+    "execution_id": "historical_v0:7cadec6600923ef52e06ed8eb013d63265f933413c12d80c8ad4d1e354d19299",
+    "lab_sha256": "7052c19137f4091b2bc0548a2d55d6205a7ad989f0f9ec8baf0b8d545fe0e442",
+    "space_sha256": "217281d0e851da2c8b778249e9dc2e9a1a04b53f74323c03d046048efc2bc500",
+    "qualification_artifact_sha256": "2cf454b47f4510c29466b512e98546a49ef908286d3814be80cce2dc13d46bf0",
+    "charging_id": "60009608b0fa1ebc9cf38d144fad5632ab231ba44d29d8164d28ce5535cf3b45"
+  },
+  "decision": "needs_review",
+  "reviewer": {
+    "kind": "assistant",
+    "name": "Codex",
+    "reviewed_at_utc": "2026-11-05T01:43:52.805898+00:00"
+  },
+  "paper": {
+    "url": "https://arxiv.org/html/2610.37388v1",
+    "version": "2610.37388v1",
+    "sections": [
+      "1.3 Definition 1.2, signed total variation",
+      "1.4 Remark 1.10 and Theorem 1.13",
+      "1.6.2 Depth-to-width ratio",
+      "2.2 Linear Activation Function",
+      "2.3 Lemma 2.5, one-input ReLU"
+    ]
+  },
+  "scope": {
+    "paper_mechanism": "A fourth-cumulant Hermite correction improves a Gaussian approximation in an asymptotic regime; signed approximants are allowed, and depth relative to width matters.",
+    "miniature_comparison": "Compare a Gaussian, signed fourth-cumulant correction, and clipped correction against a shared 4,000-network conditional-mixture estimate across width, depth, and activation.",
+    "preserved_assumptions": [
+      "Gaussian random weights and normalized linear/ReLU activations.",
+      "Common sampled conditional variances for all predictors within seed/context.",
+      "Fourth-cumulant correction and explicitly signed bin masses."
+    ],
+    "simplifications": [
+      "One input/output and small finite widths; no multivariate recursion test.",
+      "Finite Monte Carlo reference, fixed binning, and a floor for zero variance.",
+      "The grid includes depth/width=2, which is a stress regime for a truncated correction."
+    ],
+    "unsupported_claims": [
+      "A finite-grid refutation or verification of an asymptotic rate theorem.",
+      "Probability-distance bounds of 0 to 1 for a signed approximant.",
+      "A theorem-backed guarantee for the clipped-and-renormalized control."
+    ]
+  },
+  "checks": {
+    "mechanism_fidelity": {
+      "status": "unresolved",
+      "evidence": [
+        {
+          "source": "https://arxiv.org/html/2610.37388v1#S1.SS4",
+          "locator": "Theorem 1.13; 1.6.2; 2.2-2.3",
+          "finding": "The asymptotic result fixes layer depth as width grows; the depth-to-width discussion limits the truncation regime."
+        },
+        {
+          "source": "envs/2610-37388-paragaussian-approximations-of-random/lab.py",
+          "locator": "L20-L59",
+          "finding": "Random Gaussian initial features and finite-depth variance recursion need an explicit indexing/input correspondence. The width=4,depth=8 context is a stress test, not a rate test."
+        }
+      ]
+    },
+    "baseline_fairness": {
+      "status": "pass",
+      "evidence": [
+        {
+          "source": "envs/2610-37388-paragaussian-approximations-of-random/lab.py",
+          "locator": "L46-L74",
+          "finding": "All predictors use the same variance-mixture reference and unit-variance normalization. Clipping is a separate control, not silently substituted for the signed paper arm."
+        }
+      ]
+    },
+    "shared_randomness": {
+      "status": "pass",
+      "evidence": [
+        {
+          "source": "envs/2610-37388-paragaussian-approximations-of-random/lab.py",
+          "locator": "L20-L34",
+          "finding": "The torch generator is locally seeded."
+        },
+        {
+          "source": "envs/2610-37388-paragaussian-approximations-of-random/lab.py",
+          "locator": "L46-L59",
+          "finding": "The same variance simulation precedes all method branches; predictor selection does not change its draws."
+        }
+      ]
+    },
+    "heldout_metric": {
+      "status": "unresolved",
+      "evidence": [
+        {
+          "source": "https://arxiv.org/html/2610.37388v1#S1.SS3",
+          "locator": "Definition 1.2",
+          "finding": "The source distance is defined for finite signed measures."
+        },
+        {
+          "source": "envs/2610-37388-paragaussian-approximations-of-random/lab.py",
+          "locator": "L46-L50",
+          "finding": "Zero variances are floored before evaluating a finite Monte Carlo mixture; the reference is neither an exact population law nor a conventional training/test split."
+        },
+        {
+          "source": "envs/2610-37388-paragaussian-approximations-of-random/lab.py",
+          "locator": "L78-L85",
+          "finding": "The L1 bin discrepancy is lower-better. Signed TV may exceed one; fixed binning and point-mass handling need validation."
+        }
+      ]
+    },
+    "meaningful_margin": {
+      "status": "unresolved",
+      "evidence": [
+        {
+          "source": "envs/2610-37388-paragaussian-approximations-of-random/space.json",
+          "locator": "/metric/min_effect",
+          "finding": "0.01 is a binned signed-measure discrepancy. Its scale depends on binning/reference error, so a probability-distance interpretation and an unexplained threshold would be misleading."
+        }
+      ]
+    },
+    "execution_behavior": {
+      "status": "unresolved",
+      "evidence": [
+        {
+          "source": "envs/2610-37388-paragaussian-approximations-of-random/lab.py",
+          "locator": "L6-L13",
+          "finding": "4,000 mixture samples and fixed bins may have reference error; no repeated-worker, sample-size, bin-sensitivity, or variance-floor probe was performed."
+        }
+      ]
+    },
+    "shortcut_audit": {
+      "status": "unresolved",
+      "evidence": [
+        {
+          "source": "envs/2610-37388-paragaussian-approximations-of-random/lab.py",
+          "locator": "L55-L74",
+          "finding": "Large cumulants can yield negative bin masses; signedness is intentional, not itself a defect."
+        },
+        {
+          "source": "benchmarks/release_v1/admission/references/selection.json",
+          "locator": "/cases/2610-37388-paragaussian-approximations-of-random/diagnostics (lookup by env)",
+          "finding": "About 94.68% of absolute context effects comes from one context. Inspect depth/width and cumulant scale before describing the averaged contrast as a paper test."
+        }
+      ]
+    }
+  },
+  "rationale": "Assistant draft only. A signed measure is legitimate, but the current broad better-at-small-width/large-depth claim needs a regime qualification. Validate input/layer indexing, variance-floor binning, Monte Carlo error, and the effect margin.",
+  "assistant_assessment": {
+    "recommendation": "needs_review",
+    "evidence_scope": "Primary method sections and static implementation inspected; historical caches analyzed. No new lab executions, parameter probes, independent confirmation, or model evaluations.",
+    "blockers": [
+      "A signed measure is legitimate, but the current broad better-at-small-width/large-depth claim needs a regime qualification.",
+      "Validate input/layer indexing, variance-floor binning, Monte Carlo error, and the effect margin."
+    ],
+    "owner_actions": [
+      "Review Theorem 1.13, section 1.6.2, and one-input recursions alongside the simulation.",
+      "Use separate in-regime and stress diagnostics in a new version; retain the extreme context rather than silently dropping it.",
+      "Probe negative masses, zero-variance samples, and sensitivity to binning/reference sample size."
+    ]
+  }
+}
