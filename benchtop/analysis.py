@@ -15,8 +15,26 @@ def runs_from_pairs(env: Env, pairs: list[list]) -> list[dict]:
         config = json.loads(key)
         metrics = env.table.get(config, int(seed))
         if metrics is not None:
-            runs.append({"config": config, "metrics": metrics})
+            runs.append({"config": config, "seed": int(seed), "metrics": metrics})
     return runs
+
+
+def shared_estimate_from_pairs(env: Env, task_id: str, pairs: list[list]):
+    """Explicit common-estimator diagnostic; historical reconstruction keeps its original default."""
+    from benchtop.agents.estimator import estimate_answer
+
+    for key, seed in pairs:
+        if type(seed) is not int or seed not in env.visible_seeds:
+            raise ValueError("trace reconstruction requires actual visible seed identities")
+        config = json.loads(key)
+        if env.table.get(config, seed) is None:
+            raise ValueError("trace references an unavailable observation")
+    observations = runs_from_pairs(env, pairs)
+    observations = [{**row, "metrics": {key: round(value, 6) for key, value in row["metrics"].items()}}
+                    for row in observations]
+    task = env.task(task_id)
+    question = {key: task[key] for key in ("kind", "factor") if key in task}
+    return estimate_answer(env.space, question, observations, identity="seed", allowed_ids=env.visible_seeds)
 
 
 def implied_answer(env: Env, task_id: str, pairs: list[list]):

@@ -223,7 +223,8 @@ class Episode:
             "episode": self.id,
             "lab": space.title,
             "setting": space.setting,
-            "metric": {"name": space.metric, "goal": space.goal, "description": space.metric_description},
+            "metric": {"name": space.metric, "goal": space.goal, "description": space.metric_description,
+                       "min_effect": space.min_effect},
             "factors": factors,
             "treatment": {
                 "factor": space.treatment,
@@ -231,6 +232,8 @@ class Episode:
                 "baseline": space.baseline_level,
             },
             "question": self.question(),
+            "question_spec": {key: self.task[key] for key in ("kind", "factor") if key in self.task},
+            "replicate_limit": len(self.order),
             "answer_format": self.answer_format(),
             "pricing": {"schedule_id": self.charging_id, "unit": "compute_seconds", "by_config": dict(self.costs)},
             "rules": [

@@ -47,6 +47,8 @@ Incorrect answers, exhausted format correction, agent timeouts, and exits withou
 
 The 28-start reserve covers at most six smoke episodes, two integration episodes, and 20 technical retries. Every invoked rollout session counts, including failures. Generation calls and cheap classical replay are logged separately.
 
+[Versioned classical baselines](BASELINES.md) now have the first paired-uniform control and a shared visible-data estimator. Acquisition uses the same public problem/cost/budget interface; reconstruction pairs identities, keeps equal target-context weights, and exposes its neutral missing-context prior. Read-only corrected historical views keep source labels and prices intact. This is an implementation checkpoint; human-selected development replay, stronger acquisition policies, and the candidate lock remain pending.
+
 ## Validation of this checkpoint
 
 The specification was checked for valid JSON, disjoint seed splits, resource arithmetic, consistent group sizes, required lock gates, unique reference identities, and agreement with the historical archive checksum. No fresh papers were fetched, model episodes run, or application behavior changed for this checkpoint.

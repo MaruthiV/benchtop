@@ -1,13 +1,41 @@
 import json
 from concurrent.futures import ThreadPoolExecutor
+from dataclasses import replace
 from pathlib import Path
 
 import numpy as np
 
+from benchtop import cache
 from benchtop.agents import baselines
 from benchtop.agents.common import RESULTS, Client, record
 from benchtop.env import ENVS, Env, load_catalog
 from benchtop.episode import Episode
+from benchtop.stats import GRADER_ID, LEGACY_GRADER_ID
+from benchtop.tasks import build_task_set
+
+
+def corrected_replay(env: Env) -> Env:
+    """Reconstruct a read-only retrospective task view; never admit or rewrite its source lab."""
+    env.assert_current()
+    if env.grader_id != LEGACY_GRADER_ID:
+        raise ValueError("corrected_replay expects an explicitly historical task source")
+    source = Env.load(env.dir, replay=True)
+    if source.grader_id != LEGACY_GRADER_ID or source.cache_status != "historical" or source.manifest.get("seed_splits"):
+        raise ValueError("corrected_replay only supports frozen historical snapshots, not fresh seed partitions")
+    artifact = build_task_set(source)
+    if artifact["status"] != "complete":
+        raise ValueError("corrected replay requires complete qualification data")
+    # Reloading gives independent validated data and pricing, regardless of the caller's mutable table.
+    tracked = dict(source._tracked)
+    for name in ("tasks.py", "stats.py", "space.py", "cache.py"):
+        path = cache.CODE / name
+        tracked[path] = cache.file_signature(path)
+    view = replace(source, tasks=artifact["tasks"], manifest={**source.manifest, "grader_id": GRADER_ID},
+                   task_version=cache.digest({"execution_id": source.execution_id, "grader_id": GRADER_ID, "artifact": artifact}),
+                   _tracked=tracked)
+    env.assert_current()
+    view.assert_current()
+    return view
 
 
 def accepted_ids() -> set[str]:

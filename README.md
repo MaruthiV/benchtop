@@ -10,6 +10,8 @@ The [consolidated evidence report](benchmarks/release_v1/admission/REPORT.md) br
 
 A [controlled defect suite](benchmarks/release_v1/admission/defects/README.md) exercises six specific failure cases and ten valid controls, including disabled optimizer perturbations, test-set access, and mismatched shared inputs. These are lab-specific checks, with recorded sandbox evidence; they do not certify arbitrary generated science.
 
+The [versioned paired-uniform baseline](benchmarks/release_v1/BASELINES.md) uses matched visible replicates and explicit equal-context weighting. It preserves the historical policy path; coverage/cost policies and the reviewed development comparison remain pending.
+
 ```mermaid
 flowchart LR
     A[new arXiv papers] --> B[triage<br/>Haiku]
