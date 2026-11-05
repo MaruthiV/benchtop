@@ -28,6 +28,7 @@ class Episode:
         seed: int | None = None,
         show_paper: bool = True,
         max_calls: int = MAX_CALLS,
+        visible_order: list[int] | None = None,
     ):
         env.assert_current()
         self.id = secrets.token_hex(6)
@@ -50,7 +51,12 @@ class Episode:
         self.used: dict[str, int] = {}
         self.replicates: dict[str, set[int]] = {}
         # each episode sees the visible seeds in its own order
-        self.order = [int(s) for s in np.random.default_rng(self.seed).permutation(visible)]
+        if visible_order is not None and (any(type(s) is not int for s in visible_order)
+                                          or len(visible_order) != len(visible) or set(visible_order) != set(visible)):
+            raise ValueError("visible_order must be a permutation of exactly the visible seed IDs")
+        self.order = ([int(s) for s in np.random.default_rng(self.seed).permutation(visible)]
+                      if visible_order is None else list(visible_order))
+        self.order_source = "episode_seed" if visible_order is None else "explicit"
         self.log: list[dict] = []
         self.result: dict | None = None
         self.started = time.time()
@@ -293,6 +299,8 @@ class Episode:
             "task_version": self.env.task_version,
             "charging_id": self.charging_id,
             "seed": self.seed,
+            "visible_order": list(self.order),
+            "visible_order_source": self.order_source,
             "show_paper": self.show_paper,
             "budget": self.budget,
             "spent": self.spent,

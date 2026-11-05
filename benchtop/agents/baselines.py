@@ -1,3 +1,4 @@
+import copy
 import itertools
 import math
 from collections import Counter
@@ -9,7 +10,7 @@ from benchtop.agents.estimator import ESTIMATOR_ID, arms, estimate_answer, publi
 from benchtop.cache import file_hash
 from benchtop.episode import Episode
 from benchtop.space import canon, config_key
-from benchtop.stats import GRADER_ID, point_label
+from benchtop.stats import GRADER_ID, LABELS, point_label
 from benchtop.tasks import COMPONENT_LABELS, grid_over, sign
 
 
@@ -306,27 +307,100 @@ def coverage_plus_cost_public(description, run, rng):
     return _coverage_public(description, run, rng, prefer_cost=True)
 
 
+def _claim_prior_public(description, label, policy_id, source):
+    _, question = public_problem(description)
+    if question["kind"] != "claim" or label not in LABELS:
+        raise ValueError("sanity priors require a claim question and a valid bound label")
+    return {"policy_id": policy_id, "answer": label, "estimate": None, "observations": [],
+            "policy_calls": 0, "stop_reason": "prior_only", "prior_source": source}
+
+
+def paper_prior_public(description, run, rng):
+    return _claim_prior_public(description, "paper_better", "paper_prior_only_v1", "paper_claim")
+
+
+def majority_prior_public(description, run, rng, *, label=None):
+    return _claim_prior_public(description, label, "development_majority_label_v1", "bound_development_majority")
+
+
+def random_experiments_public(description, run, rng):
+    space, question = public_problem(description)
+    limit, calls_left = description["replicate_limit"], description["budget"]["calls_left"]
+    if type(limit) is not int or limit < 1 or type(calls_left) is not int or calls_left < 0:
+        raise ValueError("invalid public replicate or call limit")
+    configs, counts = space.configs(), Counter()
+    observations, calls = [], 0
+    stop = "call_limit" if calls_left < limit else "replicate_limit"
+    for _ in range(min(limit, calls_left)):
+        provisional = dict(counts)
+        batch = []
+        for _ in range(len(configs)):
+            available = [config for config in configs if provisional.get(config_key(config), 0) < limit]
+            if not available:
+                break
+            config = available[int(rng.integers(len(available)))]
+            batch.append(config)
+            key = config_key(config)
+            provisional[key] = provisional.get(key, 0) + 1
+        if not batch:
+            break
+        out = run(batch, seeds=1)
+        calls += 1
+        delivered = out.get("results", [])
+        observations.extend(delivered)
+        for row in delivered:
+            counts[config_key(row["config"])] += 1
+        if "error" in out or out.get("errors"):
+            stop = "experiment_error"
+            break
+        if "budget exhausted" in out.get("notes", []):
+            stop = "budget_exhausted"
+            break
+        if len(delivered) != len(batch):
+            stop = "partial_reply"
+            break
+    estimate = estimate_answer(space, question, observations, allowed_ids=range(1, limit + 1))
+    return {"policy_id": "random_experiment_design_v1", "answer": estimate["answer"], "estimate": estimate,
+            "observations": observations, "policy_calls": calls, "stop_reason": stop}
+
+
 # Historical BASELINES/play remain unchanged, so their saved cohort and report retain their meaning.
 RELEASE_BASELINES = {"paired_uniform": paired_uniform_public, "question_coverage": question_coverage_public,
-                     "coverage_plus_cost": coverage_plus_cost_public}
+                     "coverage_plus_cost": coverage_plus_cost_public, "paper_prior_only": paper_prior_public,
+                     "development_majority_label": majority_prior_public, "random_experiment_design": random_experiments_public}
 
 
-def play_release(ep: Episode, name: str = "paired_uniform", seed: int = 0) -> dict:
+def play_release(ep: Episode, name: str = "paired_uniform", seed: int = 0, *, majority_label=None, tool_trace=None) -> dict:
     """Trusted evaluation adapter. Scoring and private metadata are read only after acquisition ends."""
     if ep.env.grader_id != GRADER_ID:
         raise ValueError("release policies require corrected task artifacts; do not relabel historical tasks")
     if ep.done or ep.calls or ep.log:
         raise ValueError("release policies require a fresh episode")
     description = {**ep.describe(), "budget": ep.budget_left()}
-    outcome = RELEASE_BASELINES[name](description, ep.run, np.random.default_rng(seed))
+    trace = tool_trace if tool_trace is not None else []
+
+    def observed_run(configs, seeds=1):
+        entry = {"configs": copy.deepcopy(configs), "seeds": seeds}
+        trace.append(entry)
+        try:
+            out = ep.run(configs, seeds)
+        except Exception as error:
+            entry["exception"] = {"type": type(error).__name__, "message": str(error)}
+            raise
+        entry["response"] = copy.deepcopy(out)
+        return out
+
+    extra = {"label": majority_label} if name == "development_majority_label" else {}
+    outcome = RELEASE_BASELINES[name](description, observed_run, np.random.default_rng(seed), **extra)
     ep.submit(outcome["answer"])
     if not ep.done:
         raise RuntimeError("release estimator produced an invalid submission")
-    return {**outcome, "agent": outcome["policy_id"], "estimator_id": ESTIMATOR_ID,
+    return {**outcome, "agent": outcome["policy_id"], "estimator_id": ESTIMATOR_ID if outcome["estimate"] is not None else None,
             "episode": ep.id, "env": ep.env.id, "task": ep.task["id"], "kind": ep.task["kind"],
             "grader_id": ep.env.grader_id, "execution_id": ep.env.execution_id,
             "task_version": ep.env.task_version, "charging_id": ep.charging_id,
             "policy_seed": seed, "episode_seed": ep.seed, "budget": ep.budget, "spent": ep.spent,
+            "visible_order": list(ep.order), "visible_order_source": ep.order_source, "tool_trace": trace,
             "budget_frac": ep.budget / ep.full_cost, "spent_frac": ep.result["spent_frac"],
             "calls": ep.calls, "score": ep.result["score"],
             "ran": [pair for entry in ep.log if entry["action"] == "run" for pair in entry["ran"]],
