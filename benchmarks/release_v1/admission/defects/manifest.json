@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "suite_id": "reference_semantic_defects_v1",
+  "scope": "Deliberate mutations of reviewed reference code and counterfactual cached data; lab-specific engineering guards, not a general scientific-fidelity detector.",
+  "sources": {
+    "2610-37225-sharpnessaware-muon-matrixaware-optimization": {
+      "lab.py": "bbbebfd531fe48bbd2333ff068cf6f009d41b73d938d12c084f7f7c23ba481fd",
+      "space.json": "7444b8b8e857e9c613f629b6aefa4400462aed93e702dda06d311523f46b9820",
+      "manifest.json": "2692c9a073181b625d4e8a47563893ae1c214789a8de339a788073e3c7a100b5",
+      "results.jsonl": "17a5abefb0898cb87bd32a794be69005e49c257582430ac1f03b2ea5f76ee5cf",
+      "tasks.json": "21a798cb75d65453ef42c19d9acc65f2b40c26d054652f23ca05a8bad3e30d41"
+    },
+    "2610-36983-advancement-or-acceleration-how": {
+      "lab.py": "c87e4977489dc420e06af0cbb0dce7100a91d4e25b8940761f2beee60b0b5980",
+      "space.json": "04b2e9698f4295cfc7797be8fe320512dcab0616facbe0796cb871903b618a7a",
+      "manifest.json": "cafcb203d138d4699e43f2fd9b8914d7fc06dff3a3968682545df121cb89736f",
+      "results.jsonl": "38f7b346f5a98a2e65450140704a8f3ce5c33271c10a300f688979df07aa5419",
+      "tasks.json": "3090d2ad1db6a11727665300fea1dd5f9428c5fe09bb9f3f38f545b0f47070ea"
+    }
+  },
+  "muon": {
+    "env": "2610-37225-sharpnessaware-muon-matrixaware-optimization",
+    "seeds": [
+      0,
+      1
+    ],
+    "config": {
+      "batch_size": 16,
+      "rho": 0.3,
+      "train_n": 200
+    },
+    "instrumentation_anchor": "    M = [torch.zeros_like(t) for t in p]\n",
+    "instrumentation_insert": "    _fixture_capture(tr, te, batches, p, Xtr, Ytr, Xte, Yte)\n",
+    "mutations": [
+      {
+        "id": "disabled_treatment",
+        "before": "gr = _grads(_perturbed(p, M, rho), xb, yb)",
+        "after": "gr = _grads(p, xb, yb)",
+        "guard": "muon.momentum_perturbation",
+        "expected": "fail",
+        "meaning": "Remove the MoMuSAM training perturbation while preserving the method label and all other updates."
+      },
+      {
+        "id": "advantaged_baseline",
+        "before": "    tr = perm[N_TEST:N_TEST + n_train]\n",
+        "after": "    tr = perm[N_TEST:N_TEST + n_train]\n    if method == \"muon\":\n        tr = te.copy()\n",
+        "guard": "muon.heldout_disjoint",
+        "expected": "fail",
+        "meaning": "Let only the baseline train on its held-out test examples. A higher score is not required to detect this information advantage."
+      },
+      {
+        "id": "inconsistent_shared_randomness",
+        "before": "    drng = np.random.default_rng(seed)\n",
+        "after": "    drng = np.random.default_rng(seed + (1 if method == \"momusam\" else 0))\n",
+        "guard": "muon.common_inputs",
+        "expected": "fail",
+        "meaning": "Offset the data seed for the treatment only, leaving the public seed key unchanged."
+      }
+    ]
+  },
+  "cached": {
+    "env": "2610-36983-advancement-or-acceleration-how",
+    "reversed_metric": {
+      "guard": "muon.accuracy_direction",
+      "from_goal": "max",
+      "to_goal": "min"
+    },
+    "stale_cache": {
+      "guard": "cache.source_binding",
+      "before": "N_TARGET_LABELED = 40",
+      "after": "N_TARGET_LABELED = 41",
+      "expected": "fail"
+    },
+    "ambiguous_reward": {
+      "guard": "qualification.claim_interval",
+      "treatment_seed_offset": 0.04,
+      "transform": "Add +offset for odd held-out seeds and -offset for even held-out seeds to target_acc for target_select, clipped to [0,1]. Keep contexts and pairing. In-memory counterfactual only.",
+      "expected": "unavailable"
+    }
+  },
+  "review_requirement": "Every passing guard remains conditional on this exact source/profile. Baseline fairness, paper scope, meaningful margins, and human admission still require explicit review."
+}

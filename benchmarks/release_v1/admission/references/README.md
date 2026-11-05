@@ -72,4 +72,4 @@ The human-review directory is ignored scratch space until records are deliberate
 
 After human review, the protocol chooses the first four accepted, qualified references in lexicographic ID order. None is selected now. If fewer than four qualify, record an amendment before budget-selection model runs. Do not relabel an assistant draft or silently substitute an easier lab to reach four.
 
-Next engineering checkpoint: controlled semantic defect fixtures and valid controls based on these cases. Each fixture must name a specific guard, preserve historical inputs, and distinguish a lab-specific invariant from general scientific detection. The actual Qualia UI smoke remains independently pending.
+The companion [controlled defect suite](../defects/README.md) now provides six named changes, ten valid controls, and bounded Muon runtime evidence. The assistant drafts above retain their original scope and timestamps; the new measurements can inform a separate owner review. Consolidating the evidence and recording actual human decisions remain pending. The actual Qualia UI smoke also remains independently pending.

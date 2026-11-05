@@ -1,0 +1,1371 @@
+{
+  "schema_version": 1,
+  "suite_id": "reference_semantic_defects_v1",
+  "checked_at_utc": "2026-11-05T02:09:00.715366+00:00",
+  "status": "passed",
+  "scope": "Deliberate mutations of reviewed reference code and counterfactual cached data; lab-specific engineering guards, not a general scientific-fidelity detector.",
+  "analysis_runtime": {
+    "python": "3.12.11 | packaged by conda-forge | (main, Jun  4 2025, 14:38:53) [Clang 18.1.8 ]",
+    "implementation": "CPython",
+    "system": "Darwin",
+    "release": "23.5.0",
+    "machine": "arm64",
+    "packages": [
+      [
+        "annotated-types",
+        "0.8.0"
+      ],
+      [
+        "anyio",
+        "4.15.1"
+      ],
+      [
+        "attrs",
+        "26.1.0"
+      ],
+      [
+        "benchtop",
+        "0.1.0"
+      ],
+      [
+        "certifi",
+        "2026.10.23"
+      ],
+      [
+        "cffi",
+        "2.1.1"
+      ],
+      [
+        "click",
+        "8.5.0"
+      ],
+      [
+        "cloudpickle",
+        "3.1.2"
+      ],
+      [
+        "contourpy",
+        "1.4.0"
+      ],
+      [
+        "cryptography",
+        "50.0.2"
+      ],
+      [
+        "cycler",
+        "0.12.1"
+      ],
+      [
+        "filelock",
+        "4.2.4"
+      ],
+      [
+        "fonttools",
+        "4.68.0"
+      ],
+      [
+        "fsspec",
+        "2026.9.0"
+      ],
+      [
+        "h11",
+        "0.16.0"
+      ],
+      [
+        "httpcore",
+        "1.0.9"
+      ],
+      [
+        "httpcore2",
+        "2.16.0"
+      ],
+      [
+        "httptools",
+        "0.9.0"
+      ],
+      [
+        "httpx",
+        "0.28.1"
+      ],
+      [
+        "httpx2",
+        "2.16.0"
+      ],
+      [
+        "idna",
+        "3.20"
+      ],
+      [
+        "iniconfig",
+        "2.3.1"
+      ],
+      [
+        "jinja2",
+        "3.1.6"
+      ],
+      [
+        "joblib",
+        "1.6.0"
+      ],
+      [
+        "jsonschema",
+        "4.26.0"
+      ],
+      [
+        "jsonschema-specifications",
+        "2025.9.1"
+      ],
+      [
+        "kiwisolver",
+        "1.5.1"
+      ],
+      [
+        "markupsafe",
+        "3.0.4"
+      ],
+      [
+        "matplotlib",
+        "3.11.2"
+      ],
+      [
+        "mcp",
+        "2.3.0"
+      ],
+      [
+        "mcp-types",
+        "2.3.0"
+      ],
+      [
+        "mpmath",
+        "1.3.0"
+      ],
+      [
+        "narwhals",
+        "2.28.0"
+      ],
+      [
+        "networkx",
+        "3.7"
+      ],
+      [
+        "numpy",
+        "2.5.4"
+      ],
+      [
+        "opentelemetry-api",
+        "1.45.1"
+      ],
+      [
+        "packaging",
+        "26.3"
+      ],
+      [
+        "pillow",
+        "13.0.0"
+      ],
+      [
+        "pluggy",
+        "1.7.0"
+      ],
+      [
+        "pycparser",
+        "3.12"
+      ],
+      [
+        "pydantic",
+        "2.14.1"
+      ],
+      [
+        "pydantic-core",
+        "2.50.1"
+      ],
+      [
+        "pygments",
+        "2.21.0"
+      ],
+      [
+        "pyjwt",
+        "2.15.1"
+      ],
+      [
+        "pyparsing",
+        "3.3.3"
+      ],
+      [
+        "pytest",
+        "9.2.0"
+      ],
+      [
+        "python-dateutil",
+        "3.0.0"
+      ],
+      [
+        "python-dotenv",
+        "1.2.4"
+      ],
+      [
+        "python-multipart",
+        "0.0.32"
+      ],
+      [
+        "pyyaml",
+        "6.0.3"
+      ],
+      [
+        "referencing",
+        "0.37.0"
+      ],
+      [
+        "rpds-py",
+        "2026.9.1"
+      ],
+      [
+        "ruff",
+        "0.17.3"
+      ],
+      [
+        "scikit-learn",
+        "1.9.1"
+      ],
+      [
+        "scipy",
+        "1.18.1"
+      ],
+      [
+        "setuptools",
+        "84.2.1"
+      ],
+      [
+        "six",
+        "1.17.0"
+      ],
+      [
+        "sse-starlette",
+        "3.6.0"
+      ],
+      [
+        "starlette",
+        "1.10.0"
+      ],
+      [
+        "sympy",
+        "1.14.0"
+      ],
+      [
+        "threadpoolctl",
+        "3.7.0"
+      ],
+      [
+        "torch",
+        "2.15.0"
+      ],
+      [
+        "truststore",
+        "0.10.5"
+      ],
+      [
+        "typing-extensions",
+        "4.16.0"
+      ],
+      [
+        "typing-inspection",
+        "0.4.4"
+      ],
+      [
+        "tzdata",
+        "2026.6"
+      ],
+      [
+        "uvicorn",
+        "0.54.0"
+      ],
+      [
+        "uvloop",
+        "0.23.0"
+      ],
+      [
+        "watchfiles",
+        "1.3.0"
+      ],
+      [
+        "websockets",
+        "17.3"
+      ]
+    ]
+  },
+  "input_sha256": {
+    "envs/2610-37225-sharpnessaware-muon-matrixaware-optimization/lab.py": "bbbebfd531fe48bbd2333ff068cf6f009d41b73d938d12c084f7f7c23ba481fd",
+    "envs/2610-37225-sharpnessaware-muon-matrixaware-optimization/space.json": "7444b8b8e857e9c613f629b6aefa4400462aed93e702dda06d311523f46b9820",
+    "envs/2610-37225-sharpnessaware-muon-matrixaware-optimization/manifest.json": "2692c9a073181b625d4e8a47563893ae1c214789a8de339a788073e3c7a100b5",
+    "envs/2610-37225-sharpnessaware-muon-matrixaware-optimization/results.jsonl": "17a5abefb0898cb87bd32a794be69005e49c257582430ac1f03b2ea5f76ee5cf",
+    "envs/2610-37225-sharpnessaware-muon-matrixaware-optimization/tasks.json": "21a798cb75d65453ef42c19d9acc65f2b40c26d054652f23ca05a8bad3e30d41",
+    "envs/2610-36983-advancement-or-acceleration-how/lab.py": "c87e4977489dc420e06af0cbb0dce7100a91d4e25b8940761f2beee60b0b5980",
+    "envs/2610-36983-advancement-or-acceleration-how/space.json": "04b2e9698f4295cfc7797be8fe320512dcab0616facbe0796cb871903b618a7a",
+    "envs/2610-36983-advancement-or-acceleration-how/manifest.json": "cafcb203d138d4699e43f2fd9b8914d7fc06dff3a3968682545df121cb89736f",
+    "envs/2610-36983-advancement-or-acceleration-how/results.jsonl": "38f7b346f5a98a2e65450140704a8f3ce5c33271c10a300f688979df07aa5419",
+    "envs/2610-36983-advancement-or-acceleration-how/tasks.json": "3090d2ad1db6a11727665300fea1dd5f9428c5fe09bb9f3f38f545b0f47070ea",
+    "benchmarks/release_v1/admission/check_defects.py": "266796220ed093f3046701a3cb2667fd0c0cfe14116430bb77b4b849bffdf911",
+    "benchmarks/release_v1/admission/defects/manifest.json": "7d78b807cffe501492dbbf6c925e4d470b3ff020ad319a15376262f4b0f9cad1",
+    "benchmarks/release_v1/admission/defects/muon_observer.py": "00ee87e7d2495c0ff24c1705a69adb1b2c399e370fbfe13a42e5c00190e12dde",
+    "benchmarks/release_v1/admission/references/selection.json": "4b7b351e0feed3628d1c61fd4f3d7da384a85946bb5b6a1f95276cb864e69375",
+    "envs/historical_cache.json": "7acfd0d5e66e76ab6af894a2d1e9e70ab3040fa54a8047a1e64e682c736d330d",
+    "benchtop/admission.py": "399d9a0c99eaad4fd5cfd2b8309ab0308518e3141aa85bdce42c6d93ad9770e2",
+    "benchtop/cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729",
+    "benchtop/env.py": "0ee1c53004af8750cfa6f625c13167406b137aa6e6e97f0900b81429cf79be1c",
+    "benchtop/tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+    "benchtop/stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+    "benchtop/space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+    "benchtop/sandbox.py": "92729ef3e0f1db5ded6bac996f15084b241dec6984bce3d8c3045b625c6ff5cb",
+    "benchtop/_worker.py": "01ba6942a6a56212f04642db91544429b9dd2a610dacba7008c13ca601baca8c"
+  },
+  "summary": {
+    "cases": 16,
+    "expectations_met": 16,
+    "failed_cases": [],
+    "controlled_defects_observed": 6,
+    "controlled_defects_planned": 6,
+    "valid_controls": 10,
+    "sandbox_jobs": 24,
+    "source_inputs_unchanged": true
+  },
+  "cases": [
+    {
+      "id": "valid_metric",
+      "kind": "control",
+      "guard": "muon.accuracy_direction",
+      "expected": "pass",
+      "observed": "pass",
+      "result": "pass",
+      "evidence": {
+        "metric": "test_acc",
+        "declared_goal": "max",
+        "basis": "envs/2610-37225-sharpnessaware-muon-matrixaware-optimization/lab.py:L106-L108 defines fraction correctly classified; larger is better."
+      }
+    },
+    {
+      "id": "reversed_metric",
+      "kind": "defect",
+      "guard": "muon.accuracy_direction",
+      "expected": "fail",
+      "observed": "fail",
+      "result": "pass",
+      "evidence": {
+        "metric": "test_acc",
+        "declared_goal": "min",
+        "basis": "envs/2610-37225-sharpnessaware-muon-matrixaware-optimization/lab.py:L106-L108 defines fraction correctly classified; larger is better."
+      }
+    },
+    {
+      "id": "valid_cache",
+      "kind": "control",
+      "guard": "cache.source_binding",
+      "expected": "pass",
+      "observed": "pass",
+      "result": "pass",
+      "evidence": {
+        "cache_mode": "verified_historical_copy"
+      }
+    },
+    {
+      "id": "stale_cache",
+      "kind": "defect",
+      "guard": "cache.source_binding",
+      "expected": "fail",
+      "observed": "fail",
+      "result": "pass",
+      "evidence": {
+        "mutation": "Change target-label count 40 to 41 while retaining the old cache.",
+        "message": "historical cache inputs changed"
+      }
+    },
+    {
+      "id": "valid_null_claim",
+      "kind": "control",
+      "guard": "qualification.claim_interval",
+      "expected": "eligible",
+      "observed": "eligible",
+      "result": "pass",
+      "evidence": {
+        "data_status": "complete",
+        "claim": {
+          "task_id": "claim",
+          "delta": -0.00027951388888889164,
+          "se": 0.004242589116344588,
+          "n_seeds": 12,
+          "interval": [
+            -0.009617389574329628,
+            0.009058361796551844
+          ],
+          "label": "no_meaningful_difference",
+          "status": "settled",
+          "bootstrap_interval": [
+            -0.008711979166666663,
+            0.007373784722222221
+          ],
+          "bootstrap_label": "no_meaningful_difference",
+          "diagnostic_disagreement": false
+        },
+        "seed_ids": [
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "scientific_admission": "needs_review",
+        "expected_control_label": "no_meaningful_difference"
+      }
+    },
+    {
+      "id": "valid_negative_claim",
+      "kind": "control",
+      "guard": "qualification.claim_interval",
+      "expected": "eligible",
+      "observed": "eligible",
+      "result": "pass",
+      "evidence": {
+        "data_status": "complete",
+        "claim": {
+          "task_id": "claim",
+          "delta": -0.017534722884496052,
+          "se": 0.0018163594826676149,
+          "n_seeds": 12,
+          "interval": [
+            -0.021532503151239196,
+            -0.013536942617752906
+          ],
+          "label": "baseline_better",
+          "status": "settled",
+          "bootstrap_interval": [
+            -0.021163630630407066,
+            -0.014149307738989593
+          ],
+          "bootstrap_label": "baseline_better",
+          "diagnostic_disagreement": false
+        },
+        "seed_ids": [
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "scientific_admission": "needs_review",
+        "expected_control_label": "baseline_better"
+      }
+    },
+    {
+      "id": "ambiguous_reward",
+      "kind": "defect",
+      "guard": "qualification.claim_interval",
+      "expected": "unavailable",
+      "observed": "unavailable",
+      "result": "pass",
+      "evidence": {
+        "data_status": "complete",
+        "claim": {
+          "task_id": "claim",
+          "delta": -0.0002795138888888905,
+          "se": 0.01427391018274514,
+          "n_seeds": 12,
+          "interval": [
+            -0.031696178377591866,
+            0.031137150599814086
+          ],
+          "label": null,
+          "status": "ambiguous",
+          "bootstrap_interval": [
+            -0.027330251736111137,
+            0.02555850694444446
+          ],
+          "bootstrap_label": null,
+          "diagnostic_disagreement": false
+        },
+        "seed_ids": [
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "scientific_admission": "needs_review",
+        "counterfactual": true,
+        "transform": "Add +offset for odd held-out seeds and -offset for even held-out seeds to target_acc for target_select, clipped to [0,1]. Keep contexts and pairing. In-memory counterfactual only.",
+        "interpretation": "Question unavailable, not a scientific rejection; no transformed row is persisted as lab data."
+      }
+    },
+    {
+      "id": "valid_treatment",
+      "kind": "control",
+      "guard": "muon.momentum_perturbation",
+      "expected": "pass",
+      "observed": "pass",
+      "result": "pass",
+      "evidence": [
+        {
+          "seed": 0,
+          "gradient_calls": 151.0,
+          "training_perturbation_calls": 150.0,
+          "first_training_perturbation_norm": 0.0,
+          "later_max_perturbation_norm": 0.600000074009096
+        },
+        {
+          "seed": 1,
+          "gradient_calls": 151.0,
+          "training_perturbation_calls": 150.0,
+          "first_training_perturbation_norm": 0.0,
+          "later_max_perturbation_norm": 0.6000000802179124
+        }
+      ]
+    },
+    {
+      "id": "valid_holdout",
+      "kind": "control",
+      "guard": "muon.heldout_disjoint",
+      "expected": "pass",
+      "observed": "pass",
+      "result": "pass",
+      "evidence": [
+        {
+          "seed": 0,
+          "train_test_overlap": 0.0
+        },
+        {
+          "seed": 1,
+          "train_test_overlap": 0.0
+        }
+      ]
+    },
+    {
+      "id": "valid_shared_inputs",
+      "kind": "control",
+      "guard": "muon.common_inputs",
+      "expected": "pass",
+      "observed": "pass",
+      "result": "pass",
+      "evidence": [
+        {
+          "seed": 0,
+          "context_sha256": "8af109d090980897a1a8d2cd975ee4022749fa71d15a3eac5c6cc924f9d9d1fa",
+          "mismatched_streams": []
+        },
+        {
+          "seed": 1,
+          "context_sha256": "8af109d090980897a1a8d2cd975ee4022749fa71d15a3eac5c6cc924f9d9d1fa",
+          "mismatched_streams": []
+        }
+      ]
+    },
+    {
+      "id": "observer_transparency",
+      "kind": "control",
+      "guard": "fixture.observer_transparency",
+      "expected": "pass",
+      "observed": "pass",
+      "result": "pass",
+      "evidence": {
+        "compared_methods": [
+          "muon",
+          "momusam",
+          "musam"
+        ],
+        "metrics": [
+          "test_acc",
+          "train_acc",
+          "gap",
+          "test_loss",
+          "sharpness"
+        ]
+      }
+    },
+    {
+      "id": "fresh_worker_repeatability",
+      "kind": "control",
+      "guard": "fixture.fresh_worker_repeatability",
+      "expected": "pass",
+      "observed": "pass",
+      "result": "pass",
+      "evidence": {
+        "repeated_jobs": 2,
+        "comparison": "all metrics and complete input/perturbation traces"
+      }
+    },
+    {
+      "id": "zero_radius_identity",
+      "kind": "control",
+      "guard": "muon.zero_radius_identity",
+      "expected": "pass",
+      "observed": "pass",
+      "result": "pass",
+      "evidence": {
+        "radius": 0.0,
+        "methods": [
+          "muon",
+          "momusam"
+        ],
+        "metrics": [
+          "test_acc",
+          "train_acc",
+          "gap",
+          "test_loss",
+          "sharpness"
+        ]
+      }
+    },
+    {
+      "id": "disabled_treatment",
+      "kind": "defect",
+      "guard": "muon.momentum_perturbation",
+      "expected": "fail",
+      "observed": "fail",
+      "result": "pass",
+      "evidence": [
+        {
+          "seed": 0,
+          "gradient_calls": 151.0,
+          "training_perturbation_calls": 0.0,
+          "first_training_perturbation_norm": 0.0,
+          "later_max_perturbation_norm": 0.0
+        },
+        {
+          "seed": 1,
+          "gradient_calls": 151.0,
+          "training_perturbation_calls": 0.0,
+          "first_training_perturbation_norm": 0.0,
+          "later_max_perturbation_norm": 0.0
+        }
+      ]
+    },
+    {
+      "id": "advantaged_baseline",
+      "kind": "defect",
+      "guard": "muon.heldout_disjoint",
+      "expected": "fail",
+      "observed": "fail",
+      "result": "pass",
+      "evidence": [
+        {
+          "seed": 0,
+          "train_test_overlap": 400.0
+        },
+        {
+          "seed": 1,
+          "train_test_overlap": 400.0
+        }
+      ]
+    },
+    {
+      "id": "inconsistent_shared_randomness",
+      "kind": "defect",
+      "guard": "muon.common_inputs",
+      "expected": "fail",
+      "observed": "fail",
+      "result": "pass",
+      "evidence": [
+        {
+          "seed": 0,
+          "context_sha256": "8af109d090980897a1a8d2cd975ee4022749fa71d15a3eac5c6cc924f9d9d1fa",
+          "mismatched_streams": [
+            "train",
+            "test"
+          ]
+        },
+        {
+          "seed": 1,
+          "context_sha256": "8af109d090980897a1a8d2cd975ee4022749fa71d15a3eac5c6cc924f9d9d1fa",
+          "mismatched_streams": [
+            "train",
+            "test"
+          ]
+        }
+      ]
+    }
+  ],
+  "live_runs": [
+    {
+      "variant": "valid_muon",
+      "executed_source_sha256": "99af90afa8576494857925a2f7ff403cd7df319cf0088f02639a913155f6cbe7",
+      "observations": [
+        {
+          "config": {
+            "batch_size": 16,
+            "rho": 0.3,
+            "train_n": 200,
+            "method": "muon"
+          },
+          "seed": 0,
+          "metrics": {
+            "test_acc": 0.9574999809265137,
+            "train_acc": 0.9950000047683716,
+            "gap": 0.03750002384185791,
+            "test_loss": 0.17818327248096466,
+            "sharpness": 0.0067215897142887115
+          },
+          "traces": {
+            "train": "4b64576a335fd4fd9b89b2741604f36ef4cf921e04f0a0cbd6a8c7e4aef0f595",
+            "test": "edddfd44eb1dea6f236e3348751ce61b56d338e76b9e14b47b2c2ef43385ebcf",
+            "batches": "e859afe2035978a91714463a554caa8a2ee762d7c172bd020e8d1d8fb09e2a0e",
+            "initial_parameters": "0c3210953eb76239591a3a0de629e3d52dc31191dde97c54c06aa8a2badd2205",
+            "train_test_overlap": 0.0,
+            "gradient_calls": 151.0,
+            "training_perturbation_calls": 0.0,
+            "first_training_perturbation_norm": 0.0,
+            "later_max_perturbation_norm": 0.0
+          }
+        },
+        {
+          "config": {
+            "batch_size": 16,
+            "rho": 0.3,
+            "train_n": 200,
+            "method": "momusam"
+          },
+          "seed": 0,
+          "metrics": {
+            "test_acc": 0.8899999856948853,
+            "train_acc": 0.9599999785423279,
+            "gap": 0.06999999284744263,
+            "test_loss": 0.37090739607810974,
+            "sharpness": 0.040509894490242004
+          },
+          "traces": {
+            "train": "4b64576a335fd4fd9b89b2741604f36ef4cf921e04f0a0cbd6a8c7e4aef0f595",
+            "test": "edddfd44eb1dea6f236e3348751ce61b56d338e76b9e14b47b2c2ef43385ebcf",
+            "batches": "e859afe2035978a91714463a554caa8a2ee762d7c172bd020e8d1d8fb09e2a0e",
+            "initial_parameters": "0c3210953eb76239591a3a0de629e3d52dc31191dde97c54c06aa8a2badd2205",
+            "train_test_overlap": 0.0,
+            "gradient_calls": 151.0,
+            "training_perturbation_calls": 150.0,
+            "first_training_perturbation_norm": 0.0,
+            "later_max_perturbation_norm": 0.600000074009096
+          }
+        },
+        {
+          "config": {
+            "batch_size": 16,
+            "rho": 0.3,
+            "train_n": 200,
+            "method": "muon"
+          },
+          "seed": 1,
+          "metrics": {
+            "test_acc": 0.9300000071525574,
+            "train_acc": 1.0,
+            "gap": 0.06999999284744263,
+            "test_loss": 0.22253848612308502,
+            "sharpness": 0.0026775668375194073
+          },
+          "traces": {
+            "train": "3389c5b696b1d57bc2f2d869ed984b4037db7c6aafb26ad7b7a5512c250c2920",
+            "test": "714e34fe2ae98083062123de3b48f66b04412c28236c3d92344aee3974806924",
+            "batches": "f03af7bb2397b63209b605a5b9c21f29cbc4452bf4a0f7c6e5307d60a57496ac",
+            "initial_parameters": "8c4777a817f9bfb9bd887b8f84a5c79ae71d962058d7981f9a74e5c09c114c88",
+            "train_test_overlap": 0.0,
+            "gradient_calls": 151.0,
+            "training_perturbation_calls": 0.0,
+            "first_training_perturbation_norm": 0.0,
+            "later_max_perturbation_norm": 0.0
+          }
+        },
+        {
+          "config": {
+            "batch_size": 16,
+            "rho": 0.3,
+            "train_n": 200,
+            "method": "momusam"
+          },
+          "seed": 1,
+          "metrics": {
+            "test_acc": 0.8799999952316284,
+            "train_acc": 0.9549999833106995,
+            "gap": 0.07499998807907104,
+            "test_loss": 0.34069907665252686,
+            "sharpness": 0.0383242666721344
+          },
+          "traces": {
+            "train": "3389c5b696b1d57bc2f2d869ed984b4037db7c6aafb26ad7b7a5512c250c2920",
+            "test": "714e34fe2ae98083062123de3b48f66b04412c28236c3d92344aee3974806924",
+            "batches": "f03af7bb2397b63209b605a5b9c21f29cbc4452bf4a0f7c6e5307d60a57496ac",
+            "initial_parameters": "8c4777a817f9bfb9bd887b8f84a5c79ae71d962058d7981f9a74e5c09c114c88",
+            "train_test_overlap": 0.0,
+            "gradient_calls": 151.0,
+            "training_perturbation_calls": 150.0,
+            "first_training_perturbation_norm": 0.0,
+            "later_max_perturbation_norm": 0.6000000802179124
+          }
+        },
+        {
+          "config": {
+            "batch_size": 16,
+            "rho": 0.3,
+            "train_n": 200,
+            "method": "musam"
+          },
+          "seed": 0,
+          "metrics": {
+            "test_acc": 0.9599999785423279,
+            "train_acc": 0.9950000047683716,
+            "gap": 0.0350000262260437,
+            "test_loss": 0.2175881564617157,
+            "sharpness": 0.008174322545528412
+          },
+          "traces": {
+            "train": "4b64576a335fd4fd9b89b2741604f36ef4cf921e04f0a0cbd6a8c7e4aef0f595",
+            "test": "edddfd44eb1dea6f236e3348751ce61b56d338e76b9e14b47b2c2ef43385ebcf",
+            "batches": "e859afe2035978a91714463a554caa8a2ee762d7c172bd020e8d1d8fb09e2a0e",
+            "initial_parameters": "0c3210953eb76239591a3a0de629e3d52dc31191dde97c54c06aa8a2badd2205",
+            "train_test_overlap": 0.0,
+            "gradient_calls": 301.0,
+            "training_perturbation_calls": 150.0,
+            "first_training_perturbation_norm": 0.6000000367561965,
+            "later_max_perturbation_norm": 0.6000000802179124
+          }
+        },
+        {
+          "config": {
+            "batch_size": 16,
+            "rho": 0.0,
+            "train_n": 200,
+            "method": "muon"
+          },
+          "seed": 0,
+          "metrics": {
+            "test_acc": 0.9574999809265137,
+            "train_acc": 0.9950000047683716,
+            "gap": 0.03750002384185791,
+            "test_loss": 0.17818327248096466,
+            "sharpness": 0.0067215897142887115
+          },
+          "traces": {
+            "train": "4b64576a335fd4fd9b89b2741604f36ef4cf921e04f0a0cbd6a8c7e4aef0f595",
+            "test": "edddfd44eb1dea6f236e3348751ce61b56d338e76b9e14b47b2c2ef43385ebcf",
+            "batches": "e859afe2035978a91714463a554caa8a2ee762d7c172bd020e8d1d8fb09e2a0e",
+            "initial_parameters": "0c3210953eb76239591a3a0de629e3d52dc31191dde97c54c06aa8a2badd2205",
+            "train_test_overlap": 0.0,
+            "gradient_calls": 151.0,
+            "training_perturbation_calls": 0.0,
+            "first_training_perturbation_norm": 0.0,
+            "later_max_perturbation_norm": 0.0
+          }
+        },
+        {
+          "config": {
+            "batch_size": 16,
+            "rho": 0.0,
+            "train_n": 200,
+            "method": "momusam"
+          },
+          "seed": 0,
+          "metrics": {
+            "test_acc": 0.9574999809265137,
+            "train_acc": 0.9950000047683716,
+            "gap": 0.03750002384185791,
+            "test_loss": 0.17818327248096466,
+            "sharpness": 0.0067215897142887115
+          },
+          "traces": {
+            "train": "4b64576a335fd4fd9b89b2741604f36ef4cf921e04f0a0cbd6a8c7e4aef0f595",
+            "test": "edddfd44eb1dea6f236e3348751ce61b56d338e76b9e14b47b2c2ef43385ebcf",
+            "batches": "e859afe2035978a91714463a554caa8a2ee762d7c172bd020e8d1d8fb09e2a0e",
+            "initial_parameters": "0c3210953eb76239591a3a0de629e3d52dc31191dde97c54c06aa8a2badd2205",
+            "train_test_overlap": 0.0,
+            "gradient_calls": 151.0,
+            "training_perturbation_calls": 150.0,
+            "first_training_perturbation_norm": 0.0,
+            "later_max_perturbation_norm": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "variant": "fresh_worker",
+      "executed_source_sha256": "99af90afa8576494857925a2f7ff403cd7df319cf0088f02639a913155f6cbe7",
+      "observations": [
+        {
+          "config": {
+            "batch_size": 16,
+            "rho": 0.3,
+            "train_n": 200,
+            "method": "muon"
+          },
+          "seed": 0,
+          "metrics": {
+            "test_acc": 0.9574999809265137,
+            "train_acc": 0.9950000047683716,
+            "gap": 0.03750002384185791,
+            "test_loss": 0.17818327248096466,
+            "sharpness": 0.0067215897142887115
+          },
+          "traces": {
+            "train": "4b64576a335fd4fd9b89b2741604f36ef4cf921e04f0a0cbd6a8c7e4aef0f595",
+            "test": "edddfd44eb1dea6f236e3348751ce61b56d338e76b9e14b47b2c2ef43385ebcf",
+            "batches": "e859afe2035978a91714463a554caa8a2ee762d7c172bd020e8d1d8fb09e2a0e",
+            "initial_parameters": "0c3210953eb76239591a3a0de629e3d52dc31191dde97c54c06aa8a2badd2205",
+            "train_test_overlap": 0.0,
+            "gradient_calls": 151.0,
+            "training_perturbation_calls": 0.0,
+            "first_training_perturbation_norm": 0.0,
+            "later_max_perturbation_norm": 0.0
+          }
+        },
+        {
+          "config": {
+            "batch_size": 16,
+            "rho": 0.3,
+            "train_n": 200,
+            "method": "momusam"
+          },
+          "seed": 0,
+          "metrics": {
+            "test_acc": 0.8899999856948853,
+            "train_acc": 0.9599999785423279,
+            "gap": 0.06999999284744263,
+            "test_loss": 0.37090739607810974,
+            "sharpness": 0.040509894490242004
+          },
+          "traces": {
+            "train": "4b64576a335fd4fd9b89b2741604f36ef4cf921e04f0a0cbd6a8c7e4aef0f595",
+            "test": "edddfd44eb1dea6f236e3348751ce61b56d338e76b9e14b47b2c2ef43385ebcf",
+            "batches": "e859afe2035978a91714463a554caa8a2ee762d7c172bd020e8d1d8fb09e2a0e",
+            "initial_parameters": "0c3210953eb76239591a3a0de629e3d52dc31191dde97c54c06aa8a2badd2205",
+            "train_test_overlap": 0.0,
+            "gradient_calls": 151.0,
+            "training_perturbation_calls": 150.0,
+            "first_training_perturbation_norm": 0.0,
+            "later_max_perturbation_norm": 0.600000074009096
+          }
+        }
+      ]
+    },
+    {
+      "variant": "pristine_muon",
+      "executed_source_sha256": "bbbebfd531fe48bbd2333ff068cf6f009d41b73d938d12c084f7f7c23ba481fd",
+      "observations": [
+        {
+          "config": {
+            "batch_size": 16,
+            "rho": 0.3,
+            "train_n": 200,
+            "method": "muon"
+          },
+          "seed": 0,
+          "metrics": {
+            "test_acc": 0.9574999809265137,
+            "train_acc": 0.9950000047683716,
+            "gap": 0.03750002384185791,
+            "test_loss": 0.17818327248096466,
+            "sharpness": 0.0067215897142887115
+          },
+          "traces": {}
+        },
+        {
+          "config": {
+            "batch_size": 16,
+            "rho": 0.3,
+            "train_n": 200,
+            "method": "momusam"
+          },
+          "seed": 0,
+          "metrics": {
+            "test_acc": 0.8899999856948853,
+            "train_acc": 0.9599999785423279,
+            "gap": 0.06999999284744263,
+            "test_loss": 0.37090739607810974,
+            "sharpness": 0.040509894490242004
+          },
+          "traces": {}
+        },
+        {
+          "config": {
+            "batch_size": 16,
+            "rho": 0.3,
+            "train_n": 200,
+            "method": "musam"
+          },
+          "seed": 0,
+          "metrics": {
+            "test_acc": 0.9599999785423279,
+            "train_acc": 0.9950000047683716,
+            "gap": 0.0350000262260437,
+            "test_loss": 0.2175881564617157,
+            "sharpness": 0.008174322545528412
+          },
+          "traces": {}
+        }
+      ]
+    },
+    {
+      "variant": "disabled_treatment",
+      "executed_source_sha256": "ce03dfd5c4cb5532a95baa95d1ba495f6f402711017bad607267bd645d31ee18",
+      "observations": [
+        {
+          "config": {
+            "batch_size": 16,
+            "rho": 0.3,
+            "train_n": 200,
+            "method": "muon"
+          },
+          "seed": 0,
+          "metrics": {
+            "test_acc": 0.9574999809265137,
+            "train_acc": 0.9950000047683716,
+            "gap": 0.03750002384185791,
+            "test_loss": 0.17818327248096466,
+            "sharpness": 0.0067215897142887115
+          },
+          "traces": {
+            "train": "4b64576a335fd4fd9b89b2741604f36ef4cf921e04f0a0cbd6a8c7e4aef0f595",
+            "test": "edddfd44eb1dea6f236e3348751ce61b56d338e76b9e14b47b2c2ef43385ebcf",
+            "batches": "e859afe2035978a91714463a554caa8a2ee762d7c172bd020e8d1d8fb09e2a0e",
+            "initial_parameters": "0c3210953eb76239591a3a0de629e3d52dc31191dde97c54c06aa8a2badd2205",
+            "train_test_overlap": 0.0,
+            "gradient_calls": 151.0,
+            "training_perturbation_calls": 0.0,
+            "first_training_perturbation_norm": 0.0,
+            "later_max_perturbation_norm": 0.0
+          }
+        },
+        {
+          "config": {
+            "batch_size": 16,
+            "rho": 0.3,
+            "train_n": 200,
+            "method": "momusam"
+          },
+          "seed": 0,
+          "metrics": {
+            "test_acc": 0.9574999809265137,
+            "train_acc": 0.9950000047683716,
+            "gap": 0.03750002384185791,
+            "test_loss": 0.17818327248096466,
+            "sharpness": 0.0067215897142887115
+          },
+          "traces": {
+            "train": "4b64576a335fd4fd9b89b2741604f36ef4cf921e04f0a0cbd6a8c7e4aef0f595",
+            "test": "edddfd44eb1dea6f236e3348751ce61b56d338e76b9e14b47b2c2ef43385ebcf",
+            "batches": "e859afe2035978a91714463a554caa8a2ee762d7c172bd020e8d1d8fb09e2a0e",
+            "initial_parameters": "0c3210953eb76239591a3a0de629e3d52dc31191dde97c54c06aa8a2badd2205",
+            "train_test_overlap": 0.0,
+            "gradient_calls": 151.0,
+            "training_perturbation_calls": 0.0,
+            "first_training_perturbation_norm": 0.0,
+            "later_max_perturbation_norm": 0.0
+          }
+        },
+        {
+          "config": {
+            "batch_size": 16,
+            "rho": 0.3,
+            "train_n": 200,
+            "method": "muon"
+          },
+          "seed": 1,
+          "metrics": {
+            "test_acc": 0.9300000071525574,
+            "train_acc": 1.0,
+            "gap": 0.06999999284744263,
+            "test_loss": 0.22253848612308502,
+            "sharpness": 0.0026775668375194073
+          },
+          "traces": {
+            "train": "3389c5b696b1d57bc2f2d869ed984b4037db7c6aafb26ad7b7a5512c250c2920",
+            "test": "714e34fe2ae98083062123de3b48f66b04412c28236c3d92344aee3974806924",
+            "batches": "f03af7bb2397b63209b605a5b9c21f29cbc4452bf4a0f7c6e5307d60a57496ac",
+            "initial_parameters": "8c4777a817f9bfb9bd887b8f84a5c79ae71d962058d7981f9a74e5c09c114c88",
+            "train_test_overlap": 0.0,
+            "gradient_calls": 151.0,
+            "training_perturbation_calls": 0.0,
+            "first_training_perturbation_norm": 0.0,
+            "later_max_perturbation_norm": 0.0
+          }
+        },
+        {
+          "config": {
+            "batch_size": 16,
+            "rho": 0.3,
+            "train_n": 200,
+            "method": "momusam"
+          },
+          "seed": 1,
+          "metrics": {
+            "test_acc": 0.9300000071525574,
+            "train_acc": 1.0,
+            "gap": 0.06999999284744263,
+            "test_loss": 0.22253848612308502,
+            "sharpness": 0.0026775668375194073
+          },
+          "traces": {
+            "train": "3389c5b696b1d57bc2f2d869ed984b4037db7c6aafb26ad7b7a5512c250c2920",
+            "test": "714e34fe2ae98083062123de3b48f66b04412c28236c3d92344aee3974806924",
+            "batches": "f03af7bb2397b63209b605a5b9c21f29cbc4452bf4a0f7c6e5307d60a57496ac",
+            "initial_parameters": "8c4777a817f9bfb9bd887b8f84a5c79ae71d962058d7981f9a74e5c09c114c88",
+            "train_test_overlap": 0.0,
+            "gradient_calls": 151.0,
+            "training_perturbation_calls": 0.0,
+            "first_training_perturbation_norm": 0.0,
+            "later_max_perturbation_norm": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "variant": "advantaged_baseline",
+      "executed_source_sha256": "9bbd96ad9efba15957ee8df5d70747b5fa5e358322e796d3db2f0ccf60fe893a",
+      "observations": [
+        {
+          "config": {
+            "batch_size": 16,
+            "rho": 0.3,
+            "train_n": 200,
+            "method": "muon"
+          },
+          "seed": 0,
+          "metrics": {
+            "test_acc": 0.9975000023841858,
+            "train_acc": 0.9975000023841858,
+            "gap": 0.0,
+            "test_loss": 0.029411254450678825,
+            "sharpness": 0.005027191713452339
+          },
+          "traces": {
+            "train": "edddfd44eb1dea6f236e3348751ce61b56d338e76b9e14b47b2c2ef43385ebcf",
+            "test": "edddfd44eb1dea6f236e3348751ce61b56d338e76b9e14b47b2c2ef43385ebcf",
+            "batches": "35627eb6c929ec19cd4c09948988515c7d1cf0567a2dc7bb36f9e88db096fc4a",
+            "initial_parameters": "0c3210953eb76239591a3a0de629e3d52dc31191dde97c54c06aa8a2badd2205",
+            "train_test_overlap": 400.0,
+            "gradient_calls": 151.0,
+            "training_perturbation_calls": 0.0,
+            "first_training_perturbation_norm": 0.0,
+            "later_max_perturbation_norm": 0.0
+          }
+        },
+        {
+          "config": {
+            "batch_size": 16,
+            "rho": 0.3,
+            "train_n": 200,
+            "method": "momusam"
+          },
+          "seed": 0,
+          "metrics": {
+            "test_acc": 0.8899999856948853,
+            "train_acc": 0.9599999785423279,
+            "gap": 0.06999999284744263,
+            "test_loss": 0.37090739607810974,
+            "sharpness": 0.040509894490242004
+          },
+          "traces": {
+            "train": "4b64576a335fd4fd9b89b2741604f36ef4cf921e04f0a0cbd6a8c7e4aef0f595",
+            "test": "edddfd44eb1dea6f236e3348751ce61b56d338e76b9e14b47b2c2ef43385ebcf",
+            "batches": "e859afe2035978a91714463a554caa8a2ee762d7c172bd020e8d1d8fb09e2a0e",
+            "initial_parameters": "0c3210953eb76239591a3a0de629e3d52dc31191dde97c54c06aa8a2badd2205",
+            "train_test_overlap": 0.0,
+            "gradient_calls": 151.0,
+            "training_perturbation_calls": 150.0,
+            "first_training_perturbation_norm": 0.0,
+            "later_max_perturbation_norm": 0.600000074009096
+          }
+        },
+        {
+          "config": {
+            "batch_size": 16,
+            "rho": 0.3,
+            "train_n": 200,
+            "method": "muon"
+          },
+          "seed": 1,
+          "metrics": {
+            "test_acc": 0.9900000095367432,
+            "train_acc": 0.9900000095367432,
+            "gap": 0.0,
+            "test_loss": 0.039323557168245316,
+            "sharpness": 0.00882556289434433
+          },
+          "traces": {
+            "train": "714e34fe2ae98083062123de3b48f66b04412c28236c3d92344aee3974806924",
+            "test": "714e34fe2ae98083062123de3b48f66b04412c28236c3d92344aee3974806924",
+            "batches": "d6bff994ccda70e289b3f69ddcc31fd514d7f69e9ff66bb442c2b262c5afb72d",
+            "initial_parameters": "8c4777a817f9bfb9bd887b8f84a5c79ae71d962058d7981f9a74e5c09c114c88",
+            "train_test_overlap": 400.0,
+            "gradient_calls": 151.0,
+            "training_perturbation_calls": 0.0,
+            "first_training_perturbation_norm": 0.0,
+            "later_max_perturbation_norm": 0.0
+          }
+        },
+        {
+          "config": {
+            "batch_size": 16,
+            "rho": 0.3,
+            "train_n": 200,
+            "method": "momusam"
+          },
+          "seed": 1,
+          "metrics": {
+            "test_acc": 0.8799999952316284,
+            "train_acc": 0.9549999833106995,
+            "gap": 0.07499998807907104,
+            "test_loss": 0.34069907665252686,
+            "sharpness": 0.0383242666721344
+          },
+          "traces": {
+            "train": "3389c5b696b1d57bc2f2d869ed984b4037db7c6aafb26ad7b7a5512c250c2920",
+            "test": "714e34fe2ae98083062123de3b48f66b04412c28236c3d92344aee3974806924",
+            "batches": "f03af7bb2397b63209b605a5b9c21f29cbc4452bf4a0f7c6e5307d60a57496ac",
+            "initial_parameters": "8c4777a817f9bfb9bd887b8f84a5c79ae71d962058d7981f9a74e5c09c114c88",
+            "train_test_overlap": 0.0,
+            "gradient_calls": 151.0,
+            "training_perturbation_calls": 150.0,
+            "first_training_perturbation_norm": 0.0,
+            "later_max_perturbation_norm": 0.6000000802179124
+          }
+        }
+      ]
+    },
+    {
+      "variant": "inconsistent_shared_randomness",
+      "executed_source_sha256": "2fcc44c0406c31a0ba17e90462313c26f5e4c053a41c7b5be6e0ea8b49215ed6",
+      "observations": [
+        {
+          "config": {
+            "batch_size": 16,
+            "rho": 0.3,
+            "train_n": 200,
+            "method": "muon"
+          },
+          "seed": 0,
+          "metrics": {
+            "test_acc": 0.9574999809265137,
+            "train_acc": 0.9950000047683716,
+            "gap": 0.03750002384185791,
+            "test_loss": 0.17818327248096466,
+            "sharpness": 0.0067215897142887115
+          },
+          "traces": {
+            "train": "4b64576a335fd4fd9b89b2741604f36ef4cf921e04f0a0cbd6a8c7e4aef0f595",
+            "test": "edddfd44eb1dea6f236e3348751ce61b56d338e76b9e14b47b2c2ef43385ebcf",
+            "batches": "e859afe2035978a91714463a554caa8a2ee762d7c172bd020e8d1d8fb09e2a0e",
+            "initial_parameters": "0c3210953eb76239591a3a0de629e3d52dc31191dde97c54c06aa8a2badd2205",
+            "train_test_overlap": 0.0,
+            "gradient_calls": 151.0,
+            "training_perturbation_calls": 0.0,
+            "first_training_perturbation_norm": 0.0,
+            "later_max_perturbation_norm": 0.0
+          }
+        },
+        {
+          "config": {
+            "batch_size": 16,
+            "rho": 0.3,
+            "train_n": 200,
+            "method": "momusam"
+          },
+          "seed": 0,
+          "metrics": {
+            "test_acc": 0.9125000238418579,
+            "train_acc": 0.9900000095367432,
+            "gap": 0.07749998569488525,
+            "test_loss": 0.30570363998413086,
+            "sharpness": 0.02426319569349289
+          },
+          "traces": {
+            "train": "3389c5b696b1d57bc2f2d869ed984b4037db7c6aafb26ad7b7a5512c250c2920",
+            "test": "714e34fe2ae98083062123de3b48f66b04412c28236c3d92344aee3974806924",
+            "batches": "e859afe2035978a91714463a554caa8a2ee762d7c172bd020e8d1d8fb09e2a0e",
+            "initial_parameters": "0c3210953eb76239591a3a0de629e3d52dc31191dde97c54c06aa8a2badd2205",
+            "train_test_overlap": 0.0,
+            "gradient_calls": 151.0,
+            "training_perturbation_calls": 150.0,
+            "first_training_perturbation_norm": 0.0,
+            "later_max_perturbation_norm": 0.6000000864267288
+          }
+        },
+        {
+          "config": {
+            "batch_size": 16,
+            "rho": 0.3,
+            "train_n": 200,
+            "method": "muon"
+          },
+          "seed": 1,
+          "metrics": {
+            "test_acc": 0.9300000071525574,
+            "train_acc": 1.0,
+            "gap": 0.06999999284744263,
+            "test_loss": 0.22253848612308502,
+            "sharpness": 0.0026775668375194073
+          },
+          "traces": {
+            "train": "3389c5b696b1d57bc2f2d869ed984b4037db7c6aafb26ad7b7a5512c250c2920",
+            "test": "714e34fe2ae98083062123de3b48f66b04412c28236c3d92344aee3974806924",
+            "batches": "f03af7bb2397b63209b605a5b9c21f29cbc4452bf4a0f7c6e5307d60a57496ac",
+            "initial_parameters": "8c4777a817f9bfb9bd887b8f84a5c79ae71d962058d7981f9a74e5c09c114c88",
+            "train_test_overlap": 0.0,
+            "gradient_calls": 151.0,
+            "training_perturbation_calls": 0.0,
+            "first_training_perturbation_norm": 0.0,
+            "later_max_perturbation_norm": 0.0
+          }
+        },
+        {
+          "config": {
+            "batch_size": 16,
+            "rho": 0.3,
+            "train_n": 200,
+            "method": "momusam"
+          },
+          "seed": 1,
+          "metrics": {
+            "test_acc": 0.8999999761581421,
+            "train_acc": 0.9850000143051147,
+            "gap": 0.08500003814697266,
+            "test_loss": 0.34681227803230286,
+            "sharpness": 0.033910587430000305
+          },
+          "traces": {
+            "train": "b414168c304b289c537c9531f2148052293ad3f08d3c9f5cd4bdd996e6a8153a",
+            "test": "ec5f5c4f1340831782e93ab8239c228ece76f6a64c2ca71feac104d94d616274",
+            "batches": "f03af7bb2397b63209b605a5b9c21f29cbc4452bf4a0f7c6e5307d60a57496ac",
+            "initial_parameters": "8c4777a817f9bfb9bd887b8f84a5c79ae71d962058d7981f9a74e5c09c114c88",
+            "train_test_overlap": 0.0,
+            "gradient_calls": 151.0,
+            "training_perturbation_calls": 150.0,
+            "first_training_perturbation_norm": 0.0,
+            "later_max_perturbation_norm": 0.600000074009096
+          }
+        }
+      ]
+    }
+  ],
+  "live_probes": "completed_bounded_muon_profile",
+  "human_admissions": 0,
+  "model_sessions": 0,
+  "limits": [
+    "Guard outcomes cover these deliberately constructed cases only; no estimate of general scientific-defect recall.",
+    "Passing controls does not admit a lab or establish paper fidelity, fair baseline capacity, meaningful margins, or fresh reward stability.",
+    "Ambiguity removes question eligibility without a scientific rejection.",
+    "Runtime probes use two visible seeds and one Muon context, with a zero-radius extension; no qualification or confirmation sweep.",
+    "Instrumentation is validated by pristine metric agreement for three methods at one seed; it is not an adversarial security boundary."
+  ]
+}
