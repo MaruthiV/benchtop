@@ -1,4 +1,6 @@
 import itertools
+import math
+from collections import Counter
 from pathlib import Path
 
 import numpy as np
@@ -176,8 +178,137 @@ def paired_uniform_public(description: dict, run, rng: np.random.Generator) -> d
             "observations": observations, "policy_calls": calls, "stop_reason": stop}
 
 
+def _public_prices(description, space):
+    pricing = description.get("pricing", {})
+    if not isinstance(pricing.get("schedule_id"), str) or not pricing["schedule_id"]:
+        raise ValueError("coverage policies require a public frozen pricing schedule")
+    prices = {}
+    for config in space.configs():
+        key = config_key(config)
+        try:
+            value = float(pricing["by_config"][key])
+        except (KeyError, TypeError, ValueError) as error:
+            raise ValueError("public pricing must cover every configuration") from error
+        if not math.isfinite(value) or value <= 0:
+            raise ValueError("public prices must be finite and positive")
+        prices[key] = value
+    return prices
+
+
+def _budget_values(budget):
+    total, spent, calls = budget["total"], budget["spent"], budget["calls_left"]
+    if (not math.isfinite(total) or not math.isfinite(spent) or total < 0 or spent < 0 or spent > total
+            or type(calls) is not int or calls < 0):
+        raise ValueError("invalid public budget balance")
+    return total, spent, calls
+
+
+def _pair_end(spent, costs, total):
+    # Use the controller's sequential addition, tolerance, and clamp for each arm.
+    for cost in costs:
+        end = spent + cost
+        if end > total and not math.isclose(end, total, rel_tol=1e-12, abs_tol=0):
+            return None
+        spent = min(end, total)
+    return spent
+
+
+def _coverage_batch(contexts, comparison, question, counts, ranks, prices, total, spent, limit, prefer_cost):
+    factor, a, b = comparison
+    counts = dict(counts)
+    remaining = set(range(len(contexts)))
+    batch, plan = [], []
+    while remaining:
+        levels, strata = Counter(), Counter()
+        for context in contexts:
+            count = counts[canon(context)]
+            for name, level in context.items():
+                levels[(name, canon(level))] += count
+            if question["kind"] == "where":
+                strata[canon(context[question["factor"]])] += count
+        choices = []
+        for index in remaining:
+            context = contexts[index]
+            count = counts[canon(context)]
+            if count >= limit:
+                continue
+            configs = [{**context, factor: level} for level in (a, b)]
+            costs = [prices[config_key(config)] for config in configs]
+            end = _pair_end(spent, costs, total)
+            if end is None:
+                continue
+            stratum = strata[canon(context[question["factor"]])] if question["kind"] == "where" else 0
+            novelty = sum(levels[(name, canon(level))] == 0 for name, level in context.items())
+            priority = (count, stratum, -novelty, sum(costs) if prefer_cost else 0, ranks[index])
+            choices.append((priority, index, configs, costs, end))
+        if not choices:
+            break
+        _, index, configs, costs, spent = min(choices)
+        batch.extend(configs)
+        plan.append({"context": contexts[index], "quoted_cost": sum(costs)})
+        counts[canon(contexts[index])] += 1
+        remaining.remove(index)
+    return batch, plan
+
+
+def _coverage_public(description, run, rng, *, prefer_cost):
+    space, question = public_problem(description)
+    comparison = arms(space, question)
+    contexts = grid_over(space, [comparison[0]])
+    ranks = {int(index): rank for rank, index in enumerate(rng.permutation(len(contexts)))}
+    prices = _public_prices(description, space)
+    limit = description["replicate_limit"]
+    if type(limit) is not int or limit < 1:
+        raise ValueError("invalid public replicate limit")
+    budget = description["budget"]
+    _, _, calls_left = _budget_values(budget)
+    observations, allocations, calls = [], [], 0
+    stop = "call_limit" if calls_left < limit else "replicate_limit"
+    estimate = estimate_answer(space, question, observations, allowed_ids=range(1, limit + 1))
+    for _ in range(min(limit, calls_left)):
+        total, spent, available_calls = _budget_values(budget)
+        if not available_calls:
+            stop = "call_limit"
+            break
+        counts = {canon(row["context"]): row["n_pairs"]
+                  for contrast in estimate["contrasts"].values() for row in contrast["contexts"]}
+        batch, plan = _coverage_batch(contexts, comparison, question, counts, ranks, prices, total, spent, limit, prefer_cost)
+        if not batch:
+            stop = "replicate_limit" if all(count >= limit for count in counts.values()) else "no_affordable_pair"
+            break
+        out = run(batch, seeds=1)
+        calls += 1
+        allocations.append({"call": calls, "planned_pairs": plan})
+        delivered = out.get("results", [])
+        observations.extend(delivered)
+        estimate = estimate_answer(space, question, observations, allowed_ids=range(1, limit + 1))
+        if "error" in out or out.get("errors"):
+            stop = "experiment_error"
+            break
+        if "budget exhausted" in out.get("notes", []):
+            stop = "budget_exhausted"
+            break
+        if len(delivered) != len(batch):
+            stop = "partial_reply"
+            break
+        budget = out["budget"]
+    return {"policy_id": "coverage_plus_cost_v1" if prefer_cost else "question_coverage_v1",
+            "estimate": estimate, "answer": estimate["answer"], "observations": observations,
+            "policy_calls": calls, "stop_reason": stop, "allocations": allocations,
+            "pricing_schedule_id": description["pricing"]["schedule_id"]}
+
+
+def question_coverage_public(description, run, rng):
+    return _coverage_public(description, run, rng, prefer_cost=False)
+
+
+def coverage_plus_cost_public(description, run, rng):
+    return _coverage_public(description, run, rng, prefer_cost=True)
+
+
 # Historical BASELINES/play remain unchanged, so their saved cohort and report retain their meaning.
-RELEASE_BASELINES = {"paired_uniform": paired_uniform_public}
+RELEASE_BASELINES = {"paired_uniform": paired_uniform_public, "question_coverage": question_coverage_public,
+                     "coverage_plus_cost": coverage_plus_cost_public}
 
 
 def play_release(ep: Episode, name: str = "paired_uniform", seed: int = 0) -> dict:

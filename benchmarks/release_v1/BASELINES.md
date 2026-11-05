@@ -1,16 +1,36 @@
 # Classical policies and shared reconstruction
 
-The first policy checkpoint implements a versioned paired-uniform control and one common visible-data estimator. It does not select development labs, run the planned 200-seed policy comparison, freeze candidate policies, or evaluate new model sessions. Human admission reviews remain pending in the [review packet](admission/REVIEW.md).
+All three required acquisition policies are implemented with one common visible-data estimator. They do not select development labs, run the planned 200-seed policy comparison, freeze candidate policies, or evaluate new model sessions. Human admission reviews remain pending in the [review packet](admission/REVIEW.md).
 
 ## Separate historical behavior
 
-The original `prior`, `random`, and `uniform` registry, answer reconstruction, and saved results retain their historical behavior. The new `RELEASE_BASELINES` registry initially contains `paired_uniform`; `play_release` requires corrected task artifacts and a fresh episode. Existing evaluation commands do not silently switch policy cohorts or overwrite historical results with these new records.
+The original `prior`, `random`, and `uniform` registry, answer reconstruction, and saved results retain their historical behavior. The new `RELEASE_BASELINES` registry contains `paired_uniform`, `question_coverage`, and `coverage_plus_cost`; `play_release` requires corrected task artifacts and a fresh episode. Existing evaluation commands do not silently switch policy cohorts or overwrite historical results with these new records.
 
 The paired-uniform acquisition schedule matches the original contrast sweep: randomly permute target contexts once, request treatment then baseline at each context, and repeat that order over visible replicates. All requests pass through the existing budget and call accounting. A budget cutoff can deliver only one arm of the final pair; that observation remains charged and recorded, but contributes no paired effect until its matching arm exists. A reported experiment failure stops this policy; it does not count missing work as a delivered pair.
 
 The policy core accepts only a public description, a run callback, and its random generator. It receives no environment object, hidden result table, qualification answer, or grading response. `play_release` submits and reads the trusted score only after acquisition and reconstruction end. Tests match original acquisition traces and charges at 0%, 6%, 12%, 25%, and 100% budgets and verify that changed hidden outcomes cannot change the new policy's choices.
 
 `describe_lab` now provides structured `question_spec`, `metric.min_effect`, and `replicate_limit`. These encode the question, tolerance, and replicate cap already stated in the public prose. They expose no hidden labels, qualified-level subset, seed IDs, or seed ordering. Prices and call/budget balances use the same public values available to an agent.
+
+## Coverage and cost acquisition
+
+`question_coverage_v1` and `coverage_plus_cost_v1` both plan complete treatment/baseline pairs from the public frozen price schedule and current balance. They skip pairs that cannot fit, using the controller's sequential floating-point tolerance and clamp for each arm. They never look up private timings or hidden outcomes. Missing, nonfinite, or nonpositive prices fail before acquisition.
+
+Among affordable pairs, each policy applies the following priorities in order:
+
+1. Prefer contexts with fewer completed paired observations.
+2. For a where question, prefer the requested factor level with fewer completed pairs.
+3. Prefer contexts that introduce more previously unobserved levels of the other context factors.
+4. For coverage-plus-cost only, prefer a lower quoted pair cost when the coverage priorities tie.
+5. Break remaining ties with a fixed random context order from the policy seed.
+
+This gives where questions early coverage of the requested levels and gives claim/component questions early marginal factor coverage. It is a design heuristic, not an optimization guarantee or an inference rule. Visible effect magnitudes do not affect these two acquisition policies. They use the same `paired_context_v1` estimator, including its fixed missing-context prior.
+
+Each batch includes at most one pair per context; successful batches update coverage from actually delivered paired identities. A complete run uses at most the visible replicate limit in calls, subject to the public call cap, and never requests more visible replicates per configuration than allowed. Allocation records retain planned contexts, quoted pair costs, and the pricing schedule ID alongside delivered observations. Errors or unexpected partial replies stop the policy with completed observations retained; unmatched deliveries remain excluded from paired effects.
+
+Affordable uncovered contexts take priority over repeating covered ones. If all remaining uncovered contexts are unaffordable, a later batch can repeat affordable covered contexts up to the visible cap. Unaffordable contexts remain in the estimator's target and coverage diagnostics. Cost preference does not change their weights or impute them from the cheap contexts.
+
+More cheap pairs need not improve an answer. A synthetic test has pair costs 2, 2, and 6 with a budget of 8: coverage-plus-cost buys four cheap pairs, while coverage buys two pairs including the expensive context. The cost policy misses an expensive positive effect and gives the worse answer in that control. This illustrates the tradeoff and the missing-context assumption; it is not a performance result on admitted labs. Equal prices produce identical coverage-policy acquisitions, isolating the cost preference in the controlled comparison.
 
 ## Shared estimator: `paired_context_v1`
 
@@ -63,9 +83,11 @@ New policy records also retain the delivered observations directly, so later rec
 Run the focused checks from the repository root:
 
 ```sh
-.venv/bin/python -m pytest -q tests/test_shared_estimator.py tests/test_paired_uniform.py tests/test_analysis.py
+.venv/bin/python -m pytest -q tests/test_shared_estimator.py tests/test_paired_uniform.py tests/test_coverage_policies.py tests/test_analysis.py
 ```
 
 Controls cover deliberately mismatched replicates, repeated cheap contexts, missing contexts, shared and opposing seed noise, unequal identity sets, duplicate/conflicting observations, metric direction, where/component output, failure accounting, hidden-outcome independence, safe historical conversion, trace precision, and unchanged acquisition ordering.
 
-Next implement question coverage and coverage-plus-cost acquisition using this same public interface and estimator. Keep cost preference separate from target weighting. The optional adaptive policy remains deferred. Run the planned 200 policy seeds at the three protocol budgets only after selecting the reviewed development subset under the existing rule. Freeze policies and estimator at the candidate lock before fresh evaluation; no such lock has been made here.
+Coverage-policy controls also cover five budget levels, requested-level and marginal-level coverage, cost ranking, equal-price equivalence, fixed target weights despite omitted expensive contexts, public quote validation, call limits, decimal budget boundaries, partial execution failure, and independence from private timings and visible effect magnitudes.
+
+Next implement the replay harness and remaining sanity controls, retaining raw observations and policy/episode/version identities. The optional adaptive policy remains deferred. Run the planned 200 policy seeds at the three protocol budgets only after selecting the reviewed development subset under the existing rule. Review estimator sensitivity, then freeze policies and estimator at the candidate lock before fresh evaluation; no such lock has been made here.
