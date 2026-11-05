@@ -137,6 +137,28 @@ def cmd_integration(a):
         client.http.close()
 
 
+def cmd_admission(a):
+    from benchtop.admission import draft_review, inspect_lab, screen_catalog, write_json
+    from benchtop.env import ENVS
+
+    try:
+        if a.action == "inspect":
+            review = json.loads(Path(a.review).read_text()) if a.review else None
+            result = inspect_lab(Path(a.env), review=review)
+            if a.draft_review:
+                write_json(a.draft_review, draft_review(result), draft=True)
+            summary = {key: result[key] for key in ("env", "decision", "qualified_claim_admitted")}
+            summary["mechanical"] = result["mechanical"]["status"]
+            summary["human_review"] = result["human_review"]["status"]
+        else:
+            result = screen_catalog(Path(a.envs_dir) if a.envs_dir else ENVS, reviews_dir=a.reviews_dir)
+            summary = result["summary"]
+        write_json(a.output, result)
+    except (OSError, ValueError, TypeError, KeyError) as error:
+        raise SystemExit(f"admission screen failed: {error}") from error
+    print(json.dumps({**summary, "output": a.output}, indent=2, allow_nan=False))
+
+
 def main(argv=None):
     p = argparse.ArgumentParser(prog="benchtop")
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -230,6 +252,20 @@ def main(argv=None):
     for action in (prepare, begin, collect):
         action.add_argument("--base", default="http://127.0.0.1:8787")
         action.set_defaults(fn=cmd_integration)
+
+    s = sub.add_parser("admission", help="screen cached lab evidence separately from human scientific review")
+    actions = s.add_subparsers(dest="action", required=True)
+    inspect = actions.add_parser("inspect")
+    inspect.add_argument("env")
+    inspect.add_argument("--review", default=None)
+    inspect.add_argument("--draft-review", default=None)
+    inspect.add_argument("--output", default="artifacts/admission.json")
+    screen = actions.add_parser("screen")
+    screen.add_argument("--envs-dir", default=None)
+    screen.add_argument("--reviews-dir", default=None)
+    screen.add_argument("--output", default="artifacts/admission_screen.json")
+    for action in (inspect, screen):
+        action.set_defaults(fn=cmd_admission)
 
     a = p.parse_args(argv)
     a.fn(a)

@@ -4,6 +4,8 @@ benchtop turns new arXiv papers into small runnable labs that work as RL environ
 
 The results below use `historical_v0` labels. A [corrected grading review](benchmarks/release_v1/GRADING.md) retains 75 of the original 78 questions; new agent evaluations are pending.
 
+The new [admission screen](benchmarks/release_v1/ADMISSION.md) separates mechanical validity, qualified questions, human review, and model difficulty. The historical catalog has 28 corrected claim candidates; scientific admission reviews are pending.
+
 ```mermaid
 flowchart LR
     A[new arXiv papers] --> B[triage<br/>Haiku]
