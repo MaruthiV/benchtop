@@ -53,6 +53,8 @@ The [classical replay harness](REPLAY.md) now implements the three sanity contro
 
 [Fresh seed partitions](SEEDS.md) now validate three separate groups and support staged visible/qualification sweeps. Qualification labels and prices exclude confirmation data, and ordinary sweeps reserve the confirmation group. The locked confirmation runner and full model evaluation remain pending.
 
+The [budget-calibration selector](CALIBRATION.md) computes Beta predictive mixed-group probabilities, selects the development global control, and applies explicit fresh-pilot fallbacks. Its CLI reads saved normalized outcomes and preserves unknown costs and missing slots. The included example is synthetic; no model study or phase lock is implied by a selector diagnostic.
+
 ## Validation of this checkpoint
 
 The specification was checked for valid JSON, disjoint seed splits, resource arithmetic, consistent group sizes, required lock gates, unique reference identities, and agreement with the historical archive checksum. No fresh papers were fetched, model episodes run, or application behavior changed for this checkpoint.

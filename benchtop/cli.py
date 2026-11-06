@@ -52,6 +52,17 @@ def cmd_sweep(a):
     sweep(Path(a.env), workers=a.workers, seeds=a.seeds, split=a.split)
 
 
+def cmd_calibrate(a):
+    from benchtop.calibrate import select_file
+
+    try:
+        result = select_file(a.input, a.output)
+    except (OSError, ValueError, TypeError, KeyError) as error:
+        raise SystemExit(f"calibration failed: {error}") from error
+    print(json.dumps({key: result[key] for key in ("selector_id", "status", "chosen_budget_fraction", "fallback_reason")},
+                     indent=2, allow_nan=False))
+
+
 def cmd_serve(a):
     from benchtop.env import ENVS
     from benchtop.server import serve
@@ -193,6 +204,11 @@ def main(argv=None):
     s.add_argument("--split", choices=("visible", "qualification"),
                    help="fresh partition to sweep; default sweeps visible + qualification, reserving confirmation")
     s.set_defaults(fn=cmd_sweep)
+
+    s = sub.add_parser("calibrate", help="select a budget from normalized pilot outcomes; does not run models")
+    s.add_argument("input")
+    s.add_argument("--output", required=True, help="new immutable JSON diagnostic file")
+    s.set_defaults(fn=cmd_calibrate)
 
     s = sub.add_parser("serve")
     s.add_argument("--port", type=int, default=8787)

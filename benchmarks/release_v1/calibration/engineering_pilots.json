@@ -1,0 +1,193 @@
+{
+  "schema_version": 1,
+  "evidence_kind": "synthetic_control",
+  "protocol_hash": "94e8d7c14c822c80ede18b387ec8669dd36a73947a25af98e0beb9880060dcc6",
+  "phase": "fresh_pilot",
+  "closed": true,
+  "lab_ids": [
+    "synthetic-selector-0"
+  ],
+  "slots": [
+    {
+      "lab_id": "synthetic-selector-0",
+      "budget_fraction": 0.06,
+      "group_id": "3b420d5c8c8940fcd23a9528d0b86455700e55fd74ebaf66c761a2bdcdffaf84",
+      "slot_id": "46777847b7733d3daae45af0399eb7a546cda12502baad8eb9e066f47cc6a5a6",
+      "replicate_index": 0,
+      "attempts": [
+        {
+          "attempt_id": "a942ac81945f917f2580ba18b58638152cb8566e7fa6eb068877462cb44f9d35",
+          "attempt_index": 0,
+          "state": "completed",
+          "reward": 0
+        }
+      ]
+    },
+    {
+      "lab_id": "synthetic-selector-0",
+      "budget_fraction": 0.06,
+      "group_id": "3b420d5c8c8940fcd23a9528d0b86455700e55fd74ebaf66c761a2bdcdffaf84",
+      "slot_id": "866316403851f0a04be2ddc3b6973f095de250a0aa94c981ea4834246454aa09",
+      "replicate_index": 1,
+      "attempts": [
+        {
+          "attempt_id": "32ead9c12ce0d2b8f98baf941866ccc04e2613a569aec1d31200f92d005f163e",
+          "attempt_index": 0,
+          "state": "completed",
+          "reward": 0
+        }
+      ]
+    },
+    {
+      "lab_id": "synthetic-selector-0",
+      "budget_fraction": 0.06,
+      "group_id": "3b420d5c8c8940fcd23a9528d0b86455700e55fd74ebaf66c761a2bdcdffaf84",
+      "slot_id": "83ce76388a55d910255d081bf394fbaa2f61ab4fdcae366192121a21e8f8745d",
+      "replicate_index": 2,
+      "attempts": [
+        {
+          "attempt_id": "adc102a7933cf8fd4735b14fb41a53771f8a0cc854609c032dd9f6918b810201",
+          "attempt_index": 0,
+          "state": "completed",
+          "reward": 0
+        }
+      ]
+    },
+    {
+      "lab_id": "synthetic-selector-0",
+      "budget_fraction": 0.06,
+      "group_id": "3b420d5c8c8940fcd23a9528d0b86455700e55fd74ebaf66c761a2bdcdffaf84",
+      "slot_id": "0e9093780edb7386e66ea0fd9b35ead79e652c8f8690d013e0ff5a2f6a340c07",
+      "replicate_index": 3,
+      "attempts": [
+        {
+          "attempt_id": "604192c06102abd772c12a3c5f58bd7643025851cee81663f5b947598d25f01e",
+          "attempt_index": 0,
+          "state": "completed",
+          "reward": 0
+        }
+      ]
+    },
+    {
+      "lab_id": "synthetic-selector-0",
+      "budget_fraction": 0.12,
+      "group_id": "9e0c62b81537f2e2d61b0748db4c8cc2f55df9b83c581ebee713613e7f3ebb93",
+      "slot_id": "dfb0e260983b889ae44522a2af79dc84d4225e0310254165a9f1065bbdd3166a",
+      "replicate_index": 0,
+      "attempts": [
+        {
+          "attempt_id": "0c5e212b9066444b48cb923c591cdc113d42a1354dbbc66c7d458db8894908cb",
+          "attempt_index": 0,
+          "state": "completed",
+          "reward": 1
+        }
+      ]
+    },
+    {
+      "lab_id": "synthetic-selector-0",
+      "budget_fraction": 0.12,
+      "group_id": "9e0c62b81537f2e2d61b0748db4c8cc2f55df9b83c581ebee713613e7f3ebb93",
+      "slot_id": "641f82a3173caf279dcb4773b9f97180b044d4c7b9b5d82169db51781fa5a0a5",
+      "replicate_index": 1,
+      "attempts": [
+        {
+          "attempt_id": "f59ec4e578d2952ad697432efe31045d757543feb4e416723dc2b1ed22e3b8c4",
+          "attempt_index": 0,
+          "state": "completed",
+          "reward": 1
+        }
+      ]
+    },
+    {
+      "lab_id": "synthetic-selector-0",
+      "budget_fraction": 0.12,
+      "group_id": "9e0c62b81537f2e2d61b0748db4c8cc2f55df9b83c581ebee713613e7f3ebb93",
+      "slot_id": "bccb96fd082c7ff86a102d5eec793fbe82dd9538287cd9c41784dd6ce4fb2f1a",
+      "replicate_index": 2,
+      "attempts": [
+        {
+          "attempt_id": "2ff1e5581a1f95fcb541dcfaa6b26ee0e2d1da6114a802f3edf34dc531c175b5",
+          "attempt_index": 0,
+          "state": "completed",
+          "reward": 0
+        }
+      ]
+    },
+    {
+      "lab_id": "synthetic-selector-0",
+      "budget_fraction": 0.12,
+      "group_id": "9e0c62b81537f2e2d61b0748db4c8cc2f55df9b83c581ebee713613e7f3ebb93",
+      "slot_id": "be85f5d82b289f2c2a738844b8e919b2dc9568bd3413ffd0ba500e0b5e51d26b",
+      "replicate_index": 3,
+      "attempts": [
+        {
+          "attempt_id": "03ab84b562aa119c777143483baa36f7c7f26904a43124d68c4ee904e85bcd3d",
+          "attempt_index": 0,
+          "state": "completed",
+          "reward": 0
+        }
+      ]
+    },
+    {
+      "lab_id": "synthetic-selector-0",
+      "budget_fraction": 0.25,
+      "group_id": "f0a0863cc090a52553837794abe8a262cad0acbb46321a71eb489224fafdc8d9",
+      "slot_id": "dad9348105f7be4f327c1046fe0f02a5475ab80cabb192efc4d5f6cf3ea9ad92",
+      "replicate_index": 0,
+      "attempts": [
+        {
+          "attempt_id": "55f6303ad2694e4546daaf429c83b1c5f769c51be0a1d2eac5f47949cd9dcc60",
+          "attempt_index": 0,
+          "state": "completed",
+          "reward": 1
+        }
+      ]
+    },
+    {
+      "lab_id": "synthetic-selector-0",
+      "budget_fraction": 0.25,
+      "group_id": "f0a0863cc090a52553837794abe8a262cad0acbb46321a71eb489224fafdc8d9",
+      "slot_id": "e7dcc1259914fc3f0e8d48044d05544b957ab23ce81166c5e5c7617a9ba2c3ed",
+      "replicate_index": 1,
+      "attempts": [
+        {
+          "attempt_id": "677cfee7f7630b0c93155eaf7dee793586b4685b4c9e801212c5bde69c5e3911",
+          "attempt_index": 0,
+          "state": "completed",
+          "reward": 1
+        }
+      ]
+    },
+    {
+      "lab_id": "synthetic-selector-0",
+      "budget_fraction": 0.25,
+      "group_id": "f0a0863cc090a52553837794abe8a262cad0acbb46321a71eb489224fafdc8d9",
+      "slot_id": "31f5c92f799ed751dd411fd91c10a6b01ab3e115c19cf297fd5f287cf6899584",
+      "replicate_index": 2,
+      "attempts": [
+        {
+          "attempt_id": "f9f1c83e64ae83800301893bef3586d8d6c4f4fea161dbbf2cd42c71f6946d06",
+          "attempt_index": 0,
+          "state": "completed",
+          "reward": 1
+        }
+      ]
+    },
+    {
+      "lab_id": "synthetic-selector-0",
+      "budget_fraction": 0.25,
+      "group_id": "f0a0863cc090a52553837794abe8a262cad0acbb46321a71eb489224fafdc8d9",
+      "slot_id": "9afd5b6ff48f9f5eb3b4d7f2e96805d19bb8053c35882d97d0ebfe296bb8fb4e",
+      "replicate_index": 3,
+      "attempts": [
+        {
+          "attempt_id": "cfbd768126423b8d4139e88ca32de485d0dcb0a8a0b4fc1acf3c7d3506a5c7c2",
+          "attempt_index": 0,
+          "state": "completed",
+          "reward": 1
+        }
+      ]
+    }
+  ],
+  "global_budget_fraction": 0.25
+}
