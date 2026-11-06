@@ -1,0 +1,88 @@
+# Session accounting and reconciliation
+
+`session_ledger_v1` records start intents, immutable outcomes, and explicit reconciliation in one shared directory. The checkpoint accepts **engineering plans only**. It invokes no model, launches no process, and does not enable primary-study execution. The actual model runner, phase-lock verification, and integration with the older Qualia-start ledger remain pending.
+
+## Create and inspect an engineering journal
+
+Prepare a current [engineering study plan](STUDY.md), then initialize its ledger:
+
+```sh
+.venv/bin/python -m benchtop.cli study plan \
+  --mode engineering --phase smoke \
+  --env envs/2610-36935-gaussian-process-bandits-for \
+  --model-config benchmarks/release_v1/study/engineering_model.json \
+  --output-dir artifacts/session-engineering-plan
+
+.venv/bin/python -m benchtop.cli study sessions init \
+  artifacts/session-engineering-plan \
+  --output-dir artifacts/session-engineering-ledger
+
+.venv/bin/python -m benchtop.cli study sessions inspect \
+  artifacts/session-engineering-ledger \
+  --output artifacts/session-engineering-snapshot.json
+```
+
+`sessions register LEDGER PREPARATION` adds another compatible engineering plan. Model configuration, prompts, code, runtime, and protocol must match the ledger. Re-registering the same plan is idempotent. `study_preparation` plans are refused even when their preparation prerequisites pass. The model IDs in the supplied engineering file are synthetic, not identities measured from a real invocation.
+
+Directories and exports are exclusive, with repository destinations under ignored `artifacts/`. A ledger has an immutable sealed `ledger.json`, registered snapshots under `plans/`, and per-attempt JSON under `attempts/`. Each new instance has its own ID. Inspection snapshots bind their content with `snapshot_sha256`; export cannot overwrite an existing file or place an unrelated JSON inside the journal.
+
+## One accounting scope
+
+Mutations hold a local filesystem lock. A begin transaction reads all registered histories and checks the shared allowances before publishing its intent. Registering another plan does not reset counters.
+
+| Allowance | Maximum |
+|---|---:|
+| In-flight or unreconciled attempts | 2 |
+| Total start intents | 300 |
+| Initial primary starts | 272 |
+| Initial development / fresh-pilot / confirmation starts | 48 / 96 / 128 |
+| Initial smoke / integration starts | 6 / 2 |
+| Technical retry starts across phases | 20 |
+| Technical retries per slot | 1 |
+
+The arithmetic includes the full frozen protocol. Current registered plans support only smoke/development engineering controls; fresh and integration execution are not enabled by these limits.
+
+Counters belong to **one ledger directory**. Separate directories, legacy rollout commands, and the existing integration `starts.jsonl` are not coordinated. A future primary controller must select one canonical study journal, reconcile earlier integration usage, and route every invocation through it. This checkpoint does not claim a global subscription limiter or enforce limits on unrelated processes.
+
+## Start intents and interruption
+
+The Python `begin(directory, plan_sha256, slot_id, retry_technical=False)` API writes a start record before a future adapter could invoke a model. It verifies current code/runtime/protocol and the complete registered plan. Begin does not invoke anything itself. The record carries the exact plan, slot, attempt, phase, bucket, and UTC time.
+
+Each recorded intent conservatively consumes an allowance and is never refunded. A crash before an actual invocation can therefore overcount usage; it cannot create a hidden extra allowance. Reported intent counts must not be described as measured provider calls. The ledger's own model-start count stays zero.
+
+A start without a finish is `in_flight_or_interrupted`. Time passing does not prove that a model stopped. It keeps its concurrency slot and cannot be automatically rerun. The adapter must inspect its process/server evidence and reconcile it. After uncertain work is verified stopped, it can be finished as `unresolved`, releasing concurrency while still forbidding a retry until submission status is known.
+
+The core writes atomic exclusive files and preserves unfinished work. It handles ordinary process interruption; it is not a power-loss, distributed-consensus, or authenticated event-log guarantee. Temporary unpublished files do not count as completed records. Published orphaned, malformed, checksum-invalid, or allowance-inconsistent records fail visibly.
+
+## Finish and reconcile
+
+The future adapter calls `finish` with the normalized outcome and:
+
+- `process_stopped = true`, supplied only after verifying the old process ended.
+- `submission_status`: `committed`, `not_committed`, or `unknown`.
+- `reported_model_id`, or null when that identity is unavailable.
+- `evidence_sha256`, referring to retained adapter/server reconciliation evidence.
+
+The journal validates structure and references; it does not authenticate a caller's process or server claims, read a receipt from the hash alone, or reconcile the server itself. That work remains the runner's responsibility.
+
+Completed outcomes require a known committed submission and binary reward. Agent failures require an allowlisted cause and zero reward. Technical failures require an allowlisted infrastructure cause, null reward, a stopped process, and a known absence of a committed submission. Unknown submission status must remain unresolved. Incorrect answers and agent failures are final, including zero scores.
+
+An explicit `retry_technical=True` can begin attempt one only after a definite technical failure. A second retry is refused. A technical-looking transport error with uncertain submission is not enough: the first answer may already be committed.
+
+`reconcile` appends one separate resolution to an unresolved finish. A late committed answer becomes its usable outcome without another start. A proven technical failure with no submission can become retryable. The original finish remains byte-for-byte intact; a resolution references its checksum. Reconciliation cannot overwrite an already-final answer, replace an existing resolution, or turn a known reported cost into another value. Exact repeated completion calls return the existing record.
+
+If a reported model differs from the bound identity, the claimed outcome remains diagnostic, its usable reward becomes unavailable, and the entire ledger halts new work. Other already-started attempts can still finish. An unavailable model identity also keeps a submitted outcome unresolved until verified, without silently treating it as a primary reward.
+
+New plans and starts require current source/runtime/protocol bindings. Late completion/reconciliation evidence can still be retained after those inputs drift, using the recorded protocol and a checksum of the recorder implementation/runtime. It authorizes no new execution. The adapter must still verify that the actual server/model evidence belongs to the original attempt and versions. This keeps a code change from erasing an already-committed answer.
+
+## Costs and denominators
+
+Inspection retains every planned slot, including unattempted work, pending starts, terminal zeros, unresolved outcomes, and technical failures. It reports all start/retry intents and current concurrency occupancy. A resolved attempt contributes one effective outcome, while its earlier raw records remain available.
+
+Costs use the selector's normalized fields. Every attempt contributes, including failed attempts and retries. Resolutions can fill previously unknown costs and inherit previously known values; they do not count as another invocation. Missing cost fields remain unknown, with a known partial sum and a null total. Zero is used only for an actual reported zero or no recorded attempt. No tokens or wall time are inferred from a receipt or from intent counts.
+
+## Validation and next work
+
+Controls cover shared concurrency, immutable wrong answers, terminal agent failures, pending-process occupancy, explicit and bounded technical retry, late committed answers, unknown/model-mismatched outcomes, halted starts, all protocol allowance boundaries, the actual 20-retry limit, cross-plan smoke accounting, bad/corrupt/orphaned evidence, source drift, unknown costs, immutable reconciliation, exclusive snapshots, and copied-project CLI use. All synthetic start records are explicitly engineering data; no real model or paper experiment is run by these controls.
+
+Next connect a reconciled model adapter to these accounting primitives, verify actual process/server/model evidence, and implement the required primary phase locks and unified integration accounting. Primary evaluation, fresh confirmation grading, Qualia UI verification, and outreach readiness remain separate work.

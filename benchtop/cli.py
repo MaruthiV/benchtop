@@ -63,6 +63,44 @@ def cmd_calibrate(a):
                      indent=2, allow_nan=False))
 
 
+def cmd_study(a):
+    from benchtop import study
+
+    try:
+        if a.action == "inspect":
+            plan = study.load_plan(a.directory)
+        else:
+            model = json.loads(Path(a.model_config).read_text()) if a.model_config else None
+            if a.action == "gate":
+                result = study.gate(phase=a.phase, model=model, reviews_dir=a.reviews_dir, foundation=a.foundation)
+                print(json.dumps({key: result[key] for key in ("phase", "planning_status", "planning_blockers", "execution_ready", "execution_blockers")}, indent=2))
+                return
+            plan = study.make_plan(a.env, model=model, mode=a.mode, phase=a.phase,
+                                   reviews_dir=a.reviews_dir, foundation=a.foundation)
+            study.save_plan(plan, a.output_dir)
+        print(json.dumps({"plan_sha256": plan["plan_sha256"], "mode": plan["binding"]["mode"],
+                          "phase": plan["binding"]["phase"], "groups": len(plan["groups"]), "slots": len(plan["slots"]),
+                          "execution_ready": plan["execution_ready"], "model_sessions_started": 0}, indent=2))
+    except (OSError, ValueError, TypeError, KeyError) as error:
+        raise SystemExit(f"study preparation failed: {error}") from error
+
+
+def cmd_sessions(a):
+    from benchtop import session_ledger, study
+
+    try:
+        if a.session_action == "init":
+            result = session_ledger.create(study.load_plan(a.preparation), a.output_dir)
+        elif a.session_action == "register":
+            session_ledger.register(study.load_plan(a.preparation), a.ledger)
+            result = session_ledger.inspect(a.ledger)
+        else:
+            result = session_ledger.export(a.ledger, a.output) if a.output else session_ledger.inspect(a.ledger)
+        print(json.dumps({key: result[key] for key in ("ledger_id", "scope", "registered_plans", "counts", "halted", "model_sessions_started_by_ledger")}, indent=2))
+    except (OSError, ValueError, TypeError, KeyError) as error:
+        raise SystemExit(f"session accounting failed: {error}") from error
+
+
 def cmd_serve(a):
     from benchtop.env import ENVS
     from benchtop.server import serve
@@ -209,6 +247,39 @@ def main(argv=None):
     s.add_argument("input")
     s.add_argument("--output", required=True, help="new immutable JSON diagnostic file")
     s.set_defaults(fn=cmd_calibrate)
+
+    s = sub.add_parser("study", help="prepare and inspect immutable smoke/development plans; never invokes models")
+    actions = s.add_subparsers(dest="action", required=True)
+    plan = actions.add_parser("plan")
+    plan.add_argument("--mode", choices=("engineering", "study_preparation"), default="engineering")
+    plan.add_argument("--phase", choices=("smoke", "development"), default="smoke")
+    plan.add_argument("--env", action="append")
+    plan.add_argument("--model-config", required=True)
+    plan.add_argument("--output-dir", required=True)
+    gate = actions.add_parser("gate")
+    gate.add_argument("--phase", choices=("smoke", "development", "fresh_pilot", "confirmation"), default="development")
+    gate.add_argument("--model-config")
+    for action in (plan, gate):
+        action.add_argument("--reviews-dir", default="artifacts/reference-human-reviews")
+        action.add_argument("--foundation", default="artifacts/foundation_check.json")
+        action.set_defaults(fn=cmd_study)
+    inspect = actions.add_parser("inspect")
+    inspect.add_argument("directory")
+    inspect.set_defaults(fn=cmd_study)
+
+    sessions = actions.add_parser("sessions", help="inspect engineering session journals; does not invoke models")
+    operations = sessions.add_subparsers(dest="session_action", required=True)
+    init = operations.add_parser("init")
+    init.add_argument("preparation")
+    init.add_argument("--output-dir", required=True)
+    register = operations.add_parser("register")
+    register.add_argument("ledger")
+    register.add_argument("preparation")
+    inspect = operations.add_parser("inspect")
+    inspect.add_argument("ledger")
+    inspect.add_argument("--output")
+    for operation in (init, register, inspect):
+        operation.set_defaults(fn=cmd_sessions)
 
     s = sub.add_parser("serve")
     s.add_argument("--port", type=int, default=8787)

@@ -1,0 +1,16 @@
+{
+  "backend": "claude_cli",
+  "requested_model_id": "synthetic-model-for-planning-only",
+  "reported_model_id": "synthetic-model-for-planning-only",
+  "cli_version": "synthetic-cli-for-planning-only",
+  "decoding": {
+    "temperature": {
+      "status": "unavailable",
+      "reason": "Synthetic planning fixture; no actual CLI was invoked."
+    },
+    "model_seed": {
+      "status": "unavailable",
+      "reason": "Synthetic planning fixture; no actual CLI was invoked."
+    }
+  }
+}
