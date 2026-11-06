@@ -1,6 +1,6 @@
 # Session accounting and reconciliation
 
-`session_ledger_v1` records start intents, immutable outcomes, and explicit reconciliation in one shared directory. The checkpoint accepts **engineering plans only**. It invokes no model, launches no process, and does not enable primary-study execution. The actual model runner, phase-lock verification, and integration with the older Qualia-start ledger remain pending.
+`session_ledger_v1` records start intents, immutable outcomes, and explicit reconciliation in one shared directory. The checkpoint accepts **engineering plans only**. The journal itself invokes no model or process and does not enable primary-study execution. The [scripted MCP runner](RUNNER.md) now exercises its process/receipt interfaces. The primary provider adapter, phase-lock verification, and integration with the older Qualia-start ledger remain pending.
 
 ## Create and inspect an engineering journal
 
@@ -85,4 +85,4 @@ Costs use the selector's normalized fields. Every attempt contributes, including
 
 Controls cover shared concurrency, immutable wrong answers, terminal agent failures, pending-process occupancy, explicit and bounded technical retry, late committed answers, unknown/model-mismatched outcomes, halted starts, all protocol allowance boundaries, the actual 20-retry limit, cross-plan smoke accounting, bad/corrupt/orphaned evidence, source drift, unknown costs, immutable reconciliation, exclusive snapshots, and copied-project CLI use. All synthetic start records are explicitly engineering data; no real model or paper experiment is run by these controls.
 
-Next connect a reconciled model adapter to these accounting primitives, verify actual process/server/model evidence, and implement the required primary phase locks and unified integration accounting. Primary evaluation, fresh confirmation grading, Qualia UI verification, and outreach readiness remain separate work.
+The scripted adapter now connects owned process/MCP evidence to these accounting primitives. Next enable a real provider adapter only under verified primary phase locks and unified integration accounting. Primary evaluation, fresh confirmation grading, Qualia UI verification, and outreach readiness remain separate work.

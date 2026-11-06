@@ -133,7 +133,7 @@ def gate(*, phase="development", model=None, reviews_dir=None, foundation=None):
     supported = phase in ("smoke", "development")
     if not supported:
         blockers.append("Fresh candidate/cohort/confirmation planning and lock verification are not implemented.")
-    execution = ["The reconciled model runner and primary session-ledger integration are not implemented."]
+    execution = ["Primary provider execution, phase-lock verification, and primary ledger integration are not implemented."]
     if phase == "development":
         execution.append("Successful development-lab smoke evidence and the development lock still require verification.")
     elif phase != "smoke":

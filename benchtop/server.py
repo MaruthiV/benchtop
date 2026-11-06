@@ -53,6 +53,7 @@ class Hub:
         self.locks: dict[str, asyncio.Lock] = {}
         self.mcp_traces: dict[str, dict] = {}
         self.submission_sources: dict[str, str] = {}
+        self.sealed: set[str] = set()
 
     def record_mcp(self, ep: Episode, tool: str, response: dict):
         trace = self.mcp_traces.setdefault(ep.id, {"total": 0, "events": deque(maxlen=256)})
@@ -70,6 +71,8 @@ class Hub:
 
     async def run(self, ep: Episode, configs, seeds=1) -> dict:
         async with self.locks[ep.id]:
+            if ep.id in self.sealed:
+                return {"error": "episode is sealed", "code": "episode_sealed"}
             request = ep.begin_run(configs, seeds)
             if "error" in request:
                 return request
@@ -101,6 +104,8 @@ class Hub:
 
     async def submit(self, ep: Episode, answer, confidence=None, *, source="admin") -> dict:
         async with self.locks[ep.id]:
+            if ep.id in self.sealed:
+                return {"error": "episode is sealed", "code": "episode_sealed"}
             was_done = ep.done
             out = ep.submit(answer, confidence)
             if not was_done and ep.done:
@@ -114,6 +119,13 @@ class Hub:
     async def summary(self, ep: Episode) -> dict:
         async with self.locks[ep.id]:
             return ep.summary()
+
+    async def seal(self, ep: Episode) -> dict:
+        async with self.locks[ep.id]:
+            self.sealed.add(ep.id)
+            self.capabilities.pop(ep.id, None)
+            return {"sealed": True, "summary": ep.summary(), "trace": self.mcp_trace(ep),
+                    "max_calls": ep.max_calls}
 
     async def close(self):
         await asyncio.gather(*(store.close() for store in self.stores.values()))
@@ -156,6 +168,7 @@ class Hub:
             self.locks.pop(expired)
             self.mcp_traces.pop(expired, None)
             self.submission_sources.pop(expired, None)
+            self.sealed.discard(expired)
         return ep
 
     def agent_url(self, ep: Episode) -> str:
@@ -253,6 +266,13 @@ def build_admin_app(hub: Hub):
             return JSONResponse({"error": str(e)}, status_code=404)
         return JSONResponse(await hub.summary(ep))
 
+    async def seal(request: Request):
+        try:
+            ep = hub.get(request.path_params["eid"])
+        except KeyError as e:
+            return JSONResponse({"error": str(e)}, status_code=404)
+        return JSONResponse(await hub.seal(ep))
+
     async def mcp_trace(request: Request):
         try:
             ep = hub.get(request.path_params["eid"])
@@ -301,6 +321,7 @@ def build_admin_app(hub: Hub):
         Route("/episodes", create, methods=["POST"]),
         Route("/episodes", episodes, methods=["GET"]),
         Route("/episodes/{eid}", show, methods=["GET"]),
+        Route("/episodes/{eid}/seal", seal, methods=["POST"]),
         Route("/episodes/{eid}/mcp-trace", mcp_trace, methods=["GET"]),
         Route("/episodes/{eid}/run", run, methods=["POST"]),
         Route("/episodes/{eid}/submit", submit, methods=["POST"]),

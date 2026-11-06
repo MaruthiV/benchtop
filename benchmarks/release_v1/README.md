@@ -59,6 +59,8 @@ The [budget-calibration selector](CALIBRATION.md) computes Beta predictive mixed
 
 The [engineering session ledger](SESSIONS.md) adds shared start/concurrency allowances, immutable completion and reconciliation records, explicit technical retries, and unknown-cost accounting. It preserves late committed answers and stops new work after a reported model change. These controls launch no model and do not enable primary execution or coordinate legacy integration starts yet.
 
+The [scripted MCP runner](RUNNER.md) now connects those records to an owned loopback endpoint and Python process, preserves raw visible tool replies and private sealed receipts, and resumes completed evidence without relaunching work. Episode sealing prevents queued or late tool mutations from changing a finalized result. The scripted controls call no language model; actual provider execution and primary phase locks remain pending.
+
 ## Validation of this checkpoint
 
 The specification was checked for valid JSON, disjoint seed splits, resource arithmetic, consistent group sizes, required lock gates, unique reference identities, and agreement with the historical archive checksum. No fresh papers were fetched, model episodes run, or application behavior changed for this checkpoint.

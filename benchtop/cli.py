@@ -101,6 +101,22 @@ def cmd_sessions(a):
         raise SystemExit(f"session accounting failed: {error}") from error
 
 
+def cmd_runner(a):
+    from benchtop import runner
+
+    try:
+        if a.action == "resume-engineering":
+            record = runner.resume(a.ledger, a.attempt)
+            result = {"attempt_id": record["attempt_id"], "status": record["outcome"]["state"],
+                      "reward": record["outcome"]["reward"], "model_sessions": 0}
+        else:
+            result = runner.run_one(a.ledger, a.plan, a.slot, answer=a.answer, scenario=a.scenario,
+                                    timeout=a.timeout, retry_technical=a.retry_technical)
+        print(json.dumps(result, indent=2, allow_nan=False))
+    except (OSError, ValueError, TypeError, KeyError, RuntimeError) as error:
+        raise SystemExit(f"engineering runner failed: {error}") from error
+
+
 def cmd_serve(a):
     from benchtop.env import ENVS
     from benchtop.server import serve
@@ -280,6 +296,20 @@ def main(argv=None):
     inspect.add_argument("--output")
     for operation in (init, register, inspect):
         operation.set_defaults(fn=cmd_sessions)
+
+    run = actions.add_parser("run-engineering", help="run one scripted MCP control; never invokes a model")
+    run.add_argument("ledger")
+    run.add_argument("plan")
+    run.add_argument("--slot", required=True)
+    run.add_argument("--answer", default="paper_better")
+    run.add_argument("--scenario", default="submit")
+    run.add_argument("--timeout", type=float, default=20)
+    run.add_argument("--retry-technical", action="store_true")
+    resume = actions.add_parser("resume-engineering", help="commit saved sealed evidence without relaunching a process")
+    resume.add_argument("ledger")
+    resume.add_argument("attempt")
+    for action in (run, resume):
+        action.set_defaults(fn=cmd_runner)
 
     s = sub.add_parser("serve")
     s.add_argument("--port", type=int, default=8787)

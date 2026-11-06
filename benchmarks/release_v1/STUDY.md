@@ -2,7 +2,7 @@
 
 `benchtop study` prepares and inspects bound smoke/development plans. It freezes rollout identities before a future driver can execute them. It does not start a model, reserve session quota, or write any of the protocol's four study locks. Every plan has `execution_ready = false`.
 
-The reconciled model runner, primary session-ledger integration, successful-smoke verification, candidate/cohort/confirmation planners, and actual phase-lock publication remain to be implemented. The [engineering session ledger](SESSIONS.md) now provides shared counters and resumable attempt records without enabling primary execution. Preparation reports the missing prerequisites explicitly.
+The primary provider adapter, primary session-ledger integration, successful-smoke verification, candidate/cohort/confirmation planners, and actual phase-lock publication remain to be implemented. The [engineering session ledger](SESSIONS.md) and [scripted MCP runner](RUNNER.md) now provide shared counters, resumable records, process lifecycle checks, and sealed episode evidence without enabling primary execution. Preparation reports the missing prerequisites explicitly.
 
 ## Engineering plans
 
@@ -76,4 +76,4 @@ Repository destinations must be under ignored `artifacts/`; external destination
 
 Controls cover exact descriptor fields and canonical IDs, independent replicates, bounded smoke plans, frozen prompts/ordering, historical source preservation, malformed model/decoding metadata, simulated ready and real draft-blocked gates, stale/incomplete foundation evidence, future-phase refusal, code/runtime/source/review changes, tampered or promoted plans/receipts, fresh-source refusal, interrupted publication, concurrent ownership, exclusive output, and copied-project CLI use.
 
-Positive admission/foundation tests use temporary simulated records only. They do not certify any actual reference or model. The engineering accounting primitives are implemented in [SESSIONS.md](SESSIONS.md). Next connect the reconciled driver and successful-smoke evidence, then implement and verify the actual phase locks. The fresh study, independent confirmation grading, primary analysis, Qualia demonstration, and email readiness remain separate work.
+Positive admission/foundation tests use temporary simulated records only. They do not certify any actual reference or model. Engineering accounting and scripted process/MCP reconciliation are implemented in [SESSIONS.md](SESSIONS.md) and [RUNNER.md](RUNNER.md). Next connect the real provider adapter and successful-smoke evidence under verified primary phase locks. The fresh study, independent confirmation grading, primary analysis, Qualia demonstration, and email readiness remain separate work.
