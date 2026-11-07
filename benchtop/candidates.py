@@ -84,10 +84,13 @@ def generation_rules(models, preflight):
             "effect_margin": spec["fresh_cohort"]["effect_margin"], "membership": spec["fresh_cohort"]["membership"],
             "max_concurrent_model_sessions": spec["execution_limits"]["max_concurrent_model_sessions"],
             "excerpt_chars": 24000, "timeout_seconds": 900,
+            "system_prompt": "You are a precise research engineer.", "triage_schema": triage.SCHEMA,
+            "content": "Exact locked version HTML without redirects; abstract fallback only on HTTP 404.",
+            "validation_seeds": [0, 1], "sweep_workers": 2, "run_timeout_seconds": 5, "max_recorded_sweep_cpu_seconds": 1200,
             "prompts": {"triage": triage.PROMPT, "synthesis": synth.SYNTH, "repair": synth.REPAIR},
             "admission_code_sha256": {name: study.cache.file_hash(study.ROOT / "benchtop" / name)
                                       for name in ("admission.py", "validate.py", "sweep.py", "tasks.py", "stats.py")},
-            "scope": "Frozen rules and prompts for the future fresh driver; legacy build/synthesize is not authorized by this record."}
+            "scope": "Frozen rules and prompts for the bounded fresh driver; legacy build/synthesize is not authorized by this record."}
 
 
 def _development():
@@ -129,7 +132,7 @@ def lock_candidates(archive_directory, baseline_review, models):
             "plan_sha256": study.canonical_hash({"phase": "candidate", "binding": binding}),
             "protocol_hash": binding["protocol_hash"], "canonical_root": str(root.resolve()),
             "baseline_review_source": study._ref(baseline_review), "baseline_review_sha256": hashlib.sha256(raw_review).hexdigest(),
-            "recorded_at_utc": at.isoformat(), "generation_ready": False, "model_sessions_started": 0}, "record_sha256")
+            "recorded_at_utc": at.isoformat(), "generation_ready": True, "model_sessions_started": 0}, "record_sha256")
         destination = root / "candidate_metadata"
         with primary._guard(archive_directory / ".archive.lock"):
             if metadata.load(archive_directory, at=at) != archive:
@@ -152,7 +155,7 @@ def verify():
     study._verify(record, "record_sha256")
     binding = record["binding"]
     if (record.get("schema_version") != 1 or record.get("id") != "candidate_lock" or record.get("study_lock") is not True
-            or record.get("generation_ready") is not False or record.get("model_sessions_started") != 0 or binding.get("phase") != "candidate"
+            or record.get("generation_ready") is not True or record.get("model_sessions_started") != 0 or binding.get("phase") != "candidate"
             or record["canonical_root"] != str(root.resolve()) or binding["source_sha256"] != study._sources()
             or binding["runtime"] != json.loads(json.dumps(study.cache.runtime_identity()))
             or record["bindings_hash"] != study.canonical_hash(binding)

@@ -90,6 +90,14 @@ def command(work, plan, preflight):
 
 
 def parse_stream(text):
+    return _parse_stream(text, TOOLS, "benchtop")
+
+
+def parse_text_stream(text):
+    return _parse_stream(text, [], None)
+
+
+def _parse_stream(text, tools, server):
     models, final, init, synthetic, init_count = [], None, None, False, 0
     for line in text.splitlines():
         try:
@@ -114,9 +122,9 @@ def parse_stream(text):
     servers = init.get("mcp_servers")
     isolation = (not synthetic and init_count == 1 and isinstance(init.get("model"), str)
                  and isinstance(init.get("tools"), list) and all(isinstance(tool, str) for tool in init["tools"])
-                 and len(init["tools"]) == len(TOOLS) and set(init["tools"]) == set(TOOLS)
-                 and isinstance(servers, list) and len(servers) == 1 and isinstance(servers[0], dict) and servers[0].get("name") == "benchtop"
-                 and servers[0].get("status") == "connected")
+                 and len(init["tools"]) == len(tools) and set(init["tools"]) == set(tools)
+                 and (servers == [] if server is None else isinstance(servers, list) and len(servers) == 1
+                      and isinstance(servers[0], dict) and servers[0].get("name") == server and servers[0].get("status") == "connected"))
     return {"models": list(dict.fromkeys(models)), "final": final, "isolation_valid": isolation,
             "synthetic_control": synthetic, "init_observed": init_count > 0,
             "init_tools": init.get("tools"), "mcp_servers": servers}
@@ -127,3 +135,21 @@ def execute(work, timeout, plan, preflight):
 
     return execute_command(work, timeout, command(work, plan, preflight), executor="claude_cli",
                            parser=parse_stream, env=environment())
+
+
+def text_command(work, prompt, model, preflight, system):
+    verify(preflight, model)
+    study._publish(work / "mcp.json", {"mcpServers": {}})
+    study._publish(work / "settings.json", {"disableAllHooks": True})
+    return [preflight["binary"], "--print", prompt, "--model", model["requested_model_id"],
+            "--system-prompt", system, "--tools", "", "--strict-mcp-config", "--mcp-config", str(work / "mcp.json"),
+            "--permission-prompts", "none", "--output-format", "stream-json", "--verbose",
+            "--no-session-persistence", "--restricted", "--setting-sources", "", "--disable-slash-commands",
+            "--settings", str(work / "settings.json")]
+
+
+def execute_text(work, prompt, model, preflight, system, timeout):
+    from benchtop.runner import execute_command
+
+    return execute_command(work, timeout, text_command(work, prompt, model, preflight, system),
+                           executor="claude_cli", parser=parse_text_stream, env=environment())

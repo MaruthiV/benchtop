@@ -28,6 +28,8 @@ Directories and exports are exclusive, with repository destinations under ignore
 
 ## One accounting scope
 
+The [fresh generation journal](GENERATION.md) records its calls separately from evaluation episode allowances. Primary starts include pending generation intents when enforcing the shared two-active-session ceiling; generation checks the same evaluation journal before launching. Inspection reports evaluation, generation and combined active intents. Neither journal silently expires unknown processes.
+
 Mutations hold a local filesystem lock. A begin transaction reads all registered histories and checks the shared allowances before publishing its intent. Registering another plan does not reset counters.
 
 | Allowance | Maximum |

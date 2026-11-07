@@ -312,12 +312,18 @@ def begin(directory, plan_sha256, slot_id, *, retry_technical=False):
             raise ValueError("slot is not registered in this ledger")
         plan, slot = state["plans"][plan_sha256], state["slots"][key]
         study.validate_plan(plan)
+        generation_active = 0
         if manifest["identity"]["scope"] == "primary":
             from benchtop import primary
+            from benchtop.generation_journal import read as generation_state
             from benchtop.study_calibration import check_open
 
             check_open(root, plan)
             primary.verify(plan)
+            generation = generation_state()
+            if generation["halted"]:
+                raise ValueError("generation halted after a model/provider contract violation")
+            generation_active = generation["active"]
         history = state["histories"][key]
         if state["halted"]:
             raise ValueError("ledger halted after a reported model change or provider contract violation")
@@ -326,7 +332,9 @@ def begin(directory, plan_sha256, slot_id, *, retry_technical=False):
         index = len(history)
         if index > 1 or index and not retry_technical:
             raise ValueError("at most one explicit technical retry is permitted")
-        _capacity(state["counts"], plan["binding"]["phase"], index, manifest["identity"])
+        capacity_counts = state["counts"].copy()
+        capacity_counts["active"] += generation_active
+        _capacity(capacity_counts, plan["binding"]["phase"], index, manifest["identity"])
         record = study._seal({**_base(manifest, plan, slot, index), "record_kind": "start",
                               "recorded_at_utc": datetime.now(UTC).isoformat(),
                               "bucket": _bucket(plan["binding"]["phase"], index)}, "record_sha256")
@@ -411,7 +419,13 @@ def inspect(directory):
         costs = calibrate._costs(normalized)
         costs["recorded_start_intents"] = costs.pop("episode_starts")
         costs["retry_start_intents"] = costs.pop("retry_episode_starts")
+        generation_active = 0
+        if manifest["identity"]["scope"] == "primary":
+            from benchtop.generation_journal import read as generation_state
+
+            generation_active = generation_state()["active"]
         return {"schema_version": 1, "ledger_id": manifest["ledger_id"], "scope": manifest["identity"]["scope"],
+                "active_generation": generation_active, "combined_active_model_intents": state["counts"]["active"] + generation_active,
                 "registered_plans": len(state["plans"]), "slots": rows, "counts": dict(state["counts"]),
                 "status_counts": dict(Counter(row["state"] for row in rows)), "halted": state["halted"],
                 "costs": costs, "limits": manifest["identity"]["limits"], "phase_limits": manifest["identity"]["phase_limits"],

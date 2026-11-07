@@ -2,7 +2,7 @@
 
 `benchtop study plan` prepares bound smoke/development plans. Preparation starts no model, reserves no quota, and writes no study lock. Every plan has `execution_ready = false`; separate [provider authorization commands](PROVIDER.md) verify execution permission.
 
-Primary smoke/development execution, a canonical journal, smoke verification, development-lock publication, and the [candidate metadata/rule lock](CANDIDATES.md) are implemented. Actual provider smoke evidence and real study locks remain absent. The fresh generation driver, cohort/confirmation planners, shared Qualia invocation routing, and full evaluation are pending. The [engineering journal](SESSIONS.md) and [scripted runner](RUNNER.md) remain fixture scopes excluded from primary evidence.
+Primary smoke/development execution, a canonical journal, smoke verification, development-lock publication, the [candidate metadata/rule lock](CANDIDATES.md), and [bounded fresh generation](GENERATION.md) are implemented. Actual provider smoke evidence and real study locks remain absent. Cohort/confirmation planners, shared Qualia invocation routing, and full evaluation are pending. The [engineering journal](SESSIONS.md) and [scripted runner](RUNNER.md) remain fixture scopes excluded from primary evidence.
 
 ## Engineering plans
 

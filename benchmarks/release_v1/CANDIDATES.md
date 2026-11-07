@@ -1,6 +1,6 @@
 # Candidate metadata and rule lock
 
-The candidate lock binds the development-selected global budget, classical policies and estimator, generation/admission rules, and an ordered versioned paper list before fresh generation. Tests use local XML and simulated review/provider boundaries. **No actual candidate lock, fresh generation, or model budget result exists.** The generation driver and cohort/confirmation execution remain pending; a lock reports `generation_ready: false`.
+The candidate lock binds the development-selected global budget, classical policies and estimator, generation/admission rules, and an ordered versioned paper list before fresh generation. Tests use local XML and simulated review/provider boundaries. **No actual candidate lock, fresh generation, or model budget result exists.** A verified new lock reports `generation_ready: true` for the implemented [bounded generation driver](GENERATION.md). Cohort/confirmation execution remains pending.
 
 ## Archive the date selection
 
@@ -32,7 +32,7 @@ The estimator remains `paired_context_v1`, with equal context weights and its ex
 
 First close the complete [canonical development calibration](CALIBRATION.md#canonical-development-collection). An incomplete/open collection or generic operator-input diagnostic cannot supply the global budget. There is no supplied-budget override.
 
-Create a generation-model JSON with exactly `triage`, `synthesis`, and `repair`, each containing a resolved [model configuration](STUDY.md#bound-configuration). Each must match the saved subscription CLI preflight and declare unsupported decoding controls unavailable. These are declarations; actual model availability remains untested until the future driver runs.
+Create a generation-model JSON with exactly `triage`, `synthesis`, and `repair`, each containing a resolved [model configuration](STUDY.md#bound-configuration). Each must match the saved subscription CLI preflight and declare unsupported decoding controls unavailable. These are declarations; actual model availability remains untested until the driver runs.
 
 ```sh
 .venv/bin/python -m benchtop.cli study lock-candidates \
@@ -49,4 +49,4 @@ Publication stores immutable private `candidate_lock.json`, a byte-preserved bas
 
 Inspection revalidates the original development decision, copied raw metadata and failed requests, review evidence, replay, prompts, models and public binding. It runs no policy acquisition, independent regrading, live authentication or inference. Checksums establish local consistency rather than authenticated provider, arXiv or human assertions.
 
-Finish the generation, cohort and confirmation code before spending real smoke sessions. Later Python edits invalidate bound preparations; spent starts cannot be erased. Real reviews, development results, fresh admission, the model study and demonstration still precede outreach.
+Finish the remaining cohort, confirmation and shared Qualia routing code before spending real smoke sessions. Later Python edits invalidate bound preparations; spent starts cannot be erased. Real reviews, development results, fresh admission, the model study and demonstration still precede outreach.

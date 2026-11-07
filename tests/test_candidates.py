@@ -62,7 +62,7 @@ def test_candidate_lock_preserves_budget_paper_versions_rules_and_public_history
     earlier = {"id": "development_lock", "record_sha256": "4" * 64}
     primary.BINDINGS.write_text(json.dumps({"schema_version": 1, "protocol_hash": study.canonical_hash(study._json(study.SPEC)), "records": [earlier]}))
     record = candidates.lock_candidates(archive, review_path, models)
-    assert record["study_lock"] is True and record["generation_ready"] is False and record["model_sessions_started"] == 0
+    assert record["study_lock"] is True and record["generation_ready"] is True and record["model_sessions_started"] == 0
     assert record["binding"]["global_budget_fraction"] == 0.12
     assert record["binding"]["candidates"][0]["version"] == "2611.00003v2"
     rules = record["binding"]["generation"]
@@ -97,7 +97,7 @@ def test_changed_locked_evidence_cannot_authorize_the_next_phase(tmp_path, monke
         primary.BINDINGS.unlink()
     else:
         record = study._json(root / "candidate_lock.json")
-        record["generation_ready"] = True
+        record["generation_ready"] = False
         study_path = root / "candidate_lock.json"
         study_path.write_text(json.dumps(study._seal(record, "record_sha256")))
     with pytest.raises((ValueError, FileNotFoundError)):
@@ -210,7 +210,7 @@ def test_candidate_cli_reports_frozen_scope_without_generation(tmp_path, monkeyp
     model_path.write_text(json.dumps(models))
     main(["study", "lock-candidates", str(archive), "--baseline-review", str(review_path), "--generation-models", str(model_path)])
     result = json.loads(capsys.readouterr().out)
-    assert result["id"] == "candidate_lock" and result["generation_ready"] is False
+    assert result["id"] == "candidate_lock" and result["generation_ready"] is True
     main(["study", "inspect-candidates"])
     assert json.loads(capsys.readouterr().out) == result
 

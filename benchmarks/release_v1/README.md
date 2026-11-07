@@ -1,6 +1,6 @@
 # Release evaluation protocol
 
-The [candidate metadata/rule lock](CANDIDATES.md) now binds a verified development budget, reviewed baseline/estimator freeze, generation rules and the first 16 numerically ordered unseen paper IDs with fetched versions. Archived complete date responses prevent truncated or failed retrievals from changing the candidate list. Actual candidate selection and the fresh generation driver remain pending.
+The [candidate metadata/rule lock](CANDIDATES.md) binds a verified development budget, reviewed baseline/estimator freeze, generation rules and the first 16 numerically ordered unseen paper IDs with fetched versions. [Bounded fresh generation](GENERATION.md) now consumes that lock, preserves provider/repair evidence, freezes human scientific reviews and margins before qualification, and reserves confirmation seeds. Actual candidate selection and fresh model results remain pending.
 
 [spec.json](spec.json) defines the next evaluation before fresh model results exist. It is a protocol, not a completed experiment or a runnable CLI configuration. Corrected grading, endpoint separation, frozen charging, and execution-cache versioning are implemented; the fresh seed-split harness and smoke/development rollout records are implemented; locked fresh collection remains pending.
 

@@ -121,6 +121,8 @@ def cmd_primary(a):
     from benchtop import (
         candidate_metadata,
         candidates,
+        fresh_generation,
+        generation_journal,
         primary,
         provider,
         runner,
@@ -159,6 +161,21 @@ def cmd_primary(a):
         elif a.action == "inspect-candidates":
             record = candidates.verify()
             result = {key: record[key] for key in ("id", "record_sha256", "study_lock", "generation_ready", "model_sessions_started")}
+        elif a.action == "generate-next":
+            result = fresh_generation.step()
+            result = {key: value for key, value in result.items() if key in ("status", "version", "reason", "model_sessions_started_by_step")}
+        elif a.action == "review-generated":
+            result = fresh_generation.review(a.review)
+        elif a.action == "qualify-generated":
+            result = fresh_generation.qualify()
+            result = {key: value for key, value in result.items() if key in ("status", "version", "reason", "confirmation_evaluated")}
+        elif a.action == "generation-status":
+            snapshot = fresh_generation.status()
+            result = {key: snapshot[key] for key in ("generation_start_intents", "active_generation", "halted", "admitted", "model_sessions_started_by_inspection")}
+            result["candidates"] = [{"version": row["version"], "status": row["status"]} for row in snapshot["candidates"]]
+        elif a.action == "resume-generation":
+            record = generation_journal.resume(a.call)
+            result = {"call_id": record["call_id"], "status": record["result"]["state"], "model_sessions_started_by_resume": 0}
         else:
             record = runner.resume(primary.canonical_root() / "ledger", a.attempt)
             result = {"attempt_id": record["attempt_id"], "status": record["outcome"]["state"],
@@ -389,7 +406,15 @@ def main(argv=None):
     candidates.add_argument("--baseline-review", required=True)
     candidates.add_argument("--generation-models", required=True)
     inspect_candidates = actions.add_parser("inspect-candidates", help="verify saved candidate-lock evidence without a model call")
-    for action in (preflight, authorize, lock, run, resume, calibration, archive, candidates, inspect_candidates):
+    generate = actions.add_parser("generate-next", help="generate the next locked candidate with bounded model calls; pause for human review")
+    review_generated = actions.add_parser("review-generated", help="freeze a real human review and effect margin before qualification")
+    review_generated.add_argument("review")
+    qualify_generated = actions.add_parser("qualify-generated", help="sweep only visible/qualification seeds after review; never confirmation")
+    generation_status = actions.add_parser("generation-status", help="inspect generation intent accounting and ordered candidate outcomes")
+    resume_generation = actions.add_parser("resume-generation", help="finish retained generation process evidence without relaunching")
+    resume_generation.add_argument("call")
+    for action in (preflight, authorize, lock, run, resume, calibration, archive, candidates, inspect_candidates,
+                   generate, review_generated, qualify_generated, generation_status, resume_generation):
         action.set_defaults(fn=cmd_primary)
 
     s = sub.add_parser("serve")
