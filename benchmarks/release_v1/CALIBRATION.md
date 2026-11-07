@@ -23,6 +23,32 @@ The candidate budgets are 6%, 12%, and 25%. Among objectives at least the maximu
 
 An all-endpoint development dataset can still select a global control, with a diagnostic that no mixed budget was observed. It has no earlier global control to fall back to.
 
+## Canonical development collection
+
+`study calibrate-development` connects the canonical primary journal to this selector. It requires the current reviewed development plan and its verified development lock. It checks the saved model/configuration, complete group/slot grid, every finished attempt's retained provider/MCP evidence, and the journal outcome against that evidence. It does not call a model, inspect live authentication, or regrade mutable lab data. General `calibrate` remains an operator-input diagnostic; this additional bridge supplies the collector checks.
+
+```sh
+.venv/bin/python -m benchtop.cli study calibrate-development DEVELOPMENT_PLAN_SHA256 \
+  --output artifacts/development-progress.json
+```
+
+The immutable export contains a compatible normalized `input`, the computed `selection`, exact group descriptors, evidence checksums, and accounting. All 48 slots remain present. Unattempted slots have no attempts; pending starts remain unresolved with unknown costs. Finished wrong answers and agent-failure zeros retain their original rewards. Resolutions count one effective attempt while preserving the original journal records; technical retries retain both attempts and costs. Opaque operator-only finish/reconciliation records cannot substitute for replay-verifiable provider evidence, even if a later retry has a valid receipt. Preserve those records for investigation rather than silently promoting them.
+
+Smoke never contributes to development posteriors or the selected budget. The export separately retains shared-journal counts and cost summaries at snapshot time, including smoke and all recorded retries. Reported starts are conservative intents, not measured inference. Missing token, CPU, or timing counters stay unknown; they are not converted to zero. The nested selector still labels its input `operator_supplied`: checksums and local receipt checks do not authenticate provider or operator assertions.
+
+When collection is finished and no journal attempts remain active:
+
+```sh
+.venv/bin/python -m benchtop.cli study calibrate-development DEVELOPMENT_PLAN_SHA256 \
+  --output artifacts/development-final.json --close
+```
+
+`--close` writes one immutable private `development_collection.json` while holding the same lock as new starts and completions. It blocks further development starts, retries, and outcome changes. Exact repeated completion acknowledgements remain idempotent. Closing an incomplete dataset retains the full denominator and produces `incomplete_development` with no chosen budget; there is no development fallback. Open exports always stay `pending`, even with 48 usable outcomes. Do not close a progress check that you intend to resume.
+
+Subsequent exports verify the frozen evidence and return the same closed bundle byte for byte. `load_closed()` provides that verified record for the future candidate-lock path. Closure is collection finalization, not a candidate lock or authorization to generate or evaluate fresh labs. It cannot be deleted to reopen an inconvenient result. Existing output paths are refused before closing; if publication of the requested copy fails after canonical closure, preserve that closure and retry with a new output path.
+
+Positive bridge tests use temporary simulated review/auth/provider records with real loopback MCP transport. The controlled full-grid example is a fixture, not an observed model result. No actual development collection has been closed or budget selected.
+
 ## Collection and missing outcomes
 
 Inputs require an explicit boolean `closed`. While false, the result is `pending`, with no chosen budget or fallback, even when provisional pilot counts look complete. Set it true only when the upstream collector has finalized the planned slots under the study's retry/quota rules. The selector checks this declaration, but cannot verify that an external collector actually exhausted its allowances or respected the overall session cap.

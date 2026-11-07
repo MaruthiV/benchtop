@@ -1,8 +1,8 @@
 # Immutable study preparation
 
-`benchtop study` prepares and inspects bound smoke/development plans. It freezes rollout identities before a future driver can execute them. It does not start a model, reserve session quota, or write any of the protocol's four study locks. Every plan has `execution_ready = false`.
+`benchtop study plan` prepares bound smoke/development plans. Preparation starts no model, reserves no quota, and writes no study lock. Every plan has `execution_ready = false`; separate [provider authorization commands](PROVIDER.md) verify execution permission.
 
-The primary provider adapter, primary session-ledger integration, successful-smoke verification, candidate/cohort/confirmation planners, and actual phase-lock publication remain to be implemented. The [engineering session ledger](SESSIONS.md) and [scripted MCP runner](RUNNER.md) now provide shared counters, resumable records, process lifecycle checks, and sealed episode evidence without enabling primary execution. Preparation reports the missing prerequisites explicitly.
+Primary smoke/development execution, a canonical journal, smoke verification, and development-lock publication are implemented. Actual provider smoke evidence and real study locks remain absent. Candidate/cohort/confirmation planners, shared Qualia invocation routing, and the full evaluation are pending. The [engineering journal](SESSIONS.md) and [scripted runner](RUNNER.md) remain fixture scopes excluded from primary evidence.
 
 ## Engineering plans
 
@@ -43,7 +43,9 @@ Readiness checks the existing six-record [development admission rule](REPLAY.md)
 
 ## Bound configuration
 
-Model files require exactly `backend`, `requested_model_id`, `reported_model_id`, `cli_version`, and `decoding`. Backend is `claude_cli`. Requested/reported resolved IDs must agree; empty IDs and bare family aliases such as `haiku` are rejected. This validates declarations, not provider identity. The future runner must verify the actual reported model for every invocation and stop on a change.
+The [development calibration bridge](CALIBRATION.md#canonical-development-collection) reads the registered canonical plan and verifies recorded provider evidence before invoking the offline selector. Open exports retain all 48 slots and remain pending. An explicit closed collection prevents further development starts or outcome edits, preserving one reproducible decision for the future candidate lock. No real development collection or selected study budget exists yet.
+
+Model files require exactly `backend`, `requested_model_id`, `reported_model_id`, `cli_version`, and `decoding`. Backend is `claude_cli`. Requested/reported resolved IDs must agree; empty IDs and bare family aliases such as `haiku` are rejected. This validates declarations, not provider identity. The provider runner verifies the reported model on every invocation and halts new work on a change.
 
 `decoding` records `temperature` and `model_seed`. Each is either `{"status":"fixed","value":...}` or `{"status":"unavailable","reason":"..."}`. Fixed values must be finite and nonnegative, with an integer model seed. Unsupported controls must remain explicitly unavailable. This planner neither discovers CLI capabilities nor applies settings; the driver must verify supported flags rather than assuming these declarations took effect.
 
@@ -76,4 +78,4 @@ Repository destinations must be under ignored `artifacts/`; external destination
 
 Controls cover exact descriptor fields and canonical IDs, independent replicates, bounded smoke plans, frozen prompts/ordering, historical source preservation, malformed model/decoding metadata, simulated ready and real draft-blocked gates, stale/incomplete foundation evidence, future-phase refusal, code/runtime/source/review changes, tampered or promoted plans/receipts, fresh-source refusal, interrupted publication, concurrent ownership, exclusive output, and copied-project CLI use.
 
-Positive admission/foundation tests use temporary simulated records only. They do not certify any actual reference or model. Engineering accounting and scripted process/MCP reconciliation are implemented in [SESSIONS.md](SESSIONS.md) and [RUNNER.md](RUNNER.md). Next connect the real provider adapter and successful-smoke evidence under verified primary phase locks. The fresh study, independent confirmation grading, primary analysis, Qualia demonstration, and email readiness remain separate work.
+Positive admission/foundation tests use temporary simulated records only. They do not certify any actual reference or model. Engineering accounting and scripted process/MCP reconciliation are implemented in [SESSIONS.md](SESSIONS.md) and [RUNNER.md](RUNNER.md). The [provider path](PROVIDER.md) adds primary smoke/development authorization and checks; actual provider evidence and fresh phase locks are still required. The fresh study, independent confirmation grading, primary analysis, Qualia demonstration, and email readiness remain separate work.

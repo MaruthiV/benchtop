@@ -23,6 +23,8 @@ from benchtop.server import Hub, build_app
 from benchtop.stats import LABELS
 
 RUNNER_ID = "scripted_mcp_runner_v1"
+PROVIDER_RUNNER_ID = "claude_mcp_runner_v1"
+FILES = ("connection.json", "process.json", "sealed.json", "stdout.jsonl", "stderr.txt")
 SCENARIOS = ("submit", "no_answer", "quota", "unknown_error", "post_submit_error", "timeout", "post_submit_timeout", "model_change")
 
 
@@ -65,13 +67,18 @@ def _group_stopped(pid):
 
 
 def execute_script(work, timeout):
+    return execute_command(work, timeout, [sys.executable, "-I", str(Path(__file__).with_name("_scripted_agent.py")),
+                                          str(work / "connection.json")],
+                           executor="scripted_mcp_subprocess", parser=parse_stream)
+
+
+def execute_command(work, timeout, command, *, executor, parser, env=None):
     files = [os.fdopen(os.open(work / name, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600), "wb")
              for name in ("stdout.jsonl", "stderr.txt")]
     process, timed_out = None, False
     started = time.monotonic()
     try:
-        process = subprocess.Popen([sys.executable, "-I", str(Path(__file__).with_name("_scripted_agent.py")),
-                                    str(work / "connection.json")], cwd=work, stdin=subprocess.DEVNULL,
+        process = subprocess.Popen(command, cwd=work, stdin=subprocess.DEVNULL, env=env,
                                    stdout=files[0], stderr=files[1], start_new_session=True)
         try:
             process.wait(timeout=timeout)
@@ -90,13 +97,14 @@ def execute_script(work, timeout):
         for stream in files:
             stream.close()
     stopped = process is not None and process.returncode is not None and _group_stopped(process.pid)
-    stdout = (work / "stdout.jsonl").read_bytes()[:1024 * 1024].decode(errors="replace")
-    return {"executor": "scripted_mcp_subprocess", "process_stopped": stopped,
+    with (work / "stdout.jsonl").open("rb") as source:
+        stdout = source.read(1024 * 1024).decode(errors="replace")
+    return {"executor": executor, "process_stopped": stopped,
             "returncode": process.returncode if process else None, "timed_out": timed_out,
             "process_wall_seconds": time.monotonic() - started,
             "stdout_sha256": _digest(work / "stdout.jsonl"), "stderr_sha256": _digest(work / "stderr.txt"),
             "stdout_truncated": (work / "stdout.jsonl").stat().st_size > 1024 * 1024,
-            "stream": parse_stream(stdout), "model_sessions": 0}
+            "stream": parser(stdout), "model_sessions": int(executor == "claude_cli")}
 
 
 class Controller:
@@ -160,7 +168,8 @@ class Controller:
                                  visible_order=snapshot["visible_order"], show_paper=True,
                                  max_calls=plan["binding"]["limits"]["max_experiment_tool_calls"])
             return {"controller_id": self.identity, "episode": ep.id, "mcp_url": self.hub.agent_url(ep),
-                    "plan_sha256": plan["plan_sha256"], "slot_id": slot["slot_id"], "expected_budget": expected_budget}
+                    "plan_sha256": plan["plan_sha256"], "slot_id": slot["slot_id"], "expected_budget": expected_budget,
+                    "description": ep.describe(), "budget": ep.budget_left()}
 
         return asyncio.run_coroutine_threadsafe(prepare(), self.loop).result(timeout=10)
 
@@ -197,10 +206,17 @@ def _classify(plan, slot, connection, process, sealed, spec):
     expected_model = plan["binding"]["model_configuration"]["reported_model_id"]
     reported = next((value for value in models if value != expected_model), models[0] if models else None)
     outcome = {"state": "unresolved", "reward": None, "failure_category": "unclassified_process_result"}
+    unverified_provider = process["executor"] == "claude_cli" and process["stream"].get("isolation_valid") is not True
+    contract_failure = unverified_provider and (process["stream"].get("init_observed") is True
+                                                or process["stream"].get("synthetic_control") is True)
     if not valid:
         outcome["failure_category"] = "episode_binding_mismatch"
     elif process["stdout_truncated"]:
         outcome["failure_category"] = "truncated_process_metadata"
+    elif contract_failure:
+        outcome["failure_category"] = "provider_contract_mismatch"
+    elif unverified_provider:
+        outcome["failure_category"] = "unverified_provider_metadata"
     elif result is not None:
         private_receipt = any(event["tool"] == "submit_answer" and event.get("receipt_only") is True for event in trace["events"])
         if (trace.get("submission_source") != "mcp" or not private_receipt
@@ -214,38 +230,32 @@ def _classify(plan, slot, connection, process, sealed, spec):
         final = process["stream"]["final"] or {}
         category = final.get("failure_category")
         allowed = spec["failure_handling"]["infrastructure_failures_missing"]
-        if final.get("is_error") is True and category in allowed:
+        if process["executor"] == "scripted_mcp_subprocess" and final.get("is_error") is True and category in allowed:
             outcome = {"state": "technical_failure", "reward": None, "failure_category": category}
         elif final.get("is_error") is False and process["returncode"] == 0:
             outcome = {"state": "agent_failure", "reward": 0, "failure_category": "exited_without_answer"}
     outcome["costs"] = {"charged_experiment_cost": summary["spent"], "unique_executed_runs": 0,
                         "requested_runs": sum(len(row["configs"]) * max(1, min(row["seeds"], len(summary["visible_order"])))
                                               for row in summary["log"] if row["action"] == "run")}
-    return {"outcome": outcome, "reported_model_id": reported, "submission_status": submission,
-            "process_stopped": process["process_stopped"]}
+    if process["executor"] == "claude_cli":
+        outcome["costs"]["model_wall_seconds"] = process["process_wall_seconds"]
+        usage = (process["stream"]["final"] or {}).get("modelUsage")
+        if isinstance(usage, dict) and usage:
+            for field, key in (("input_tokens", "inputTokens"), ("output_tokens", "outputTokens")):
+                values = [row.get(key) if isinstance(row, dict) else None for row in usage.values()]
+                if all(type(value) is int and value >= 0 for value in values):
+                    outcome["costs"][field] = sum(values)
+    completion = {"outcome": outcome, "reported_model_id": reported, "submission_status": submission,
+                  "process_stopped": process["process_stopped"]}
+    if process["executor"] == "claude_cli":
+        completion["integrity_failure"] = contract_failure
+    return completion
 
 
 def resume(directory, attempt_id):
     manifest, plan, slot, _, entry = _lookup(directory, attempt_id)
     work = Path(directory) / "runner" / attempt_id
-    evidence = study._json(work / "evidence.json")
-    study._verify(evidence, "artifact_sha256")
-    if (evidence.get("runner_id") != RUNNER_ID or evidence.get("ledger_id") != manifest["ledger_id"]
-            or evidence.get("attempt_id") != attempt_id or evidence.get("plan_sha256") != plan["plan_sha256"]):
-        raise ValueError("runner evidence belongs to another attempt")
-    for name, sha in evidence["files"].items():
-        if name not in ("connection.json", "process.json", "sealed.json", "stdout.jsonl", "stderr.txt") or _digest(work / name) != sha:
-            raise ValueError("runner evidence files changed")
-    if set(evidence["files"]) != {"connection.json", "process.json", "sealed.json", "stdout.jsonl", "stderr.txt"}:
-        raise ValueError("runner evidence is incomplete")
-    connection, process, sealed = (study._json(work / name) for name in ("connection.json", "process.json", "sealed.json"))
-    if (connection["plan_sha256"] != plan["plan_sha256"] or connection["slot_id"] != slot["slot_id"]
-            or process["stdout_sha256"] != _digest(work / "stdout.jsonl") or process["stderr_sha256"] != _digest(work / "stderr.txt")):
-        raise ValueError("private process/connection binding differs")
-    expected = _classify(plan, slot, connection, process, sealed, manifest["identity"]["protocol"])
-    if evidence["completion"] != expected or not expected["process_stopped"]:
-        raise ValueError("process is not confirmed stopped or completion evidence changed")
-    completion = copy.deepcopy(expected)
+    completion = _validated_evidence(manifest, plan, slot, attempt_id, work)
     outcome = completion.pop("outcome")
     completion["evidence_sha256"] = _digest(work / "evidence.json")
     if "finish" in entry and entry["finish"]["outcome"]["state"] == "unresolved" and outcome["state"] != "unresolved":
@@ -253,43 +263,100 @@ def resume(directory, attempt_id):
     return ledger.finish(directory, attempt_id, outcome, **completion)
 
 
+def _validated_evidence(manifest, plan, slot, attempt_id, work):
+    evidence = study._json(work / "evidence.json")
+    study._verify(evidence, "artifact_sha256")
+    runner_id = PROVIDER_RUNNER_ID if manifest["identity"]["scope"] == "primary" else RUNNER_ID
+    if (evidence.get("runner_id") != runner_id or evidence.get("ledger_id") != manifest["ledger_id"]
+            or evidence.get("attempt_id") != attempt_id or evidence.get("plan_sha256") != plan["plan_sha256"]):
+        raise ValueError("runner evidence belongs to another attempt")
+    for name, sha in evidence["files"].items():
+        if name not in FILES or _digest(work / name) != sha:
+            raise ValueError("runner evidence files changed")
+    if set(evidence["files"]) != set(FILES):
+        raise ValueError("runner evidence is incomplete")
+    connection, process, sealed = (study._json(work / name) for name in ("connection.json", "process.json", "sealed.json"))
+    executor = "claude_cli" if runner_id == PROVIDER_RUNNER_ID else "scripted_mcp_subprocess"
+    if (process.get("executor") != executor or connection["plan_sha256"] != plan["plan_sha256"] or connection["slot_id"] != slot["slot_id"]
+            or process["stdout_sha256"] != _digest(work / "stdout.jsonl") or process["stderr_sha256"] != _digest(work / "stderr.txt")):
+        raise ValueError("private process/connection binding differs")
+    if executor == "claude_cli":
+        from benchtop import provider
+
+        with (work / "stdout.jsonl").open("rb") as source:
+            stream = provider.parse_stream(source.read(1024 * 1024).decode(errors="replace"))
+        if process["stream"] != stream:
+            raise ValueError("provider process metadata differs from retained stdout")
+    expected = _classify(plan, slot, connection, process, sealed, manifest["identity"]["protocol"])
+    if evidence["completion"] != expected or not expected["process_stopped"]:
+        raise ValueError("process is not confirmed stopped or completion evidence changed")
+    return copy.deepcopy(expected)
+
+
 def run_one(directory, plan_sha256, slot_id, *, answer="paper_better", scenario="submit", timeout=20,
             retry_technical=False, controller=None):
     if answer not in LABELS or scenario not in SCENARIOS or type(timeout) not in (int, float) or not 0 < timeout <= 1200:
         raise ValueError("invalid controlled answer, scenario, or timeout")
+    plan, slot = _registered(directory, plan_sha256, slot_id)
+    if plan["binding"]["mode"] != "engineering":
+        raise ValueError("only scripted engineering execution is enabled")
+    extra = {"answer": answer, "scenario": scenario,
+             "reported_model_id": plan["binding"]["model_configuration"]["reported_model_id"]}
+    return _run(directory, plan, slot, timeout, retry_technical, controller, execute_script, RUNNER_ID, extra)
+
+
+def run_provider(plan_sha256, slot_id, *, timeout=1200, retry_technical=False, controller=None):
+    from benchtop import primary, provider
+
+    if type(timeout) not in (int, float) or not 0 < timeout <= 1200:
+        raise ValueError("timeout must be positive and at most 1200 seconds")
+    root = primary.canonical_root()
+    directory = root / "ledger"
+    plan, slot = _registered(directory, plan_sha256, slot_id)
+    primary.verify(plan)
+    preflight = study._json(root / "provider.json")
+    return _run(directory, plan, slot, timeout, retry_technical, controller,
+                lambda work, seconds: provider.execute(work, seconds, plan, preflight), PROVIDER_RUNNER_ID, {})
+
+
+def _registered(directory, plan_sha256, slot_id):
     if re.fullmatch(r"[0-9a-f]{64}", plan_sha256) is None:
         raise ValueError("invalid plan identity")
     plan = study._json(Path(directory) / "plans" / f"{plan_sha256}.json")
     study.validate_plan(plan)
-    if plan["binding"]["mode"] != "engineering":
-        raise ValueError("only scripted engineering execution is enabled")
     slot = next((row for row in plan["slots"] if row["slot_id"] == slot_id), None)
     if slot is None:
         raise ValueError("unknown planned slot")
+    return plan, slot
+
+
+def _run(directory, plan, slot, timeout, retry_technical, controller, execute, runner_id, extra):
+    real = runner_id == PROVIDER_RUNNER_ID
+    plan_sha256, slot_id = plan["plan_sha256"], slot["slot_id"]
     with _controller(controller) as owned:
         start = ledger.begin(directory, plan_sha256, slot_id, retry_technical=retry_technical)
         work = Path(directory).resolve() / "runner" / start["attempt_id"]
         work.mkdir(parents=True, exist_ok=False, mode=0o700)
         connection = owned.prepare(plan, slot)
-        connection.update(answer=answer, scenario=scenario,
-                          reported_model_id=plan["binding"]["model_configuration"]["reported_model_id"])
+        connection.update(extra)
         _private(work / "connection.json", connection)
-        process = execute_script(work, timeout)
+        process = execute(work, timeout)
         _private(work / "process.json", process)
         sealed = owned.seal(connection)
         _private(work / "sealed.json", sealed)
         manifest = ledger._json(Path(directory) / "ledger.json")
         completion = _classify(plan, slot, connection, process, sealed, manifest["identity"]["protocol"])
-        evidence = study._seal({"runner_id": RUNNER_ID, "ledger_id": manifest["ledger_id"],
+        evidence = study._seal({"runner_id": runner_id, "ledger_id": manifest["ledger_id"],
             "plan_sha256": plan_sha256, "attempt_id": start["attempt_id"], "completion": completion,
-            "files": {name: _digest(work / name) for name in ("connection.json", "process.json", "sealed.json", "stdout.jsonl", "stderr.txt")},
-            "scope": "Scripted subprocess/MCP engineering control; no model or primary-study authorization."}, "artifact_sha256")
+            "files": {name: _digest(work / name) for name in FILES},
+            "scope": "Authorized subscription CLI attempt with private MCP grading." if real else
+                     "Scripted subprocess/MCP engineering control; no model or primary-study authorization."}, "artifact_sha256")
         _private(work / "evidence.json", evidence)
         if not process["process_stopped"]:
-            return {"attempt_id": start["attempt_id"], "status": "pending_reconciliation", "model_sessions": 0}
+            return {"attempt_id": start["attempt_id"], "status": "pending_reconciliation", "model_sessions": int(real)}
         result = resume(directory, start["attempt_id"])
         return {"attempt_id": start["attempt_id"], "status": result["outcome"]["state"],
-                "reward": result["outcome"]["reward"], "model_sessions": 0, "scripted_processes": 1}
+                "reward": result["outcome"]["reward"], "model_sessions": int(real), "scripted_processes": int(not real)}
 
 
 @contextmanager

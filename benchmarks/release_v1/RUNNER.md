@@ -1,6 +1,6 @@
 # Reconciled engineering runner
 
-`scripted_mcp_runner_v1` connects immutable plans and session accounting to an owned process and an actual MCP endpoint. It uses a deterministic Python stand-in for an agent. **It invokes no language model and enables no primary-study phase.** The real provider adapter, canonical primary journal, legacy integration accounting, successful-smoke verifier, and actual phase locks remain pending.
+`scripted_mcp_runner_v1` connects immutable plans and session accounting to an owned process and an actual MCP endpoint. It uses a deterministic Python stand-in for an agent. **It invokes no language model and enables no primary-study phase.** A separate [provider adapter](PROVIDER.md) supports authorized smoke/development attempts in a canonical primary journal. Scripted evidence remains excluded from its smoke gate; no actual provider smoke or study result has been observed.
 
 ## Run one control
 
@@ -49,7 +49,7 @@ With valid evidence and a confirmed stopped process:
 | Unknown error, metadata, provenance, or binding | Unresolved missing outcome |
 | Different reported model | Ledger retains diagnostics, withholds usable reward, and halts new work |
 
-Those machine-error mappings apply to the controlled helper. No real provider error taxonomy, usage fields, authentication, or actual reported model has been validated by these controls.
+Those machine-error mappings apply to the controlled helper. These controls do not validate a real provider error taxonomy, usage fields, authentication, or reported model. The separate provider path validates metadata and retains unknown errors as unresolved; its actual model compatibility remains untested.
 
 The evidence bundle is published before committing the ledger outcome. It hashes the connection, process report, sealed receipt, stdout, and stderr, and binds the plan/attempt/ledger. Ledger completion remains immutable and idempotent. A technical retry gets a distinct attempt and fresh episode while preserving the earlier records.
 

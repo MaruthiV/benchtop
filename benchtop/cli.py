@@ -117,6 +117,38 @@ def cmd_runner(a):
         raise SystemExit(f"engineering runner failed: {error}") from error
 
 
+def cmd_primary(a):
+    from benchtop import primary, provider, runner, session_ledger, study, study_calibration
+
+    try:
+        if a.action == "provider-preflight":
+            proof = provider.probe()
+            output = session_ledger._writable(a.output)
+            output.parent.mkdir(parents=True, exist_ok=True)
+            study._publish(output, proof)
+            result = {key: proof[key] for key in ("cli_version", "auth", "flags", "overrides", "managed_policy_files", "model_sessions")}
+        elif a.action == "authorize-smoke":
+            record = primary.authorize_smoke(study.load_plan(a.preparation), study._json(a.preflight),
+                                             extra_usage_disabled=a.confirm_extra_usage_disabled)
+            result = {key: record[key] for key in ("id", "record_sha256", "study_lock")}
+        elif a.action == "lock-development":
+            record = primary.lock_development(study.load_plan(a.preparation))
+            result = {key: record[key] for key in ("id", "record_sha256", "study_lock")}
+        elif a.action == "run-provider":
+            result = runner.run_provider(a.plan, a.slot, timeout=a.timeout, retry_technical=a.retry_technical)
+        elif a.action == "calibrate-development":
+            bundle = study_calibration.export_development(a.plan, a.output, close=a.close)
+            result = {key: bundle["selection"][key] for key in ("status", "closed", "chosen_budget_fraction", "fallback_reason")}
+            result.update(snapshot_sha256=bundle["snapshot_sha256"], model_sessions=0)
+        else:
+            record = runner.resume(primary.canonical_root() / "ledger", a.attempt)
+            result = {"attempt_id": record["attempt_id"], "status": record["outcome"]["state"],
+                      "reward": record["outcome"]["reward"], "model_sessions": 0}
+        print(json.dumps(result, indent=2, allow_nan=False))
+    except (OSError, ValueError, TypeError, KeyError, RuntimeError) as error:
+        raise SystemExit(f"primary study failed: {error}") from error
+
+
 def cmd_serve(a):
     from benchtop.env import ENVS
     from benchtop.server import serve
@@ -264,7 +296,7 @@ def main(argv=None):
     s.add_argument("--output", required=True, help="new immutable JSON diagnostic file")
     s.set_defaults(fn=cmd_calibrate)
 
-    s = sub.add_parser("study", help="prepare and inspect immutable smoke/development plans; never invokes models")
+    s = sub.add_parser("study", help="prepare, authorize, run and reconcile bounded smoke/development attempts")
     actions = s.add_subparsers(dest="action", required=True)
     plan = actions.add_parser("plan")
     plan.add_argument("--mode", choices=("engineering", "study_preparation"), default="engineering")
@@ -310,6 +342,28 @@ def main(argv=None):
     resume.add_argument("attempt")
     for action in (run, resume):
         action.set_defaults(fn=cmd_runner)
+
+    preflight = actions.add_parser("provider-preflight", help="inspect CLI/auth metadata without starting a model")
+    preflight.add_argument("--output", required=True)
+    authorize = actions.add_parser("authorize-smoke", help="authorize six reviewed smoke slots in the canonical journal")
+    authorize.add_argument("preparation")
+    authorize.add_argument("--preflight", required=True)
+    authorize.add_argument("--confirm-extra-usage-disabled", action="store_true")
+    lock = actions.add_parser("lock-development", help="verify six provider smoke outcomes and record the development lock")
+    lock.add_argument("preparation")
+    run = actions.add_parser("run-provider", help="start one authorized subscription model attempt")
+    run.add_argument("plan")
+    run.add_argument("--slot", required=True)
+    run.add_argument("--timeout", type=float, default=1200)
+    run.add_argument("--retry-technical", action="store_true")
+    resume = actions.add_parser("resume-provider", help="commit saved primary evidence without another model invocation")
+    resume.add_argument("attempt")
+    calibration = actions.add_parser("calibrate-development", help="verify primary development evidence and run the offline selector")
+    calibration.add_argument("plan")
+    calibration.add_argument("--output", required=True)
+    calibration.add_argument("--close", action="store_true", help="irreversibly close collection and prevent further development starts or outcome changes")
+    for action in (preflight, authorize, lock, run, resume, calibration):
+        action.set_defaults(fn=cmd_primary)
 
     s = sub.add_parser("serve")
     s.add_argument("--port", type=int, default=8787)

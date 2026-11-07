@@ -136,6 +136,9 @@ def begin(client: Client, episode, *, client_name, requested_model, reported_mod
     descriptor = os.open(root / "starts.jsonl", os.O_RDWR | os.O_CREAT | os.O_APPEND, 0o600)
     with os.fdopen(descriptor, "a+") as ledger:
         fcntl.flock(ledger, fcntl.LOCK_EX)
+        from benchtop.primary import block_legacy
+
+        block_legacy(root)
         ledger.seek(0)
         starts = [json.loads(line) for line in ledger if line.strip()]
         if any(item["protocol_hash"] != protocol_hash for item in starts):

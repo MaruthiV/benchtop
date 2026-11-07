@@ -1,6 +1,6 @@
 # Session accounting and reconciliation
 
-`session_ledger_v1` records start intents, immutable outcomes, and explicit reconciliation in one shared directory. The checkpoint accepts **engineering plans only**. The journal itself invokes no model or process and does not enable primary-study execution. The [scripted MCP runner](RUNNER.md) now exercises its process/receipt interfaces. The primary provider adapter, phase-lock verification, and integration with the older Qualia-start ledger remain pending.
+`session_ledger_v1` records start intents, immutable outcomes, and explicit reconciliation in one shared directory. It supports engineering journals and a separately authorized canonical primary journal. The journal itself invokes no model or process. The [scripted runner](RUNNER.md) exercises engineering controls; the [provider path](PROVIDER.md) checks current authorization before primary starts.
 
 ## Create and inspect an engineering journal
 
@@ -22,7 +22,7 @@ Prepare a current [engineering study plan](STUDY.md), then initialize its ledger
   --output artifacts/session-engineering-snapshot.json
 ```
 
-`sessions register LEDGER PREPARATION` adds another compatible engineering plan. Model configuration, prompts, code, runtime, and protocol must match the ledger. Re-registering the same plan is idempotent. `study_preparation` plans are refused even when their preparation prerequisites pass. The model IDs in the supplied engineering file are synthetic, not identities measured from a real invocation.
+`sessions register LEDGER PREPARATION` adds another compatible engineering plan. Model configuration, prompts, code, runtime, and protocol must match the ledger. Re-registering the same plan is idempotent. The general engineering initializer refuses `study_preparation`; those plans require `authorize-smoke` or `lock-development` through the primary path. The model IDs in the supplied engineering file are synthetic, not identities measured from a real invocation.
 
 Directories and exports are exclusive, with repository destinations under ignored `artifacts/`. A ledger has an immutable sealed `ledger.json`, registered snapshots under `plans/`, and per-attempt JSON under `attempts/`. Each new instance has its own ID. Inspection snapshots bind their content with `snapshot_sha256`; export cannot overwrite an existing file or place an unrelated JSON inside the journal.
 
@@ -40,9 +40,9 @@ Mutations hold a local filesystem lock. A begin transaction reads all registered
 | Technical retry starts across phases | 20 |
 | Technical retries per slot | 1 |
 
-The arithmetic includes the full frozen protocol. Current registered plans support only smoke/development engineering controls; fresh and integration execution are not enabled by these limits.
+The arithmetic includes the full frozen protocol. Current plans support smoke/development engineering controls and authorized primary attempts; fresh and primary integration execution are not enabled by these limits.
 
-Counters belong to **one ledger directory**. Separate directories, legacy rollout commands, and the existing integration `starts.jsonl` are not coordinated. A future primary controller must select one canonical study journal, reconcile earlier integration usage, and route every invocation through it. This checkpoint does not claim a global subscription limiter or enforce limits on unrelated processes.
+Engineering counters belong to one directory and do not coordinate unrelated commands. Primary starts must use the single canonical journal, preventing copied directories from resetting capacity. Existing legacy integration usage blocks authorization pending explicit reconciliation; the legacy begin path is blocked after authorization. Shared primary integration routing remains pending. These controls do not limit unrelated subscription processes.
 
 ## Start intents and interruption
 
@@ -71,11 +71,13 @@ An explicit `retry_technical=True` can begin attempt one only after a definite t
 
 `reconcile` appends one separate resolution to an unresolved finish. A late committed answer becomes its usable outcome without another start. A proven technical failure with no submission can become retryable. The original finish remains byte-for-byte intact; a resolution references its checksum. Reconciliation cannot overwrite an already-final answer, replace an existing resolution, or turn a known reported cost into another value. Exact repeated completion calls return the existing record.
 
-If a reported model differs from the bound identity, the claimed outcome remains diagnostic, its usable reward becomes unavailable, and the entire ledger halts new work. Other already-started attempts can still finish. An unavailable model identity also keeps a submitted outcome unresolved until verified, without silently treating it as a primary reward.
+If a reported model differs from the bound identity or the provider reports a capability-contract violation, the claimed outcome remains diagnostic, its usable reward becomes unavailable, and the entire ledger halts new work. Other already-started attempts can still finish. An unavailable model identity also keeps a submitted outcome unresolved until verified, without silently treating it as a primary reward.
 
 New plans and starts require current source/runtime/protocol bindings. Late completion/reconciliation evidence can still be retained after those inputs drift, using the recorded protocol and a checksum of the recorder implementation/runtime. It authorizes no new execution. The adapter must still verify that the actual server/model evidence belongs to the original attempt and versions. This keeps a code change from erasing an already-committed answer.
 
 ## Costs and denominators
+
+The [canonical calibration bridge](CALIBRATION.md#canonical-development-collection) can close development collection under this same journal lock. Closed development refuses new starts and new finish/resolution records, including retries. Exact repeated completion acknowledgements remain idempotent. Other phases retain their separate authorization gates. Closure with a pending process is refused; incomplete stopped outcomes remain missing in the full planned denominator.
 
 Inspection retains every planned slot, including unattempted work, pending starts, terminal zeros, unresolved outcomes, and technical failures. It reports all start/retry intents and current concurrency occupancy. A resolved attempt contributes one effective outcome, while its earlier raw records remain available.
 
@@ -85,4 +87,4 @@ Costs use the selector's normalized fields. Every attempt contributes, including
 
 Controls cover shared concurrency, immutable wrong answers, terminal agent failures, pending-process occupancy, explicit and bounded technical retry, late committed answers, unknown/model-mismatched outcomes, halted starts, all protocol allowance boundaries, the actual 20-retry limit, cross-plan smoke accounting, bad/corrupt/orphaned evidence, source drift, unknown costs, immutable reconciliation, exclusive snapshots, and copied-project CLI use. All synthetic start records are explicitly engineering data; no real model or paper experiment is run by these controls.
 
-The scripted adapter now connects owned process/MCP evidence to these accounting primitives. Next enable a real provider adapter only under verified primary phase locks and unified integration accounting. Primary evaluation, fresh confirmation grading, Qualia UI verification, and outreach readiness remain separate work.
+The scripted adapter now connects owned process/MCP evidence to these accounting primitives. The [provider adapter](PROVIDER.md) now checks canonical smoke/development authorization; actual provider smoke evidence, fresh locks, and shared Qualia invocation routing remain pending. Primary evaluation, fresh confirmation grading, Qualia UI verification, and outreach readiness remain separate work.

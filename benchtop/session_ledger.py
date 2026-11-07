@@ -34,22 +34,38 @@ def _phase_limits(spec):
             "confirmation": spec["episode_accounting"]["fresh_confirmation"]["episodes_max"]}
 
 
-def _identity(plan):
+def _identity(plan, authorization=None):
     core = plan["binding"]
-    if core["mode"] != "engineering":
+    scope = "engineering_only"
+    if core["mode"] != "engineering" and authorization is None:
         raise ValueError("this ledger accepts engineering preparations only; primary execution remains blocked")
+    if core["mode"] != "engineering":
+        from benchtop import primary
+
+        primary.verify(plan, authorization, allow_missing_ledger=True)
+        scope = "primary"
     spec = _json(study.SPEC)
-    return {"scope": "engineering_only", "protocol": spec, "protocol_hash": canonical_hash(spec),
+    return {"scope": scope, "protocol": spec, "protocol_hash": canonical_hash(spec),
             "source_sha256": core["source_sha256"], "runtime": core["runtime"],
             "model_configuration": core["model_configuration"], "prompt": core["prompt"],
             "limits": spec["execution_limits"], "phase_limits": _phase_limits(spec)}
 
 
-def create(plan, directory):
-    _identity(plan)
+def _directory(directory, scope):
+    if scope == "primary":
+        from benchtop import primary
+
+        directory = Path(directory).resolve()
+        if directory != (primary.canonical_root() / "ledger").resolve():
+            raise ValueError("primary accounting must use the canonical journal; copies cannot reset allowances")
+        return directory
+    return _writable(directory)
+
+
+def create(plan, directory, *, authorization=None):
     study.validate_plan(plan)
-    identity = _identity(plan)
-    directory = _writable(directory)
+    identity = _identity(plan, authorization)
+    directory = _directory(directory, identity["scope"])
     directory.mkdir(parents=True, exist_ok=False, mode=0o700)
     (directory / "plans").mkdir(mode=0o700)
     (directory / "attempts").mkdir(mode=0o700)
@@ -58,7 +74,7 @@ def create(plan, directory):
     manifest = study._seal({**core, "ledger_id": canonical_hash(core),
                             "created_at_utc": datetime.now(UTC).isoformat()}, "record_sha256")
     study._publish(directory / "ledger.json", manifest)
-    register(plan, directory)
+    register(plan, directory, authorization=authorization)
     return inspect(directory)
 
 
@@ -68,7 +84,7 @@ def _manifest(directory):
     core = {key: manifest[key] for key in ("version", "instance_id", "identity")}
     identity = core["identity"]
     if (core["version"] != LEDGER_ID or manifest["ledger_id"] != canonical_hash(core)
-            or identity["scope"] != "engineering_only" or identity["protocol_hash"] != canonical_hash(identity["protocol"])
+            or identity["scope"] not in ("engineering_only", "primary") or identity["protocol_hash"] != canonical_hash(identity["protocol"])
             or identity["limits"] != identity["protocol"]["execution_limits"]
             or identity["phase_limits"] != _phase_limits(identity["protocol"])):
         raise ValueError("invalid ledger identity or limits")
@@ -91,10 +107,10 @@ def _current(manifest):
         raise ValueError("ledger implementation/runtime/protocol changed; preserve it for audit")
 
 
-def register(plan, directory):
-    identity = _identity(plan)
+def register(plan, directory, *, authorization=None):
+    identity = _identity(plan, authorization)
     study.validate_plan(plan)
-    with _locked(_writable(directory)) as (root, manifest):
+    with _locked(_directory(directory, identity["scope"])) as (root, manifest):
         _current(manifest)
         _read(root, manifest)
         if identity != manifest["identity"]:
@@ -138,7 +154,9 @@ def _normalized(slot, index, outcome):
 
 
 def _completion(manifest, slot, index, claimed, prior, *, reported_model_id, submission_status,
-                process_stopped, evidence_sha256, previous=None):
+                process_stopped, evidence_sha256, integrity_failure=False, previous=None):
+    if type(integrity_failure) is not bool:
+        raise ValueError("adapter integrity status must be boolean")
     if process_stopped is not True:
         raise ValueError("verify that the old process stopped before releasing its in-flight slot")
     if not isinstance(evidence_sha256, str) or re.fullmatch(r"[0-9a-f]{64}", evidence_sha256) is None:
@@ -169,12 +187,12 @@ def _completion(manifest, slot, index, claimed, prior, *, reported_model_id, sub
     mismatch = reported_model_id is not None and reported_model_id != expected_model
     unverified = reported_model_id is None and state in ("completed", "agent_failure")
     effective = claimed
-    if mismatch or unverified:
+    if mismatch or unverified or integrity_failure:
         effective = {**claimed, "state": "unresolved", "reward": None,
-                     "failure_category": "reported_model_mismatch" if mismatch else "unverified_reported_model"}
+                     "failure_category": "reported_model_mismatch" if mismatch else "provider_contract_mismatch" if integrity_failure else "unverified_reported_model"}
     return {"claimed_outcome": claimed, "outcome": effective, "reported_model_id": reported_model_id,
             "submission_status": submission_status, "process_stopped": True, "evidence_sha256": evidence_sha256,
-            "model_mismatch": mismatch, "identity_source": "adapter_supplied_not_authenticated"}
+            "model_mismatch": mismatch, "integrity_failure": integrity_failure, "identity_source": "adapter_supplied_not_authenticated"}
 
 
 def _files(directory):
@@ -241,16 +259,16 @@ def _read(root, manifest):
                 finish = events["finish"]
                 _verify_completion(manifest, slot, index, finish, prior)
                 effective = finish
-                halted |= finish["model_mismatch"]
+                halted |= finish["model_mismatch"] or finish.get("integrity_failure", False)
                 if "resolve" in events:
                     resolution = events["resolve"]
-                    if (finish["outcome"]["state"] != "unresolved" or finish["model_mismatch"]
+                    if (finish["outcome"]["state"] != "unresolved" or finish["model_mismatch"] or finish.get("integrity_failure", False)
                             or resolution.get("original_finish_sha256") != finish["record_sha256"]
                             or resolution["outcome"]["state"] == "unresolved"):
                         raise ValueError("invalid or nonterminal resolution")
                     _verify_completion(manifest, slot, index, resolution, prior, previous=finish["outcome"])
                     effective = resolution
-                    halted |= resolution["model_mismatch"]
+                    halted |= resolution["model_mismatch"] or resolution.get("integrity_failure", False)
                 prior.append(effective["outcome"])
             history.append({**events, "effective": effective})
         histories[key] = history
@@ -266,7 +284,8 @@ def _read(root, manifest):
 
 def _identity_recorded(plan, manifest):
     core, identity = plan["binding"], manifest["identity"]
-    return (core["mode"] == "engineering" and plan["execution_ready"] is False
+    mode = "study_preparation" if identity["scope"] == "primary" else "engineering"
+    return (core["mode"] == mode and plan["execution_ready"] is False
             and core["protocol_hash"] == identity["protocol_hash"]
             and all(core[name] == identity[name] for name in ("source_sha256", "runtime", "model_configuration", "prompt")))
 
@@ -274,8 +293,9 @@ def _identity_recorded(plan, manifest):
 def _verify_completion(manifest, slot, index, record, prior, previous=None):
     expected = _completion(manifest, slot, index, record["claimed_outcome"], prior,
         reported_model_id=record["reported_model_id"], submission_status=record["submission_status"],
-        process_stopped=record["process_stopped"], evidence_sha256=record["evidence_sha256"], previous=previous)
-    if any(record.get(name) != value for name, value in expected.items()):
+        process_stopped=record["process_stopped"], evidence_sha256=record["evidence_sha256"],
+        integrity_failure=record.get("integrity_failure", False), previous=previous)
+    if any(record.get(name, False if name == "integrity_failure" else None) != value for name, value in expected.items()):
         raise ValueError("completion payload differs from its normalized evidence")
     if (not isinstance(record.get("recorder"), dict) or set(record["recorder"]) != {"source_sha256", "runtime_sha256"}
             or any(not isinstance(value, str) or re.fullmatch(r"[0-9a-f]{64}", value) is None for value in record["recorder"].values())):
@@ -283,7 +303,8 @@ def _verify_completion(manifest, slot, index, record, prior, previous=None):
 
 
 def begin(directory, plan_sha256, slot_id, *, retry_technical=False):
-    with _locked(_writable(directory)) as (root, manifest):
+    with _locked(directory) as (root, manifest):
+        _directory(root, manifest["identity"]["scope"])
         _current(manifest)
         state = _read(root, manifest)
         key = plan_sha256, slot_id
@@ -291,9 +312,15 @@ def begin(directory, plan_sha256, slot_id, *, retry_technical=False):
             raise ValueError("slot is not registered in this ledger")
         plan, slot = state["plans"][plan_sha256], state["slots"][key]
         study.validate_plan(plan)
+        if manifest["identity"]["scope"] == "primary":
+            from benchtop import primary
+            from benchtop.study_calibration import check_open
+
+            check_open(root, plan)
+            primary.verify(plan)
         history = state["histories"][key]
         if state["halted"]:
-            raise ValueError("ledger halted after a reported model change")
+            raise ValueError("ledger halted after a reported model change or provider contract violation")
         if history and (history[-1]["effective"] is None or history[-1]["effective"]["outcome"]["state"] != "technical_failure"):
             raise ValueError("attempt is final or requires reconciliation; never relaunch it automatically")
         index = len(history)
@@ -308,8 +335,9 @@ def begin(directory, plan_sha256, slot_id, *, retry_technical=False):
 
 
 def _complete(directory, attempt_id, outcome, *, reported_model_id, submission_status,
-              process_stopped, evidence_sha256, resolve):
-    with _locked(_writable(directory)) as (root, manifest):
+              process_stopped, evidence_sha256, resolve, integrity_failure=False):
+    with _locked(directory) as (root, manifest):
+        _directory(root, manifest["identity"]["scope"])
         state = _read(root, manifest)
         matches = [(key, index, entry) for key, history in state["histories"].items()
                    for index, entry in enumerate(history) if entry["start"]["attempt_id"] == attempt_id]
@@ -320,12 +348,14 @@ def _complete(directory, attempt_id, outcome, *, reported_model_id, submission_s
         prior = [item["effective"]["outcome"] for item in state["histories"][key][:index]]
         previous = None
         if resolve:
-            if "finish" not in entry or entry["finish"]["outcome"]["state"] != "unresolved" or entry["finish"]["model_mismatch"]:
+            if ("finish" not in entry or entry["finish"]["outcome"]["state"] != "unresolved"
+                    or entry["finish"]["model_mismatch"] or entry["finish"].get("integrity_failure", False)):
                 raise ValueError("only an unresolved finish can be reconciled, without a model mismatch")
             previous = entry["finish"]["outcome"]
         payload = _completion(manifest, slot, index, _normalized(slot, index, outcome), prior,
             reported_model_id=reported_model_id, submission_status=submission_status,
-            process_stopped=process_stopped, evidence_sha256=evidence_sha256, previous=previous)
+            process_stopped=process_stopped, evidence_sha256=evidence_sha256,
+            integrity_failure=integrity_failure, previous=previous)
         if resolve and payload["outcome"]["state"] == "unresolved":
             raise ValueError("resolution must provide a definite outcome; keep unknown work unresolved")
         kind = "resolve" if resolve else "finish"
@@ -334,9 +364,13 @@ def _complete(directory, attempt_id, outcome, *, reported_model_id, submission_s
             payload["original_finish_sha256"] = entry["finish"]["record_sha256"]
         if kind in entry:
             existing = entry[kind]
-            if all(existing.get(name) == value for name, value in payload.items()):
+            if all(existing.get(name, False if name == "integrity_failure" else None) == value for name, value in payload.items()):
                 return existing
             raise ValueError("an immutable completion already exists; preserve the original outcome")
+        if manifest["identity"]["scope"] == "primary":
+            from benchtop.study_calibration import check_open
+
+            check_open(root, plan)
         recorder = {"source_sha256": study.cache.file_hash(Path(__file__)),
                     "runtime_sha256": canonical_hash(study.cache.runtime_identity())}
         record = study._seal({**payload, "recorded_at_utc": datetime.now(UTC).isoformat(),
@@ -353,17 +387,20 @@ def reconcile(directory, attempt_id, outcome, **evidence):
     return _complete(directory, attempt_id, outcome, resolve=True, **evidence)
 
 
+def _normalized_history(history):
+    return [copy.deepcopy(entry["effective"]["outcome"]) if entry["effective"] is not None else {
+        "attempt_id": entry["start"]["attempt_id"], "attempt_index": index,
+        "state": "unresolved", "reward": None, "failure_category": "pending_reconciliation"}
+        for index, entry in enumerate(history)]
+
+
 def inspect(directory):
     with _locked(directory) as (root, manifest):
         state = _read(root, manifest)
         rows, normalized = [], []
         for key, slot in state["slots"].items():
             history = state["histories"][key]
-            attempts = []
-            for index, entry in enumerate(history):
-                attempts.append(entry["effective"]["outcome"] if entry["effective"] is not None else {
-                    "attempt_id": entry["start"]["attempt_id"], "attempt_index": index,
-                    "state": "unresolved", "reward": None, "failure_category": "pending_reconciliation"})
+            attempts = _normalized_history(history)
             normalized.append({"attempts": attempts})
             latest = history[-1]["effective"] if history else None
             rows.append({"plan_sha256": key[0], "slot_id": slot["slot_id"],
@@ -374,12 +411,12 @@ def inspect(directory):
         costs = calibrate._costs(normalized)
         costs["recorded_start_intents"] = costs.pop("episode_starts")
         costs["retry_start_intents"] = costs.pop("retry_episode_starts")
-        return {"schema_version": 1, "ledger_id": manifest["ledger_id"], "scope": "engineering_only",
+        return {"schema_version": 1, "ledger_id": manifest["ledger_id"], "scope": manifest["identity"]["scope"],
                 "registered_plans": len(state["plans"]), "slots": rows, "counts": dict(state["counts"]),
                 "status_counts": dict(Counter(row["state"] for row in rows)), "halted": state["halted"],
                 "costs": costs, "limits": manifest["identity"]["limits"], "phase_limits": manifest["identity"]["phase_limits"],
                 "model_sessions_started_by_ledger": 0,
-                "accounting": "Start intents conservatively consume allowances and are never refunded. Pending processes remain active until adapter-supplied reconciliation. No models invoked; no primary-study authorization."}
+                "accounting": "Start intents conservatively consume allowances and are never refunded. Pending processes remain active until adapter-supplied reconciliation. The journal itself invokes no models; primary starts require separate phase authorization."}
 
 
 def export(directory, output):
