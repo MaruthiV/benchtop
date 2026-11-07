@@ -1,5 +1,7 @@
 # Classical policies and shared reconstruction
 
+The [candidate lock](CANDIDATES.md) freezes these sources after the complete development replay and dated human correctness/sensitivity review. No actual baseline freeze or fresh comparison exists yet.
+
 All three required acquisition policies are implemented with one common visible-data estimator. They do not select development labs, run the planned 200-seed policy comparison, freeze candidate policies, or evaluate new model sessions. Human admission reviews remain pending in the [review packet](admission/REVIEW.md).
 
 ## Separate historical behavior

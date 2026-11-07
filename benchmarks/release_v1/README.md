@@ -1,6 +1,8 @@
 # Release evaluation protocol
 
-[spec.json](spec.json) defines the next evaluation before fresh model results exist. It is a protocol, not a completed experiment or a runnable CLI configuration. Corrected grading, endpoint separation, frozen charging, and execution-cache versioning are implemented; the fresh seed-split harness and protocol-specific rollout records remain pending.
+The [candidate metadata/rule lock](CANDIDATES.md) now binds a verified development budget, reviewed baseline/estimator freeze, generation rules and the first 16 numerically ordered unseen paper IDs with fetched versions. Archived complete date responses prevent truncated or failed retrievals from changing the candidate list. Actual candidate selection and the fresh generation driver remain pending.
+
+[spec.json](spec.json) defines the next evaluation before fresh model results exist. It is a protocol, not a completed experiment or a runnable CLI configuration. Corrected grading, endpoint separation, frozen charging, and execution-cache versioning are implemented; the fresh seed-split harness and smoke/development rollout records are implemented; locked fresh collection remains pending.
 
 The primary question is whether a small calibration batch can select a useful experiment budget for one agent better than choosing one global budget on development labs. The measured outcome is how often a group of eight rollouts contains both correct and incorrect answers. That can inform environment selection for training, but mixed rewards can also arise from guessing, malformed answers, or timeouts. Report accuracy, failures, classical controls, and costs alongside it.
 
@@ -47,7 +49,7 @@ Incorrect answers, exhausted format correction, agent timeouts, and exits withou
 
 The 28-start reserve covers at most six smoke episodes, two integration episodes, and 20 technical retries. Every invoked rollout session counts, including failures. Generation calls and cheap classical replay are logged separately.
 
-[Versioned classical baselines](BASELINES.md) implement paired-uniform, question-coverage, and coverage-plus-cost acquisition with a shared visible-data estimator. All use the same public problem/cost/budget interface; reconstruction pairs identities, keeps equal target-context weights, and exposes its neutral missing-context prior. Coverage policies plan affordable complete pairs and spread factor-level coverage; cost preference only breaks coverage-priority ties. Read-only corrected historical views keep source labels and prices intact. The human-selected development comparison, estimator sensitivity review, and candidate lock remain pending.
+[Versioned classical baselines](BASELINES.md) implement paired-uniform, question-coverage, and coverage-plus-cost acquisition with a shared visible-data estimator. All use the same public problem/cost/budget interface; reconstruction pairs identities, keeps equal target-context weights, and exposes its neutral missing-context prior. Coverage policies plan affordable complete pairs and spread factor-level coverage; cost preference only breaks coverage-priority ties. Read-only corrected historical views keep source labels and prices intact. The actual human-selected development comparison, estimator sensitivity review, and candidate lock remain pending; the lock writer and verifier are implemented.
 
 The [classical replay harness](REPLAY.md) now implements the three sanity controls, bound plans and slots, raw immutable attempt records, fixed visible ordering, resumable execution, and missing-outcome summaries. The actual reviewed 200-seed development comparison remains gated by six completed human records and four eligible claim labs. No model development or candidate lock is created by a classical plan.
 

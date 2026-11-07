@@ -132,7 +132,7 @@ def gate(*, phase="development", model=None, reviews_dir=None, foundation=None):
         model_status = {"status": "missing_or_invalid"}
     supported = phase in ("smoke", "development")
     if not supported:
-        blockers.append("Fresh candidate/cohort/confirmation planning and lock verification are not implemented.")
+        blockers.append("Fresh cohort/pilot/confirmation planning and execution are not implemented; candidate metadata/rules use study lock-candidates.")
     execution = ["Preparation alone never authorizes execution; verify the current provider and canonical phase authorization with study authorize-smoke or lock-development."]
     if phase == "development":
         execution.append("Successful development-lab smoke evidence and the development lock still require verification.")

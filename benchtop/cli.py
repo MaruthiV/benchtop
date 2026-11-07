@@ -118,7 +118,16 @@ def cmd_runner(a):
 
 
 def cmd_primary(a):
-    from benchtop import primary, provider, runner, session_ledger, study, study_calibration
+    from benchtop import (
+        candidate_metadata,
+        candidates,
+        primary,
+        provider,
+        runner,
+        session_ledger,
+        study,
+        study_calibration,
+    )
 
     try:
         if a.action == "provider-preflight":
@@ -140,6 +149,16 @@ def cmd_primary(a):
             bundle = study_calibration.export_development(a.plan, a.output, close=a.close)
             result = {key: bundle["selection"][key] for key in ("status", "closed", "chosen_budget_fraction", "fallback_reason")}
             result.update(snapshot_sha256=bundle["snapshot_sha256"], model_sessions=0)
+        elif a.action == "archive-candidates":
+            archive = candidate_metadata.collect(a.output_dir, study._json(a.exclusions))
+            result = {key: archive[key] for key in ("archive_sha256", "selection_date", "model_sessions")}
+            result["candidates"] = len(archive["candidates"])
+        elif a.action == "lock-candidates":
+            record = candidates.lock_candidates(a.archive, a.baseline_review, study._json(a.generation_models))
+            result = {key: record[key] for key in ("id", "record_sha256", "study_lock", "generation_ready", "model_sessions_started")}
+        elif a.action == "inspect-candidates":
+            record = candidates.verify()
+            result = {key: record[key] for key in ("id", "record_sha256", "study_lock", "generation_ready", "model_sessions_started")}
         else:
             record = runner.resume(primary.canonical_root() / "ledger", a.attempt)
             result = {"attempt_id": record["attempt_id"], "status": record["outcome"]["state"],
@@ -362,7 +381,15 @@ def main(argv=None):
     calibration.add_argument("plan")
     calibration.add_argument("--output", required=True)
     calibration.add_argument("--close", action="store_true", help="irreversibly close collection and prevent further development starts or outcome changes")
-    for action in (preflight, authorize, lock, run, resume, calibration):
+    archive = actions.add_parser("archive-candidates", help="archive complete date metadata without generating labs")
+    archive.add_argument("--exclusions", required=True)
+    archive.add_argument("--output-dir", required=True)
+    candidates = actions.add_parser("lock-candidates", help="freeze canonical development choice, rules and archived ordered candidates")
+    candidates.add_argument("archive")
+    candidates.add_argument("--baseline-review", required=True)
+    candidates.add_argument("--generation-models", required=True)
+    inspect_candidates = actions.add_parser("inspect-candidates", help="verify saved candidate-lock evidence without a model call")
+    for action in (preflight, authorize, lock, run, resume, calibration, archive, candidates, inspect_candidates):
         action.set_defaults(fn=cmd_primary)
 
     s = sub.add_parser("serve")

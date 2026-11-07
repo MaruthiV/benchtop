@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "decision": "needs_review",
+  "reviewer": {"kind": "unassigned", "name": "", "reviewed_at_utc": ""},
+  "replay_directory": {"base": "repository", "path": "artifacts/classical-development"},
+  "replay_summary_sha256": "",
+  "checks": {
+    "policy_correctness": {"judgment": "unresolved", "rationale": "", "evidence": []},
+    "estimator_sensitivity": {"judgment": "unresolved", "rationale": "", "evidence": []}
+  },
+  "adaptive_allocation": {
+    "decision": "deferred",
+    "rationale": "Adaptive allocation is outside this bounded release; confirm this scope decision during human review."
+  }
+}
