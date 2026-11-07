@@ -113,6 +113,7 @@ def register(plan, directory, *, authorization=None):
     with _locked(_directory(directory, identity["scope"])) as (root, manifest):
         _current(manifest)
         _read(root, manifest)
+        study.validate_plan(plan, ledger_context=(root, manifest))
         if identity != manifest["identity"]:
             raise ValueError("plan model/prompt/runtime/implementation does not match the shared ledger")
         path = root / "plans" / f"{plan['plan_sha256']}.json"
@@ -311,7 +312,7 @@ def begin(directory, plan_sha256, slot_id, *, retry_technical=False):
         if key not in state["slots"]:
             raise ValueError("slot is not registered in this ledger")
         plan, slot = state["plans"][plan_sha256], state["slots"][key]
-        study.validate_plan(plan)
+        study.validate_plan(plan, ledger_context=(root, manifest))
         generation_active = 0
         if manifest["identity"]["scope"] == "primary":
             from benchtop import primary
@@ -319,7 +320,7 @@ def begin(directory, plan_sha256, slot_id, *, retry_technical=False):
             from benchtop.study_calibration import check_open
 
             check_open(root, plan)
-            primary.verify(plan)
+            primary.verify(plan, ledger_context=(root, manifest))
             generation = generation_state()
             if generation["halted"]:
                 raise ValueError("generation halted after a model/provider contract violation")

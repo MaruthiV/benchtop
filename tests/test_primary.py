@@ -257,9 +257,12 @@ def test_unreviewed_records_cannot_create_primary_authorization(tmp_path, monkey
     assert not primary.canonical_root().exists()
 
 
-def test_fresh_execution_remains_unavailable(tmp_path, monkeypatch):
+def test_confirmation_remains_unavailable_and_forged_fresh_pilot_is_refused(tmp_path, monkeypatch):
     plans = preparation(tmp_path, monkeypatch)
     altered = copy.deepcopy(plans["smoke"])
-    altered["binding"]["phase"] = "fresh_pilot"
+    altered["binding"]["phase"] = "confirmation"
     with pytest.raises(ValueError, match="fresh phase authorization"):
+        primary.verify(altered)
+    altered["binding"]["phase"] = "fresh_pilot"
+    with pytest.raises(ValueError, match="invalid plan_sha256"):
         primary.verify(altered)

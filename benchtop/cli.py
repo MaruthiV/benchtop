@@ -124,6 +124,8 @@ def cmd_primary(a):
         cohort,
         fresh_generation,
         generation_journal,
+        pilot_calibration,
+        pilots,
         primary,
         provider,
         runner,
@@ -152,6 +154,11 @@ def cmd_primary(a):
             bundle = study_calibration.export_development(a.plan, a.output, close=a.close)
             result = {key: bundle["selection"][key] for key in ("status", "closed", "chosen_budget_fraction", "fallback_reason")}
             result.update(snapshot_sha256=bundle["snapshot_sha256"], model_sessions=0)
+        elif a.action == "calibrate-pilots":
+            bundle = pilot_calibration.export_pilots(a.plan, a.output, close=a.close)
+            result = {"snapshot_sha256": bundle["snapshot_sha256"], "closed": bundle["closed"], "cohort_size": bundle["cohort_size"],
+                      "model_sessions": 0, "labs": [{"env_id": lab["env_id"], **{key: lab["selection"][key] for key in (
+                          "status", "chosen_budget_fraction", "fallback_reason")}} for lab in bundle["labs"]]}
         elif a.action == "archive-candidates":
             archive = candidate_metadata.collect(a.output_dir, study._json(a.exclusions))
             result = {key: archive[key] for key in ("archive_sha256", "selection_date", "model_sessions")}
@@ -166,6 +173,15 @@ def cmd_primary(a):
             record = cohort.lock_cohort() if a.action == "lock-cohort" else cohort.verify()
             result = {key: record[key] for key in ("id", "record_sha256", "study_lock", "status", "model_sessions_started")}
             result["cohort_size"] = record["binding"]["cohort_size"]
+        elif a.action == "plan-pilots":
+            plan = pilots.make_plan()
+            receipt = study.save_plan(plan, a.output_dir)
+            result = {"plan_sha256": receipt["plan_sha256"], "study_lock": False, "execution_ready": False,
+                      "planned_slots": len(plan["slots"]), "cohort_size": plan["binding"]["cohort_size"], "model_sessions_started": 0}
+        elif a.action in ("authorize-pilots", "inspect-pilots"):
+            record = (pilots.authorize(study.load_plan(a.preparation)) if a.action == "authorize-pilots" else
+                      pilots.verify(study._json(primary.canonical_root() / "pilot_plan.json"), live=False))
+            result = {key: record[key] for key in ("id", "plan_sha256", "record_sha256", "study_lock", "planned_slots", "model_sessions_started")}
         elif a.action == "generate-next":
             result = fresh_generation.step()
             result = {key: value for key, value in result.items() if key in ("status", "version", "reason", "model_sessions_started_by_step")}
@@ -420,8 +436,18 @@ def main(argv=None):
     resume_generation.add_argument("call")
     lock_cohort = actions.add_parser("lock-cohort", help="freeze the complete ordered funnel and qualification-only cohort without model calls")
     inspect_cohort = actions.add_parser("inspect-cohort", help="verify frozen membership, reviews and cached qualification evidence")
+    plan_pilots = actions.add_parser("plan-pilots", help="prepare all fresh pilot slots from the frozen cohort without starting models")
+    plan_pilots.add_argument("--output-dir", required=True)
+    authorize_pilots = actions.add_parser("authorize-pilots", help="authorize the exact fresh pilot plan in the existing primary journal")
+    authorize_pilots.add_argument("preparation")
+    inspect_pilots = actions.add_parser("inspect-pilots", help="verify saved fresh pilot authorization without model calls or live authentication")
+    calibrate_pilots = actions.add_parser("calibrate-pilots", help="verify canonical pilot evidence and calibrate each cohort member without model calls")
+    calibrate_pilots.add_argument("plan")
+    calibrate_pilots.add_argument("--output", required=True)
+    calibrate_pilots.add_argument("--close", action="store_true", help="irreversibly close pilot starts/outcome changes and freeze selections or fallbacks")
     for action in (preflight, authorize, lock, run, resume, calibration, archive, candidates, inspect_candidates,
-                   generate, review_generated, qualify_generated, generation_status, resume_generation, lock_cohort, inspect_cohort):
+                   generate, review_generated, qualify_generated, generation_status, resume_generation, lock_cohort, inspect_cohort,
+                   plan_pilots, authorize_pilots, inspect_pilots, calibrate_pilots):
         action.set_defaults(fn=cmd_primary)
 
     s = sub.add_parser("serve")

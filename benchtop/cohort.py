@@ -244,11 +244,14 @@ def lock_cohort():
             return record
 
 
-def verify():
+def verify(*, ledger_context=None):
     root = primary.canonical_root()
     record = _record(root / "cohort_lock.json")
-    candidate = candidates.verify()
+    candidate = candidates.verify(ledger_context=ledger_context)
     manifest = ledger._manifest(root / "ledger")
+    if ledger_context is not None:
+        _expect(ledger_context[0].resolve() == (root / "ledger").resolve() and ledger_context[1] == manifest,
+                "cohort context differs from the canonical journal")
     ledger._current(manifest)
     binding = _binding(journal.directory(), candidate, manifest, record["recorded_at_utc"])
     _expect(record.get("schema_version") == 1 and record.get("id") == "cohort_lock" and record.get("study_lock") is True

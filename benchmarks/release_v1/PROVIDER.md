@@ -1,6 +1,6 @@
 # Authorized subscription provider
 
-`claude_mcp_runner_v1` implements one primary smoke or development attempt through the installed Claude CLI. This checkpoint exercises the controller with test fixtures and read-only authentication metadata. **No actual model smoke, development lock, or primary performance result has been observed.** Fresh generation and cohort locking are implemented; fresh pilot/confirmation execution remains pending.
+`claude_mcp_runner_v1` implements one primary smoke, development or [fresh pilot](PILOTS.md) attempt through the installed Claude CLI. This checkpoint exercises the controller with test fixtures and read-only authentication metadata. **No actual model smoke, development lock, or primary performance result has been observed.** Fresh generation, cohort locking, pilot preparation/authorization and [pilot closure/calibration](PILOT_CALIBRATION.md) are implemented; confirmation execution remains pending.
 
 ## Metadata before inference
 

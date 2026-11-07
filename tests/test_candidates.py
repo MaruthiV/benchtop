@@ -39,7 +39,7 @@ def setup(tmp_path, monkeypatch):
     closed = {"plan_sha256": plan_sha, "snapshot_sha256": "3" * 64,
               "selection": {"status": "selected", "closed": True, "chosen_budget_fraction": 0.12,
                             "labs": [{"budgets": [{"missing": 0}]}]}}
-    monkeypatch.setattr(study_calibration, "load_closed", lambda: copy.deepcopy(closed))
+    monkeypatch.setattr(study_calibration, "load_closed", lambda **kwargs: copy.deepcopy(closed))
 
     def simulated_baseline(freeze, development, at):
         return {"review": freeze, "estimator_id": ESTIMATOR_ID, "policies": ["paired_uniform"],

@@ -1,6 +1,6 @@
 # Candidate metadata and rule lock
 
-The candidate lock binds the development-selected global budget, classical policies and estimator, generation/admission rules, and an ordered versioned paper list before fresh generation. Tests use local XML and simulated review/provider boundaries. **No actual candidate lock, fresh generation, or model budget result exists.** A verified new lock reports `generation_ready: true` for the implemented [bounded generation driver](GENERATION.md). The [cohort lock](COHORT.md) freezes its reviewed qualification outcomes. Fresh pilot/confirmation execution remains pending.
+The candidate lock binds the development-selected global budget, classical policies and estimator, generation/admission rules, and an ordered versioned paper list before fresh generation. Tests use local XML and simulated review/provider boundaries. **No actual candidate lock, fresh generation, or model budget result exists.** A verified new lock reports `generation_ready: true` for the implemented [bounded generation driver](GENERATION.md). The [cohort lock](COHORT.md) freezes its reviewed qualification outcomes. [Fresh pilot preparation/authorization](PILOTS.md) and [pilot closure/calibration](PILOT_CALIBRATION.md) are implemented; confirmation remains pending.
 
 ## Archive the date selection
 
@@ -49,4 +49,4 @@ Publication stores immutable private `candidate_lock.json`, a byte-preserved bas
 
 Inspection revalidates the original development decision, copied raw metadata and failed requests, review evidence, replay, prompts, models and public binding. It runs no policy acquisition, independent regrading, live authentication or inference. Checksums establish local consistency rather than authenticated provider, arXiv or human assertions.
 
-Finish the remaining fresh pilot, confirmation and shared Qualia routing code before spending real smoke sessions. Later Python edits invalidate bound preparations; spent starts cannot be erased. Real reviews, development results, fresh admission, the model study and demonstration still precede outreach.
+Finish confirmation, analysis and shared Qualia routing code before spending real smoke sessions. Later Python edits invalidate bound preparations; spent starts cannot be erased. Real reviews, development results, fresh admission, the model study and demonstration still precede outreach.

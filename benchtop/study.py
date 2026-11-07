@@ -132,7 +132,7 @@ def gate(*, phase="development", model=None, reviews_dir=None, foundation=None):
         model_status = {"status": "missing_or_invalid"}
     supported = phase in ("smoke", "development")
     if not supported:
-        blockers.append("Fresh pilot/confirmation planning and execution are not implemented; candidate and cohort evidence use study lock-candidates and lock-cohort.")
+        blockers.append("Use study plan-pilots for cohort-bound fresh pilot preparation; confirmation planning/execution is not implemented.")
     execution = ["Preparation alone never authorizes execution; verify the current provider and canonical phase authorization with study authorize-smoke or lock-development."]
     if phase == "development":
         execution.append("Successful development-lab smoke evidence and the development lock still require verification.")
@@ -173,7 +173,8 @@ def _grid(binding, bindings_hash):
     spec = _json(SPEC)
     phase = binding["phase"]
     selected = binding["environments"][:2] if phase == "smoke" else binding["environments"]
-    repeats = 1 if phase == "smoke" else spec["development"]["budget_selection_repeats"]
+    repeats = (1 if phase == "smoke" else spec["calibration"]["pilot_repeats_per_budget"]
+               if phase == "fresh_pilot" else spec["development"]["budget_selection_repeats"])
     model_hash = canonical_hash(binding["model_configuration"])
     prompt_hash = canonical_hash(binding["prompt"])
     grader_hash = canonical_hash({name: binding["source_sha256"]["benchtop/" + name] for name in ("tasks.py", "stats.py")})
@@ -237,11 +238,17 @@ def make_plan(env_paths=None, *, model, phase="smoke", mode="engineering", revie
                   "slots": slots, "execution_ready": False, "model_sessions_started": 0}, "plan_sha256")
 
 
-def validate_plan(plan):
+def validate_plan(plan, *, ledger_context=None):
     _verify(plan, "plan_sha256")
     binding = plan["binding"]
     if plan["bindings_hash"] != canonical_hash(binding) or binding["planner_id"] != PLANNER_ID:
         raise ValueError("invalid study binding")
+    if binding["phase"] == "fresh_pilot":
+        from benchtop import pilots
+
+        if plan != pilots.make_plan(ledger_context=ledger_context):
+            raise ValueError("fresh pilot plan or frozen cohort inputs changed")
+        return plan
     expected = make_plan([_resolve(env["source"]) for env in binding["environments"]]
                          if binding["mode"] == "engineering" else None,
                          model=binding["model_configuration"], mode=binding["mode"], phase=binding["phase"],

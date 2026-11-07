@@ -56,6 +56,8 @@ A start without a finish is `in_flight_or_interrupted`. Time passing does not pr
 
 The core writes atomic exclusive files and preserves unfinished work. It handles ordinary process interruption; it is not a power-loss, distributed-consensus, or authenticated event-log guarantee. Temporary unpublished files do not count as completed records. Published orphaned, malformed, checksum-invalid, or allowance-inconsistent records fail visibly.
 
+[Fresh pilot authorization](PILOTS.md) registers the cohort-bound three-budget/four-replicate grid in this same primary journal. Starts inherit all existing caps, retain the original ledger identity, revalidate frozen qualification sources and require separate saved authorization. [Canonical pilot closure](PILOT_CALIBRATION.md) verifies the provider/MCP evidence and freezes per-lab choices or fallbacks under this same lock. Pilot-collection or confirmation-lock markers block new pilot starts and outcome changes. Closed-development and closed-pilot verification accept the caller's canonical journal context to avoid reacquiring its held lock.
+
 ## Finish and reconcile
 
 The future adapter calls `finish` with the normalized outcome and:

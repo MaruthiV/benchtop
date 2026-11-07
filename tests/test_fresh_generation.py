@@ -58,7 +58,7 @@ def setup(tmp_path, monkeypatch, *, count=2):
                     "baselines": {"policies": ["random"], "estimator_id": "fixture_only", "development_majority_label": "paper_better"}},
         "scope": "TEST FIXTURE ONLY; candidate-lock authority stubbed"}, "record_sha256")
     study._publish(primary.canonical_root() / "candidate_lock.json", lock)
-    monkeypatch.setattr(candidates, "verify", lambda: copy.deepcopy(lock))
+    monkeypatch.setattr(candidates, "verify", lambda **kwargs: copy.deepcopy(lock))
     monkeypatch.setattr(fresh.arxiv, "_polite", lambda: None)
     calls = []
 

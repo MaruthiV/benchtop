@@ -154,11 +154,16 @@ class Controller:
     def prepare(self, plan, slot):
         snapshot = next(env for env in plan["binding"]["environments"] if env["env_id"] == slot["env_id"])
         path = study._resolve(snapshot["source"])
-        if study._snapshot(path) != snapshot:
-            raise ValueError("episode source differs from bound preparation")
-        env = Env.load(path, replay=True)
-        if env.cache_status == "historical":
-            env = corrected_replay(env)
+        if plan["binding"]["phase"] == "fresh_pilot":
+            from benchtop.pilots import load_environment
+
+            env = load_environment(snapshot)
+        else:
+            if study._snapshot(path) != snapshot:
+                raise ValueError("episode source differs from bound preparation")
+            env = Env.load(path, replay=True)
+            if env.cache_status == "historical":
+                env = corrected_replay(env)
         prices, _ = env.charging_schedule()
         expected_budget = sum(prices.values()) * len(snapshot["visible_order"]) * slot["budget_fraction"]
 

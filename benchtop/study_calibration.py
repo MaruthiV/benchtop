@@ -10,6 +10,9 @@ COLLECTION = "development_collection.json"
 
 
 def check_open(directory, plan):
+    from benchtop.pilots import check_open as check_pilots_open
+
+    check_pilots_open(directory, plan)
     path = Path(directory).parent / COLLECTION
     if path.exists():
         closed = study._json(path)
@@ -48,14 +51,17 @@ def _inventory(directory, manifest, plan, state):
     return {name: runner._digest(directory / name) for name in sorted(files)}
 
 
+def _slots(plan, state):
+    return [{"group_id": slot["group_id"], "slot_id": slot["slot_id"], "lab_id": slot["env_id"],
+             "budget_fraction": slot["budget_fraction"], "replicate_index": slot["replicate_index"],
+             "attempts": ledger._normalized_history(state["histories"][(plan["plan_sha256"], slot["slot_id"])])}
+            for slot in plan["slots"]]
+
+
 def _input(plan, state, *, closed):
-    slots = [{"group_id": slot["group_id"], "slot_id": slot["slot_id"], "lab_id": slot["env_id"],
-              "budget_fraction": slot["budget_fraction"], "replicate_index": slot["replicate_index"],
-              "attempts": ledger._normalized_history(state["histories"][(plan["plan_sha256"], slot["slot_id"])])}
-             for slot in plan["slots"]]
     return {"schema_version": 1, "protocol_hash": plan["binding"]["protocol_hash"],
             "evidence_kind": "operator_supplied", "phase": "development", "closed": closed,
-            "lab_ids": [env["env_id"] for env in plan["binding"]["environments"]], "slots": slots}
+            "lab_ids": [env["env_id"] for env in plan["binding"]["environments"]], "slots": _slots(plan, state)}
 
 
 def _context(directory, manifest, plan_sha256):
@@ -89,10 +95,16 @@ def _closed(directory, manifest, state, plan, lock):
     return frozen
 
 
-def load_closed():
+def load_closed(*, ledger_context=None):
     directory = primary.canonical_root() / "ledger"
     frozen = study._json(directory.parent / COLLECTION)
     calibrate._identifier(frozen["plan_sha256"])
+    if ledger_context is not None:
+        root, manifest = ledger_context
+        if Path(root).resolve() != directory.resolve() or manifest != ledger._manifest(directory):
+            raise ValueError("closed development context differs from the canonical journal")
+        state, plan, lock = _context(root, manifest, frozen["plan_sha256"])
+        return _closed(root, manifest, state, plan, lock)
     with ledger._locked(directory) as (root, manifest):
         state, plan, lock = _context(root, manifest, frozen["plan_sha256"])
         return _closed(root, manifest, state, plan, lock)

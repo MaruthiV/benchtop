@@ -1,6 +1,8 @@
 # Budget calibration selector
 
-`benchtop calibrate INPUT --output NEW_FILE` evaluates saved normalized pilot outcomes. It starts no models, runs no experiments, and makes no study lock. `beta_mixed_group_v1` implements the rule in [spec.json](spec.json); the model driver, immutable phase bindings, and independent confirmation evaluation remain separate work.
+`benchtop calibrate INPUT --output NEW_FILE` evaluates saved normalized pilot outcomes. It starts no models, runs no experiments, and makes no study lock. `beta_mixed_group_v1` implements the rule in [spec.json](spec.json). Primary collection and phase bindings use the study commands; independent confirmation evaluation remains pending.
+
+The [canonical fresh pilot bridge](PILOT_CALIBRATION.md) verifies retained provider/MCP evidence, closes collection and applies this selector separately to each cohort member. The generic `calibrate` command remains an operator-input diagnostic.
 
 ## Rule
 

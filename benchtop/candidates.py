@@ -93,8 +93,8 @@ def generation_rules(models, preflight):
             "scope": "Frozen rules and prompts for the bounded fresh driver; legacy build/synthesize is not authorized by this record."}
 
 
-def _development():
-    frozen = study_calibration.load_closed()
+def _development(*, ledger_context=None):
+    frozen = study_calibration.load_closed(ledger_context=ledger_context)
     selection = frozen["selection"]
     if (selection["status"] != "selected" or selection["closed"] is not True
             or selection["chosen_budget_fraction"] not in study._json(study.SPEC)["budget"]["fractions"]
@@ -149,7 +149,7 @@ def lock_candidates(archive_directory, baseline_review, models):
         return record
 
 
-def verify():
+def verify(*, ledger_context=None):
     root = primary.canonical_root()
     record = study._json(root / "candidate_lock.json")
     study._verify(record, "record_sha256")
@@ -162,7 +162,7 @@ def verify():
             or record["plan_sha256"] != study.canonical_hash({"phase": "candidate", "binding": binding})
             or record["protocol_hash"] != study.canonical_hash(study._json(study.SPEC))):
         raise ValueError("candidate lock configuration changed")
-    development, plan = _development()
+    development, plan = _development(ledger_context=ledger_context)
     if study.cache.file_hash(root / "candidate_baseline_review.json") != record["baseline_review_sha256"]:
         raise ValueError("archived baseline review changed")
     at = metadata.timestamp(record["recorded_at_utc"])

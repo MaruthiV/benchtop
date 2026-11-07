@@ -67,11 +67,15 @@ def authorize_smoke(plan, preflight, *, extra_usage_disabled=False):
         return record
 
 
-def verify(plan, root=None, *, allow_missing_ledger=False, live=True):
+def verify(plan, root=None, *, allow_missing_ledger=False, live=True, ledger_context=None):
     root = canonical_root() if root is None else Path(root).resolve()
     if root.resolve() != canonical_root().resolve():
         raise ValueError("primary execution must use the single canonical study directory")
     phase = plan["binding"]["phase"]
+    if phase == "fresh_pilot":
+        from benchtop import pilots
+
+        return pilots.verify(plan, live=live, ledger_context=ledger_context)
     if phase not in ("smoke", "development"):
         raise ValueError("fresh phase authorization is not implemented")
     _plan(plan, phase)
