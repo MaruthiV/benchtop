@@ -121,6 +121,7 @@ def cmd_primary(a):
     from benchtop import (
         candidate_metadata,
         candidates,
+        cohort,
         fresh_generation,
         generation_journal,
         primary,
@@ -161,6 +162,10 @@ def cmd_primary(a):
         elif a.action == "inspect-candidates":
             record = candidates.verify()
             result = {key: record[key] for key in ("id", "record_sha256", "study_lock", "generation_ready", "model_sessions_started")}
+        elif a.action in ("lock-cohort", "inspect-cohort"):
+            record = cohort.lock_cohort() if a.action == "lock-cohort" else cohort.verify()
+            result = {key: record[key] for key in ("id", "record_sha256", "study_lock", "status", "model_sessions_started")}
+            result["cohort_size"] = record["binding"]["cohort_size"]
         elif a.action == "generate-next":
             result = fresh_generation.step()
             result = {key: value for key, value in result.items() if key in ("status", "version", "reason", "model_sessions_started_by_step")}
@@ -413,8 +418,10 @@ def main(argv=None):
     generation_status = actions.add_parser("generation-status", help="inspect generation intent accounting and ordered candidate outcomes")
     resume_generation = actions.add_parser("resume-generation", help="finish retained generation process evidence without relaunching")
     resume_generation.add_argument("call")
+    lock_cohort = actions.add_parser("lock-cohort", help="freeze the complete ordered funnel and qualification-only cohort without model calls")
+    inspect_cohort = actions.add_parser("inspect-cohort", help="verify frozen membership, reviews and cached qualification evidence")
     for action in (preflight, authorize, lock, run, resume, calibration, archive, candidates, inspect_candidates,
-                   generate, review_generated, qualify_generated, generation_status, resume_generation):
+                   generate, review_generated, qualify_generated, generation_status, resume_generation, lock_cohort, inspect_cohort):
         action.set_defaults(fn=cmd_primary)
 
     s = sub.add_parser("serve")

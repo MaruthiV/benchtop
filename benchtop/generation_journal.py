@@ -113,6 +113,8 @@ def invoke(lock, paper, stage, prompt, system):
     model = lock["binding"]["generation"]["models"]["repair" if stage.startswith("repair_") else stage]
     preflight = study._json(primary.canonical_root() / "provider.json")
     with ledger._locked(primary.canonical_root() / "ledger") as (root, manifest):
+        if (primary.canonical_root() / "cohort_lock.json").exists():
+            raise ValueError("cohort is locked; generation calls are closed")
         if manifest["identity"]["scope"] != "primary":
             raise ValueError("generation requires the canonical primary journal")
         ledger._current(manifest)

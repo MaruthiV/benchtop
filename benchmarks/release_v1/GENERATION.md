@@ -53,6 +53,10 @@ Results are `admitted`, `qualification_ambiguous`, or `generation_failed`. Ambig
 
 A qualification start without a durable finish blocks automatic re-execution. Preserve partial records for explicit reconciliation. If the complete qualification proof was saved before acknowledgement failed, rerunning `qualify-generated` verifies and finalizes it without more CPU work. Outcome snapshots bind lab data, reviews and generator transcripts. Later edits or a cohort-lock marker block further admission mutations.
 
+## Freeze membership
+
+Once the ordered funnel is complete, use the [cohort lock](COHORT.md) to verify the retained transcripts, human reviews and cached qualification evidence and freeze the actual membership. It starts no models or sweeps. A published cohort closes further generation, review and qualification mutations; smaller or empty cohorts remain valid outcomes.
+
 ## Email readiness
 
-This completes the generation-to-qualification implementation, not the project. Still required are the cohort and confirmation execution/analysis path, shared Qualia invocation routing, actual scientific reviews and bounded study runs, the reproducible public report, and a working demonstration. No actual selected cohort, fresh performance result or Qualia pass is claimed by these tests.
+Generation-to-qualification and cohort locking are implemented. Still required are fresh pilot/confirmation execution and analysis, shared Qualia invocation routing, actual scientific reviews and bounded study runs, the reproducible public report, and a working demonstration. No actual selected cohort, fresh performance result or Qualia pass is claimed by these tests.

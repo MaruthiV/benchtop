@@ -131,25 +131,7 @@ def _current(root, lock):
 def _content(folder, paper, client=None):
     path = folder / "content.json"
     if path.exists():
-        record = study._json(path)
-        study._verify(record, "record_sha256")
-        if record["version"] != paper["version"]:
-            raise ValueError("paper content version changed")
-        _verify_files(folder, record["files"])
-        receipt = study._json(folder / record["receipt_file"])
-        study._verify(receipt, "record_sha256")
-        if receipt["record_sha256"] != record["receipt_sha256"]:
-            raise ValueError("paper retrieval receipt changed")
-        raw_path = folder / next(iter(record["files"]))
-        if record["http_status"] == 404:
-            expected = "(no html full text available; work from the abstract)"
-        else:
-            parser = arxiv._Text()
-            parser.feed(raw_path.read_bytes().decode(record["encoding"], errors="replace"))
-            expected = parser.text()[:24000]
-        if record["excerpt"] != expected:
-            raise ValueError("paper excerpt differs from its archived versioned response")
-        return record["excerpt"]
+        return saved_content(folder, paper)
     folder.mkdir(parents=True, exist_ok=True, mode=0o700)
     fetches = folder / "fetches"
     fetches.mkdir(exist_ok=True, mode=0o700)
@@ -187,6 +169,46 @@ def _content(folder, paper, client=None):
     finally:
         if owned:
             client.close()
+
+
+def saved_content(folder, paper):
+    record = study._json(folder / "content.json")
+    study._verify(record, "record_sha256")
+    if record["version"] != paper["version"] or record["url"] != "https://arxiv.org/html/" + paper["version"]:
+        raise ValueError("paper content version changed")
+    _verify_files(folder, record["files"])
+    receipt_path = (folder / record["receipt_file"]).resolve()
+    if not receipt_path.is_relative_to(folder.resolve()):
+        raise ValueError("paper receipt escapes its candidate folder")
+    receipt = study._json(receipt_path)
+    study._verify(receipt, "record_sha256")
+    if receipt["record_sha256"] != record["receipt_sha256"]:
+        raise ValueError("paper retrieval receipt changed")
+    if record["http_status"] == 404:
+        expected = "(no html full text available; work from the abstract)"
+    elif record["http_status"] == 200:
+        parser = arxiv._Text()
+        parser.feed((folder / next(iter(record["files"]))).read_bytes().decode(record["encoding"], errors="replace"))
+        expected = parser.text()[:24000]
+    else:
+        raise ValueError("paper content has no successful pinned-version response")
+    if record["excerpt"] != expected:
+        raise ValueError("paper excerpt differs from its archived versioned response")
+    return record["excerpt"]
+
+
+def initial_manifest(paper, lock):
+    splits = {name: lock["binding"]["generation"]["seed_partitions"][name] for name in ("visible", "qualification", "confirmation")}
+    return {"id": paper["version"], "source": "arxiv", "arxiv_id": paper["id"], "arxiv_version": paper["version"],
+            "paper_title": paper["title"], "published": paper["published"], "seeds": 28, "visible_seeds": 4, "seed_splits": splits}
+
+
+def qualification_decision(visible, qualified, report, rules):
+    if report["mechanical"]["status"] != "passed" or visible["cpu_secs"] + qualified["cpu_secs"] > rules["max_recorded_sweep_cpu_seconds"]:
+        return "generation_failed", "qualification/sandbox/completeness or CPU acceptance checks failed"
+    if report["qualification"]["claim_eligible"]:
+        return "admitted", "pre-qualification human acceptance and complete settled qualification claim"
+    return "qualification_ambiguous", "no settled qualification claim; retain this candidate without replacement"
 
 
 def _call(lock, paper, stage, prompt, system):
@@ -256,6 +278,7 @@ def step(*, client=None):
     _ready(lock)
     root = journal.initialize(lock)
     with primary._guard(root / ".generation.lock"):
+        _ready(lock)
         paper = _current(root, lock)
         if paper is None:
             return {"status": "collection_complete", "model_sessions_started_by_step": 0}
@@ -301,6 +324,7 @@ def review(source):
     if not (root / "journal.json").exists():
         raise ValueError("generate a candidate before submitting its human review")
     with primary._guard(root / ".generation.lock"):
+        _ready(lock)
         paper = _current(root, lock)
         if paper is None:
             raise ValueError("candidate collection is already complete")
@@ -340,9 +364,7 @@ def review(source):
         space["metric"]["min_effect"] = value
         _put(lab / "lab.py", (work / "lab.py").read_bytes())
         _put(lab / "space.json", (json.dumps(space, indent=2, allow_nan=False) + "\n").encode())
-        splits = {name: lock["binding"]["generation"]["seed_partitions"][name] for name in ("visible", "qualification", "confirmation")}
-        manifest = {"id": paper["version"], "source": "arxiv", "arxiv_id": paper["id"], "arxiv_version": paper["version"],
-                    "paper_title": paper["title"], "published": paper["published"], "seeds": 28, "visible_seeds": 4, "seed_splits": splits}
+        manifest = initial_manifest(paper, lock)
         _put(lab / "manifest.json", (json.dumps(manifest, indent=2) + "\n").encode())
         _put(folder / "human_review.json", raw)
         permit = _sealed(folder / "qualification_permit.json", {"subject": subject, "review_sha256": hashlib.sha256(raw).hexdigest(),
@@ -357,6 +379,7 @@ def qualify():
     if not (root / "journal.json").exists():
         raise ValueError("generate and review a candidate before qualification")
     with primary._guard(root / ".generation.lock"):
+        _ready(lock)
         paper = _current(root, lock)
         if paper is None:
             return {"status": "collection_complete"}
@@ -390,12 +413,7 @@ def qualify():
         if any(row["seed"] in env.confirmation_seeds for row in read_jsonl(lab / "results.jsonl")):
             raise ValueError("confirmation seeds were evaluated before the confirmation lock")
         report = admission.inspect_lab(lab)
-        if report["mechanical"]["status"] != "passed" or visible["cpu_secs"] + qualified["cpu_secs"] > rules["max_recorded_sweep_cpu_seconds"]:
-            state, reason = "generation_failed", "qualification/sandbox/completeness or CPU acceptance checks failed"
-        elif report["qualification"]["claim_eligible"]:
-            state, reason = "admitted", "pre-qualification human acceptance and complete settled qualification claim"
-        else:
-            state, reason = "qualification_ambiguous", "no settled qualification claim; retain this candidate without replacement"
+        state, reason = qualification_decision(visible, qualified, report, rules)
         fields = {"lab": str(lab.relative_to(root)), "qualification_label": (report["qualification"].get("claim") or {}).get("label"), "confirmation_evaluated": False}
         _sealed(finished, {"permit_sha256": permit["record_sha256"], "visible": visible, "qualification": qualified,
             "screen": report, "files": _files(root, [path for path in lab.iterdir() if path.is_file()]), "finished_at_utc": _now(),

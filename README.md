@@ -12,6 +12,8 @@ A [controlled defect suite](benchmarks/release_v1/admission/defects/README.md) e
 
 The [versioned classical baselines](benchmarks/release_v1/BASELINES.md) implement paired-uniform, question-coverage, and coverage-plus-cost acquisition with one shared estimator. They use matched visible replicates, public frozen prices, and explicit equal-context weighting. The reviewed development comparison remains pending.
 
+The [cohort lock](benchmarks/release_v1/COHORT.md) freezes reviewed labs and qualification evidence from the ordered fresh-generation funnel. Fresh pilot/confirmation execution and actual study results remain pending.
+
 The [classical replay harness](benchmarks/release_v1/REPLAY.md) adds sanity controls, raw attempt evidence, immutable resume, and a review gate before development comparisons. Engineering replays are explicitly separated from study results.
 
 ```mermaid

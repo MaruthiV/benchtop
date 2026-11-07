@@ -54,7 +54,9 @@ def setup(tmp_path, monkeypatch, *, count=2):
               for index in range(1, count + 1)]
     rules = candidates.generation_rules({stage: model() for stage in ("triage", "synthesis", "repair")}, preflight())
     lock = study._seal({"id": "candidate_lock", "study_lock": True, "generation_ready": True,
-        "binding": {"generation": rules, "candidates": papers}, "scope": "TEST FIXTURE ONLY; candidate-lock authority stubbed"}, "record_sha256")
+        "binding": {"generation": rules, "candidates": papers, "global_budget_fraction": 0.12,
+                    "baselines": {"policies": ["random"], "estimator_id": "fixture_only", "development_majority_label": "paper_better"}},
+        "scope": "TEST FIXTURE ONLY; candidate-lock authority stubbed"}, "record_sha256")
     study._publish(primary.canonical_root() / "candidate_lock.json", lock)
     monkeypatch.setattr(candidates, "verify", lambda: copy.deepcopy(lock))
     monkeypatch.setattr(fresh.arxiv, "_polite", lambda: None)
