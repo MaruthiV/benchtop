@@ -10,8 +10,10 @@ COLLECTION = "development_collection.json"
 
 
 def check_open(directory, plan):
+    from benchtop.confirmation_results import check_open as check_confirmation_open
     from benchtop.pilots import check_open as check_pilots_open
 
+    check_confirmation_open(directory, plan)
     check_pilots_open(directory, plan)
     path = Path(directory).parent / COLLECTION
     if path.exists():

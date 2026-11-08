@@ -44,4 +44,4 @@ Exports are exclusive and cannot overwrite existing files. Repeated exports afte
 
 ## What remains
 
-This snapshot is collection finalization, not the protocol's confirmation lock or execution authorization. Confirmation planning must bind all pilot records and calibrated choices or fallbacks before inspecting confirmation outcomes. Separate confirmation data/truth/stability, model collection, classical replay and full-cohort analysis remain. Actual scientific records and bounded runs, shared Qualia invocation accounting, the demonstration, reproducible reporting and public release still precede outreach.
+This snapshot is collection finalization, not a phase lock or execution authorization. The [confirmation lock and arm planner](CONFIRMATION.md) bind all pilot records and calibrated choices or fallbacks before [independent truth collection](CONFIRMATION_DATA.md). [Matched classical replay and full-cohort analysis](CONFIRMATION_RESULTS.md) are implemented; actual model collection remains pending. Actual scientific records and bounded runs, actual observed Qualia compatibility, the demonstration, reproducible reporting and public release still precede outreach.

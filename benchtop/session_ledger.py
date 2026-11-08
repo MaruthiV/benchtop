@@ -231,6 +231,12 @@ def _read(root, manifest):
         base = _base(manifest, plans[key[0]], slots[key], record["attempt_index"])
         if any(record.get(name) != value for name, value in base.items()):
             raise ValueError("attempt identity differs from its plan")
+        if manifest["identity"]["scope"] == "primary" and record["phase"] == "integration" and kind == "start":
+            from benchtop.qualia import validate_request
+
+            if record["attempt_index"] != 0:
+                raise ValueError("Qualia has two initial UI slots and no authorized UI retry path")
+            validate_request(plans[key[0]], slots[key], record.get("integration_request"))
         records[(key, record["attempt_index"])][kind] = record
     histories, counts, halted = {}, Counter({name: 0 for name in ("total", "active", "primary", "retry", "smoke", "integration")}), False
     for key, slot in slots.items():
@@ -303,7 +309,7 @@ def _verify_completion(manifest, slot, index, record, prior, previous=None):
         raise ValueError("completion recorder identity is invalid")
 
 
-def begin(directory, plan_sha256, slot_id, *, retry_technical=False):
+def begin(directory, plan_sha256, slot_id, *, retry_technical=False, integration_request=None):
     with _locked(directory) as (root, manifest):
         _directory(root, manifest["identity"]["scope"])
         _current(manifest)
@@ -312,6 +318,9 @@ def begin(directory, plan_sha256, slot_id, *, retry_technical=False):
         if key not in state["slots"]:
             raise ValueError("slot is not registered in this ledger")
         plan, slot = state["plans"][plan_sha256], state["slots"][key]
+        qualia_start = manifest["identity"]["scope"] == "primary" and plan["binding"]["phase"] == "integration"
+        if integration_request is not None and not qualia_start:
+            raise ValueError("UI accounting requests apply only to authorized Qualia integration slots")
         study.validate_plan(plan, ledger_context=(root, manifest))
         generation_active = 0
         if manifest["identity"]["scope"] == "primary":
@@ -320,7 +329,7 @@ def begin(directory, plan_sha256, slot_id, *, retry_technical=False):
             from benchtop.study_calibration import check_open
 
             check_open(root, plan)
-            primary.verify(plan, ledger_context=(root, manifest))
+            authorization = primary.verify(plan, ledger_context=(root, manifest))
             generation = generation_state()
             if generation["halted"]:
                 raise ValueError("generation halted after a model/provider contract violation")
@@ -333,10 +342,21 @@ def begin(directory, plan_sha256, slot_id, *, retry_technical=False):
         index = len(history)
         if index > 1 or index and not retry_technical:
             raise ValueError("at most one explicit technical retry is permitted")
+        if qualia_start:
+            from benchtop.qualia import validate_request
+
+            if index:
+                raise ValueError("Qualia has two initial UI slots and no authorized UI retry path")
+            validate_request(plan, slot, integration_request)
+        if manifest["identity"]["scope"] == "primary" and plan["binding"]["phase"] == "confirmation":
+            from benchtop.confirmation_execution import check_start
+
+            check_start(plan, slot, state, authorization)
         capacity_counts = state["counts"].copy()
         capacity_counts["active"] += generation_active
         _capacity(capacity_counts, plan["binding"]["phase"], index, manifest["identity"])
         record = study._seal({**_base(manifest, plan, slot, index), "record_kind": "start",
+                              **({"integration_request": integration_request} if qualia_start else {}),
                               "recorded_at_utc": datetime.now(UTC).isoformat(),
                               "bucket": _bucket(plan["binding"]["phase"], index)}, "record_sha256")
         study._publish(root / "attempts" / f"{record['attempt_id']}.start.json", record)

@@ -1,3 +1,4 @@
+import copy
 import json
 import math
 import secrets
@@ -6,6 +7,7 @@ import time
 import numpy as np
 
 from benchtop.cache import CacheError
+from benchtop.calibrate import canonical_hash
 from benchtop.env import Env
 from benchtop.space import canon, config_key
 from benchtop.stats import LABELS
@@ -29,11 +31,22 @@ class Episode:
         show_paper: bool = True,
         max_calls: int = MAX_CALLS,
         visible_order: list[int] | None = None,
+        grading_context: dict | None = None,
     ):
         env.assert_current()
         self.id = secrets.token_hex(6)
         self.env = env
         self.task = env.task(task_id)
+        self._grading_context = copy.deepcopy(grading_context)
+        self._grading_task = self.task
+        if grading_context is not None:
+            context = self._grading_context
+            if (context.get("context_sha256") != canonical_hash({k: v for k, v in context.items() if k != "context_sha256"})
+                    or context["binding"]["role"] != "independent_confirmation" or context["binding"]["env_id"] != env.id
+                    or context["binding"]["question_task_hash"] != canonical_hash(self.task)
+                    or task_id != "claim" or context["task"]["id"] != task_id or context["task"]["kind"] != "claim"):
+                raise ValueError("invalid private confirmation grading context")
+            self._grading_task = context["task"]
         self.seed = secrets.randbits(32) if seed is None else seed
         self.show_paper = show_paper
         self.max_calls = max_calls
@@ -188,7 +201,7 @@ class Episode:
             self.env.assert_current()
         except CacheError:
             return {"error": "environment cache inputs changed; reload or rebuild", "code": "stale_cache"}
-        graded = grade(self.env, self.task, answer)
+        graded = grade(self.env, self._grading_task, answer)
         bad_format = "error" in graded and "given" not in graded
         # bad format gets one more try instead of a silent zero
         if bad_format and not any(e["action"] == "bad_submit" for e in self.log):
@@ -208,6 +221,8 @@ class Episode:
             "spent_frac": self.spent / self.budget if self.budget else 0.0,
             "calls": self.calls,
         }
+        if self._grading_context is not None:
+            self.result["grading_context_sha256"] = self._grading_context["context_sha256"]
         self.log.append(
             {
                 "t": time.time() - self.started,
@@ -291,6 +306,8 @@ class Episode:
 
     def summary(self) -> dict:
         return {
+            **({"private_grading": {**self._grading_context["binding"], "context_sha256": self._grading_context["context_sha256"]}}
+               if self._grading_context is not None else {}),
             "episode": self.id,
             "env": self.env.id,
             "task": self.task["id"],

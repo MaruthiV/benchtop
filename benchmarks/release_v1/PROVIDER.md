@@ -1,6 +1,8 @@
 # Authorized subscription provider
 
-`claude_mcp_runner_v1` implements one primary smoke, development or [fresh pilot](PILOTS.md) attempt through the installed Claude CLI. This checkpoint exercises the controller with test fixtures and read-only authentication metadata. **No actual model smoke, development lock, or primary performance result has been observed.** Fresh generation, cohort locking, pilot preparation/authorization and [pilot closure/calibration](PILOT_CALIBRATION.md) are implemented; confirmation execution remains pending.
+`claude_mcp_runner_v1` implements one primary smoke, development, [fresh pilot](PILOTS.md) or [confirmation](CONFIRMATION_EXECUTION.md) attempt through the installed Claude CLI. This checkpoint exercises the controller with test fixtures and read-only authentication metadata. **No actual model smoke, development lock, or primary performance result has been observed.** Fresh generation, cohort locking, pilot preparation/authorization, [pilot closure/calibration](PILOT_CALIBRATION.md), confirmation authorization, ordered starts and independent private grading are implemented.
+
+The [confirmation planner and protocol lock](CONFIRMATION.md) freeze both arms before [independent confirmation truth](CONFIRMATION_DATA.md). [Separate execution authorization](CONFIRMATION_EXECUTION.md) verifies truth/stability and registers the full original plan while limiting starts to stable tasks. They cannot use qualification grading as confirmation evidence.
 
 ## Metadata before inference
 
@@ -45,7 +47,7 @@ Finish the remaining study implementation before spending the bound smoke allowa
 
 The last flag attests that subscription extra usage is disabled, required by this project's zero-new-spend constraint. Authentication metadata does not verify that account setting. Authorization invokes no model and is not the development lock. It creates `.state/study/CANONICAL_PROTOCOL_SHA256/` with one primary `ledger/`. A chosen second path cannot reset its allowance.
 
-Existing legacy integration starts block authorization until explicitly reconciled; they are never discarded or assumed stopped. Once authorization exists, old `integration begin` calls are blocked under their own file lock. Qualia invocation through the shared primary integration reserve still needs supported routing. Engineering journals cannot authorize primary execution.
+Existing legacy integration starts block authorization until explicitly reconciled; they are never discarded or assumed stopped. Once authorization exists, old `integration begin` calls are blocked under their own file lock. The [Qualia route](QUALIA_PRIMARY.md) now reserves UI invocations in the same journal, with inactive preparation and explicit client/billing/stop attestations. Engineering journals cannot authorize primary execution.
 
 Read `plan_sha256` and the six `slot_id` values from the smoke plan. This command **starts one real model session**:
 
@@ -76,8 +78,8 @@ Costs include experiment requests/charges, zero new lab executions, process wall
 .venv/bin/python -m benchtop.cli study resume-provider ATTEMPT_ID
 ```
 
-Resume verifies saved files and reparses stdout, recording the original outcome without another model call or grading. It can preserve a stopped attempt after source drift while new attempts stay blocked. Missing stop evidence or incomplete files leave work pending. Changed model/capability contracts cannot be reconciled into usable primary data.
+Resume verifies saved files and reparses stdout, recording the original outcome without another model call or experiment. Confirmation verification also checks the saved reward against its bound independent claim. It can preserve a stopped attempt after source drift while new attempts stay blocked. Missing stop evidence or incomplete files leave work pending. Changed model/capability contracts cannot be reconciled into usable primary data.
 
 The [canonical calibration bridge](CALIBRATION.md#canonical-development-collection) verifies saved development evidence and runs the offline selector. Its collection closure blocks new development starts and outcome changes. The [candidate lock](CANDIDATES.md) then binds that choice, human baseline freeze, generation rules and archived paper versions. The [fresh driver](GENERATION.md) uses a separate text-only provider command with no built-in tools or MCP servers, and shares active-session accounting with evaluation.
 
-Temporary positive tests use labeled simulated admission/auth/provider records, real local MCP transport and sandboxed synthetic labs, with locks only under temporary roots. They do not certify real reviews, provider compatibility, or study outcomes. Cohort/confirmation locks, independent confirmation collection, fresh selector/analysis export, shared Qualia invocation accounting, and presentation remain. Complete those code paths before live smoke: implementation edits invalidate authorization, and spent starts cannot be erased.
+Temporary positive tests use labeled simulated admission/auth/provider records, real local MCP transport and sandboxed synthetic labs, with locks only under temporary roots. They do not certify real reviews, provider compatibility, or study outcomes. [Confirmation collection and analysis](CONFIRMATION_RESULTS.md) verify raw provider evidence, close the phase and compare matched classical replay without another model batch. Actual scientific records and bounded study runs, an actual observed Qualia pass and presentation remain. Shared UI accounting is implemented in the original journal. Complete those code paths before live smoke: implementation edits invalidate authorization, and spent starts cannot be erased.

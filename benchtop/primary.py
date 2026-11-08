@@ -72,10 +72,18 @@ def verify(plan, root=None, *, allow_missing_ledger=False, live=True, ledger_con
     if root.resolve() != canonical_root().resolve():
         raise ValueError("primary execution must use the single canonical study directory")
     phase = plan["binding"]["phase"]
+    if phase == "integration":
+        from benchtop import qualia
+
+        return qualia.verify(plan, live=live, ledger_context=ledger_context)
     if phase == "fresh_pilot":
         from benchtop import pilots
 
         return pilots.verify(plan, live=live, ledger_context=ledger_context)
+    if phase == "confirmation":
+        from benchtop import confirmation_execution
+
+        return confirmation_execution.verify(plan, live=live, ledger_context=ledger_context)
     if phase not in ("smoke", "development"):
         raise ValueError("fresh phase authorization is not implemented")
     _plan(plan, phase)

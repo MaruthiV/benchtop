@@ -132,7 +132,7 @@ def gate(*, phase="development", model=None, reviews_dir=None, foundation=None):
         model_status = {"status": "missing_or_invalid"}
     supported = phase in ("smoke", "development")
     if not supported:
-        blockers.append("Use study plan-pilots for cohort-bound fresh pilot preparation; confirmation planning/execution is not implemented.")
+        blockers.append("Use study plan-pilots or plan-confirmation for cohort-bound fresh preparation; confirmation execution still requires independent truth assessment and authorization.")
     execution = ["Preparation alone never authorizes execution; verify the current provider and canonical phase authorization with study authorize-smoke or lock-development."]
     if phase == "development":
         execution.append("Successful development-lab smoke evidence and the development lock still require verification.")
@@ -169,33 +169,39 @@ def _snapshot(path):
     return snapshot
 
 
+def _group(binding, bindings_hash, env, budget, arm):
+    spec = _json(SPEC)
+    descriptor = {"protocol_hash": binding["protocol_hash"], "bindings_hash": bindings_hash,
+                  "phase": binding["phase"], "arm": arm, "lab_hash": env["lab_hash"], "task_hash": env["task_hash"],
+                  "grader_hash": canonical_hash({name: binding["source_sha256"]["benchtop/" + name] for name in ("tasks.py", "stats.py")}),
+                  "model_config_hash": canonical_hash(binding["model_configuration"]), "prompt_template_hash": canonical_hash(binding["prompt"]),
+                  "charging_hash": env["charging_hash"], "budget_fraction": budget,
+                  "visible_order": env["visible_order"], "show_paper": spec["agent"]["show_paper"]}
+    if set(descriptor) != set(spec["identities"]["group_descriptor_fields"]):
+        raise ValueError("group descriptor schema differs from protocol")
+    return {"env_id": env["env_id"], "task": "claim", "group_id": canonical_hash(descriptor), "descriptor": descriptor}
+
+
+def _slot(group, index):
+    slot_id = canonical_hash({"group_id": group["group_id"], "replicate_index": index})
+    return {"group_id": group["group_id"], "slot_id": slot_id, "env_id": group["env_id"], "task": group["task"],
+            "replicate_index": index, "budget_fraction": group["descriptor"]["budget_fraction"],
+            "attempt_ids": [canonical_hash({"slot_id": slot_id, "attempt_index": attempt}) for attempt in range(2)]}
+
+
 def _grid(binding, bindings_hash):
     spec = _json(SPEC)
     phase = binding["phase"]
     selected = binding["environments"][:2] if phase == "smoke" else binding["environments"]
     repeats = (1 if phase == "smoke" else spec["calibration"]["pilot_repeats_per_budget"]
                if phase == "fresh_pilot" else spec["development"]["budget_selection_repeats"])
-    model_hash = canonical_hash(binding["model_configuration"])
-    prompt_hash = canonical_hash(binding["prompt"])
-    grader_hash = canonical_hash({name: binding["source_sha256"]["benchtop/" + name] for name in ("tasks.py", "stats.py")})
     groups, slots = [], []
     for env in selected:
         for budget in spec["budget"]["fractions"]:
-            descriptor = {"protocol_hash": binding["protocol_hash"], "bindings_hash": bindings_hash,
-                          "phase": phase, "arm": "smoke" if phase == "smoke" else "budget_candidate",
-                          "lab_hash": env["lab_hash"], "task_hash": env["task_hash"], "grader_hash": grader_hash,
-                          "model_config_hash": model_hash, "prompt_template_hash": prompt_hash,
-                          "charging_hash": env["charging_hash"], "budget_fraction": budget,
-                          "visible_order": env["visible_order"], "show_paper": spec["agent"]["show_paper"]}
-            if set(descriptor) != set(spec["identities"]["group_descriptor_fields"]):
-                raise ValueError("group descriptor schema differs from protocol")
-            group_id = canonical_hash(descriptor)
-            groups.append({"env_id": env["env_id"], "task": "claim", "group_id": group_id, "descriptor": descriptor})
+            group = _group(binding, bindings_hash, env, budget, "smoke" if phase == "smoke" else "budget_candidate")
+            groups.append(group)
             for index in range(repeats):
-                slot_id = canonical_hash({"group_id": group_id, "replicate_index": index})
-                slots.append({"group_id": group_id, "slot_id": slot_id, "env_id": env["env_id"], "task": "claim",
-                              "replicate_index": index, "budget_fraction": budget,
-                              "attempt_ids": [canonical_hash({"slot_id": slot_id, "attempt_index": attempt}) for attempt in range(2)]})
+                slots.append(_slot(group, index))
     if len({group["group_id"] for group in groups}) != len(groups) or len({slot["slot_id"] for slot in slots}) != len(slots):
         raise ValueError("identical lab/task content would collide; use distinct sources")
     return groups, slots
@@ -248,6 +254,18 @@ def validate_plan(plan, *, ledger_context=None):
 
         if plan != pilots.make_plan(ledger_context=ledger_context):
             raise ValueError("fresh pilot plan or frozen cohort inputs changed")
+        return plan
+    if binding["phase"] == "confirmation":
+        from benchtop import confirmation
+
+        if plan != confirmation.make_plan(ledger_context=ledger_context):
+            raise ValueError("confirmation plan or frozen pilot/cohort inputs changed")
+        return plan
+    if binding["phase"] == "integration" and binding["mode"] == "study_preparation":
+        from benchtop import qualia
+
+        if plan != qualia.make_plan(ledger_context=ledger_context):
+            raise ValueError("Qualia integration plan or original smoke inputs changed")
         return plan
     expected = make_plan([_resolve(env["source"]) for env in binding["environments"]]
                          if binding["mode"] == "engineering" else None,

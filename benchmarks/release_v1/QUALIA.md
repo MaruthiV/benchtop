@@ -1,5 +1,7 @@
 # Qualia connectivity check
 
+These legacy commands apply before primary study authorization. Once primary accounting exists, use the [shared Qualia route](QUALIA_PRIMARY.md), which reserves slots in the canonical journal and gates tools until activation. No actual UI pass is implied by either preparation path.
+
 The agent endpoint has passed generic MCP preflight through a temporary public HTTPS tunnel. A real Qualia conversation has not yet been observed. This is the remaining foundation gate; preflight alone does not satisfy it.
 
 ## Current client setup

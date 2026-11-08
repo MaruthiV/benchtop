@@ -1,4 +1,5 @@
 import asyncio
+import copy
 import json
 import re
 import secrets
@@ -54,6 +55,8 @@ class Hub:
         self.mcp_traces: dict[str, dict] = {}
         self.submission_sources: dict[str, str] = {}
         self.sealed: set[str] = set()
+        self.instance_id = secrets.token_hex(16)
+        self.integrations: dict[str, dict] = {}
 
     def record_mcp(self, ep: Episode, tool: str, response: dict):
         trace = self.mcp_traces.setdefault(ep.id, {"total": 0, "events": deque(maxlen=256)})
@@ -73,6 +76,13 @@ class Hub:
         async with self.locks[ep.id]:
             if ep.id in self.sealed:
                 return {"error": "episode is sealed", "code": "episode_sealed"}
+            if ep.id in self.integrations:
+                from benchtop.qualia import check_lease
+
+                try:
+                    check_lease(self, ep)
+                except (ValueError, OSError):
+                    return {"error": "Qualia integration is inactive or requires reconciliation", "code": "integration_inactive"}
             request = ep.begin_run(configs, seeds)
             if "error" in request:
                 return request
@@ -106,6 +116,13 @@ class Hub:
         async with self.locks[ep.id]:
             if ep.id in self.sealed:
                 return {"error": "episode is sealed", "code": "episode_sealed"}
+            if ep.id in self.integrations:
+                from benchtop.qualia import check_lease
+
+                try:
+                    check_lease(self, ep)
+                except (ValueError, OSError):
+                    return {"error": "Qualia integration is inactive or requires reconciliation", "code": "integration_inactive"}
             was_done = ep.done
             out = ep.submit(answer, confidence)
             if not was_done and ep.done:
@@ -118,13 +135,20 @@ class Hub:
 
     async def summary(self, ep: Episode) -> dict:
         async with self.locks[ep.id]:
-            return ep.summary()
+            return self._summary(ep)
+
+    def _summary(self, ep):
+        result = ep.summary()
+        if ep.id in self.integrations:
+            guard = self.integrations[ep.id]
+            result["qualia"] = copy.deepcopy({key: guard[key] for key in ("binding", "activation")})
+        return result
 
     async def seal(self, ep: Episode) -> dict:
         async with self.locks[ep.id]:
             self.sealed.add(ep.id)
             self.capabilities.pop(ep.id, None)
-            return {"sealed": True, "summary": ep.summary(), "trace": self.mcp_trace(ep),
+            return {"sealed": True, "summary": self._summary(ep), "trace": self.mcp_trace(ep),
                     "max_calls": ep.max_calls}
 
     async def close(self):
@@ -169,6 +193,7 @@ class Hub:
             self.mcp_traces.pop(expired, None)
             self.submission_sources.pop(expired, None)
             self.sealed.discard(expired)
+            self.integrations.pop(expired, None)
         return ep
 
     def agent_url(self, ep: Episode) -> str:
@@ -246,16 +271,23 @@ def build_admin_app(hub: Hub):
     async def create(request: Request):
         body = await request.json()
         try:
-            ep = hub.create(
-                body["env"],
-                body["task"],
-                budget_frac=body.get("budget_frac", 0.25),
-                seed=body.get("seed"),
-                show_paper=body.get("show_paper", True),
-            )
+            if "qualia" in body:
+                from benchtop.qualia import create_episode
+
+                if set(body) != {"qualia"} or set(body["qualia"]) != {"plan_sha256", "slot_id"}:
+                    raise ValueError("Qualia episodes cannot override frozen task or budget controls")
+                ep = create_episode(hub, **body["qualia"])
+            else:
+                ep = hub.create(
+                    body["env"],
+                    body["task"],
+                    budget_frac=body.get("budget_frac", 0.25),
+                    seed=body.get("seed"),
+                    show_paper=body.get("show_paper", True),
+                )
         except KeyError as e:
             return JSONResponse({"error": str(e)}, status_code=404)
-        except (TypeError, ValueError) as e:
+        except (TypeError, ValueError, OSError) as e:
             return JSONResponse({"error": str(e)}, status_code=400)
         return JSONResponse({"id": ep.id, "describe": ep.describe(), "budget": ep.budget_left(), "mcp_url": hub.agent_url(ep)})
 
@@ -272,6 +304,19 @@ def build_admin_app(hub: Hub):
         except KeyError as e:
             return JSONResponse({"error": str(e)}, status_code=404)
         return JSONResponse(await hub.seal(ep))
+
+    async def qualia_activate(request: Request):
+        from benchtop.qualia import arm
+
+        try:
+            ep = hub.get(request.path_params["eid"])
+            async with hub.locks[ep.id]:
+                activation = arm(hub, ep)
+            return JSONResponse({"activation": activation})
+        except KeyError as error:
+            return JSONResponse({"error": str(error)}, status_code=404)
+        except (TypeError, ValueError, OSError) as error:
+            return JSONResponse({"error": str(error)}, status_code=400)
 
     async def mcp_trace(request: Request):
         try:
@@ -322,6 +367,7 @@ def build_admin_app(hub: Hub):
         Route("/episodes", episodes, methods=["GET"]),
         Route("/episodes/{eid}", show, methods=["GET"]),
         Route("/episodes/{eid}/seal", seal, methods=["POST"]),
+        Route("/episodes/{eid}/qualia-activate", qualia_activate, methods=["POST"]),
         Route("/episodes/{eid}/mcp-trace", mcp_trace, methods=["GET"]),
         Route("/episodes/{eid}/run", run, methods=["POST"]),
         Route("/episodes/{eid}/submit", submit, methods=["POST"]),

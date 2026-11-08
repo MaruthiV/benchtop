@@ -154,10 +154,19 @@ class Controller:
     def prepare(self, plan, slot):
         snapshot = next(env for env in plan["binding"]["environments"] if env["env_id"] == slot["env_id"])
         path = study._resolve(snapshot["source"])
-        if plan["binding"]["phase"] == "fresh_pilot":
+        grading_context = None
+        confirmation_authorization = None
+        if plan["binding"]["phase"] in ("fresh_pilot", "confirmation"):
             from benchtop.pilots import load_environment
 
             env = load_environment(snapshot)
+            if plan["binding"]["phase"] == "confirmation":
+                from benchtop.confirmation_execution import AUTHORIZATION
+                from benchtop.confirmation_execution import grading_context as independent_grading
+                from benchtop.primary import canonical_root
+
+                grading_context = independent_grading(plan, slot["env_id"])
+                confirmation_authorization = study._json(canonical_root() / AUTHORIZATION)["record_sha256"]
         else:
             if study._snapshot(path) != snapshot:
                 raise ValueError("episode source differs from bound preparation")
@@ -171,8 +180,13 @@ class Controller:
             self.hub.envs[env.id] = env
             ep = self.hub.create(env.id, "claim", budget_frac=slot["budget_fraction"], seed=0,
                                  visible_order=snapshot["visible_order"], show_paper=True,
+                                 grading_context=grading_context,
                                  max_calls=plan["binding"]["limits"]["max_experiment_tool_calls"])
             return {"controller_id": self.identity, "episode": ep.id, "mcp_url": self.hub.agent_url(ep),
+                    **({"private_grading": {**grading_context["binding"], "context_sha256": grading_context["context_sha256"]}}
+                       if grading_context is not None else {}),
+                    **({"grading_context": grading_context, "confirmation_authorization_sha256": confirmation_authorization}
+                       if grading_context is not None else {}),
                     "plan_sha256": plan["plan_sha256"], "slot_id": slot["slot_id"], "expected_budget": expected_budget,
                     "description": ep.describe(), "budget": ep.budget_left()}
 
@@ -206,6 +220,22 @@ def _classify(plan, slot, connection, process, sealed, spec):
              and sealed.get("max_calls") == plan["binding"]["limits"]["max_experiment_tool_calls"]
              and summary.get("budget") == connection["expected_budget"])
     result = summary.get("result")
+    if plan["binding"]["phase"] == "confirmation":
+        from benchtop.confirmation_execution import evidence_context
+        from benchtop.tasks import grade
+
+        try:
+            context = evidence_context(plan, slot["env_id"], connection.get("confirmation_authorization_sha256"))
+        except (KeyError, ValueError, FileNotFoundError):
+            context = None
+        binding = {**context["binding"], "context_sha256": context["context_sha256"]} if context is not None else None
+        valid = (valid and context is not None and connection.get("grading_context") == context
+                 and connection.get("private_grading") == summary.get("private_grading") == binding)
+        if result is not None and context is not None:
+            submissions = [row for row in summary["log"] if row["action"] == "submit"]
+            graded = grade(None, context["task"], submissions[0]["answer"]) if len(submissions) == 1 else None
+            valid = (valid and result.get("grading_context_sha256") == context["context_sha256"]
+                     and graded is not None and result.get("graded") == graded and result.get("score") == graded["score"])
     submission = "committed" if result is not None else "not_committed" if valid else "unknown"
     models = process["stream"]["models"]
     expected_model = plan["binding"]["model_configuration"]["reported_model_id"]
@@ -318,6 +348,8 @@ def run_provider(plan_sha256, slot_id, *, timeout=1200, retry_technical=False, c
     root = primary.canonical_root()
     directory = root / "ledger"
     plan, slot = _registered(directory, plan_sha256, slot_id)
+    if plan["binding"]["phase"] == "integration":
+        raise ValueError("Qualia integration uses the operator-assisted UI path, not the CLI provider runner")
     primary.verify(plan)
     preflight = study._json(root / "provider.json")
     return _run(directory, plan, slot, timeout, retry_technical, controller,

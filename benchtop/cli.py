@@ -122,17 +122,25 @@ def cmd_primary(a):
         candidate_metadata,
         candidates,
         cohort,
+        confirmation,
+        confirmation_analysis,
+        confirmation_data,
+        confirmation_execution,
+        confirmation_replay,
+        confirmation_results,
         fresh_generation,
         generation_journal,
         pilot_calibration,
         pilots,
         primary,
         provider,
+        qualia,
         runner,
         session_ledger,
         study,
         study_calibration,
     )
+    from benchtop.access import redact
 
     try:
         if a.action == "provider-preflight":
@@ -178,6 +186,63 @@ def cmd_primary(a):
             receipt = study.save_plan(plan, a.output_dir)
             result = {"plan_sha256": receipt["plan_sha256"], "study_lock": False, "execution_ready": False,
                       "planned_slots": len(plan["slots"]), "cohort_size": plan["binding"]["cohort_size"], "model_sessions_started": 0}
+        elif a.action == "plan-confirmation":
+            plan = confirmation.make_plan()
+            study.save_plan(plan, a.output_dir)
+            result = {"plan_sha256": plan["plan_sha256"], "study_lock": False, "execution_ready": False,
+                      "planned_slots": len(plan["slots"]), "cohort_size": plan["binding"]["cohort_size"], "model_sessions_started": 0}
+        elif a.action in ("lock-confirmation", "inspect-confirmation"):
+            record = (confirmation.lock_confirmation(study.load_plan(a.preparation)) if a.action == "lock-confirmation" else confirmation.verify())
+            result = {key: record[key] for key in ("id", "plan_sha256", "record_sha256", "study_lock", "status",
+                                                 "planned_slots", "execution_ready", "model_sessions_started")}
+        elif a.action in ("collect-confirmation-data", "inspect-confirmation-data"):
+            assessment = confirmation_data.collect() if a.action == "collect-confirmation-data" else confirmation_data.status()
+            result = {key: assessment[key] for key in ("status", "full_cohort_size", "model_sessions_started")}
+            result.update({key: assessment[key] for key in ("assessment_sha256", "gradable_labs") if key in assessment})
+            result["members"] = [{key: member[key] for key in ("env_id", "status", "gradable") if key in member} for member in assessment["members"]]
+        elif a.action in ("authorize-confirmation", "inspect-confirmation-execution"):
+            record = (confirmation_execution.authorize(study.load_plan(a.preparation)) if a.action == "authorize-confirmation" else
+                      confirmation_execution.verify(study._json(primary.canonical_root() / "confirmation_plan.json"), live=False))
+            result = {key: record[key] for key in ("id", "plan_sha256", "record_sha256", "study_lock", "status", "assessment_sha256",
+                                                  "planned_slots", "eligible_slots", "full_cohort_size", "gradable_labs", "model_sessions_started")}
+        elif a.action == "collect-confirmation":
+            record = confirmation_results.collect(a.plan, a.output, close=a.close)
+            result = {key: record[key] for key in ("snapshot_sha256", "closed", "plan_sha256", "model_sessions_started_by_export")}
+            result.update(cohort_size=len(record["members"]), planned_slots=len(record["slots"]))
+        elif a.action in ("replay-confirmation", "inspect-confirmation-replay"):
+            record = confirmation_replay.run() if a.action == "replay-confirmation" else confirmation_replay.inspect()
+            result = {key: record[key] for key in ("status", "model_sessions_started", "summary_sha256", "replay_plan_sha256") if key in record}
+        elif a.action == "analyse-confirmation":
+            record = confirmation_analysis.export(a.output, report=a.report)
+            result = {key: record[key] for key in ("status", "reporting_status", "analysis_sha256", "denominators", "primary", "model_sessions_started_by_analysis")}
+        elif a.action == "authorize-qualia":
+            record = qualia.authorize()
+            result = {key: record[key] for key in ("id", "record_sha256", "plan_sha256", "planned_slots", "model_sessions_started")}
+        elif a.action == "inspect-qualia":
+            result = qualia.inspect()
+        elif a.action == "resume-qualia":
+            record = qualia.resume(a.episode)
+            result = {key: record[key] for key in ("attempt_id", "outcome", "model_mismatch", "identity_source")}
+        elif a.action == "abandon-qualia":
+            result = qualia.abandon(a.episode, client_stopped=a.client_stopped, reason=a.reason, output=a.output)
+        elif a.action in ("prepare-qualia", "begin-qualia", "activate-qualia", "collect-qualia"):
+            from benchtop.agents.common import Client
+
+            client = Client(a.base)
+            try:
+                if a.action == "prepare-qualia":
+                    result = qualia.prepare(client, a.slot)
+                elif a.action == "begin-qualia":
+                    result = qualia.begin(client, a.episode, client_name=a.client, selected_model_label=a.selected_model,
+                        reported_model=None if a.reported_model == "not_reported" else a.reported_model,
+                        restrictions=a.restrictions, no_new_spend=a.confirm_no_new_spend)
+                elif a.action == "activate-qualia":
+                    result = qualia.activate(client, a.episode)
+                else:
+                    result = qualia.collect(client, a.episode, client_stopped=a.client_stopped, client_observed=a.client_observed,
+                        reported_model=None if a.reported_model == "not_reported" else a.reported_model, output=a.output)
+            finally:
+                client.http.close()
         elif a.action in ("authorize-pilots", "inspect-pilots"):
             record = (pilots.authorize(study.load_plan(a.preparation)) if a.action == "authorize-pilots" else
                       pilots.verify(study._json(primary.canonical_root() / "pilot_plan.json"), live=False))
@@ -201,9 +266,9 @@ def cmd_primary(a):
             record = runner.resume(primary.canonical_root() / "ledger", a.attempt)
             result = {"attempt_id": record["attempt_id"], "status": record["outcome"]["state"],
                       "reward": record["outcome"]["reward"], "model_sessions": 0}
-        print(json.dumps(result, indent=2, allow_nan=False))
-    except (OSError, ValueError, TypeError, KeyError, RuntimeError) as error:
-        raise SystemExit(f"primary study failed: {error}") from error
+        print(json.dumps(redact(result), indent=2, allow_nan=False))
+    except Exception as error:
+        raise SystemExit(f"primary study failed: {redact(str(error))}") from None
 
 
 def cmd_serve(a):
@@ -445,9 +510,60 @@ def main(argv=None):
     calibrate_pilots.add_argument("plan")
     calibrate_pilots.add_argument("--output", required=True)
     calibrate_pilots.add_argument("--close", action="store_true", help="irreversibly close pilot starts/outcome changes and freeze selections or fallbacks")
+    plan_confirmation = actions.add_parser("plan-confirmation", help="prepare both confirmation arms from verified closed pilots without collecting data")
+    plan_confirmation.add_argument("--output-dir", required=True)
+    lock_confirmation = actions.add_parser("lock-confirmation", help="freeze confirmation arms and append the protocol binding before confirmation data")
+    lock_confirmation.add_argument("preparation")
+    inspect_confirmation = actions.add_parser("inspect-confirmation", help="verify frozen confirmation decisions without reading confirmation outcomes")
+    collect_confirmation_data = actions.add_parser("collect-confirmation-data", help="collect only independent confirmation seeds after the verified arm lock; no model calls")
+    inspect_confirmation_data = actions.add_parser("inspect-confirmation-data", help="verify private confirmation truth/stability or report pending data without executing labs")
+    authorize_confirmation = actions.add_parser("authorize-confirmation", help="authorize stable confirmation tasks and register every locked slot in the original primary journal")
+    authorize_confirmation.add_argument("preparation")
+    inspect_confirmation_execution = actions.add_parser("inspect-confirmation-execution", help="verify independent confirmation execution authority without model calls or live authentication")
+    collect_confirmation = actions.add_parser("collect-confirmation", help="verify and export every confirmation slot without model calls")
+    collect_confirmation.add_argument("plan")
+    collect_confirmation.add_argument("--output", required=True)
+    collect_confirmation.add_argument("--close", action="store_true", help="irreversibly close confirmation starts and outcome changes")
+    replay_confirmation = actions.add_parser("replay-confirmation", help="run cached classical policies at the frozen global budget, with no models or lab workers")
+    inspect_confirmation_replay = actions.add_parser("inspect-confirmation-replay", help="verify retained classical replay without executing policies")
+    analyse_confirmation = actions.add_parser("analyse-confirmation", help="export paired whole-lab analysis and full-cohort missing bounds from closed confirmation evidence")
+    analyse_confirmation.add_argument("--output", required=True)
+    analyse_confirmation.add_argument("--report")
+    authorize_qualia = actions.add_parser("authorize-qualia", help="register two operator-assisted Qualia slots in the existing primary journal; no model calls")
+    inspect_qualia = actions.add_parser("inspect-qualia", help="inspect shared Qualia accounting without assuming an actual UI observation")
+    prepare_qualia = actions.add_parser("prepare-qualia", help="prepare an inactive cached Qualia episode and private connection without a model start")
+    prepare_qualia.add_argument("slot")
+    begin_qualia = actions.add_parser("begin-qualia", help="reserve one shared integration intent before enabling a single Qualia conversation")
+    begin_qualia.add_argument("episode")
+    begin_qualia.add_argument("--client", choices=("qualia-cloud", "qualia-desktop"), required=True)
+    begin_qualia.add_argument("--selected-model", required=True)
+    begin_qualia.add_argument("--reported-model", default="not_reported")
+    begin_qualia.add_argument("--restrictions", default="not_verified")
+    begin_qualia.add_argument("--confirm-no-new-spend", action="store_true", help="attest this Qualia invocation uses included/free usage and no new billing")
+    activate_qualia = actions.add_parser("activate-qualia", help="recover activation of the same reserved intent; never launch or resend a conversation")
+    activate_qualia.add_argument("episode")
+    collect_qualia = actions.add_parser("collect-qualia", help="seal a stopped UI session and retain its server evidence and shared journal completion")
+    collect_qualia.add_argument("episode")
+    collect_qualia.add_argument("--client-stopped", action="store_true")
+    collect_qualia.add_argument("--client-observed", action="store_true")
+    collect_qualia.add_argument("--reported-model", default="not_reported")
+    collect_qualia.add_argument("--output")
+    resume_qualia = actions.add_parser("resume-qualia", help="acknowledge retained Qualia capture without any network or model calls")
+    resume_qualia.add_argument("episode")
+    abandon_qualia = actions.add_parser("abandon-qualia", help="retain an unavailable stopped-client outcome when the server receipt is lost; no refund or rerun")
+    abandon_qualia.add_argument("episode")
+    abandon_qualia.add_argument("--client-stopped", action="store_true")
+    abandon_qualia.add_argument("--reason", required=True)
+    abandon_qualia.add_argument("--output")
+    for action in (prepare_qualia, begin_qualia, activate_qualia, collect_qualia):
+        action.add_argument("--base", default="http://127.0.0.1:8787")
     for action in (preflight, authorize, lock, run, resume, calibration, archive, candidates, inspect_candidates,
                    generate, review_generated, qualify_generated, generation_status, resume_generation, lock_cohort, inspect_cohort,
-                   plan_pilots, authorize_pilots, inspect_pilots, calibrate_pilots):
+                   plan_pilots, authorize_pilots, inspect_pilots, calibrate_pilots,
+                   plan_confirmation, lock_confirmation, inspect_confirmation, collect_confirmation_data, inspect_confirmation_data,
+                   authorize_confirmation, inspect_confirmation_execution, collect_confirmation, replay_confirmation,
+                   inspect_confirmation_replay, analyse_confirmation, authorize_qualia, inspect_qualia, prepare_qualia,
+                   begin_qualia, activate_qualia, collect_qualia, resume_qualia, abandon_qualia):
         action.set_defaults(fn=cmd_primary)
 
     s = sub.add_parser("serve")

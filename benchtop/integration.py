@@ -89,6 +89,9 @@ def preflight(url, episode, *, lab=None):
 
 
 def prepare(client: Client, *, env=DEFAULT_ENV, task=DEFAULT_TASK, root=STATE / "integration", lab=None):
+    from benchtop.primary import block_legacy
+
+    block_legacy(root)
     created = client.create(env, task, seed=777, budget_frac=0.25, show_paper=True)
     episode = created["id"]
     checked = preflight(created["mcp_url"], episode, lab=lab)

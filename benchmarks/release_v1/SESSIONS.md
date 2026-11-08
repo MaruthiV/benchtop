@@ -42,9 +42,9 @@ Mutations hold a local filesystem lock. A begin transaction reads all registered
 | Technical retry starts across phases | 20 |
 | Technical retries per slot | 1 |
 
-The arithmetic includes the full frozen protocol. Current plans support smoke/development engineering controls and authorized primary attempts; fresh and primary integration execution are not enabled by these limits.
+The arithmetic includes the full frozen protocol. Current plans support smoke/development engineering controls and authorized primary attempts; fresh phases need their separate authorization and [primary integration routing](QUALIA_PRIMARY.md) requires its separate UI authorization and prepared-connection request.
 
-Engineering counters belong to one directory and do not coordinate unrelated commands. Primary starts must use the single canonical journal, preventing copied directories from resetting capacity. Existing legacy integration usage blocks authorization pending explicit reconciliation; the legacy begin path is blocked after authorization. Shared primary integration routing remains pending. These controls do not limit unrelated subscription processes.
+Engineering counters belong to one directory and do not coordinate unrelated commands. Primary starts must use the single canonical journal, preventing copied directories from resetting capacity. Existing legacy integration usage blocks authorization pending explicit reconciliation; the legacy begin path is blocked after authorization. [Shared primary integration routing](QUALIA_PRIMARY.md) now reserves exactly two UI starts, checks the same combined evaluation/generation capacity and keeps unavailable observations explicit. These controls do not limit unrelated subscription processes.
 
 ## Start intents and interruption
 
@@ -59,6 +59,8 @@ The core writes atomic exclusive files and preserves unfinished work. It handles
 [Fresh pilot authorization](PILOTS.md) registers the cohort-bound three-budget/four-replicate grid in this same primary journal. Starts inherit all existing caps, retain the original ledger identity, revalidate frozen qualification sources and require separate saved authorization. [Canonical pilot closure](PILOT_CALIBRATION.md) verifies the provider/MCP evidence and freezes per-lab choices or fallbacks under this same lock. Pilot-collection or confirmation-lock markers block new pilot starts and outcome changes. Closed-development and closed-pilot verification accept the caller's canonical journal context to avoid reacquiring its held lock.
 
 ## Finish and reconcile
+
+The [confirmation lock](CONFIRMATION.md) freezes both arm groups and the interleaved rollout slots while preserving this journal identity. Publication refuses prior confirmation observations, active evaluation intents and model/tool halts. [Independent truth/stability collection](CONFIRMATION_DATA.md) has its own CPU intents and writes no model starts. [Separate confirmation authorization](CONFIRMATION_EXECUTION.md) now registers every original slot, binds stable independent grading and checks the frozen eligible initial-start order under the start-intent lock. Unavailable members stay unattempted with unavailable rewards. Retries retain their original identities and all shared limits.
 
 The future adapter calls `finish` with the normalized outcome and:
 
@@ -91,4 +93,4 @@ Costs use the selector's normalized fields. Every attempt contributes, including
 
 Controls cover shared concurrency, immutable wrong answers, terminal agent failures, pending-process occupancy, explicit and bounded technical retry, late committed answers, unknown/model-mismatched outcomes, halted starts, all protocol allowance boundaries, the actual 20-retry limit, cross-plan smoke accounting, bad/corrupt/orphaned evidence, source drift, unknown costs, immutable reconciliation, exclusive snapshots, and copied-project CLI use. All synthetic start records are explicitly engineering data; no real model or paper experiment is run by these controls.
 
-The scripted adapter now connects owned process/MCP evidence to these accounting primitives. The [provider adapter](PROVIDER.md) now checks canonical smoke/development authorization; actual provider smoke evidence, fresh locks, and shared Qualia invocation routing remain pending. Primary evaluation, fresh confirmation grading, Qualia UI verification, and outreach readiness remain separate work.
+The scripted adapter now connects owned process/MCP evidence to these accounting primitives. The [provider adapter](PROVIDER.md) now checks canonical smoke/development authorization; shared [Qualia invocation routing](QUALIA_PRIMARY.md) is implemented; actual provider smoke evidence, fresh locks and observed UI compatibility remain pending. [Confirmation collection closure and analysis](CONFIRMATION_RESULTS.md) use this journal lock to freeze all slots and verify every finished provider attempt. Historical accounting stays fixed as later phases grow. Actual primary evaluation, Qualia UI verification and outreach readiness remain separate work.

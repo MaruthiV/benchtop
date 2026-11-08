@@ -261,7 +261,7 @@ def test_confirmation_remains_unavailable_and_forged_fresh_pilot_is_refused(tmp_
     plans = preparation(tmp_path, monkeypatch)
     altered = copy.deepcopy(plans["smoke"])
     altered["binding"]["phase"] = "confirmation"
-    with pytest.raises(ValueError, match="fresh phase authorization"):
+    with pytest.raises(ValueError, match="confirmation provider authorization is missing"):
         primary.verify(altered)
     altered["binding"]["phase"] = "fresh_pilot"
     with pytest.raises(ValueError, match="invalid plan_sha256"):

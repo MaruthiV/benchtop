@@ -12,7 +12,9 @@ A [controlled defect suite](benchmarks/release_v1/admission/defects/README.md) e
 
 The [versioned classical baselines](benchmarks/release_v1/BASELINES.md) implement paired-uniform, question-coverage, and coverage-plus-cost acquisition with one shared estimator. They use matched visible replicates, public frozen prices, and explicit equal-context weighting. The reviewed development comparison remains pending.
 
-The [cohort lock](benchmarks/release_v1/COHORT.md) freezes reviewed labs and qualification evidence from the ordered fresh-generation funnel. [Fresh pilots](benchmarks/release_v1/PILOTS.md) have cohort-bound plans, provider authorization and [per-lab calibration](benchmarks/release_v1/PILOT_CALIBRATION.md). Confirmation execution and actual study results remain pending.
+The [cohort lock](benchmarks/release_v1/COHORT.md) freezes reviewed labs and qualification evidence from the ordered fresh-generation funnel. [Fresh pilots](benchmarks/release_v1/PILOTS.md) have cohort-bound plans, provider authorization and [per-lab calibration](benchmarks/release_v1/PILOT_CALIBRATION.md). The [confirmation lock](benchmarks/release_v1/CONFIRMATION.md) freezes both budget arms; [independent confirmation truth](benchmarks/release_v1/CONFIRMATION_DATA.md) preserves qualification data and flags instability. [Confirmation provider execution](benchmarks/release_v1/CONFIRMATION_EXECUTION.md) now binds stable independent grading and ordered starts to the original journal; [Full-cohort analysis and matched classical replay](benchmarks/release_v1/CONFIRMATION_RESULTS.md) are implemented; actual study results remain pending.
+
+The [shared Qualia route](benchmarks/release_v1/QUALIA_PRIMARY.md) reserves UI invocations in the original journal and keeps experiments/submission inactive until reservation. Actual Qualia UI evidence remains pending.
 
 The [classical replay harness](benchmarks/release_v1/REPLAY.md) adds sanity controls, raw attempt evidence, immutable resume, and a review gate before development comparisons. Engineering replays are explicitly separated from study results.
 

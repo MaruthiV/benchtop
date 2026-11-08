@@ -59,4 +59,4 @@ Once the ordered funnel is complete, use the [cohort lock](COHORT.md) to verify 
 
 ## Email readiness
 
-Generation-to-qualification, cohort locking, [fresh pilot preparation/authorization](PILOTS.md) and [pilot closure/calibration](PILOT_CALIBRATION.md) are implemented. Still required are confirmation execution and analysis, shared Qualia invocation routing, actual scientific reviews and bounded study runs, the reproducible public report, and a working demonstration. No actual selected cohort, fresh performance result or Qualia pass is claimed by these tests.
+Generation-to-qualification, cohort locking, [fresh pilot preparation/authorization](PILOTS.md) and [pilot closure/calibration](PILOT_CALIBRATION.md) are implemented. [Confirmation execution/analysis](CONFIRMATION_RESULTS.md) and [shared Qualia routing](QUALIA_PRIMARY.md) are implemented. Still required are actual UI observation, actual scientific reviews and bounded study runs, the reproducible public report, and a working demonstration. No actual selected cohort, fresh performance result or Qualia pass is claimed by these tests.
