@@ -1,5 +1,7 @@
 # benchtop
 
+[Execution through outreach](benchmarks/release_v1/EXECUTION.md) · [Reproducible release packaging](benchmarks/release_v1/PUBLICATION.md)
+
 benchtop turns new arXiv papers into small runnable labs that work as RL environments for research taste. An agent gets a question about a paper's claim, spends a compute budget on experiments, and is graded on seeds it never saw.
 
 The results below use `historical_v0` labels. A [corrected grading review](benchmarks/release_v1/GRADING.md) retains 75 of the original 78 questions; new agent evaluations are pending.

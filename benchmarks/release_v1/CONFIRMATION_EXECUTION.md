@@ -9,7 +9,7 @@ Finish remaining study implementation and public documentation before actual mod
 ```sh
 .venv/bin/python -m benchtop.cli study authorize-confirmation artifacts/confirmation-preparation
 .venv/bin/python -m benchtop.cli study inspect-confirmation-execution
-.venv/bin/python -m benchtop.cli study run-provider PLAN_SHA256 SLOT_ID
+.venv/bin/python -m benchtop.cli study run-provider PLAN_SHA256 --slot SLOT_ID
 ```
 
 Use the exact preparation saved before confirmation data collection. Authorization revalidates the protocol lock, frozen pilot choices, qualification sources and independent data/assessment. It inherits the original pinned model, prompts, runtime, provider and extra-usage-disabled attestation. Inspection performs no live authentication probe or model call and prints hashes and counts without private labels or metrics.

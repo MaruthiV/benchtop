@@ -1,5 +1,7 @@
 # Release evaluation protocol
 
+Follow the [execution runbook](EXECUTION.md) for the remaining real review, connectivity, study, demonstration and outreach gates. [Publication](PUBLICATION.md) creates a separate sanitized release with frozen-input hashes, figures and model-free reproduction; keep the evaluation workspace unchanged.
+
 The [candidate metadata/rule lock](CANDIDATES.md) binds a verified development budget, reviewed baseline/estimator freeze, generation rules and the first 16 numerically ordered unseen paper IDs with fetched versions. [Bounded fresh generation](GENERATION.md) consumes that lock, preserves provider/repair evidence, freezes human scientific reviews and margins before qualification, and reserves confirmation seeds. The [cohort lock](COHORT.md) verifies the full funnel and freezes the first eight eligible labs or the smaller actual cohort. Actual candidate selection and fresh model results remain pending.
 
 [spec.json](spec.json) defines the next evaluation before fresh model results exist. It is a protocol, not a completed experiment or a runnable CLI configuration. Corrected grading, endpoint separation, frozen charging, and execution-cache versioning are implemented; the fresh seed-split harness and smoke/development rollout records are implemented; locked fresh collection remains pending.

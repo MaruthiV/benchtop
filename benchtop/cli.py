@@ -271,6 +271,22 @@ def cmd_primary(a):
         raise SystemExit(f"primary study failed: {redact(str(error))}") from None
 
 
+def cmd_release(a):
+    from benchtop import release
+    from benchtop.access import redact
+
+    try:
+        if a.action == "status":
+            result = release.status()
+        elif a.action == "build":
+            result = release.build(a.output_dir)
+        else:
+            result = release.reproduce(a.directory, replay_classical=not a.skip_classical_replay)
+        print(json.dumps(redact(result), indent=2, allow_nan=False))
+    except (OSError, ValueError, TypeError, KeyError, RuntimeError) as error:
+        raise SystemExit(f"release failed: {redact(str(error))}") from None
+
+
 def cmd_serve(a):
     from benchtop.env import ENVS
     from benchtop.server import serve
@@ -575,6 +591,17 @@ def main(argv=None):
     s.add_argument("--allowed-host", action="append", default=[])
     s.add_argument("--allowed-origin", action="append", default=[])
     s.set_defaults(fn=cmd_serve)
+
+    s = sub.add_parser("release", help="inspect readiness, build a separate sanitized publication and reproduce it without models")
+    releases = s.add_subparsers(dest="action", required=True)
+    release_status = releases.add_parser("status")
+    release_build = releases.add_parser("build")
+    release_build.add_argument("--output-dir", required=True)
+    release_reproduce = releases.add_parser("reproduce")
+    release_reproduce.add_argument("directory")
+    release_reproduce.add_argument("--skip-classical-replay", action="store_true", help="verify hashes, cached truth, model grades and analysis without repeating completed classical acquisitions")
+    for action in (release_status, release_build, release_reproduce):
+        action.set_defaults(fn=cmd_release)
 
     s = sub.add_parser("baselines")
     s.add_argument("--episodes", type=int, default=50)
