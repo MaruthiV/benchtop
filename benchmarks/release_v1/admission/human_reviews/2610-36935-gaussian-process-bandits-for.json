@@ -1,0 +1,211 @@
+{
+  "schema_version": 1,
+  "subject": {
+    "contract": "cached_admission_v1",
+    "env": "2610-36935-gaussian-process-bandits-for",
+    "execution_id": "historical_v0:61992841b3a74ac68707e3e65922821d54b520c25e6f39ce474493b06a647765",
+    "lab_sha256": "f4a4bb7156cc0c081f90ed8703629f44ed2530854a1342f75e0d38434e62e117",
+    "space_sha256": "7f0f1b901b8a3024401bbaa41a7921b2705d5df82fec6d890c0440ddc521068f",
+    "qualification_artifact_sha256": "19aaa603f9ff1c4cf841e64658ab2e237033f89f92a0035936f4543829221d48",
+    "charging_id": "af92bc5da48181eda5058401d76510c01fde75119013a28b5aae106401c3489c"
+  },
+  "decision": "accepted",
+  "reviewer": {
+    "kind": "human",
+    "name": "Maruthi Vemula",
+    "reviewed_at_utc": "2026-11-09T18:24:10.474838+00:00"
+  },
+  "paper": {
+    "url": "https://arxiv.org/html/2610.36935v1",
+    "version": "2610.36935v1",
+    "sections": [
+      "3.1.1 Kernel Selection",
+      "4.1 Simulated Allocation Environment",
+      "4.2 Environment Variants",
+      "4.3 Algorithms",
+      "4.4 Evaluation Methodology"
+    ]
+  },
+  "scope": {
+    "paper_mechanism": "GP-UCB transfers information across constrained allocations through kernels; the paper compares noise-free cumulative regret under several changing reward landscapes.",
+    "miniature_comparison": "52-round, three-segment simulation comparing independently tuned composite-kernel GP-UCB with epsilon-greedy; RBF GP is an additional arm. Approved admission scope: Compare independently tuned GP-UCB and epsilon-greedy in this 52-round miniature; disclose the changed landscape distributions, tuning grid and reactive dynamics. This is not a paper replication, production result or equal-wall-clock comparison.",
+    "preserved_assumptions": [
+      "Common initial landscapes and observation-noise stream within seed and context.",
+      "Neighbor-constrained allocation moves and delayed observations.",
+      "Regret uses the instantaneous noise-free oracle reward."
+    ],
+    "simplifications": [
+      "Only three algorithm arms and three environment types; no production deployment.",
+      "Steepness and width distributions differ from the source setup.",
+      "Separate four-seed hyperparameter search replaces the paper schedules."
+    ],
+    "unsupported_claims": [
+      "Reproduction of paper effect sizes or business returns.",
+      "Universal GP superiority or policy-independent realized paths in reactive contexts."
+    ]
+  },
+  "checks": {
+    "mechanism_fidelity": {
+      "status": "pass",
+      "evidence": [
+        {
+          "source": "https://arxiv.org/html/2610.36935v1#S4.SS1",
+          "locator": "4.1 reward landscape; 4.3 algorithm schedules",
+          "finding": "Source parameter draws and exploration schedules need comparison with the miniature."
+        },
+        {
+          "source": "envs/2610-36935-gaussian-process-bandits-for/lab.py",
+          "locator": "L51-L72",
+          "finding": "Steepness uses Uniform(-0.5,1) and widths Uniform(0.05,0.25); source setup uses Uniform(0,1) and Uniform(0,0.1)."
+        },
+        {
+          "source": "envs/2610-36935-gaussian-process-bandits-for/lab.py",
+          "locator": "L170-L193",
+          "finding": "Both methods select hyperparameters on four training seeds before final evaluation. This is a different comparison, requiring an explicit scope decision."
+        },
+        {
+          "source": "Declared miniature contract and linked original source evidence",
+          "locator": "/scope",
+          "finding": "Owner-approved scoped judgment: Compare independently tuned GP-UCB and epsilon-greedy in this 52-round miniature; disclose the changed landscape distributions, tuning grid and reactive dynamics. This is not a paper replication, production result or equal-wall-clock comparison."
+        }
+      ],
+      "rationale": "Approved within the narrow stated miniature scope and the recorded bounded validation. Original source limitations remain explicit; no broader scientific or production guarantee is claimed."
+    },
+    "baseline_fairness": {
+      "status": "pass",
+      "evidence": [
+        {
+          "source": "envs/2610-36935-gaussian-process-bandits-for/lab.py",
+          "locator": "L116-L164",
+          "finding": "Both policies have the same horizon and observation delay, but acquisition and computation differ."
+        },
+        {
+          "source": "envs/2610-36935-gaussian-process-bandits-for/lab.py",
+          "locator": "L170-L180",
+          "finding": "Separate searches use the same training seeds. Equal seed counts do not establish equal tuning effort or comparable cold/warm timing."
+        },
+        {
+          "source": "Declared miniature contract and linked original source evidence",
+          "locator": "/scope",
+          "finding": "Owner-approved scoped judgment: Compare independently tuned GP-UCB and epsilon-greedy in this 52-round miniature; disclose the changed landscape distributions, tuning grid and reactive dynamics. This is not a paper replication, production result or equal-wall-clock comparison."
+        }
+      ],
+      "rationale": "Approved within the narrow stated miniature scope and the recorded bounded validation. Original source limitations remain explicit; no broader scientific or production guarantee is claimed."
+    },
+    "shared_randomness": {
+      "status": "pass",
+      "evidence": [
+        {
+          "source": "envs/2610-36935-gaussian-process-bandits-for/lab.py",
+          "locator": "L116-L124",
+          "finding": "Data and action generators are separated; landscape and observation noise are generated before method-specific actions."
+        },
+        {
+          "source": "envs/2610-36935-gaussian-process-bandits-for/lab.py",
+          "locator": "L96-L105",
+          "finding": "Reactive rewards depend on the current action. Shared exogenous randomness does not imply identical realized landscapes under different policies."
+        }
+      ],
+      "rationale": "Approved within the narrow stated miniature scope and the recorded bounded validation. Original source limitations remain explicit; no broader scientific or production guarantee is claimed."
+    },
+    "heldout_metric": {
+      "status": "pass",
+      "evidence": [
+        {
+          "source": "https://arxiv.org/html/2610.36935v1#S4.SS4",
+          "locator": "4.4 Regret",
+          "finding": "Evaluation compares expected rewards to a time-specific oracle."
+        },
+        {
+          "source": "envs/2610-36935-gaussian-process-bandits-for/lab.py",
+          "locator": "L162-L193",
+          "finding": "Cumulative noise-free regret is lower-better. Tuning seed IDs 10001-10004 are separate from cached qualification IDs 4-15."
+        },
+        {
+          "source": "envs/2610-36935-gaussian-process-bandits-for/lab.py",
+          "locator": "L21-L23",
+          "finding": "Tuning seed IDs 10001-10004 are declared here, disjoint from the cached qualification seeds 4-15."
+        }
+      ],
+      "rationale": "Approved within the narrow stated miniature scope and the recorded bounded validation. Original source limitations remain explicit; no broader scientific or production guarantee is claimed."
+    },
+    "meaningful_margin": {
+      "status": "pass",
+      "evidence": [
+        {
+          "source": "envs/2610-36935-gaussian-process-bandits-for/space.json",
+          "locator": "/metric/min_effect",
+          "finding": "0.3 cumulative-regret units over 52 rounds is about 0.00577 per round. The unit conversion is descriptive; a practical threshold rationale remains unsigned."
+        },
+        {
+          "source": "Original frozen space.json metric/min_effect and declared evaluation sample sizes",
+          "locator": "/metric/min_effect",
+          "finding": "Owner-approved exploratory convention: The pre-existing 0.3 cumulative-regret threshold corresponds to 0.3/52, about 0.00577 normalized reward per round, or about 0.72% of the theoretical 52-round regret range when rewards lie in [0.2,1]. Proposed as an exploratory resolution convention for this toy task, not a measured business threshold."
+        }
+      ],
+      "rationale": "Approved within the narrow stated miniature scope and the recorded bounded validation. Original source limitations remain explicit; no broader scientific or production guarantee is claimed."
+    },
+    "execution_behavior": {
+      "status": "pass",
+      "evidence": [
+        {
+          "source": "envs/2610-36935-gaussian-process-bandits-for/lab.py",
+          "locator": "L170-L180",
+          "finding": "Tuning is lru-cached. Repeated-process and fresh-worker behavior and timing need probes; no executions were performed for this draft."
+        },
+        {
+          "source": "benchmarks/release_v1/admission/runtime_review/report.json",
+          "locator": "/members/0",
+          "finding": "Bounded visible-seed fresh-worker repetition passed. Observer results are transparent where present, with zero reported optimizer failures/nonfinite results. Scope is limited to the recorded contexts; no full-grid convergence guarantee.",
+          "sha256": "7c92076dc235b6b868271ff61177343ae0d9965c6d8de2936022dd06107afc0b"
+        }
+      ],
+      "rationale": "Approved within the narrow stated miniature scope and the recorded bounded validation. Original source limitations remain explicit; no broader scientific or production guarantee is claimed."
+    },
+    "shortcut_audit": {
+      "status": "pass",
+      "evidence": [
+        {
+          "source": "envs/2610-36935-gaussian-process-bandits-for/lab.py",
+          "locator": "L96-L105",
+          "finding": "The action-dependent reactive update is intentional feedback, requiring an explicit comparison scope."
+        },
+        {
+          "source": "envs/2610-36935-gaussian-process-bandits-for/lab.py",
+          "locator": "L170-L180",
+          "finding": "Disjoint tuning seeds are reassuring, but broadened landscape parameters and tuning choices could materially change which algorithm wins."
+        },
+        {
+          "source": "Declared miniature contract and linked original source evidence",
+          "locator": "/scope",
+          "finding": "Owner-approved scoped judgment: Compare independently tuned GP-UCB and epsilon-greedy in this 52-round miniature; disclose the changed landscape distributions, tuning grid and reactive dynamics. This is not a paper replication, production result or equal-wall-clock comparison."
+        }
+      ],
+      "rationale": "Approved within the narrow stated miniature scope and the recorded bounded validation. Original source limitations remain explicit; no broader scientific or production guarantee is claimed."
+    }
+  },
+  "rationale": "Scoped decision explicitly approved by the reviewer after reading the guided review and proposed admission decisions. Compare independently tuned GP-UCB and epsilon-greedy in this 52-round miniature; disclose the changed landscape distributions, tuning grid and reactive dynamics. This is not a paper replication, production result or equal-wall-clock comparison. The pre-existing 0.3 cumulative-regret threshold corresponds to 0.3/52, about 0.00577 normalized reward per round, or about 0.72% of the theoretical 52-round regret range when rewards lie in [0.2,1]. Proposed as an exploratory resolution convention for this toy task, not a measured business threshold.",
+  "assistant_assessment": {
+    "recommendation": "needs_review",
+    "evidence_scope": "Primary method sections and static implementation inspected; historical caches analyzed. No new lab executions, parameter probes, independent confirmation, or model evaluations.",
+    "blockers": [
+      "Resolve the landscape and exploration-policy departures before calling this paper-faithful.",
+      "Justify the margin and verify fresh-worker determinism, tuning isolation, and timing."
+    ],
+    "owner_actions": [
+      "Read source sections 4.1-4.4 alongside code; accept a narrowly labeled simulator only if these changes are scientifically defensible.",
+      "Probe repeated runs and changed seeds/contexts in a new fixture; preserve historical files.",
+      "Record a human decision with evidence rather than copying the assistant statuses."
+    ]
+  },
+  "review_provenance": {
+    "prepared_with_assistant_evidence": true,
+    "human_decision_source": "Explicit user reply in this conversation",
+    "approval_text": "Approve these six scoped decisions",
+    "decision_summary_document": "docs/REFERENCE_ADMISSION_DECISIONS.md",
+    "approved_proposal_sha256": "1ba793df2b184a0f6be3066c203bfd5ee7141381cece0675d4cf7235ebbda049",
+    "previous_owner_record_sha256": "24342b4e56ea4815edcc92d7fd4eefffe7d2ab5c6609b80e128f51d1de31fb43",
+    "acknowledged_at_utc": "2026-11-09T18:24:10.474838+00:00",
+    "identity_source": "operator_reported_not_authenticated"
+  }
+}

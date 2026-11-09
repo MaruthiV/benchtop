@@ -25,6 +25,7 @@ from tests.test_calibrate import fixture as calibration_fixture
 from tests.test_confirmation_analysis import document
 from tests.test_confirmation_results import no_models, ready
 from tests.test_primary import simulate_provider_transport
+from tests.test_study import ready_controls
 
 
 @pytest.fixture(scope="module")
@@ -208,6 +209,28 @@ def test_missing_canonical_state_has_read_only_status_and_cannot_build(tmp_path,
         release.build(tmp_path / "unavailable")
     assert not (tmp_path / "state").exists()
     assert not (tmp_path / "unavailable").exists()
+
+
+def test_recorded_unresolved_review_counts_as_reviewed_without_admitting_the_lab(tmp_path, monkeypatch):
+    reviews, _ = ready_controls(tmp_path)
+    path = next(reviews.glob("*.json"))
+    value = study._json(path)
+    value["decision"] = "needs_review"
+    for check in value["checks"].values():
+        check["status"] = "unresolved"
+    path.write_text(json.dumps(value))
+    workspace = tmp_path / "workspace"
+    (workspace / "artifacts").mkdir(parents=True)
+    shutil.copytree(reviews, workspace / "artifacts/reference-human-reviews")
+    (workspace / "envs").symlink_to(release.ROOT / "envs", target_is_directory=True)
+    monkeypatch.setattr(release, "ROOT", workspace)
+    monkeypatch.setattr(primary, "STATE_BASE", tmp_path / "missing-state")
+    status = release.status()
+    assert status["gates"]["six_recorded_reference_reviews"] is True
+    assert status["email_ready"] is False
+    inspected = release.admission.inspect_lab(workspace / "envs" / path.stem, review=value)
+    assert inspected["human_review"]["status"] == "recorded"
+    assert inspected["qualified_claim_admitted"] is False
 
 
 def test_empty_and_missing_group_figures_are_explicit(packaged, tmp_path):

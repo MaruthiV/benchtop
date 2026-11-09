@@ -70,7 +70,7 @@ def status():
     for path in sorted(reviews.glob("*.json")):
         value = study._json(path)
         checked = admission.inspect_lab(ROOT / "envs" / path.stem, review=value)["human_review"]
-        if checked["status"] == "recorded" and checked["decision"] in ("accepted", "rejected"):
+        if checked["status"] == "recorded":
             reference.append(path.name)
     gates = {"six_recorded_reference_reviews": len(reference) == 6, "canonical_primary_journal": (root / "ledger/ledger.json").exists(),
         "confirmation_closed": (root / confirmation_results.COLLECTION).exists(), "classical_collection_complete": False,

@@ -1,0 +1,173 @@
+{
+  "schema_version": 1,
+  "subject": {
+    "contract": "cached_admission_v1",
+    "env": "2610-36994-callm-continual-adaptation-of",
+    "execution_id": "historical_v0:a837be0f67946efbe7937192f3b003a36807a864e67b5f8983588ba48d5abeaa",
+    "lab_sha256": "7a1a0677fe6cac97a87325a05cb379d7f72245f3a1a83850f4039e64b173c7fd",
+    "space_sha256": "62eed32b6a8b34c680c24c447d87fa83f34032b420a4e667262d6ca13dbeb282",
+    "qualification_artifact_sha256": "e14dd1e088027b4c5d0a349001e28688352c61e83f1852861e3d61bd79e6dfcb",
+    "charging_id": "c26247ee01f945482f120fcbe44d662055a27903b945e359f6aaac92fecd3331"
+  },
+  "decision": "rejected",
+  "reviewer": {
+    "kind": "human",
+    "name": "Maruthi Vemula",
+    "reviewed_at_utc": "2026-11-09T18:24:10.474838+00:00"
+  },
+  "paper": {
+    "url": "https://arxiv.org/html/2610.36994v1",
+    "version": "2610.36994v1",
+    "sections": [
+      "3.1 Adapter Pool",
+      "3.2 Non-Parametric Router",
+      "3.3 Training and Evaluation Protocol",
+      "4.1 Experimental Setup",
+      "B.1 Algorithms"
+    ]
+  },
+  "scope": {
+    "paper_mechanism": "CaLLM routes frozen-backbone batch embeddings to isolated adapters through prototype matching, with reuse, creation, and capacity handling.",
+    "miniature_comparison": "PCA digits embeddings routed by cosine distance to per-task logistic heads, compared with a sequential global MLP with replay; oracle routing is a diagnostic. Approved admission scope: Reject the present routing-only comparison because architecture, output scope, training and capacity change with routing. This rejects using the current miniature for that claim, not the source paper.",
+    "preserved_assumptions": [
+      "Train-only feature preprocessing shared across arms.",
+      "Mean-embedding prototype routing and isolated per-task predictors.",
+      "Evaluation examples are separate from fitting samples."
+    ],
+    "simplifications": [
+      "Digits and PCA replace language data and frozen LLM embeddings.",
+      "Independent logistic heads replace shared-backbone PEFT adapters.",
+      "Tasks are formed from class labels; no online pool creation/reuse/capacity pressure."
+    ],
+    "unsupported_claims": [
+      "A causal effect of routing alone on continual adaptation.",
+      "Reproduction of LLM forgetting, adapter memory scaling, or online capacity handling."
+    ]
+  },
+  "checks": {
+    "mechanism_fidelity": {
+      "status": "unresolved",
+      "evidence": [
+        {
+          "source": "https://arxiv.org/html/2610.36994v1#S3.SS1",
+          "locator": "3.1-3.3; B.1",
+          "finding": "The source combines frozen-backbone adapters with prototype routing and pool management."
+        },
+        {
+          "source": "envs/2610-36994-callm-continual-adaptation-of/lab.py",
+          "locator": "L99-L110",
+          "finding": "The miniature keeps nearest-prototype selection and isolation, but omits a shared adapter backbone and pool management."
+        }
+      ]
+    },
+    "baseline_fairness": {
+      "status": "fail",
+      "evidence": [
+        {
+          "source": "envs/2610-36994-callm-continual-adaptation-of/lab.py",
+          "locator": "L31-L43",
+          "finding": "Routed predictors are separately fitted logistic heads, or constant-class heads when a task has one class."
+        },
+        {
+          "source": "envs/2610-36994-callm-continual-adaptation-of/lab.py",
+          "locator": "L75-L91",
+          "finding": "The baseline is a global nonlinear MLP trained sequentially for 80 steps per task with a small replay set. Architecture, output scope, optimization, and capacity change together."
+        },
+        {
+          "source": "envs/2610-36994-callm-continual-adaptation-of/lab.py",
+          "locator": "L99-L110",
+          "finding": "Prototype versus oracle routing compares the same fitted heads; prototype versus shared_replay does not isolate routing."
+        }
+      ]
+    },
+    "shared_randomness": {
+      "status": "unresolved",
+      "evidence": [
+        {
+          "source": "envs/2610-36994-callm-continual-adaptation-of/lab.py",
+          "locator": "L53-L69",
+          "finding": "All methods share split, train-fitted scaler/PCA, task construction, and evaluation chunks. This does not imply comparable initialization across architectures."
+        }
+      ]
+    },
+    "heldout_metric": {
+      "status": "unresolved",
+      "evidence": [
+        {
+          "source": "envs/2610-36994-callm-continual-adaptation-of/lab.py",
+          "locator": "L53-L60",
+          "finding": "Scaler and PCA fit only training samples; test samples remain separate."
+        },
+        {
+          "source": "envs/2610-36994-callm-continual-adaptation-of/lab.py",
+          "locator": "L115-L121",
+          "finding": "Final metric is an equal-task average of held-out classification accuracies; higher is better. It is not a measured backward-transfer trajectory."
+        }
+      ]
+    },
+    "meaningful_margin": {
+      "status": "unresolved",
+      "evidence": [
+        {
+          "source": "envs/2610-36994-callm-continual-adaptation-of/space.json",
+          "locator": "/metric/min_effect",
+          "finding": "0.02 is two percentage points of macro task accuracy. It cannot repair the confounded treatment comparison and has not been justified as a practical tolerance."
+        }
+      ]
+    },
+    "execution_behavior": {
+      "status": "unresolved",
+      "evidence": [
+        {
+          "source": "envs/2610-36994-callm-continual-adaptation-of/lab.py",
+          "locator": "L31-L37",
+          "finding": "Logistic convergence is not inspected."
+        },
+        {
+          "source": "envs/2610-36994-callm-continual-adaptation-of/lab.py",
+          "locator": "L75-L91",
+          "finding": "The MLP has fixed training steps. Repeated execution and equalized training/capacity controls were not measured."
+        }
+      ]
+    },
+    "shortcut_audit": {
+      "status": "fail",
+      "evidence": [
+        {
+          "source": "envs/2610-36994-callm-continual-adaptation-of/lab.py",
+          "locator": "L58-L69",
+          "finding": "True labels define task-homogeneous test chunks; task identity is not passed to prototype routing, but the batching assumption is privileged and must be explicit."
+        },
+        {
+          "source": "envs/2610-36994-callm-continual-adaptation-of/lab.py",
+          "locator": "L31-L43",
+          "finding": "At ten tasks each head is constant-class; prediction can reduce to task routing, while the baseline still learns global classification. This undermines a routing-only performance claim."
+        }
+      ]
+    }
+  },
+  "rationale": "Scoped decision explicitly approved by the reviewer after reading the guided review and proposed admission decisions. Reject the present routing-only comparison because architecture, output scope, training and capacity change with routing. This rejects using the current miniature for that claim, not the source paper. Keep the original 0.02 in the record but do not approve it as a practical margin; it cannot repair the documented baseline confound.",
+  "assistant_assessment": {
+    "recommendation": "reject_current_comparison",
+    "evidence_scope": "Primary method sections and static implementation inspected; historical caches analyzed. No new lab executions, parameter probes, independent confirmation, or model evaluations.",
+    "blockers": [
+      "The current primary contrast changes architecture, head scope, capacity, and training along with routing.",
+      "Retain as a rejection candidate; a repaired routing-only comparison needs new versioned artifacts."
+    ],
+    "owner_actions": [
+      "Verify the confound in source and code, then record an independent human reject/needs-review decision.",
+      "If repairing, keep predictors and training identical across routing variants and include mixed-task chunks.",
+      "Preserve this original and its favorable cached result in the admission funnel."
+    ]
+  },
+  "review_provenance": {
+    "prepared_with_assistant_evidence": true,
+    "human_decision_source": "Explicit user reply in this conversation",
+    "approval_text": "Approve these six scoped decisions",
+    "decision_summary_document": "docs/REFERENCE_ADMISSION_DECISIONS.md",
+    "approved_proposal_sha256": "a90b007773ba81259b22725b4f30952df78bb5681e919dbd25eb32f6b1765c7f",
+    "previous_owner_record_sha256": "96bb9efba954019bbcab4292afa3bd71657d3bc83213f7328078e6f580efd7b9",
+    "acknowledged_at_utc": "2026-11-09T18:24:10.474838+00:00",
+    "identity_source": "operator_reported_not_authenticated"
+  }
+}

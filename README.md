@@ -1,16 +1,22 @@
 # benchtop
 
+[One-minute project brief](benchmarks/release_v1/PROJECT_BRIEF.md)
+
+[Run one MCP episode without a model](benchmarks/release_v1/WALKTHROUGH.md)
+
 [Execution through outreach](benchmarks/release_v1/EXECUTION.md) · [Reproducible release packaging](benchmarks/release_v1/PUBLICATION.md)
 
 benchtop turns new arXiv papers into small runnable labs that work as RL environments for research taste. An agent gets a question about a paper's claim, spends a compute budget on experiments, and is graded on seeds it never saw.
 
 The results below use `historical_v0` labels. A [corrected grading review](benchmarks/release_v1/GRADING.md) retains 75 of the original 78 questions; new agent evaluations are pending.
 
-The new [admission screen](benchmarks/release_v1/ADMISSION.md) separates mechanical validity, qualified questions, human review, and model difficulty. The historical catalog has 28 corrected claim candidates; scientific admission reviews are pending.
+The [admission screen](benchmarks/release_v1/ADMISSION.md) separates mechanical validity, qualified questions, human review, and model difficulty. The historical catalog has 28 corrected claim candidates. [Recorded reference decisions](benchmarks/release_v1/admission/human_reviews/README.md) admit four narrowly scoped development miniatures, reject the current CaLLM comparison and leave Para-Gaussian unresolved.
 
-The [consolidated evidence report](benchmarks/release_v1/admission/REPORT.md) brings six paper-to-code reviews, cached diagnostics, and bounded runtime evidence together. The [owner review guide](benchmarks/release_v1/admission/REVIEW.md) explains the remaining scientific decisions.
+The [consolidated evidence report](benchmarks/release_v1/admission/REPORT.md) preserves the pre-approval paper-to-code reviews, cached diagnostics and bounded runtime evidence. The [owner review guide](benchmarks/release_v1/admission/REVIEW.md) explains how decisions are recorded separately from assistant suggestions and task eligibility.
 
 A [controlled defect suite](benchmarks/release_v1/admission/defects/README.md) exercises six specific failure cases and ten valid controls, including disabled optimizer perturbations, test-set access, and mismatched shared inputs. These are lab-specific checks, with recorded sandbox evidence; they do not certify arbitrary generated science.
+
+A [bounded visible-seed runtime review](benchmarks/release_v1/admission/runtime_review/README.md) adds fresh-worker repetition and optimizer diagnostics for the GP-bandit, monoculture and data-curation miniatures. Its tested contexts and remaining limitations are explicit.
 
 The [versioned classical baselines](benchmarks/release_v1/BASELINES.md) implement paired-uniform, question-coverage, and coverage-plus-cost acquisition with one shared estimator. They use matched visible replicates, public frozen prices, and explicit equal-context weighting. The reviewed development comparison remains pending.
 

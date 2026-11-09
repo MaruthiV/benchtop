@@ -1,0 +1,200 @@
+{
+  "schema_version": 1,
+  "subject": {
+    "contract": "cached_admission_v1",
+    "env": "2610-37225-sharpnessaware-muon-matrixaware-optimization",
+    "execution_id": "historical_v0:732def1c3a372908f151bf87494e25b069969ea7ae719e97a109a951288e296b",
+    "lab_sha256": "bbbebfd531fe48bbd2333ff068cf6f009d41b73d938d12c084f7f7c23ba481fd",
+    "space_sha256": "7444b8b8e857e9c613f629b6aefa4400462aed93e702dda06d311523f46b9820",
+    "qualification_artifact_sha256": "35dd5be1fccbaa07a02102383a96000c46ca14aac3d810e5dc261b51caae27df",
+    "charging_id": "17cfc7b5187bd4cda138174027edadf93db36b45d94b50a4feaa76e0f52e3c2c"
+  },
+  "decision": "accepted",
+  "reviewer": {
+    "kind": "human",
+    "name": "Maruthi Vemula",
+    "reviewed_at_utc": "2026-11-09T18:24:10.474838+00:00"
+  },
+  "paper": {
+    "url": "https://arxiv.org/html/2610.37225v1",
+    "version": "2610.37225v1",
+    "sections": [
+      "2.2 Momentum Orthogonalization",
+      "3.1 A Sharpness-Aware Extension of Muon",
+      "3.2 A Momentum-Guided Refinement",
+      "B.3 Algorithm 2",
+      "C Additional Experiments"
+    ]
+  },
+  "scope": {
+    "paper_mechanism": "MoMuSAM reuses previous momentum to choose a local perturbation before an orthogonalized momentum update; MuSAM uses an extra clean-gradient evaluation.",
+    "miniature_comparison": "A 150-step digits MLP comparing plain Muon-style updates, clean-gradient perturbations, and previous-momentum perturbations with shared batches and initialization. Approved admission scope: Compare the declared 150-step digits-MLP update rules under the documented architecture, approximate Newton-Schulz routine, shared initialization/batches and finite grid. No LLM result, exact polar factor or general optimizer guarantee.",
+    "preserved_assumptions": [
+      "Previous momentum chooses the perturbation before the current gradient.",
+      "Zero momentum gives zero first-step perturbation.",
+      "Matrix momentum is orthogonalized approximately; all arms share splits, initialization, and minibatches."
+    ],
+    "simplifications": [
+      "Tiny digits MLP instead of the source experimental models.",
+      "Five Newton-Schulz steps approximate a polar update; shape scaling and a cosine schedule are fixed.",
+      "Bias vectors are also perturbed and use momentum SGD; primary comparison fixes steps, not equal compute."
+    ],
+    "unsupported_claims": [
+      "Replication of source benchmark accuracy, convergence theorems, or generalization guarantees.",
+      "Equal wall-clock or gradient-compute performance across all three methods."
+    ]
+  },
+  "checks": {
+    "mechanism_fidelity": {
+      "status": "pass",
+      "evidence": [
+        {
+          "source": "https://arxiv.org/html/2610.37225v1#S3.SS2",
+          "locator": "3.2 equation 8; B.3 Algorithm 2",
+          "finding": "The perturbation uses the preceding momentum before the current perturbed gradient."
+        },
+        {
+          "source": "envs/2610-37225-sharpnessaware-muon-matrixaware-optimization/lab.py",
+          "locator": "L48-L54",
+          "finding": "Block normalization uses zero perturbation for zero direction."
+        },
+        {
+          "source": "envs/2610-37225-sharpnessaware-muon-matrixaware-optimization/lab.py",
+          "locator": "L83-L104",
+          "finding": "momusam takes one gradient at the momentum-perturbed point, then updates momentum and applies matrix orthogonalization. Bias treatment is an explicit extension."
+        },
+        {
+          "source": "Declared miniature contract and linked original source evidence",
+          "locator": "/scope",
+          "finding": "Owner-approved scoped judgment: Compare the declared 150-step digits-MLP update rules under the documented architecture, approximate Newton-Schulz routine, shared initialization/batches and finite grid. No LLM result, exact polar factor or general optimizer guarantee."
+        }
+      ],
+      "rationale": "Approved within the narrow stated miniature scope and the recorded bounded validation. Original source limitations remain explicit; no broader scientific or production guarantee is claimed."
+    },
+    "baseline_fairness": {
+      "status": "pass",
+      "evidence": [
+        {
+          "source": "envs/2610-37225-sharpnessaware-muon-matrixaware-optimization/lab.py",
+          "locator": "L63-L91",
+          "finding": "Within each context the split, initialization, batches, schedule, and step count agree. MuSAM intentionally uses a second gradient; this is a fixed-step accuracy comparison, not an equal-compute comparison."
+        },
+        {
+          "source": "Declared miniature contract and linked original source evidence",
+          "locator": "/scope",
+          "finding": "Owner-approved scoped judgment: Compare the declared 150-step digits-MLP update rules under the documented architecture, approximate Newton-Schulz routine, shared initialization/batches and finite grid. No LLM result, exact polar factor or general optimizer guarantee."
+        }
+      ],
+      "rationale": "Approved within the narrow stated miniature scope and the recorded bounded validation. Original source limitations remain explicit; no broader scientific or production guarantee is claimed."
+    },
+    "shared_randomness": {
+      "status": "pass",
+      "evidence": [
+        {
+          "source": "envs/2610-37225-sharpnessaware-muon-matrixaware-optimization/lab.py",
+          "locator": "L63-L81",
+          "finding": "Method-independent permutation and batch generators plus a locally seeded torch generator make the intended common split, batches, and initial tensors explicit."
+        }
+      ],
+      "rationale": "Approved within the narrow stated miniature scope and the recorded bounded validation. Original source limitations remain explicit; no broader scientific or production guarantee is claimed."
+    },
+    "heldout_metric": {
+      "status": "pass",
+      "evidence": [
+        {
+          "source": "envs/2610-37225-sharpnessaware-muon-matrixaware-optimization/lab.py",
+          "locator": "L65-L69",
+          "finding": "The 400 test indices are disjoint from the training slice."
+        },
+        {
+          "source": "envs/2610-37225-sharpnessaware-muon-matrixaware-optimization/lab.py",
+          "locator": "L106-L121",
+          "finding": "Primary test accuracy is higher-better. The sharpness diagnostic uses training data and must not be described as held-out sharpness."
+        }
+      ],
+      "rationale": "Approved within the narrow stated miniature scope and the recorded bounded validation. Original source limitations remain explicit; no broader scientific or production guarantee is claimed."
+    },
+    "meaningful_margin": {
+      "status": "pass",
+      "evidence": [
+        {
+          "source": "envs/2610-37225-sharpnessaware-muon-matrixaware-optimization/space.json",
+          "locator": "/metric/min_effect",
+          "finding": "0.01 is one percentage point, or four examples out of 400 in a single seed. Its use as a practical tolerance needs owner justification."
+        },
+        {
+          "source": "Original frozen space.json metric/min_effect and declared evaluation sample sizes",
+          "locator": "/metric/min_effect",
+          "finding": "Owner-approved exploratory convention: Retain the pre-existing one-percentage-point test-accuracy resolution: four of 400 test examples within a seed. Proposed as a toy benchmark resolution convention, not a theorem-backed or production performance threshold."
+        }
+      ],
+      "rationale": "Approved within the narrow stated miniature scope and the recorded bounded validation. Original source limitations remain explicit; no broader scientific or production guarantee is claimed."
+    },
+    "execution_behavior": {
+      "status": "pass",
+      "evidence": [
+        {
+          "source": "envs/2610-37225-sharpnessaware-muon-matrixaware-optimization/lab.py",
+          "locator": "L21-L30",
+          "finding": "Five polynomial Newton-Schulz iterations approximate orthogonalization; numerical properties have not been probed here."
+        },
+        {
+          "source": "envs/2610-37225-sharpnessaware-muon-matrixaware-optimization/lab.py",
+          "locator": "L83-L104",
+          "finding": "Gradient counts follow the code branches, but repeated-worker determinism and measured parameter response remain pending."
+        },
+        {
+          "source": "benchmarks/release_v1/admission/defects/report.json",
+          "locator": "/cases",
+          "finding": "Recorded bounded Muon perturbation, input-sharing, observer transparency, repeatability and zero-radius controls pass in the stated profile. This is not full-grid numerical certification."
+        }
+      ],
+      "rationale": "Approved within the narrow stated miniature scope and the recorded bounded validation. Original source limitations remain explicit; no broader scientific or production guarantee is claimed."
+    },
+    "shortcut_audit": {
+      "status": "pass",
+      "evidence": [
+        {
+          "source": "envs/2610-37225-sharpnessaware-muon-matrixaware-optimization/lab.py",
+          "locator": "L58-L61",
+          "finding": "Plain Muon ignores rho, intentionally creating repeated baseline contexts. Equal-context grading must retain those weights."
+        },
+        {
+          "source": "benchmarks/release_v1/admission/references/selection.json",
+          "locator": "/cases/2610-37225-sharpnessaware-muon-matrixaware-optimization/diagnostics (lookup by env)",
+          "finding": "The corrected cached contrast favors the baseline; do not discard the case or infer the source method is disproved. Check perturbation sensitivity and training regime before admission."
+        },
+        {
+          "source": "Declared miniature contract and linked original source evidence",
+          "locator": "/scope",
+          "finding": "Owner-approved scoped judgment: Compare the declared 150-step digits-MLP update rules under the documented architecture, approximate Newton-Schulz routine, shared initialization/batches and finite grid. No LLM result, exact polar factor or general optimizer guarantee."
+        }
+      ],
+      "rationale": "Approved within the narrow stated miniature scope and the recorded bounded validation. Original source limitations remain explicit; no broader scientific or production guarantee is claimed."
+    }
+  },
+  "rationale": "Scoped decision explicitly approved by the reviewer after reading the guided review and proposed admission decisions. Compare the declared 150-step digits-MLP update rules under the documented architecture, approximate Newton-Schulz routine, shared initialization/batches and finite grid. No LLM result, exact polar factor or general optimizer guarantee. Retain the pre-existing one-percentage-point test-accuracy resolution: four of 400 test examples within a seed. Proposed as a toy benchmark resolution convention, not a theorem-backed or production performance threshold.",
+  "assistant_assessment": {
+    "recommendation": "needs_review",
+    "evidence_scope": "Primary method sections and static implementation inspected; historical caches analyzed. No new lab executions, parameter probes, independent confirmation, or model evaluations.",
+    "blockers": [
+      "Validate numerical updates and parameter responses in the restricted fixed-step setting.",
+      "Explain bias perturbations, ignored baseline rho, and the practical margin."
+    ],
+    "owner_actions": [
+      "Read section 3.2/Algorithm 2 alongside update order and normalization.",
+      "Probe rho=0 identity, first-step momentum behavior, and repeated fresh-worker outputs.",
+      "Keep the unfavorable cached effect visible and decide scope independently of its sign."
+    ]
+  },
+  "review_provenance": {
+    "prepared_with_assistant_evidence": true,
+    "human_decision_source": "Explicit user reply in this conversation",
+    "approval_text": "Approve these six scoped decisions",
+    "decision_summary_document": "docs/REFERENCE_ADMISSION_DECISIONS.md",
+    "approved_proposal_sha256": "1dbe3c44d82b6b08b31c013688a1fcc0d92701e6c99ee3188c603ec6a1309da0",
+    "previous_owner_record_sha256": "8488bf3992674d95a4a3185a8ed8c0519d252b5a22ba9201cb4112a137a8e49a",
+    "acknowledged_at_utc": "2026-11-09T18:24:10.474838+00:00",
+    "identity_source": "operator_reported_not_authenticated"
+  }
+}
