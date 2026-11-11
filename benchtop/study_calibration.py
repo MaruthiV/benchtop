@@ -138,13 +138,17 @@ def export_development(plan_sha256, output, *, close=False):
             costs = calibrate._costs(all_slots)
             costs["recorded_start_intents"] = costs.pop("episode_starts")
             costs["retry_start_intents"] = costs.pop("retry_episode_starts")
+            from benchtop import continuation
+
+            prior = continuation.usage()
             result = study._seal({"schema_version": 1, "exporter_id": EXPORTER_ID,
                 "ledger_id": manifest["ledger_id"], "plan_sha256": plan_sha256,
                 "development_lock_sha256": lock["record_sha256"], "groups": copy.deepcopy(plan["groups"]),
                 "input": document, "selection": calibrate.select_budget(document), "phase_evidence": evidence,
                 "accounting": {"shared_ledger_counts_at_snapshot": dict(state["counts"]),
                                "shared_ledger_costs_at_snapshot": costs, "smoke_included_in_selection": False,
-                               "interpretation": "Recorded intents conservatively count starts; costs are adapter reports, not authenticated billing."},
+                               "interpretation": "Recorded intents conservatively count starts; costs are adapter reports, not authenticated billing.",
+                               **({"prior_protocol_usage": prior} if prior else {})},
                 "recorded_at_utc": datetime.now(UTC).isoformat(), "study_lock": False,
                 "model_sessions_started_by_export": 0,
                 "scope": "Offline calibration from current canonical development records with replay-verified local provider/MCP evidence. No inference, independent regrading, authenticated measurements, candidate lock or fresh-phase authorization."},

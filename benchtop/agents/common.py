@@ -22,9 +22,9 @@ SYSTEM = (
 def first_message(describe: dict, budget: dict) -> str:
     lab = json.dumps({**describe, "budget": budget}, indent=1)
     return (
-        "Here is your lab (describe_lab returns the same thing):\n\n"
+        "Here is your initial lab information. You must call describe_lab first to verify the live episode and budget:\n\n"
         + lab
-        + "\n\nInvestigate with run_experiments, then call submit_answer once."
+        + "\n\nCall describe_lab before any experiments. Then investigate with run_experiments and call submit_answer once."
     )
 
 

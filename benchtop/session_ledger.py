@@ -100,6 +100,9 @@ def _locked(directory):
 
 
 def _current(manifest):
+    from benchtop import continuation
+
+    continuation.guard(manifest)
     identity = manifest["identity"]
     runtime = json.loads(json.dumps(study.cache.runtime_identity()))
     if (identity["source_sha256"] != study._sources() or identity["runtime"] != runtime
@@ -445,7 +448,11 @@ def inspect(directory):
             from benchtop.generation_journal import read as generation_state
 
             generation_active = generation_state()["active"]
+        from benchtop import continuation
+
+        prior = continuation.usage() if manifest["identity"]["scope"] == "primary" and manifest["identity"]["protocol_hash"] == canonical_hash(_json(study.SPEC)) else None
         return {"schema_version": 1, "ledger_id": manifest["ledger_id"], "scope": manifest["identity"]["scope"],
+                **({"prior_protocol_usage": prior, "cumulative_start_intents": state["counts"]["total"] + prior["prior_counts"]["total"]} if prior else {}),
                 "active_generation": generation_active, "combined_active_model_intents": state["counts"]["active"] + generation_active,
                 "registered_plans": len(state["plans"]), "slots": rows, "counts": dict(state["counts"]),
                 "status_counts": dict(Counter(row["state"] for row in rows)), "halted": state["halted"],

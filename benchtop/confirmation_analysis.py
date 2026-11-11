@@ -252,6 +252,12 @@ def render_markdown(result):
         for name in ("charged_experiment_cost", "model_wall_seconds", "input_tokens", "output_tokens"):
             row = result["costs"][phase]["fields"][name]
             lines.append("| " + " | ".join(shown(value) for value in (phase + "/" + name, row["known_sum"], row["unreported_attempts"], row["total"])) + " |")
+    prior = result["costs"]["shared_evaluation_snapshot"].get("prior_protocol_usage")
+    if prior:
+        lines += ["", f"Earlier excluded protocol: {prior['prior_counts']['total']} consumed compatibility start(s), retained outside primary outcomes. The global cap remains {prior['global_total_max_episode_starts']} starts across versions.", ""]
+        for name in ("charged_experiment_cost", "model_wall_seconds", "input_tokens", "output_tokens"):
+            row = prior["prior_costs"]["fields"][name]
+            lines.append(f"Earlier protocol {name}: known {shown(row['known_sum'])}; total {shown(row['total'])}; unreported {row['unreported_attempts']}.")
     lines += ["", "Raw slot outcomes, retries, failure states, stability and generation/CPU costs are retained in the JSON export.", ""]
     lines.extend("- " + limitation for limitation in result["limitations"])
     return "\n".join(lines) + "\n"

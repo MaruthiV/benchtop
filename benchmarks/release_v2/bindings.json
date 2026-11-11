@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "protocol_hash": "ba515089163fa749acff31fc991dd74264bcb02668d87ef07890051109750ac3",
+  "records": [
+    {
+      "id": "development_lock",
+      "plan_sha256": "f0231c155b0d28f11f039f7def153dc53ab32f7556592c207ac1f444ee3211a5",
+      "bindings_hash": "b08f321abe3b2c7f357923ade2b9f4dd3f8cf2a74e7eb83110aa7b076c3f48c5",
+      "record_sha256": "32b8e9fc212bfea14c2d65839ea90a8fe94b98b34d3e89739dc47a0d3cb254fc",
+      "recorded_at_utc": "2026-11-09T19:35:48.825348+00:00"
+    },
+    {
+      "id": "candidate_lock",
+      "plan_sha256": "6d7ed3bba27950a34f9d08ea19e53e668a5c7a2f6baccf2b760ac8bf6ab28004",
+      "bindings_hash": "ae81ab42175591fa6a29d83f250b27cdb66f7bb5f1e090ce798b98c7016d2ef7",
+      "record_sha256": "602a7ad6f217c62c345d8997d56ded738db6a11ba7225ad83b85d58d70f19869",
+      "recorded_at_utc": "2026-11-09T20:02:24.262598+00:00"
+    },
+    {
+      "id": "cohort_lock",
+      "plan_sha256": "8f598dc882aa9f507f4926bf0dd337663825fef2cc1e12dbf0c6a257fc96f467",
+      "bindings_hash": "58c8a5a58698130c80cfa57349e0bc62f0abdeb485c0825e9a5385ae751c4b0a",
+      "record_sha256": "b487c81b7ede3ebe6f9c6fc0cb25e1e73dfb442c927bdf3b80c7ed429db1272c",
+      "recorded_at_utc": "2026-11-10T18:22:45.247750+00:00"
+    },
+    {
+      "id": "confirmation_lock",
+      "plan_sha256": "a5e97ce63f9a0c40e2080d8dc082f7f38412d3a25f5835a2c2b63c4d86053206",
+      "bindings_hash": "fc2f8597d8b8a72590eb5e12f4f2d763a18f9d11f1b396b2817e025ea5333461",
+      "record_sha256": "5150cb665fd709001d005acd38dc1c37613f773df8c3f7ea244d79c3ffee757e",
+      "recorded_at_utc": "2026-11-10T19:18:22.290981+00:00"
+    }
+  ]
+}

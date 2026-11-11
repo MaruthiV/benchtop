@@ -9,11 +9,12 @@ from pathlib import Path
 
 from scipy.stats import beta
 
+from benchtop import protocol
 from benchtop.cache import file_hash, runtime_identity
 from benchtop.env import ROOT
 
 SELECTOR_ID = "beta_mixed_group_v1"
-SPEC = ROOT / "benchmarks/release_v1/spec.json"
+SPEC = protocol.SPEC
 COST_FIELDS = ("requested_runs", "unique_executed_runs", "charged_experiment_cost",
                "actual_environment_cpu_seconds", "environment_wall_seconds", "model_wall_seconds",
                "input_tokens", "output_tokens")

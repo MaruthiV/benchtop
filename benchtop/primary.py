@@ -6,12 +6,12 @@ from contextlib import contextmanager
 from datetime import UTC, datetime
 from pathlib import Path
 
-from benchtop import provider, study
+from benchtop import protocol, provider, study
 from benchtop.calibrate import canonical_hash
 from benchtop.env import ROOT
 
 STATE_BASE = ROOT / ".state"
-BINDINGS = ROOT / "benchmarks/release_v1/bindings.json"
+BINDINGS = protocol.BINDINGS
 
 
 def canonical_root():
@@ -43,6 +43,7 @@ def _plan(plan, phase):
 
 
 def authorize_smoke(plan, preflight, *, extra_usage_disabled=False):
+    from benchtop import continuation
     from benchtop import session_ledger as ledger
 
     _plan(plan, "smoke")
@@ -53,6 +54,9 @@ def authorize_smoke(plan, preflight, *, extra_usage_disabled=False):
     with _guard(root.parent / ".initialization.lock"), _guard(legacy_directory() / "starts.jsonl") as legacy:
         if legacy.read().strip():
             raise ValueError("existing integration starts require explicit reconciliation before primary authorization; none are discarded")
+        carried = continuation.prepare()
+        if carried and carried["parent_model_configuration"] != plan["binding"]["model_configuration"]:
+            raise ValueError("continuation must retain the pinned model configuration")
         root.mkdir(mode=0o700, exist_ok=False)
         study._publish(root / "provider.json", preflight)
         study._publish(root / "smoke_plan.json", plan)
@@ -61,6 +65,7 @@ def authorize_smoke(plan, preflight, *, extra_usage_disabled=False):
             "protocol_hash": plan["binding"]["protocol_hash"], "canonical_root": str(root.resolve()),
             "provider_sha256": preflight["preflight_sha256"], "extra_usage_disabled": True,
             "billing_confirmation_source": "operator_attestation_not_authenticated", "legacy_integration_starts": 0,
+            "continuation_sha256": carried["record_sha256"] if carried else None,
             "recorded_at_utc": datetime.now(UTC).isoformat()}, "record_sha256")
         study._publish(root / "smoke_authorization.json", record)
         ledger.create(plan, root / "ledger", authorization=root)
@@ -68,6 +73,9 @@ def authorize_smoke(plan, preflight, *, extra_usage_disabled=False):
 
 
 def verify(plan, root=None, *, allow_missing_ledger=False, live=True, ledger_context=None):
+    from benchtop import continuation
+
+    carried = continuation.verify()
     root = canonical_root() if root is None else Path(root).resolve()
     if root.resolve() != canonical_root().resolve():
         raise ValueError("primary execution must use the single canonical study directory")
@@ -93,6 +101,7 @@ def verify(plan, root=None, *, allow_missing_ledger=False, live=True, ledger_con
     if (record.get("id") != expected_id or record.get("plan_sha256") != plan["plan_sha256"]
             or record.get("bindings_hash") != plan["bindings_hash"] or record.get("protocol_hash") != plan["binding"]["protocol_hash"]
             or record.get("canonical_root") != str(root.resolve()) or record.get("extra_usage_disabled") is not True
+            or record.get("continuation_sha256") != (carried["record_sha256"] if carried else None)
             or record.get("legacy_integration_starts") != 0):
         raise ValueError("phase authorization differs from the current plan or accounting contract")
     preflight = study._json(root / "provider.json")
@@ -206,6 +215,7 @@ def lock_development(plan):
             "plan_sha256": plan["plan_sha256"], "bindings_hash": plan["bindings_hash"],
             "protocol_hash": plan["binding"]["protocol_hash"], "canonical_root": str(root.resolve()),
             "provider_sha256": authorization["provider_sha256"], "extra_usage_disabled": True,
+            "continuation_sha256": authorization.get("continuation_sha256"),
             "billing_confirmation_source": "inherited_operator_attestation", "legacy_integration_starts": 0,
             "smoke_plan_sha256": smoke["plan_sha256"], "evidence": evidence,
             "recorded_at_utc": datetime.now(UTC).isoformat()}, "record_sha256")

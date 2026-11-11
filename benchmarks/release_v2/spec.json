@@ -1,0 +1,501 @@
+{
+  "schema_version": 1,
+  "protocol_id": "benchtop_release_v2",
+  "protocol_version": 2,
+  "status": "smoke_prompt_continuation_before_primary_data",
+  "question": "Does model-specific budget calibration produce more groups with both correct and incorrect answers than a development-selected global budget, and what does calibration cost?",
+  "scope": {
+    "primary_task_kind": "claim",
+    "primary_questions_per_lab": 1,
+    "supporting_task_kinds": [
+      "where"
+    ],
+    "supporting_scope": "Historical development analysis and integration demonstration only.",
+    "inference_scope": "Pilot on the admitted miniature labs and one recorded model configuration.",
+    "training_claim": "Reward variation is a diagnostic; no RL training or learning improvement is established."
+  },
+  "historical_baseline": {
+    "manifest": "benchmarks/historical_v0/manifest.json",
+    "archive_sha256": "ae9ad8a8e3f2ed3d4d1cb8664d49adeb24d942686ffe88981628e97bad0a79ae",
+    "grader_id": "historical_v0",
+    "use": "Development evidence only; never pool historical scores with release grades."
+  },
+  "execution_limits": {
+    "new_spend_usd": 0,
+    "max_concurrent_model_sessions": 2,
+    "max_episode_seconds": 1200,
+    "max_experiment_tool_calls": 40,
+    "primary_max_episodes": 272,
+    "total_max_episode_starts": 299,
+    "reserve": {
+      "smoke": 6,
+      "integration": 2,
+      "infrastructure_retries": 19
+    },
+    "generation_and_repair": "Separate subscription usage, logged per invocation; local CPU only.",
+    "quota_handling": "Checkpoint and pause; do not change model, skip difficult labs, or consume more than the episode cap."
+  },
+  "lock_schedule": [
+    {
+      "id": "development_lock",
+      "before": "Any development budget-selection rollout",
+      "requires": [
+        "Passing grading, isolation, budget, and discovery regressions",
+        "Six reference-lab admission records",
+        "Four development claim-lab IDs selected by the rule below",
+        "Resolved requested model ID and reported model ID, CLI version, and decoding controls or explicit unavailability",
+        "Exact prompt text, rendering code, runtime lock, task/grader code, and charging-schedule hashes",
+        "Successful smoke checks on development labs only"
+      ]
+    },
+    {
+      "id": "candidate_lock",
+      "before": "Fresh lab generation",
+      "requires": [
+        "Development-selected global budget",
+        "Frozen baseline policy and shared answer-estimator code hashes",
+        "Frozen generation, triage, repair, and admission rules and prompt hashes",
+        "Archived fresh metadata response, selection date, ordered first 16 candidate IDs, and paper versions"
+      ]
+    },
+    {
+      "id": "cohort_lock",
+      "before": "Fresh model pilots or inspection of confirmation outcomes",
+      "requires": [
+        "Human fidelity reviews completed without fresh model scores",
+        "Ordered admission funnel and first eight eligible claim-lab IDs, or the smaller actual cohort",
+        "Qualification labels and fixed effect margins",
+        "Exact lab, space, seed-partition, task, charging-schedule, and runtime hashes",
+        "A protocol-bound manifest with all membership decisions"
+      ]
+    },
+    {
+      "id": "confirmation_lock",
+      "before": "Any fresh confirmation rollout or inspection of confirmation outcomes",
+      "requires": [
+        "All pilot attempt records and calibration decisions or recorded fallbacks",
+        "Frozen arm budgets, group descriptors, and planned rollout slots"
+      ]
+    }
+  ],
+  "binding_policy": {
+    "path": "benchmarks/release_v2/bindings.json",
+    "state": "not_created",
+    "purpose": "Record the exact artifacts required by each lock; this specification does not claim those artifacts already exist.",
+    "mutation_rule": "Append dated lock records with hashes before the affected data are observed. Never overwrite an earlier lock.",
+    "model_change": "Stop if the resolved model changes; do not pool configurations in the primary analysis.",
+    "protocol_change": "Preserve this version and record an amendment, rationale, timing, and affected observations. Post-outcome changes are exploratory."
+  },
+  "development": {
+    "reference_labs": 6,
+    "coverage": [
+      "average_effect",
+      "interaction",
+      "near_null",
+      "unequal_cost",
+      "shared_seed_correlation",
+      "known_fidelity_or_fairness_issue"
+    ],
+    "reference_selection": "Coverage-oriented manual selection from historical labs before new model scores; overlap of mechanisms is allowed.",
+    "claim_labs": 4,
+    "claim_selection": "First four reference labs in lexicographic environment-ID order that pass human admission and have a qualified claim under the corrected grader. If fewer than four qualify, stop and amend before budget-selection rollouts.",
+    "selection_basis": "Human review and corrected qualification data only; never new model performance.",
+    "qualification_data": "Historical held-out seeds with corrected grading, explicitly labeled development-only; no independent-confirmation claim.",
+    "budget_selection_repeats": 4,
+    "smoke_rule": "Six newly recorded smoke episodes exercise describe_lab, experiments and submission. The preceding v1 compatibility episode is retained separately and excluded from selection/confirmation."
+  },
+  "fresh_cohort": {
+    "target_labs": 8,
+    "max_candidate_papers": 16,
+    "primary_categories": [
+      "cs.LG",
+      "stat.ML"
+    ],
+    "date_rule": "At candidate lock, use the most recent completed UTC first-publication date with at least one unseen paper in the primary categories. An empty date may be skipped using metadata only.",
+    "freshness_rule": "Exclude papers previously generated or manually reviewed in this project; record the exclusion list before selecting candidates.",
+    "ordering": "Deduplicate by versionless arXiv ID, retain the fetched version, sort IDs numerically ascending, and take the first 16. No relevance or model-performance reranking.",
+    "metadata_failure": "Pause and retry retrieval of the same date; do not choose another date because downloads fail.",
+    "generation_attempts_per_candidate": 1,
+    "max_repairs_per_candidate": 2,
+    "eligibility": [
+      "Pure Python CPU lab with synthetic or locally bundled data; no downloads, pretrained weights, or paid services",
+      "A concrete paper mechanism and a fair treatment/baseline comparison documented by a human reviewer",
+      "Discrete complete paired grid with fixed metric direction and meaningful-effect margin",
+      "Passing sandbox, determinism, completeness, cache-version, and lab-specific invariant checks",
+      "A settled claim on the qualification split under the release grader"
+    ],
+    "effect_margin": "Set and justify from the metric and task meaning before inspecting qualification outcomes. Never tune the margin to admit a preferred label.",
+    "admission_states": [
+      "accepted",
+      "rejected",
+      "needs_review"
+    ],
+    "membership": "First eight accepted candidates with qualified claims in the archived candidate order; stop generation once eight qualify or all 16 are processed.",
+    "accounting": "Record every candidate as admitted, rejected, needs_review, generation_failed, qualification_ambiguous, or not_processed_after_target.",
+    "insufficient_cohort": "Use the smaller actual cohort without extending the candidate list; with zero gradable labs report no primary comparison.",
+    "replacement_rule": "Never replace a locked lab because of model performance, confirmation instability, or an inconvenient result."
+  },
+  "seed_partitions": {
+    "visible": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "qualification": [
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "confirmation": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27
+    ],
+    "pairing": "Within each split, both treatment arms and every context use the same seed IDs.",
+    "missing_data": "Any missing required pair makes that split incomplete; never silently reweight the estimand.",
+    "extension_rule": "No outcome-dependent seed additions.",
+    "visible_order": {
+      "rule": "List all permutations of the four visible seeds lexicographically. Set k to the integer SHA-256 digest of UTF-8 'benchtop_release_v1/order/' plus lab content hash, modulo 24.",
+      "pilot": "Permutation k, shared across all candidate budgets and repeats within that lab.",
+      "confirmation": "Permutation (k + 1) modulo 24, shared across both arms and all repeats within that lab.",
+      "interpretation": "A changed ordering is not a new research problem; model repeats use independent sessions, not claimed independent underlying worlds."
+    }
+  },
+  "grading": {
+    "id": "seed_block_t_v1",
+    "status": "requires_implementation_and_validation",
+    "primary_labels": [
+      "paper_better",
+      "baseline_better",
+      "no_meaningful_difference"
+    ],
+    "contrast": "Orient the metric so higher is better. For each seed average treatment-minus-baseline across all contexts with equal weights; estimate the mean and standard error across these seed means.",
+    "interval": {
+      "kind": "two_sided_student_t",
+      "confidence": 0.95,
+      "degrees_of_freedom": "number of paired seed means minus one"
+    },
+    "decision": {
+      "paper_better": "lower interval endpoint > min_effect",
+      "baseline_better": "upper interval endpoint < -min_effect",
+      "no_meaningful_difference": "lower endpoint > -min_effect AND upper endpoint < min_effect",
+      "ambiguous": "Any other complete-data case, including equality at a decision boundary"
+    },
+    "bootstrap_diagnostic": {
+      "resamples": 2000,
+      "unit": "Whole seed blocks, preserving treatment pairing and cross-context dependence",
+      "interval": "Percentile 2.5 and 97.5; report diagnostic disagreement without changing primary membership",
+      "rng_seed": 1729
+    },
+    "pilot_truth": "Qualification label; used only by the evaluator and calibration selector.",
+    "confirmation_truth": "Independent confirmation label, inspected only after cohort and arm decisions are locked.",
+    "confirmation_stability": "Gradable only if confirmation is complete, settled, and agrees with qualification. Otherwise retain the lab in the full-cohort denominator and mark model reward comparisons unavailable.",
+    "reward": "1 for a correct claim answer, otherwise 0, only on gradable tasks. Missing infrastructure outcomes remain missing.",
+    "where_scope": "Supporting analysis only; state graded levels and pointwise interval coverage without implying simultaneous coverage."
+  },
+  "agent": {
+    "backend": "claude_cli",
+    "requested_model_family": "haiku",
+    "resolved_model_id": null,
+    "model_binding": "Resolve and pin the available model before development budget selection; record reported IDs per attempt. If unavailable, amend the model choice before evaluation.",
+    "show_paper": true,
+    "tools": [
+      "describe_lab",
+      "run_experiments",
+      "submit_answer"
+    ],
+    "tool_access": "Only the episode-scoped MCP capability; no built-in tools, arbitrary shell, browser, filesystem, extra MCP servers, admin routes, or arbitrary network access.",
+    "sessions": "Fresh model session for every attempt; no session persistence or conversation reuse.",
+    "prompt_binding": "Freeze system text, first-message template, lab-description renderer, CLI configuration, and code hashes before development budget selection; keep the template and information access constant across arms. Explicitly call describe_lab first; preserve equal information access across all scientific arms.",
+    "sampling": "Record supported decoding settings. Unsupported temperature and model random-seed controls are explicitly unavailable, not assumed fixed.",
+    "submission": "First valid answer is final. One format-only correction is allowed; repeated submissions receive only an idempotent receipt. Rewards and hidden seed data never enter the agent conversation."
+  },
+  "budget": {
+    "fractions": [
+      0.06,
+      0.12,
+      0.25
+    ],
+    "denominator": "Frozen sum of per-configuration charged costs multiplied by the four visible seeds.",
+    "charging_schedule": "One versioned per-configuration estimate measured on development or qualification execution and frozen before rollouts; the same estimates are visible to all policies and the LLM.",
+    "separation": "Charged experimental budget is distinct from actual cached wall time, unique execution work, and model inference cost.",
+    "live_failures": "No experimental-result charge for failed runs; failures consume the bounded call/retry allowance and actual work is still logged."
+  },
+  "baselines": {
+    "required": [
+      "paired_uniform",
+      "question_coverage",
+      "coverage_plus_cost"
+    ],
+    "optional": [
+      "adaptive_allocation"
+    ],
+    "optional_rule": "Declare inclusion or deferral at candidate lock, based on development correctness and scope; never fresh scores.",
+    "sanity_controls": [
+      "paper_prior_only",
+      "development_majority_label",
+      "random_experiment_design"
+    ],
+    "majority_rule": "Use the four development claim labels; break ties in primary_labels order and freeze before fresh pilots.",
+    "replay_seeds": {
+      "first": 0,
+      "count": 200
+    },
+    "budget_fractions": [
+      0.06,
+      0.12,
+      0.25
+    ],
+    "estimator": "One shared answer estimator for the main classical-policy comparison; define its weighting, pairing, and missing-context treatment on development data and freeze the code before fresh replay.",
+    "information_rule": "Same visible observations, question, public cost estimates, budget and call limits; no hidden table lookup, qualification reward, or confirmation reward during acquisition.",
+    "label_use": "Hidden labels are used after a baseline finishes only for scoring, never experimental selection.",
+    "weighting": "Cost preference must not redefine an equal-context target as a cheap-context target.",
+    "historical_traces": "Common-estimator reconstruction is retrospective and limited to complete observed-data traces."
+  },
+  "calibration": {
+    "pilot_repeats_per_budget": 4,
+    "target_group_size": 8,
+    "completed_outcome_rule": "Agent-failure zero rewards count toward completed pilot outcomes; unresolved infrastructure attempts do not. Require all four planned slots before selection.",
+    "prior": {
+      "kind": "beta",
+      "alpha": 1,
+      "beta": 1
+    },
+    "posterior": "Beta(correct + 1, valid completed pilot outcomes - correct + 1)",
+    "objective": "1 - E[p^8] - E[(1-p)^8] under the pilot posterior",
+    "posterior_interval": {
+      "confidence": 0.95,
+      "kind": "equal_tailed_beta"
+    },
+    "near_best_tolerance": 0.05,
+    "tie_rule": "Choose the smallest budget with objective >= maximum objective minus 0.05.",
+    "global_control": "Average the objective across the four development labs at each budget and apply the same near-best/smallest-budget rule. This budget is fixed before fresh generation.",
+    "fallbacks": {
+      "no_observed_mixed_budget": "If every budget has either zero correct or four correct pilots, use the global control budget and retain the diagnostic.",
+      "incomplete_pilots": "If any candidate budget lacks four completed outcomes after permitted retry, use the global control budget and mark calibration incomplete."
+    },
+    "pilot_reuse": "Never include pilot or development outcomes in confirmation groups.",
+    "output": [
+      "pilot_slot_ids",
+      "success_counts",
+      "posterior_intervals",
+      "objectives",
+      "chosen_budget",
+      "fallback_reason",
+      "upfront_cost"
+    ]
+  },
+  "confirmation": {
+    "arms": [
+      "global_budget",
+      "calibrated_budget"
+    ],
+    "repeats_per_arm": 8,
+    "same_budget_case": "Retain separate independent model sessions and planned slots even when both arms choose the same budget.",
+    "ordering": "In cohort order, alternate arms for each replicate, reversing the starting arm on odd-numbered lab indices. Dispatch at most two sessions concurrently.",
+    "controls": "Identical model configuration, prompt template, paper visibility, visible ordering, tool limits, charging schedule, and grader; arm budget alone may differ.",
+    "baseline_comparison": "Reuse the global-budget confirmation arm for matched-budget comparison with classical replay; no additional model batch."
+  },
+  "episode_accounting": {
+    "development": {
+      "labs": 4,
+      "budgets": 3,
+      "repeats": 4,
+      "episodes": 48
+    },
+    "fresh_pilots": {
+      "labs_max": 8,
+      "budgets": 3,
+      "repeats": 4,
+      "episodes_max": 96
+    },
+    "fresh_confirmation": {
+      "labs_max": 8,
+      "arms": 2,
+      "repeats": 8,
+      "episodes_max": 128
+    },
+    "cap_rule": "Count every invoked rollout model session, including failed or retried sessions. Smaller cohorts reduce planned work. Generation and classical table replay are recorded separately."
+  },
+  "identities": {
+    "canonical_encoding": "UTF-8 JSON with sorted object keys, separators ',' and ':', ensure_ascii=false, allow_nan=false; preserve array order.",
+    "protocol_hash": "SHA-256 of canonical encoding of this entire specification.",
+    "bindings_hash": "SHA-256 of the immutable phase binding core: resolved artifacts and configuration only, excluding computed IDs, planned slots, and its own hash. Derive group and slot IDs afterward and store the plan hash in a separate lock record referencing this core; no circular hashes.",
+    "group_descriptor_fields": [
+      "protocol_hash",
+      "bindings_hash",
+      "phase",
+      "arm",
+      "lab_hash",
+      "task_hash",
+      "grader_hash",
+      "model_config_hash",
+      "prompt_template_hash",
+      "charging_hash",
+      "budget_fraction",
+      "visible_order",
+      "show_paper"
+    ],
+    "group_id": "SHA-256 of canonical group descriptor.",
+    "slot_id": "SHA-256 of canonical {group_id, replicate_index}; replicate indices start at zero.",
+    "attempt_id": "SHA-256 of canonical {slot_id, attempt_index}; attempt zero is the first invocation and one is the only permitted technical retry.",
+    "phases": [
+      "smoke",
+      "development",
+      "fresh_pilot",
+      "confirmation",
+      "integration"
+    ],
+    "resume": "Persist plans before invoking a model. Reconcile server state for in-flight slots. Never rerun a completed valid or agent-failure slot, including an incorrect answer.",
+    "deduplication": "Independent replicate slots are never deduplicated by episode seed. Preserve all attempts; at most one final usable outcome per slot."
+  },
+  "failure_handling": {
+    "max_technical_retries_per_slot": 1,
+    "retry_budget": "At most 20 retry sessions across the study and always within the 300-start cap.",
+    "agent_outcomes_reward_zero": [
+      "incorrect_answer",
+      "invalid_final_format_after_correction",
+      "episode_timeout",
+      "exited_without_answer",
+      "agent_tool_or_budget_misuse"
+    ],
+    "infrastructure_failures_missing": [
+      "provider_quota",
+      "provider_outage",
+      "transport_failure",
+      "server_failure",
+      "sandbox_worker_failure"
+    ],
+    "classification": "Use allowlisted machine-readable causes and retained evidence, without consulting whether the answer was correct; unclassified failures remain unresolved, not silently excluded.",
+    "after_submission": "If an answer was committed before a transport error, reconcile and retain that result instead of replacing the attempt.",
+    "incomplete_group": "A primary group requires all eight planned outcomes. Unrecovered infrastructure failures make it unavailable; report planned, completed, and unavailable counts.",
+    "invalid_lab": "Stop the affected lab, preserve evidence and membership, and report unavailable rewards; do not repair a lab after viewing fresh model outcomes for the primary analysis.",
+    "sampling_or_timeout_change": "Record an amendment and separate exploratory runs; never retroactively remove poor primary attempts."
+  },
+  "analysis": {
+    "primary": "Paired difference in the fraction of complete, stable-label groups containing both reward 0 and reward 1, calibrated minus global.",
+    "raw_reporting": "For every locked lab and arm publish the eight slot outcomes, selected budget, failure states, and stability state; retain missing entries explicitly.",
+    "denominators": "Report all locked qualified labs, stable-label labs, complete paired groups, and unavailable comparisons separately. Primary complete-case results are conditional on stable labels and complete groups.",
+    "no_complete_pairs": "Report the primary result and interval as unavailable when no complete gradable lab pair remains; do not substitute a zero effect.",
+    "missing_bounds": "Also give worst-case bounds over all locked labs by assigning every unavailable arm's mixed-group indicator either 0 or 1; do not silently improve the denominator.",
+    "secondary": [
+      "claim_accuracy",
+      "reward_variance",
+      "selected_budgets",
+      "qualification_confirmation_agreement",
+      "fallback_counts",
+      "agent_failure_counts",
+      "infrastructure_failure_counts",
+      "mixed_groups_without_agent_failures"
+    ],
+    "baseline": "Per-lab global-arm mean accuracy minus each matched-budget classical policy's mean accuracy over 200 replays; average equally across labs.",
+    "intervals": {
+      "kind": "paired_lab_cluster_percentile_bootstrap",
+      "resamples": 10000,
+      "confidence": 0.95,
+      "rng_seed": 1729,
+      "unit": "Whole labs with both arms and their nested outcomes",
+      "single_lab": "Report raw outcomes and no between-lab interval when fewer than two complete labs remain."
+    },
+    "claims": "Exploratory pilot with at most eight labs; no equivalence claim, universal generalization, or learning claim. Secondary results are descriptive.",
+    "cost_fields": [
+      "pilot_episode_starts",
+      "confirmation_episode_starts",
+      "requested_runs",
+      "unique_executed_runs",
+      "charged_experiment_cost",
+      "actual_environment_cpu_seconds",
+      "environment_wall_seconds",
+      "model_wall_seconds",
+      "input_tokens",
+      "output_tokens",
+      "generation_and_repair_usage"
+    ],
+    "missing_usage": "Use null with an availability reason; never substitute zero for unreported tokens or time.",
+    "efficiency": "Include calibration overhead and the measured budget tradeoff. If reporting break-even, state the assumed number of future groups; reward variation alone is not an efficiency benefit."
+  },
+  "records": {
+    "release_manifest_required": [
+      "protocol_hash",
+      "binding_records",
+      "ordered_candidates",
+      "membership_decisions",
+      "environment_versions",
+      "task_versions",
+      "seed_partitions"
+    ],
+    "admission_required": [
+      "candidate_id",
+      "lab_hash",
+      "mechanism",
+      "simplifications",
+      "checks",
+      "evidence",
+      "review_decision",
+      "limitations"
+    ],
+    "rollout_required": [
+      "protocol_hash",
+      "group_id",
+      "slot_id",
+      "attempt_id",
+      "attempt_index",
+      "phase",
+      "arm",
+      "environment_version",
+      "task_version",
+      "grader_version",
+      "model_config",
+      "prompt_hash",
+      "budget",
+      "observed_trace",
+      "answer",
+      "outcome_state",
+      "reward_or_null",
+      "costs",
+      "failure_category",
+      "retry_of_or_null"
+    ],
+    "calibration_required": [
+      "lab_hash",
+      "pilot_attempt_ids",
+      "selector_version",
+      "posterior_summary",
+      "chosen_budget",
+      "fallback_reason",
+      "upfront_cost"
+    ],
+    "publication": "Release sanitized artifacts after scoring is locked. Remove capabilities, credentials and private paths; keep raw transcripts in ignored local state."
+  },
+  "continuation": {
+    "parent_protocol_hash": "94e8d7c14c822c80ede18b387ec8669dd36a73947a25af98e0beb9880060dcc6",
+    "parent_protocol_file_sha256": "7fe03af89514fba99f9c4164f438251498e90681b7f4ebc116614e5f7cb977d1",
+    "parent_ledger_id": "c5f715be498dd79351bcaf55778bc5799016f436d6fe8183060f961e4ac03cb1",
+    "parent_manifest_sha256": "b353ef8f74cc1b06e1c33e10b0bca43c0ec93f4bdd410b665517c60ba14e4176",
+    "parent_inventory_sha256": "86edc9112c04f747c5226fc7fb1599ce8a5ab4eef59c90e9c04a53b63d0ca74c",
+    "parent_expected_start_intents": 1,
+    "global_total_max_episode_starts": 300,
+    "reason": "The first valid v1 smoke omitted a redundant describe_lab call because the complete description was supplied. Fix that instruction prospectively before primary model data; retain the completed attempt and its consumption.",
+    "accounting": "One completed v1 smoke plus at most299v2 evaluation/integration starts. New retries19 rather than20; primary272, six new smoke, two UI unchanged.",
+    "affected_data": "Only an excluded v1 smoke exists. No primary development, fresh pilot or confirmation model outcome is pooled, relabeled or rebound."
+  }
+}

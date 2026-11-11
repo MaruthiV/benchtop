@@ -9,7 +9,7 @@ import tempfile
 from datetime import UTC, datetime
 from pathlib import Path
 
-from benchtop import cache
+from benchtop import cache, protocol
 from benchtop.agents.common import SYSTEM, first_message
 from benchtop.calibrate import canonical_hash
 from benchtop.env import ROOT, Env
@@ -18,7 +18,7 @@ from benchtop.replay import development_gate
 from benchtop.stats import GRADER_ID
 
 PLANNER_ID = "study_plan_v1"
-SPEC = ROOT / "benchmarks/release_v1/spec.json"
+SPEC = protocol.SPEC
 
 
 def _json(path):

@@ -52,12 +52,16 @@ def _core(directory, manifest, state, plan, authorization, *, closed):
 
 
 def _accounting(state):
+    from benchtop import continuation
+
     slots = [{"attempts": ledger._normalized_history(history)} for history in state["histories"].values()]
     costs = calibrate._costs(slots)
     costs["recorded_start_intents"] = costs.pop("episode_starts")
     costs["retry_start_intents"] = costs.pop("retry_episode_starts")
+    prior = continuation.usage()
     return {"shared_ledger_counts_at_snapshot": dict(state["counts"]), "shared_ledger_costs_at_snapshot": costs,
-            "interpretation": "Frozen snapshot of recorded intents and adapter-reported costs, not authenticated provider calls or billing. Generation is accounted separately."}
+            "interpretation": "Frozen snapshot of recorded intents and adapter-reported costs, not authenticated provider calls or billing. Generation is accounted separately.",
+            **({"prior_protocol_usage": prior} if prior else {})}
 
 
 def _closed(directory, manifest, state, plan, authorization):
@@ -68,7 +72,11 @@ def _closed(directory, manifest, state, plan, authorization):
             or any(frozen.get(key) != value for key, value in expected.items())):
         raise ValueError("closed pilot evidence or per-lab selection differs from the canonical collection")
     accounting = frozen["accounting"]
-    calibrate._keys(accounting, {"shared_ledger_counts_at_snapshot", "shared_ledger_costs_at_snapshot", "interpretation"})
+    calibrate._keys(accounting, {"shared_ledger_counts_at_snapshot", "shared_ledger_costs_at_snapshot", "interpretation"}, {"prior_protocol_usage"})
+    from benchtop import continuation
+
+    if accounting.get("prior_protocol_usage") != continuation.usage():
+        raise ValueError("closed pilot prior-protocol usage changed")
     counts, costs = accounting["shared_ledger_counts_at_snapshot"], accounting["shared_ledger_costs_at_snapshot"]
     if (not isinstance(counts, dict) or not isinstance(costs, dict) or any(type(value) is not int or value < 0 for value in counts.values())
             or counts.get("active") != 0 or counts.get("total", -1) < expected["pilot_costs"]["episode_starts"]

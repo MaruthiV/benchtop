@@ -11,7 +11,7 @@ from collections import Counter, defaultdict
 from datetime import UTC, datetime
 from pathlib import Path
 
-from benchtop import cache
+from benchtop import cache, protocol
 from benchtop.admission import inspect_lab
 from benchtop.agents.baselines import RELEASE_BASELINES, play_release
 from benchtop.env import ROOT, Env, load_catalog
@@ -19,8 +19,8 @@ from benchtop.episode import Episode
 from benchtop.evaluate import corrected_replay
 from benchtop.stats import GRADER_ID
 
-SPEC = ROOT / "benchmarks/release_v1/spec.json"
-REFERENCES = ROOT / "benchmarks/release_v1/admission/references/selection.json"
+SPEC = protocol.SPEC
+REFERENCES = protocol.REFERENCES
 REPLAY_ID = "classical_replay_v1"
 SOURCE_FILES = ("replay.py", "agents/baselines.py", "agents/estimator.py", "episode.py", "evaluate.py",
                 "analysis.py", "admission.py", "validate.py", "cache.py", "env.py", "space.py", "stats.py", "tasks.py")

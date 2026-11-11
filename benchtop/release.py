@@ -15,6 +15,7 @@ from benchtop import (
     confirmation_results,
     pilot_calibration,
     primary,
+    protocol,
     release_data,
     study,
     study_calibration,
@@ -26,6 +27,10 @@ from benchtop.verify import PUBLIC_DIRS, PUBLIC_FILES
 
 FORMAT = "benchtop_public_release_v1"
 MANIFEST = "release-manifest.json"
+
+
+def _binding_name():
+    return str(protocol.BINDINGS.relative_to(ROOT))
 
 
 def _files(directory):
@@ -54,7 +59,7 @@ def public_inputs():
                 raise ValueError("private material appeared inside frozen public inputs")
             result[relative] = sha
     if primary.BINDINGS.exists():
-        result["benchmarks/release_v1/bindings.json"] = cache.file_hash(primary.BINDINGS)
+        result[_binding_name()] = cache.file_hash(primary.BINDINGS)
     return result
 
 
@@ -149,7 +154,7 @@ def _gather():
         if study._foundation(study._resolve(smoke["binding"]["foundation_source"]))["status"] != "current":
             raise ValueError("publication requires the original current foundation inputs")
         inputs = public_inputs()
-        allowed = set(foundation["input_sha256"]) | {"benchmarks/release_v1/bindings.json"}
+        allowed = set(foundation["input_sha256"]) | {_binding_name()}
         if set(inputs) != allowed or any(inputs[name] != sha for name, sha in foundation["input_sha256"].items()):
             raise ValueError("public input set changed after the foundation snapshot; preserve the frozen evaluation workspace")
         baseline = cohort["binding"]["baselines"]
@@ -262,12 +267,13 @@ def figures(report, directory):
 def _readme(report, identity):
     primary_result = report["primary"]
     estimate = "unavailable" if primary_result["estimate"] is None else f"{primary_result['estimate']:.3f}"
+    command = ("BENCHTOP_PROTOCOL=" + protocol.NAME + " ") if protocol.NAME != "release_v1" else ""
     return "\n".join(["# Benchtop", "", "Paper-inspired computational labs, independent reward checks, and model-specific budget calibration.", "",
         "This release preserves the full cohort, missing outcomes and measured overhead. It contains a sanitized projection of the recorded study, cached lab data and an offline reproducer.", "",
         "## Recorded result", "", f"Locked labs: **{report['denominators']['locked_labs']}**. Stable: **{report['denominators']['stable_labs']}**. Complete pairs: **{report['denominators']['complete_paired_labs']}**.", "",
         f"Calibrated minus global mixed-group frequency: **{estimate}**. See [the report](release-results/report.md) for the interval, full-cohort bounds, controls and limitations.", "",
         "![Confirmation groups and budgets](release-results/figures/confirmation.png)", "", "## Reproduce without models", "",
-        "```sh", "uv sync --locked", "uv run python -m benchtop.cli release reproduce .", "```", "",
+        "```sh", "uv sync --locked", command + "uv run python -m benchtop.cli release reproduce .", "```", "",
         "Reproduction checks file hashes, seed partitions, independent grading, recorded model rewards, completed classical policy trials and the paired analysis. It starts no model, network request or lab worker; recorded failures remain missing or failed.", "",
         "[Machine-readable analysis](release-results/analysis.json) · [projected evidence](release-results/evidence.json) · [execution runbook](benchmarks/release_v1/EXECUTION.md)", "",
         "## Evidence and scope", "", identity["source_scope"], "",
@@ -289,7 +295,7 @@ def build(output):
     for name in inputs:
         destination = target / ("evaluation/README.md" if name == "README.md" else name)
         destination.parent.mkdir(parents=True, exist_ok=True)
-        source = primary.BINDINGS if name == "benchmarks/release_v1/bindings.json" else ROOT / name
+        source = primary.BINDINGS if name == _binding_name() else ROOT / name
         shutil.copyfile(source, destination)
     provenance = _copy_labs(target / "release-data", plan)
     _write(target / "release-results/evidence.json", projection)
@@ -305,7 +311,7 @@ def build(output):
     files = _files(target)
     files.pop(".release-building")
     manifest = study._seal({"schema_version": 1, "format": FORMAT, "recorded_at_utc": datetime.now(UTC).isoformat(),
-        "protocol_hash": plan["binding"]["protocol_hash"], "source_sha256": identity["source_sha256"], "runtime": identity["runtime"],
+        "protocol_hash": plan["binding"]["protocol_hash"], "protocol_profile": protocol.NAME, "source_sha256": identity["source_sha256"], "runtime": identity["runtime"],
         "original_public_inputs": inputs, "original_private_inventory_sha256": identity["private_inventory_sha256"],
         "foundation_file_sha256": identity["foundation_file_sha256"], "binding_records": identity["bindings"],
         "ordered_candidates": identity["ordered_candidates"], "membership_decisions": collection["candidate_funnel"],
