@@ -1,0 +1,180 @@
+# benchtop
+
+[One-minute project brief](benchmarks/release_v1/PROJECT_BRIEF.md)
+
+[Run one MCP episode without a model](benchmarks/release_v1/WALKTHROUGH.md)
+
+[Execution through outreach](benchmarks/release_v1/EXECUTION.md) · [Reproducible release packaging](benchmarks/release_v1/PUBLICATION.md)
+
+The real study uses the [v2 smoke-prompt continuation](benchmarks/release_v2/README.md). It preserves the first compatibility attempt, explicitly requires `describe_lab`, and deducts that consumed start from the original 300-start allowance. Use `BENCHTOP_PROTOCOL=release_v2` for the continuation; the scientific design is unchanged and primary model results remain pending.
+
+benchtop turns new arXiv papers into small runnable labs that work as RL environments for research taste. An agent gets a question about a paper's claim, spends a compute budget on experiments, and is graded on seeds it never saw.
+
+The results below use `historical_v0` labels. A [corrected grading review](benchmarks/release_v1/GRADING.md) retains 75 of the original 78 questions; new agent evaluations are pending.
+
+The [admission screen](benchmarks/release_v1/ADMISSION.md) separates mechanical validity, qualified questions, human review, and model difficulty. The historical catalog has 28 corrected claim candidates. [Recorded reference decisions](benchmarks/release_v1/admission/human_reviews/README.md) admit four narrowly scoped development miniatures, reject the current CaLLM comparison and leave Para-Gaussian unresolved.
+
+The [consolidated evidence report](benchmarks/release_v1/admission/REPORT.md) preserves the pre-approval paper-to-code reviews, cached diagnostics and bounded runtime evidence. The [owner review guide](benchmarks/release_v1/admission/REVIEW.md) explains how decisions are recorded separately from assistant suggestions and task eligibility.
+
+A [controlled defect suite](benchmarks/release_v1/admission/defects/README.md) exercises six specific failure cases and ten valid controls, including disabled optimizer perturbations, test-set access, and mismatched shared inputs. These are lab-specific checks, with recorded sandbox evidence; they do not certify arbitrary generated science.
+
+A [bounded visible-seed runtime review](benchmarks/release_v1/admission/runtime_review/README.md) adds fresh-worker repetition and optimizer diagnostics for the GP-bandit, monoculture and data-curation miniatures. Its tested contexts and remaining limitations are explicit.
+
+The [versioned classical baselines](benchmarks/release_v1/BASELINES.md) implement paired-uniform, question-coverage, and coverage-plus-cost acquisition with one shared estimator. They use matched visible replicates, public frozen prices, and explicit equal-context weighting. The reviewed development comparison remains pending.
+
+The [cohort lock](benchmarks/release_v1/COHORT.md) freezes reviewed labs and qualification evidence from the ordered fresh-generation funnel. [Fresh pilots](benchmarks/release_v1/PILOTS.md) have cohort-bound plans, provider authorization and [per-lab calibration](benchmarks/release_v1/PILOT_CALIBRATION.md). The [confirmation lock](benchmarks/release_v1/CONFIRMATION.md) freezes both budget arms; [independent confirmation truth](benchmarks/release_v1/CONFIRMATION_DATA.md) preserves qualification data and flags instability. [Confirmation provider execution](benchmarks/release_v1/CONFIRMATION_EXECUTION.md) now binds stable independent grading and ordered starts to the original journal; [Full-cohort analysis and matched classical replay](benchmarks/release_v1/CONFIRMATION_RESULTS.md) are implemented; actual study results remain pending.
+
+The [shared Qualia route](benchmarks/release_v1/QUALIA_PRIMARY.md) reserves UI invocations in the original journal and keeps experiments/submission inactive until reservation. Actual Qualia UI evidence remains pending.
+
+The [classical replay harness](benchmarks/release_v1/REPLAY.md) adds sanity controls, raw attempt evidence, immutable resume, and a review gate before development comparisons. Engineering replays are explicitly separated from study results.
+
+```mermaid
+flowchart LR
+    A[new arXiv papers] --> B[triage<br/>Haiku]
+    B --> C[lab writer<br/>Sonnet]
+    C --> D[sandbox checks<br/>repair loop]
+    D --> E[full sweep<br/>16 seeds per config]
+    E --> F[questions with<br/>held-out truth]
+    F --> G[episode server<br/>HTTP + MCP]
+    G --> H[agents]
+    C -. independent audit .-> I[Opus reviewer]
+```
+
+## Why
+
+Training a model on research judgment needs environments that are cheap to run, have a verifiable reward, and keep coming. Hand-built evals like TasteVal ([2610.06824](https://arxiv.org/abs/2610.06824)) spend about 40 H100-hours per run on 8 hidden tasks. That's fine for measurement, but too slow and too few for RL.
+
+benchtop goes the other way. Each lab is a miniature of one paper's central comparison that runs in milliseconds on a laptop CPU. The whole grid is swept ahead of time, so cached episode steps are lookups. Grading uses labels estimated from held-out runs.
+
+## One day of arXiv
+
+![funnel](assets/funnel.svg)
+
+- 74 cs.LG and stat.ML papers from Oct 27, 2026
+- 30 became labs, 26 of them on the lab writer's first try. Median build time was about 100 s, and the total cost was about $7 at API prices ($0.24 per lab, $0 on a subscription)
+- the most common reason a paper didn't make it: it needs a pretrained LLM (27 papers)
+- an independent Opus audit passed 25 labs. 2 had unfair baselines and 3 were low fidelity. One more is outlier-dominated (one setting drives the whole average), which leaves a clean set of 24
+
+## What a lab is
+
+Two files. `lab.py` has `run(config, seed) -> metrics`. `space.json` lists the factors: the paper's method vs a baseline, plus 2 or 3 settings where the effect might change.
+
+Example, [2610.36983](https://arxiv.org/abs/2610.36983) "Advancement or Acceleration? How Data Curation Improves LLM Training":
+
+| | |
+|---|---|
+| paper's claim | curation helps only when there is a correctable train/target gap |
+| method | `uniform` vs `target_select` |
+| settings | `gap_deg` 0 / 30 / 60, `n_pool` 200 / 2000, `label_noise` 0 / 0.2 |
+| one run | 2 ms on one core |
+| held-out truth | no effect on average; hurts at gap 0, helps at gap 60; helps on clean labels, hurts with noisy ones |
+
+## Episodes
+
+- three question types: *does it help?* (averaged over settings), *where does it help?* (per level of one setting), and *best config*
+- 16 seeds per config: 4 visible to the agent, 12 held out for grading
+- both arms share seeds (same data split, same init), so paired comparisons work
+- claim and where questions require a settled interval-based label; historical and corrected interval rules differ (see the grading review above)
+- the budget is a quarter of the visible grid (6% in the tight runs); new episodes use a [frozen, public runtime estimate per configuration](benchmarks/release_v1/BUDGETS.md)
+- agents get three tools and nothing else: `describe_lab`, `run_experiments`, `submit_answer`
+- live labs require macOS `sandbox-exec` with no network, no writes outside a temp dir, and no reads of results or docs; unsupported execution fails closed
+- new caches [bind execution inputs and task versions](benchmarks/release_v1/CACHE.md); historical labs remain verified snapshots for cached replay
+
+## Agents
+
+![scores](assets/scores.svg)
+
+Agents get identical episodes and seeds with a budget of 25% of the visible grid. Haiku, Sonnet and Qwen played all 78 episodes, GPT the 49 claim and where episodes, and Opus the 41 on audit-clean labs. Claude runs through `claude -p` with only the three lab tools. GPT runs through the Codex CLI with its shell turned off. Qwen3 4B runs locally through Ollama.
+
+- at this budget, frontier agents tie a uniform-design baseline that uses no LLM (0.93 vs 0.94 on *does it help?*)
+- Qwen3 4B scores at the level of blindly trusting the paper, at 0.96 mean confidence
+- the Claude models are slightly underconfident (0.82 to 0.85 confidence at 0.90 to 0.93 accuracy). GPT is close to calibrated (Brier 0.03)
+- Sonnet stops early and uses 64% of its budget on average. Opus uses 85%, GPT 97%
+
+### When the lab disagrees with its paper
+
+![trust](assets/trust.svg)
+
+On the 24 clean labs, 14 agree with their paper and 9 contradict it. Every frontier agent is perfect on the first group and drops to 0.67 to 0.78 on the second. Some of that drop is just difficulty: the uniform design also falls, from 0.97 to 0.84, because contradicting labs tend to have small or null effects.
+
+The agents mostly aren't fooled by the abstract. Hiding the paper's claim barely moved Haiku on contradicting labs (0.85 to 0.90 over 48 paired episodes, 95% CI -0.04 to +0.13). Sonnet and Opus never overrode their own data in the paper's favor. Each missed 6 of 41 clean questions. In 3 (Sonnet) and 4 (Opus) of those, the experiments they chose really did point to the wrong answer, which fits the early stopping above.
+
+### Tight budgets
+
+![budget](assets/budget.svg)
+
+At 25% of the grid, brute force works. At 6% (about 8 runs), choosing which experiments to run starts to matter. Every frontier agent beats the uniform design on the same episodes:
+
+| | *does it help?* | vs uniform (95% CI) | *where does it help?* | vs uniform (95% CI) |
+|---|---|---|---|---|
+| uniform design | 0.83 | | 0.66 | |
+| Claude Haiku 5.5 | 0.90 | +0.07 (-0.02 to +0.15) | 0.84 | +0.18 (+0.09 to +0.27) |
+| Claude Sonnet 5.5 | 0.93 | +0.10 (+0.02 to +0.18) | 0.78 | +0.11 (+0.02 to +0.20) |
+| GPT (Codex CLI) | 0.97 | +0.14 (+0.04 to +0.23) | 0.84 | +0.18 (+0.08 to +0.28) |
+
+Going from 25% to 6% of the grid, the agents lose 2 to 5 points, the uniform design 15, and random design 42. That gap is the part of research taste these labs can measure: knowing which runs settle the question.
+
+### Rollout groups
+
+Six groups of eight Haiku rollouts, each group on one episode seed (like a GRPO group), asked for 1,393 experiment runs in total, but only 312 were unique. A shared cache skips 78% of the work (63% at the 6% budget). Even together, a group touches only 38% of the visible grid. In live mode (run on demand, coalesce identical requests, cache), that's all the agent-facing compute a group needs. Only the held-out grading seeds still have to be swept.
+
+At the 25% budget, 5 of 6 groups were all correct: no reward variance, so no GRPO signal. At 6%, on the same six episodes, 2 groups split and 4 were still all correct. So the tight budget separates agents from baselines, but on its own it doesn't give GRPO much to learn from. A training set would also need episodes the policy sometimes fails.
+
+## Scale
+
+![scale](assets/scale.svg)
+
+Episodes are tiny state machines over a swept table, so the cost of an environment step is a dict lookup.
+
+- in-process (for an RL loop): 110k episode creations/s and 53k steps/s on one core, about 0.7 KB per open episode
+- over HTTP, one uvicorn process does about 8,200 requests/s closed-loop (p99 3.6 ms)
+- with LLM-paced agents (each acting about every 10 s), one process holds 5,000 concurrent episodes at p99 16 ms with no errors, and 20,000 at p99 140 ms
+- episodes are independent, so they shard by id. Four processes hold 40,000 at p99 89 ms
+
+The load generator ran on the same 11-core laptop as the servers. The servers logged no errors. The 0.2 to 3% of agents that hit connection resets were caused by macOS limits (a 128-connection accept queue, 16k ephemeral ports). At 80,000 agents those limits take over and 40% of agents fail.
+
+## Use it
+
+Reproduce the existing report and check the interfaces without model calls:
+
+```sh
+uv sync --frozen
+.venv/bin/python -m benchtop.cli verify
+# macOS: also exercise a new synthetic sweep and cached resume
+.venv/bin/python -m benchtop.cli verify --live --output artifacts/foundation_live.json
+```
+
+The checker uses a disposable copy without private state and preserves the original data. See [foundation reproduction](benchmarks/release_v1/REPRODUCTION.md) for proof fields, trainer semantics, and remaining gates.
+
+The generation and model-run commands are separate:
+
+```sh
+uv run benchtop fetch --n 200 --name today       # recent cs.LG + stat.ML
+uv run benchtop triage --listing today           # can it be miniaturized?
+uv run benchtop build --listing today --jobs 3   # write, check, sweep, keep or drop
+uv run benchtop serve                            # admin 8787, agent MCP 8788
+uv run benchtop rollouts --agent claude:sonnet   # or claude:haiku, ollama:qwen3:4b-instruct, codex:default
+uv run benchtop report
+```
+
+`uv run benchtop episode <env> <task>` prints a capability URL on the agent port, scoped to one episode. Administrative operations use a separate local credential; grades are not available through the agent app. Host and Origin checks stay enabled, with explicit settings for external clients. See [agent and evaluator access](benchmarks/release_v1/ACCESS.md) for setup, grading, and tunnel configuration.
+
+For Qualia, the [integration guide](benchmarks/release_v1/QUALIA.md) covers private configuration, preflight, invocation accounting, and evidence capture. Public MCP preflight has passed; an actual Qualia conversation remains unverified.
+
+In-process, for an RL loop:
+
+```python
+from benchtop.gym import make
+
+lab = make("2610-36983-advancement-or-acceleration-how", "where:gap_deg")
+obs, info = lab.reset(seed=0)
+obs, reward, done, info = lab.step({"tool": "run_experiments", "configs": [{"method": "target_select"}], "seeds": 2})
+```
+
+## Limits
+
+- the lab is the world. A lab can disagree with its paper because the claim doesn't hold at small scale, or because the lab writer got something wrong. The audit catches some of the second kind, not all
+- settings are discrete grids, so "propose a new method" isn't covered, only choosing and reading experiments
+- miniatures run on CPU in milliseconds, so anything that truly needs scale (LLM pretraining, large vision models) gets triaged out
+- one day of papers and one rollout per agent per episode for most numbers, so the intervals are wide
+- the sandbox is macOS only for now; Linux would want a container or gVisor backend behind the same worker protocol

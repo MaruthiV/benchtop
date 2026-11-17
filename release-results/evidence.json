@@ -1,0 +1,4291 @@
+{
+  "schema_version": 1,
+  "format": "public_confirmation_projection_v1",
+  "collection": {
+    "schema_version": 1,
+    "exporter_id": "primary_confirmation_collection_v1",
+    "closed": true,
+    "protocol_hash": "ba515089163fa749acff31fc991dd74264bcb02668d87ef07890051109750ac3",
+    "bindings_hash": "fc2f8597d8b8a72590eb5e12f4f2d763a18f9d11f1b396b2817e025ea5333461",
+    "groups": [
+      {
+        "env_id": "2611.08959v1",
+        "task": "claim",
+        "group_id": "fe0dbd09d72e9fee504427cb6236b488b88c7843c78111d0996dd0ab47f5b838",
+        "descriptor": {
+          "protocol_hash": "ba515089163fa749acff31fc991dd74264bcb02668d87ef07890051109750ac3",
+          "bindings_hash": "fc2f8597d8b8a72590eb5e12f4f2d763a18f9d11f1b396b2817e025ea5333461",
+          "phase": "confirmation",
+          "arm": "global_budget",
+          "lab_hash": "63fe7956ebe67d148c901e05f2d309f427cd906698831b54cac87ff6f404fe28",
+          "task_hash": "6ed4bdc1b50a0bce89e638d9a14f0a6e2f6e10296b9d51cc41e8dc7a9573c77f",
+          "grader_hash": "445387ac8fde455d41149bc8ec62fcba7401c6f9e2740e049f9d7ec7dca89068",
+          "model_config_hash": "5152b3b2315f9052d97a3ccb205864675207b59fb10d89c5ef505f157ce7ea9f",
+          "prompt_template_hash": "d423fd2122c8d8b8260e1777162e0dc3790df3f207b1c5a9d85f7f2c6553f7a2",
+          "charging_hash": "60a9dce7dc5f572f9e6cead92c28f8f4a5f1a20882951be480d942db3e2db26f",
+          "budget_fraction": 0.06,
+          "visible_order": [
+            2,
+            3,
+            1,
+            0
+          ],
+          "show_paper": true
+        }
+      },
+      {
+        "env_id": "2611.08959v1",
+        "task": "claim",
+        "group_id": "d91ac9c7a8b2e101bee472426f85994c20140f68f5d88e41bf03af31c54af534",
+        "descriptor": {
+          "protocol_hash": "ba515089163fa749acff31fc991dd74264bcb02668d87ef07890051109750ac3",
+          "bindings_hash": "fc2f8597d8b8a72590eb5e12f4f2d763a18f9d11f1b396b2817e025ea5333461",
+          "phase": "confirmation",
+          "arm": "calibrated_budget",
+          "lab_hash": "63fe7956ebe67d148c901e05f2d309f427cd906698831b54cac87ff6f404fe28",
+          "task_hash": "6ed4bdc1b50a0bce89e638d9a14f0a6e2f6e10296b9d51cc41e8dc7a9573c77f",
+          "grader_hash": "445387ac8fde455d41149bc8ec62fcba7401c6f9e2740e049f9d7ec7dca89068",
+          "model_config_hash": "5152b3b2315f9052d97a3ccb205864675207b59fb10d89c5ef505f157ce7ea9f",
+          "prompt_template_hash": "d423fd2122c8d8b8260e1777162e0dc3790df3f207b1c5a9d85f7f2c6553f7a2",
+          "charging_hash": "60a9dce7dc5f572f9e6cead92c28f8f4a5f1a20882951be480d942db3e2db26f",
+          "budget_fraction": 0.06,
+          "visible_order": [
+            2,
+            3,
+            1,
+            0
+          ],
+          "show_paper": true
+        }
+      }
+    ],
+    "members": [
+      {
+        "env_id": "2611.08959v1",
+        "stability": "ambiguous",
+        "gradable": false,
+        "member_assessment_sha256": "fe7e03bc27474b0e7fa0d374c451fca1de25e02c573e965337a2a5eea5ba6d40",
+        "confirmation_cpu_work": {
+          "recorded_job_intents": 576,
+          "observed_results": 576,
+          "failed_results": 0,
+          "reported_job_seconds": {
+            "known_sum": 0.4474750179797411,
+            "unreported_jobs": 0,
+            "total": 0.4474750179797411
+          },
+          "collection_wall_seconds": 68.35923983342946,
+          "actual_environment_cpu_seconds": null
+        }
+      }
+    ],
+    "pilot_decisions": [
+      {
+        "env_id": "2611.08959v1",
+        "status": "fallback",
+        "chosen_budget_fraction": 0.06,
+        "fallback_reason": "no_observed_mixed_budget",
+        "selection_sha256": "331a2dbc07b8522c2a2d350f5682ebbc3dc194ec8adb21ff71f46ee5520ffc98",
+        "pilot_slot_ids": [
+          "d263fad34f056d2c89ec7e342e0fedbd400947d99f4291d0e6cf65a4d594aabf",
+          "f93f518bffdbb3102b821bc3ff3b8e04beeab4256a6251fa8c5123e4c13f092b",
+          "f27af32c4d1c373d3bbeac54ff9786b2c15e4f22608beda06ff332fcbb86604b",
+          "9029a3d149648feb24afaa0f59a82482922fd0ea331690377a580e0e9e2b0e1f",
+          "50fc42c980cdea05a5662be032b7b77a62388ca9c5340a8b34ebdc26c069d4f1",
+          "c532ff9cecc1646e3644528ed32a9f948397983ddb50adc1753a7b7e59bb01fd",
+          "862bc04b213a1d9b31cbf4402ecac3b42aa4f055ebf2487c52d0f2bc389ae4ac",
+          "caf913bf94b3523da30dd2147ac194438c853c5479c92fc8f8115d477bae06a9",
+          "0954b75ed83f8b781ce493a8a0e38fe8143d35ef9e8c893f1c90e65c89cafc7a",
+          "a1d87d8568d23907b7926fe8573621fde9bae902f721a1aac534629e745a7a56",
+          "49f93d38010aef2dada4b3cf2cf5748eaf87d4788831d6a62deb57bfd08432a6",
+          "8896e35b139baf54c83b3ad1b89e61fd0c92cf52a46b3296463293806895be9a"
+        ],
+        "pilot_attempt_ids": [
+          "dbe63aa9e71623e75175e3b676aa60ddbd238727affa0f0665acc3a15bf13c44",
+          "4655273b1f0316bc4fd766eae4b2fbda7f4375e3d3a8fa16574b3e517ad93651",
+          "6d51551cd801590279ef641efb2f51897b69455e4b17a8c677ee0c492fafc4e3",
+          "ff90db90845bab5bfcf74a8db2bdb4ae845e6cca05601870c92445356cc88bfe",
+          "2f52c48764650b5055ac1a87e43e20d50d2f39beeb6369af23aee7c503f03b25",
+          "35410cf262894034b1b410b1acdbe3f75a7fee129c662cb28cbae315f360d8b9",
+          "9e921e36f0403015825c7b38ba3063c1c93334f23d38e28bbc91dc668c4f59fd",
+          "763ef30c1fde92a35b12898dd8763cd360ebd8887922bd784f2b18cdc0cc9fc5",
+          "1e56181a29779a52296ead213c3da9702a89d2f09f541f787cb628376841e244",
+          "7e3af0932b96785837c768053c825b1f24217cb1ceb8db5b124b0044e84f6528",
+          "130c026a0705860a69a0d1c2f4bd3fe542e618d9e25de004f41ce10026374e67",
+          "534c99d58da0f6c67321ec9e457487563fc6ca7d334756723ccba71eb92474f0"
+        ]
+      }
+    ],
+    "global_budget_fraction": 0.06,
+    "candidate_funnel": [
+      {
+        "id": "2611.08831",
+        "version": "2611.08831v1",
+        "status": "rejected",
+        "basis": "triage_or_mechanical_failure"
+      },
+      {
+        "id": "2611.08833",
+        "version": "2611.08833v1",
+        "status": "rejected",
+        "basis": "human_rejection"
+      },
+      {
+        "id": "2611.08840",
+        "version": "2611.08840v1",
+        "status": "rejected",
+        "basis": "triage_or_mechanical_failure"
+      },
+      {
+        "id": "2611.08866",
+        "version": "2611.08866v1",
+        "status": "generation_failed",
+        "basis": "triage_or_mechanical_failure"
+      },
+      {
+        "id": "2611.08883",
+        "version": "2611.08883v1",
+        "status": "rejected",
+        "basis": "human_rejection"
+      },
+      {
+        "id": "2611.08909",
+        "version": "2611.08909v1",
+        "status": "qualification_ambiguous",
+        "basis": "prequalification_review_and_cached_qualification"
+      },
+      {
+        "id": "2611.08912",
+        "version": "2611.08912v1",
+        "status": "rejected",
+        "basis": "triage_or_mechanical_failure"
+      },
+      {
+        "id": "2611.08918",
+        "version": "2611.08918v1",
+        "status": "generation_failed",
+        "basis": "triage_or_mechanical_failure"
+      },
+      {
+        "id": "2611.08924",
+        "version": "2611.08924v1",
+        "status": "rejected",
+        "basis": "human_rejection"
+      },
+      {
+        "id": "2611.08936",
+        "version": "2611.08936v1",
+        "status": "rejected",
+        "basis": "triage_or_mechanical_failure"
+      },
+      {
+        "id": "2611.08937",
+        "version": "2611.08937v1",
+        "status": "rejected",
+        "basis": "human_rejection"
+      },
+      {
+        "id": "2611.08959",
+        "version": "2611.08959v1",
+        "status": "admitted",
+        "basis": "prequalification_review_and_cached_qualification"
+      },
+      {
+        "id": "2611.08977",
+        "version": "2611.08977v1",
+        "status": "rejected",
+        "basis": "human_rejection"
+      },
+      {
+        "id": "2611.08990",
+        "version": "2611.08990v1",
+        "status": "qualification_ambiguous",
+        "basis": "prequalification_review_and_cached_qualification"
+      },
+      {
+        "id": "2611.08992",
+        "version": "2611.08992v1",
+        "status": "rejected",
+        "basis": "human_rejection"
+      },
+      {
+        "id": "2611.08993",
+        "version": "2611.08993v1",
+        "status": "rejected",
+        "basis": "triage_or_mechanical_failure"
+      }
+    ],
+    "pilot_costs": {
+      "episode_starts": 12,
+      "retry_episode_starts": 0,
+      "fields": {
+        "requested_runs": {
+          "known_sum": 296,
+          "unreported_attempts": 0,
+          "total": 296,
+          "availability": "reported"
+        },
+        "unique_executed_runs": {
+          "known_sum": 0,
+          "unreported_attempts": 0,
+          "total": 0,
+          "availability": "reported"
+        },
+        "charged_experiment_cost": {
+          "known_sum": 0.13662521867081523,
+          "unreported_attempts": 0,
+          "total": 0.13662521867081523,
+          "availability": "reported"
+        },
+        "actual_environment_cpu_seconds": {
+          "known_sum": 0.0,
+          "unreported_attempts": 12,
+          "total": null,
+          "availability": "partial_or_unreported"
+        },
+        "environment_wall_seconds": {
+          "known_sum": 0.0,
+          "unreported_attempts": 12,
+          "total": null,
+          "availability": "partial_or_unreported"
+        },
+        "model_wall_seconds": {
+          "known_sum": 204.3556583346799,
+          "unreported_attempts": 0,
+          "total": 204.3556583346799,
+          "availability": "reported"
+        },
+        "input_tokens": {
+          "known_sum": 116,
+          "unreported_attempts": 0,
+          "total": 116,
+          "availability": "reported"
+        },
+        "output_tokens": {
+          "known_sum": 39944,
+          "unreported_attempts": 0,
+          "total": 39944,
+          "availability": "reported"
+        }
+      },
+      "source": "operator_supplied_attempt_costs"
+    },
+    "confirmation_costs": {
+      "episode_starts": 0,
+      "retry_episode_starts": 0,
+      "fields": {
+        "requested_runs": {
+          "known_sum": 0,
+          "unreported_attempts": 0,
+          "total": 0,
+          "availability": "reported"
+        },
+        "unique_executed_runs": {
+          "known_sum": 0,
+          "unreported_attempts": 0,
+          "total": 0,
+          "availability": "reported"
+        },
+        "charged_experiment_cost": {
+          "known_sum": 0.0,
+          "unreported_attempts": 0,
+          "total": 0.0,
+          "availability": "reported"
+        },
+        "actual_environment_cpu_seconds": {
+          "known_sum": 0.0,
+          "unreported_attempts": 0,
+          "total": 0.0,
+          "availability": "reported"
+        },
+        "environment_wall_seconds": {
+          "known_sum": 0.0,
+          "unreported_attempts": 0,
+          "total": 0.0,
+          "availability": "reported"
+        },
+        "model_wall_seconds": {
+          "known_sum": 0.0,
+          "unreported_attempts": 0,
+          "total": 0.0,
+          "availability": "reported"
+        },
+        "input_tokens": {
+          "known_sum": 0,
+          "unreported_attempts": 0,
+          "total": 0,
+          "availability": "reported"
+        },
+        "output_tokens": {
+          "known_sum": 0,
+          "unreported_attempts": 0,
+          "total": 0,
+          "availability": "reported"
+        }
+      },
+      "source": "replay_verified_primary_adapter_reports"
+    },
+    "generation_and_repair_usage": {
+      "recorded_invocation_intents": 26,
+      "active": 0,
+      "halted": false,
+      "fields": {
+        "model_wall_seconds": {
+          "known_sum": 1745.6255034971982,
+          "unreported_items": 0,
+          "total": 1745.6255034971982
+        },
+        "input_tokens": {
+          "known_sum": 52,
+          "unreported_items": 0,
+          "total": 52
+        },
+        "output_tokens": {
+          "known_sum": 397856,
+          "unreported_items": 0,
+          "total": 397856
+        }
+      }
+    },
+    "accounting": {
+      "shared_ledger_counts_at_snapshot": {
+        "total": 68,
+        "active": 0,
+        "primary": 60,
+        "retry": 0,
+        "smoke": 6,
+        "integration": 2,
+        "phase:fresh_pilot": 12,
+        "phase:integration": 2,
+        "phase:smoke": 6,
+        "phase:development": 48
+      },
+      "shared_ledger_costs_at_snapshot": {
+        "fields": {
+          "requested_runs": {
+            "known_sum": 1321,
+            "unreported_attempts": 1,
+            "total": null,
+            "availability": "partial_or_unreported"
+          },
+          "unique_executed_runs": {
+            "known_sum": 0,
+            "unreported_attempts": 1,
+            "total": null,
+            "availability": "partial_or_unreported"
+          },
+          "charged_experiment_cost": {
+            "known_sum": 24.771779583767056,
+            "unreported_attempts": 1,
+            "total": null,
+            "availability": "partial_or_unreported"
+          },
+          "actual_environment_cpu_seconds": {
+            "known_sum": 0.0,
+            "unreported_attempts": 67,
+            "total": null,
+            "availability": "partial_or_unreported"
+          },
+          "environment_wall_seconds": {
+            "known_sum": 0.0,
+            "unreported_attempts": 68,
+            "total": null,
+            "availability": "partial_or_unreported"
+          },
+          "model_wall_seconds": {
+            "known_sum": 1018.8583772517741,
+            "unreported_attempts": 2,
+            "total": null,
+            "availability": "partial_or_unreported"
+          },
+          "input_tokens": {
+            "known_sum": 688,
+            "unreported_attempts": 2,
+            "total": null,
+            "availability": "partial_or_unreported"
+          },
+          "output_tokens": {
+            "known_sum": 203473,
+            "unreported_attempts": 2,
+            "total": null,
+            "availability": "partial_or_unreported"
+          }
+        },
+        "source": "operator_supplied_attempt_costs",
+        "recorded_start_intents": 68,
+        "retry_start_intents": 0
+      },
+      "interpretation": "Frozen snapshot of recorded intents and adapter-reported costs, not authenticated provider calls or billing. Generation is accounted separately.",
+      "prior_protocol_usage": {
+        "parent_protocol_hash": "94e8d7c14c822c80ede18b387ec8669dd36a73947a25af98e0beb9880060dcc6",
+        "parent_ledger_id": "c5f715be498dd79351bcaf55778bc5799016f436d6fe8183060f961e4ac03cb1",
+        "prior_counts": {
+          "total": 1,
+          "active": 0,
+          "primary": 0,
+          "retry": 0,
+          "smoke": 1,
+          "integration": 0,
+          "phase:smoke": 1
+        },
+        "prior_costs": {
+          "episode_starts": 1,
+          "retry_episode_starts": 0,
+          "fields": {
+            "requested_runs": {
+              "known_sum": 8,
+              "unreported_attempts": 0,
+              "total": 8,
+              "availability": "reported"
+            },
+            "unique_executed_runs": {
+              "known_sum": 0,
+              "unreported_attempts": 0,
+              "total": 0,
+              "availability": "reported"
+            },
+            "charged_experiment_cost": {
+              "known_sum": 0.03743008291348815,
+              "unreported_attempts": 0,
+              "total": 0.03743008291348815,
+              "availability": "reported"
+            },
+            "actual_environment_cpu_seconds": {
+              "known_sum": 0.0,
+              "unreported_attempts": 1,
+              "total": null,
+              "availability": "partial_or_unreported"
+            },
+            "environment_wall_seconds": {
+              "known_sum": 0.0,
+              "unreported_attempts": 1,
+              "total": null,
+              "availability": "partial_or_unreported"
+            },
+            "model_wall_seconds": {
+              "known_sum": 9.271727041341364,
+              "unreported_attempts": 0,
+              "total": 9.271727041341364,
+              "availability": "reported"
+            },
+            "input_tokens": {
+              "known_sum": 8,
+              "unreported_attempts": 0,
+              "total": 8,
+              "availability": "reported"
+            },
+            "output_tokens": {
+              "known_sum": 1713,
+              "unreported_attempts": 0,
+              "total": 1713,
+              "availability": "reported"
+            }
+          },
+          "source": "operator_supplied_attempt_costs"
+        },
+        "remaining_start_intents": 299,
+        "global_total_max_episode_starts": 300,
+        "record_sha256": "fbbcaa3c8271a67a79839ad55edb90bd30b6621e41cc73bce2128792d8a093ea",
+        "interpretation": "Excluded earlier compatibility smoke, retained as consumed usage and reported overhead; never pooled into successor primary outcomes."
+      }
+    },
+    "halted": false,
+    "slots": [
+      {
+        "group_id": "fe0dbd09d72e9fee504427cb6236b488b88c7843c78111d0996dd0ab47f5b838",
+        "slot_id": "d55730efaffff190fa4568d574ffbeb65e2b6722d710f1363c1e8ba4b55b29a9",
+        "env_id": "2611.08959v1",
+        "task": "claim",
+        "replicate_index": 0,
+        "budget_fraction": 0.06,
+        "attempt_ids": [
+          "cfa3c598a7f5a5aa172a591d902c7c7dc166a02cdbcd57ca64d832142c64817a",
+          "2b270d08db062d686b370f176710b7531306c9b65aeef6b8db3d5c10e422b02c"
+        ],
+        "arm": "global_budget",
+        "attempts": [],
+        "details": []
+      },
+      {
+        "group_id": "d91ac9c7a8b2e101bee472426f85994c20140f68f5d88e41bf03af31c54af534",
+        "slot_id": "0485b86fceb4b7e4acb889fbbbcf303b1002eb40407b4818ad9b7c8626bd5cbc",
+        "env_id": "2611.08959v1",
+        "task": "claim",
+        "replicate_index": 0,
+        "budget_fraction": 0.06,
+        "attempt_ids": [
+          "ffac0d6014168986e172cc0aa77fb62ffca49371c623a63203efdd619c8c6b63",
+          "0e737822791ebcc9233de91fd1fd3f783c5d4ed5bf9c0c5ce20f255c2bafc0d6"
+        ],
+        "arm": "calibrated_budget",
+        "attempts": [],
+        "details": []
+      },
+      {
+        "group_id": "fe0dbd09d72e9fee504427cb6236b488b88c7843c78111d0996dd0ab47f5b838",
+        "slot_id": "46d60dcbd44171563d81bab09575d0dc295715b0e68eb3479e65c6f7b4ed10b5",
+        "env_id": "2611.08959v1",
+        "task": "claim",
+        "replicate_index": 1,
+        "budget_fraction": 0.06,
+        "attempt_ids": [
+          "f39422b48540f419a781538d7a33e27efc3ca9e4b5d4236bf0b908dd436bce8d",
+          "eef2859e59bc6078635b1ceba90b712f18bdaeab1fb6b191c23f34fc788646b3"
+        ],
+        "arm": "global_budget",
+        "attempts": [],
+        "details": []
+      },
+      {
+        "group_id": "d91ac9c7a8b2e101bee472426f85994c20140f68f5d88e41bf03af31c54af534",
+        "slot_id": "45fc4a295feef8d07f5e0967c4d1e30c79c621c4befaa49683147b8f62a8e136",
+        "env_id": "2611.08959v1",
+        "task": "claim",
+        "replicate_index": 1,
+        "budget_fraction": 0.06,
+        "attempt_ids": [
+          "52b02029e78d0e2cb32ba690b09a4d3c3e7e7aea0e5897f536fbc46b6e087363",
+          "0149df1ba5837c0b2e9831509ccfbe2edad179b02d7fae0ca623d88cb61ba177"
+        ],
+        "arm": "calibrated_budget",
+        "attempts": [],
+        "details": []
+      },
+      {
+        "group_id": "fe0dbd09d72e9fee504427cb6236b488b88c7843c78111d0996dd0ab47f5b838",
+        "slot_id": "7fa1c100b7f8724b88c21e21322ba5121a892799a3a144f6f2ed921de9a08433",
+        "env_id": "2611.08959v1",
+        "task": "claim",
+        "replicate_index": 2,
+        "budget_fraction": 0.06,
+        "attempt_ids": [
+          "76018ee25afbfa2694b4d92c05187809c5ac344974e3b4a8d08335c68b6bb36e",
+          "2b0898473798ff1d741d7d608c74df1ab5ae5ce57cc8e10da5c41749fee39939"
+        ],
+        "arm": "global_budget",
+        "attempts": [],
+        "details": []
+      },
+      {
+        "group_id": "d91ac9c7a8b2e101bee472426f85994c20140f68f5d88e41bf03af31c54af534",
+        "slot_id": "fbc2dd0ea7011eb4493f377719a50b71ea1cb075fe4f8e746b083df896c512d8",
+        "env_id": "2611.08959v1",
+        "task": "claim",
+        "replicate_index": 2,
+        "budget_fraction": 0.06,
+        "attempt_ids": [
+          "c51c3304439c00101624fbee9691fc0fd210ce7b3539d1da568a3feaa47ed30b",
+          "05b64f2c0480f30f12648d2bf96d333a2112d615ce63ca20e661392302ccfd22"
+        ],
+        "arm": "calibrated_budget",
+        "attempts": [],
+        "details": []
+      },
+      {
+        "group_id": "fe0dbd09d72e9fee504427cb6236b488b88c7843c78111d0996dd0ab47f5b838",
+        "slot_id": "bb57508450501167cafcd72d3c31714188490ba84d1975b34a3d61b560e41945",
+        "env_id": "2611.08959v1",
+        "task": "claim",
+        "replicate_index": 3,
+        "budget_fraction": 0.06,
+        "attempt_ids": [
+          "a635a770c622bc9ceb157f6e956f8b52d38b311d62a074de4e9d7744a3c3455d",
+          "928fecd2140dd933498cf10914b230f564c64522a85658062ae5e6b8828ad74e"
+        ],
+        "arm": "global_budget",
+        "attempts": [],
+        "details": []
+      },
+      {
+        "group_id": "d91ac9c7a8b2e101bee472426f85994c20140f68f5d88e41bf03af31c54af534",
+        "slot_id": "093097db61d2f3c766e48d89c4c06f69e7f6730f45f43cf33743096ca479a8a1",
+        "env_id": "2611.08959v1",
+        "task": "claim",
+        "replicate_index": 3,
+        "budget_fraction": 0.06,
+        "attempt_ids": [
+          "af14c2cf565f5c42d963e44cb2d3c23914a98ff29499885d8e657ef0e9cf7712",
+          "5028214a846ee830bd02a1d4cffbadc9dbcdb4e2e6d6f23f2f4cfe615a85c6b1"
+        ],
+        "arm": "calibrated_budget",
+        "attempts": [],
+        "details": []
+      },
+      {
+        "group_id": "fe0dbd09d72e9fee504427cb6236b488b88c7843c78111d0996dd0ab47f5b838",
+        "slot_id": "ff2a0365bb52878d4d7feb5b3d807408ab9b6b6c1a8a6d2ebb53187dc1f9919e",
+        "env_id": "2611.08959v1",
+        "task": "claim",
+        "replicate_index": 4,
+        "budget_fraction": 0.06,
+        "attempt_ids": [
+          "8b6277fb320e5272e761861a8d9a0d490e816694a448113d12c7670884a9ebed",
+          "6b57a239db2e34cb33e05b7ddcd2f411d27d7d39b398c68607a8ac81c29ed421"
+        ],
+        "arm": "global_budget",
+        "attempts": [],
+        "details": []
+      },
+      {
+        "group_id": "d91ac9c7a8b2e101bee472426f85994c20140f68f5d88e41bf03af31c54af534",
+        "slot_id": "64008a8331ef46bb2d1b5e674058822b37c918bcdbfc58f47081d73c9f34bfa3",
+        "env_id": "2611.08959v1",
+        "task": "claim",
+        "replicate_index": 4,
+        "budget_fraction": 0.06,
+        "attempt_ids": [
+          "e0c6f30d9495664c0ebc5d74057a827cab827241e8ed9927bab079da8a1a4571",
+          "bb012cedd3100409a6cc7f17b971598cdbeff318d9b2031c9cbdab97f6256a23"
+        ],
+        "arm": "calibrated_budget",
+        "attempts": [],
+        "details": []
+      },
+      {
+        "group_id": "fe0dbd09d72e9fee504427cb6236b488b88c7843c78111d0996dd0ab47f5b838",
+        "slot_id": "82fb88c3036e82e17e79fc2f7b2556e579fae2e7738d6d6f804d7e66383e6df2",
+        "env_id": "2611.08959v1",
+        "task": "claim",
+        "replicate_index": 5,
+        "budget_fraction": 0.06,
+        "attempt_ids": [
+          "70e5acc4203fd26de20b86fb1a3476a234523ab50a9b5dff93316a5399093811",
+          "fc2ec70782debde74ce41de9e1597ecfa7c352a87cc92f26d3dbf8a60d2d4bf9"
+        ],
+        "arm": "global_budget",
+        "attempts": [],
+        "details": []
+      },
+      {
+        "group_id": "d91ac9c7a8b2e101bee472426f85994c20140f68f5d88e41bf03af31c54af534",
+        "slot_id": "86accf67ccb76d8aefffb92eec00ea6b4677f926dfd9e7542bfdae5c6aef02a2",
+        "env_id": "2611.08959v1",
+        "task": "claim",
+        "replicate_index": 5,
+        "budget_fraction": 0.06,
+        "attempt_ids": [
+          "1789eff8c09ef0e0cfb6926294ba38d6d4e1955b8683f82c0a195141ee4c5564",
+          "a1d7f2aa6e1b24dd2e4cf99049c7d4edaf36e44e988f41ce29d375828b1502e6"
+        ],
+        "arm": "calibrated_budget",
+        "attempts": [],
+        "details": []
+      },
+      {
+        "group_id": "fe0dbd09d72e9fee504427cb6236b488b88c7843c78111d0996dd0ab47f5b838",
+        "slot_id": "58fc253f2856b5b7d6193278c800aa88d4b2f12e53df1853904ad41655b00cfc",
+        "env_id": "2611.08959v1",
+        "task": "claim",
+        "replicate_index": 6,
+        "budget_fraction": 0.06,
+        "attempt_ids": [
+          "7a50f398c0de92038a80b5c8ab4bef22b2092412832c74cec3310ba3d5be5e0a",
+          "ab9f9ca145886140fd99c2a4288c59d2205b41646cbe89295d1aca173e0729d8"
+        ],
+        "arm": "global_budget",
+        "attempts": [],
+        "details": []
+      },
+      {
+        "group_id": "d91ac9c7a8b2e101bee472426f85994c20140f68f5d88e41bf03af31c54af534",
+        "slot_id": "fbfcf645d7459e191d77506eb891d340dfa3db78dbd372162739fbd4fc2db9ef",
+        "env_id": "2611.08959v1",
+        "task": "claim",
+        "replicate_index": 6,
+        "budget_fraction": 0.06,
+        "attempt_ids": [
+          "c72cf3eb659352e50f2b4c7700ae6b751b8ebf2e4df335e0d9274a3d38b32cfe",
+          "b5ed4a03cfb1090e805437629b75ab79374f2801820c3250d58ba3a4573b51e3"
+        ],
+        "arm": "calibrated_budget",
+        "attempts": [],
+        "details": []
+      },
+      {
+        "group_id": "fe0dbd09d72e9fee504427cb6236b488b88c7843c78111d0996dd0ab47f5b838",
+        "slot_id": "db661b234f0f4fbd631e07a713a9264c2db7f14fdebb301f38a94084bb06b9c2",
+        "env_id": "2611.08959v1",
+        "task": "claim",
+        "replicate_index": 7,
+        "budget_fraction": 0.06,
+        "attempt_ids": [
+          "15f57a1b0f8070a1864eec96640bc8484efaca506c299f53f226e9281817cfc7",
+          "22ebef43641f6d54d4150e6bca35acc9865713e93229f9380f8f5fd720cd2527"
+        ],
+        "arm": "global_budget",
+        "attempts": [],
+        "details": []
+      },
+      {
+        "group_id": "d91ac9c7a8b2e101bee472426f85994c20140f68f5d88e41bf03af31c54af534",
+        "slot_id": "4cbc53a1b579ef423c3371c732695407638f2b94ef6b1b0a6548da01f43ef62b",
+        "env_id": "2611.08959v1",
+        "task": "claim",
+        "replicate_index": 7,
+        "budget_fraction": 0.06,
+        "attempt_ids": [
+          "11eefa46b7dc34fe3d5d1aefbb3f3bf14e0c46fa1e125f1dabf40d2ea7bcac3a",
+          "3a878b65d284e65448ccda199070d2578e22341f39d9f7462040ddbaa5c034d8"
+        ],
+        "arm": "calibrated_budget",
+        "attempts": [],
+        "details": []
+      }
+    ],
+    "snapshot_sha256": "13f8dfc5979bd896e74d690c10c2e5ddd3d7aa36d7cac70cc548d8c029e349f3"
+  },
+  "classical": {
+    "replay_id": "confirmation_classical_replay_v1",
+    "replay_plan_sha256": "52e200b8dfdb9ef34c55948d79c2bdca2af5d347de31c0838366e6cc10005c44",
+    "protocol_hash": "ba515089163fa749acff31fc991dd74264bcb02668d87ef07890051109750ac3",
+    "status": "complete",
+    "groups": [
+      {
+        "env_id": "2611.08959v1",
+        "policy": "paired_uniform",
+        "gradable": false,
+        "planned": 200,
+        "outcomes": [],
+        "accuracy": null
+      },
+      {
+        "env_id": "2611.08959v1",
+        "policy": "question_coverage",
+        "gradable": false,
+        "planned": 200,
+        "outcomes": [],
+        "accuracy": null
+      },
+      {
+        "env_id": "2611.08959v1",
+        "policy": "coverage_plus_cost",
+        "gradable": false,
+        "planned": 200,
+        "outcomes": [],
+        "accuracy": null
+      },
+      {
+        "env_id": "2611.08959v1",
+        "policy": "paper_prior_only",
+        "gradable": false,
+        "planned": 200,
+        "outcomes": [],
+        "accuracy": null
+      },
+      {
+        "env_id": "2611.08959v1",
+        "policy": "development_majority_label",
+        "gradable": false,
+        "planned": 200,
+        "outcomes": [],
+        "accuracy": null
+      },
+      {
+        "env_id": "2611.08959v1",
+        "policy": "random_experiment_design",
+        "gradable": false,
+        "planned": 200,
+        "outcomes": [],
+        "accuracy": null
+      }
+    ],
+    "policy_seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111,
+      112,
+      113,
+      114,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120,
+      121,
+      122,
+      123,
+      124,
+      125,
+      126,
+      127,
+      128,
+      129,
+      130,
+      131,
+      132,
+      133,
+      134,
+      135,
+      136,
+      137,
+      138,
+      139,
+      140,
+      141,
+      142,
+      143,
+      144,
+      145,
+      146,
+      147,
+      148,
+      149,
+      150,
+      151,
+      152,
+      153,
+      154,
+      155,
+      156,
+      157,
+      158,
+      159,
+      160,
+      161,
+      162,
+      163,
+      164,
+      165,
+      166,
+      167,
+      168,
+      169,
+      170,
+      171,
+      172,
+      173,
+      174,
+      175,
+      176,
+      177,
+      178,
+      179,
+      180,
+      181,
+      182,
+      183,
+      184,
+      185,
+      186,
+      187,
+      188,
+      189,
+      190,
+      191,
+      192,
+      193,
+      194,
+      195,
+      196,
+      197,
+      198,
+      199
+    ],
+    "budget_fraction": 0.06,
+    "model_sessions_started": 0,
+    "actual_environment_executions": 0,
+    "actual_environment_cpu_seconds": 0,
+    "costs": {
+      "charged_experiment_cost": {
+        "known_sum": 0,
+        "unreported_items": 0,
+        "total": 0
+      },
+      "requested_runs": {
+        "known_sum": 0,
+        "unreported_items": 0,
+        "total": 0
+      },
+      "controller_wall_seconds": {
+        "known_sum": 0,
+        "unreported_items": 0,
+        "total": 0
+      },
+      "controller_cpu_seconds": {
+        "known_sum": 0,
+        "unreported_items": 0,
+        "total": 0
+      }
+    },
+    "interpretation": "Cached policy replays reuse the same visible data; 200 policy seeds are not independent labs. Controller CPU/wall time is measured separately.",
+    "collection_sha256": "13f8dfc5979bd896e74d690c10c2e5ddd3d7aa36d7cac70cc548d8c029e349f3",
+    "summary_sha256": "7d94ca8375fc5df1512ab764f170644d1fa286b2663bf2ab0841c39f45d9ec77"
+  },
+  "members": [
+    {
+      "env_id": "2611.08959v1",
+      "version": "2611.08959v1",
+      "lab_hash": "63fe7956ebe67d148c901e05f2d309f427cd906698831b54cac87ff6f404fe28",
+      "execution_id": "08a76b682007e23597062259e8d97db926124ecd4ea7cf2fe3090474cbb95c06",
+      "task_version": "40f031e1ddbf4eac7c8d81b059de5b4e3888e88951979caa8aa4040c213f12d3",
+      "task_hash": "6ed4bdc1b50a0bce89e638d9a14f0a6e2f6e10296b9d51cc41e8dc7a9573c77f",
+      "grader_id": "seed_block_t_v1",
+      "charging_hash": "60a9dce7dc5f572f9e6cead92c28f8f4a5f1a20882951be480d942db3e2db26f",
+      "qualification_label": "paper_better",
+      "min_effect": 0.05,
+      "visible_order": [
+        2,
+        3,
+        1,
+        0
+      ],
+      "confirmation_visible_order": [
+        2,
+        3,
+        1,
+        0
+      ],
+      "seed_splits": {
+        "visible": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "qualification": [
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "confirmation": [
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27
+        ]
+      },
+      "status": "ambiguous",
+      "gradable": false,
+      "confirmation_task_artifact": {
+        "schema_version": 1,
+        "grader_id": "seed_block_t_v1",
+        "seed_ids": [
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27
+        ],
+        "binding": {
+          "execution_id": "08a76b682007e23597062259e8d97db926124ecd4ea7cf2fe3090474cbb95c06",
+          "qualification_sha256": "8812e171bd2aacebcd6829f17c666cd6ee01566f9d78f1be6982335fa3e11b6b",
+          "generator_sha256": {
+            "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+            "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+            "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+            "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+          },
+          "seed_ids": [
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27
+          ]
+        },
+        "interval_method": "student_t_95",
+        "status": "complete",
+        "issues": [],
+        "tasks": [
+          {
+            "id": "best",
+            "kind": "best",
+            "answer": "{\"method\":\"student_relative\",\"ridge_regularization\":10.0,\"student_invisible_error_fraction\":0.25,\"unlabeled_sample_size\":50}",
+            "grading_rule": "heldout_best_mean",
+            "best": -1.0057105923835412,
+            "median": -1.0561766908639107,
+            "seed_std": 0.5830976124293157,
+            "grader_id": "seed_block_t_v1",
+            "seed_ids": [
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26,
+              27
+            ],
+            "binding": {
+              "execution_id": "08a76b682007e23597062259e8d97db926124ecd4ea7cf2fe3090474cbb95c06",
+              "qualification_sha256": "8812e171bd2aacebcd6829f17c666cd6ee01566f9d78f1be6982335fa3e11b6b",
+              "generator_sha256": {
+                "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+                "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+                "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+                "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+              },
+              "seed_ids": [
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                26,
+                27
+              ]
+            },
+            "task_sha256": "fc4f2b2d75a3dde8a9fcfd651d221df5e24b97e27602546b6c8faef1dd019319"
+          }
+        ],
+        "contrasts": [
+          {
+            "task_id": "claim",
+            "delta": 0.396409182740809,
+            "se": 0.17244536614748157,
+            "n_seeds": 12,
+            "interval": [
+              0.01685949092363309,
+              0.7759588745579848
+            ],
+            "label": null,
+            "status": "ambiguous",
+            "bootstrap_interval": [
+              0.16142544815012388,
+              0.7605519236888576
+            ],
+            "bootstrap_label": "paper_better",
+            "diagnostic_disagreement": true
+          },
+          {
+            "task_id": "where:student_invisible_error_fraction",
+            "level": "0.0",
+            "delta": 0.1460096438009433,
+            "se": 0.04271450678761937,
+            "n_seeds": 12,
+            "interval": [
+              0.051995648240759515,
+              0.24002363936112708
+            ],
+            "label": "paper_better",
+            "status": "settled",
+            "bootstrap_interval": [
+              0.07360197315754378,
+              0.23005379482195287
+            ],
+            "bootstrap_label": "paper_better",
+            "diagnostic_disagreement": false
+          },
+          {
+            "task_id": "where:student_invisible_error_fraction",
+            "level": "0.25",
+            "delta": 0.2357848884148579,
+            "se": 0.11561296751263497,
+            "n_seeds": 12,
+            "interval": [
+              -0.018677537394608368,
+              0.49024731422432416
+            ],
+            "label": null,
+            "status": "ambiguous",
+            "bootstrap_interval": [
+              0.07605257017230414,
+              0.48300678179767675
+            ],
+            "bootstrap_label": "paper_better",
+            "diagnostic_disagreement": true
+          },
+          {
+            "task_id": "where:student_invisible_error_fraction",
+            "level": "0.5",
+            "delta": 0.3933287178116605,
+            "se": 0.20428423902417553,
+            "n_seeds": 12,
+            "interval": [
+              -0.056297860721162996,
+              0.842955296344484
+            ],
+            "label": null,
+            "status": "ambiguous",
+            "bootstrap_interval": [
+              0.12093243521690218,
+              0.8319693909113725
+            ],
+            "bootstrap_label": "paper_better",
+            "diagnostic_disagreement": true
+          },
+          {
+            "task_id": "where:student_invisible_error_fraction",
+            "level": "0.75",
+            "delta": 0.8105134809357742,
+            "se": 0.3377452626407734,
+            "n_seeds": 12,
+            "interval": [
+              0.06714116997217912,
+              1.5538857918993694
+            ],
+            "label": "paper_better",
+            "status": "settled",
+            "bootstrap_interval": [
+              0.34804263572729466,
+              1.5226148036134772
+            ],
+            "bootstrap_label": "paper_better",
+            "diagnostic_disagreement": false
+          },
+          {
+            "task_id": "where:ridge_regularization",
+            "level": "0.01",
+            "delta": 0.3178175382223679,
+            "se": 0.13970702115707506,
+            "n_seeds": 12,
+            "interval": [
+              0.010324457895037165,
+              0.6253106185496986
+            ],
+            "label": null,
+            "status": "ambiguous",
+            "bootstrap_interval": [
+              0.13260795863294217,
+              0.6140089415109543
+            ],
+            "bootstrap_label": "paper_better",
+            "diagnostic_disagreement": true
+          },
+          {
+            "task_id": "where:ridge_regularization",
+            "level": "1.0",
+            "delta": 0.3359756077588776,
+            "se": 0.14987136276258847,
+            "n_seeds": 12,
+            "interval": [
+              0.006110962395709796,
+              0.6658402531220453
+            ],
+            "label": null,
+            "status": "ambiguous",
+            "bootstrap_interval": [
+              0.1376646141734076,
+              0.6531832585347578
+            ],
+            "bootstrap_label": "paper_better",
+            "diagnostic_disagreement": true
+          },
+          {
+            "task_id": "where:ridge_regularization",
+            "level": "10.0",
+            "delta": 0.5354344022411813,
+            "se": 0.2339855954260682,
+            "n_seeds": 12,
+            "interval": [
+              0.020435579033199258,
+              1.0504332254491633
+            ],
+            "label": null,
+            "status": "ambiguous",
+            "bootstrap_interval": [
+              0.18886909923023726,
+              1.0325711388705796
+            ],
+            "bootstrap_label": "paper_better",
+            "diagnostic_disagreement": true
+          },
+          {
+            "task_id": "where:unlabeled_sample_size",
+            "level": "50",
+            "delta": 0.4792327603046465,
+            "se": 0.23859225636071765,
+            "n_seeds": 12,
+            "interval": [
+              -0.04590525525807282,
+              1.004370775867366
+            ],
+            "label": null,
+            "status": "ambiguous",
+            "bootstrap_interval": [
+              0.14632076134842179,
+              0.995559741827993
+            ],
+            "bootstrap_label": "paper_better",
+            "diagnostic_disagreement": true
+          },
+          {
+            "task_id": "where:unlabeled_sample_size",
+            "level": "1000",
+            "delta": 0.3135856051769714,
+            "se": 0.11046960400338765,
+            "n_seeds": 12,
+            "interval": [
+              0.07044364612431536,
+              0.5567275642296274
+            ],
+            "label": "paper_better",
+            "status": "settled",
+            "bootstrap_interval": [
+              0.15229260056473712,
+              0.551892836836201
+            ],
+            "bootstrap_label": "paper_better",
+            "diagnostic_disagreement": false
+          }
+        ],
+        "artifact_sha256": "d57c0500b54d1f0be2cffedebd6b03164a772b418707f51ed05a66ba2a801bb3"
+      },
+      "source_qualification_files": {
+        "lab.py": "f7837d6b34febc21a2f9470f3559c0b3eabdfa23f096a7daf73664fe7e74b1c0",
+        "space.json": "fd6e4620da82b024f3fd11e5ce2eebaa9759e81fd74a0ad33742d6f93eee4bab",
+        "manifest.json": "3c943910d1ea1fb4516f5224584df3cc87439b1b3954e7ada495113521e40211",
+        "results.jsonl": "a2a1637976f0f7877893c5e86c0bf93e54f6ae993ecdeb853dc4fcd35dc5f93a",
+        "tasks.json": "482e31b7f0c9d360c165c14fe1eb7cd8244368c22792e0a4e0c2bbb26e259598",
+        "cache.json": "893656690d81461ea43d554a9c6d4837f4733d0645f86d5d6b8dd16cffd542c3"
+      },
+      "source_member_assessment_sha256": "fe7e03bc27474b0e7fa0d374c451fca1de25e02c573e965337a2a5eea5ba6d40"
+    }
+  ],
+  "model_configuration": {
+    "backend": "claude_cli",
+    "requested_model_id": "claude-haiku-5-5",
+    "reported_model_id": "claude-haiku-5-5",
+    "cli_version": "2.1.318 (Claude Code)",
+    "decoding": {
+      "temperature": {
+        "status": "unavailable",
+        "reason": "The isolated subscription CLI adapter cannot set this sampling control; no fixed value is claimed."
+      },
+      "model_seed": {
+        "status": "unavailable",
+        "reason": "The isolated subscription CLI adapter cannot set this sampling control; no fixed value is claimed."
+      }
+    }
+  },
+  "max_calls": 40,
+  "calibration": {
+    "development": {
+      "input": {
+        "schema_version": 1,
+        "protocol_hash": "ba515089163fa749acff31fc991dd74264bcb02668d87ef07890051109750ac3",
+        "evidence_kind": "operator_supplied",
+        "phase": "development",
+        "closed": true,
+        "lab_ids": [
+          "2610-36935-gaussian-process-bandits-for",
+          "2610-36941-algorithmic-monoculture-in-machine",
+          "2610-36983-advancement-or-acceleration-how",
+          "2610-37225-sharpnessaware-muon-matrixaware-optimization"
+        ],
+        "slots": [
+          {
+            "group_id": "50c351f648eafed62790d6d5adbaa5c3200a4e60b939969998d84ab82b865cc3",
+            "slot_id": "1220436ed0c77d80968e09b3c76f61bcb5e6f27f5847ab0da4a1cc866fe0498e",
+            "lab_id": "2610-36935-gaussian-process-bandits-for",
+            "budget_fraction": 0.06,
+            "replicate_index": 0,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 1.0,
+                "costs": {
+                  "charged_experiment_cost": 0.03926270920783281,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 8,
+                  "model_wall_seconds": 10.856914250180125,
+                  "input_tokens": 10,
+                  "output_tokens": 1899
+                },
+                "attempt_id": "b11eda2ea013f815e589bab22fc2084a25a52b35112e7a3e2294d436296a874e",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "50c351f648eafed62790d6d5adbaa5c3200a4e60b939969998d84ab82b865cc3",
+            "slot_id": "5d90d25be6db7cda017fe1f1bd04679b7a7c5f0a4a774bc4289b6a43836017d6",
+            "lab_id": "2610-36935-gaussian-process-bandits-for",
+            "budget_fraction": 0.06,
+            "replicate_index": 1,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 1.0,
+                "costs": {
+                  "charged_experiment_cost": 0.03743008291348815,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 8,
+                  "model_wall_seconds": 11.342732209712267,
+                  "input_tokens": 10,
+                  "output_tokens": 1878
+                },
+                "attempt_id": "6a6f653263a3bf5d20a4a60f25945efda1440b1ae11f10a5ab733457e4a7d267",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "50c351f648eafed62790d6d5adbaa5c3200a4e60b939969998d84ab82b865cc3",
+            "slot_id": "56f3a5e1492cbd3f1b5932306312fc5a3a226434927cf5776f01510db54db396",
+            "lab_id": "2610-36935-gaussian-process-bandits-for",
+            "budget_fraction": 0.06,
+            "replicate_index": 2,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 1.0,
+                "costs": {
+                  "charged_experiment_cost": 0.04788485402241349,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 10,
+                  "model_wall_seconds": 12.97174154035747,
+                  "input_tokens": 14,
+                  "output_tokens": 2284
+                },
+                "attempt_id": "f996eb4f67bd8899595cd86883ebcc6bbace70f31f19bdf1fb336232fab89175",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "50c351f648eafed62790d6d5adbaa5c3200a4e60b939969998d84ab82b865cc3",
+            "slot_id": "5302844e7eb37e632b231853b716558a5c0e84d3a37de01ecd11f248294ff042",
+            "lab_id": "2610-36935-gaussian-process-bandits-for",
+            "budget_fraction": 0.06,
+            "replicate_index": 3,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 1.0,
+                "costs": {
+                  "charged_experiment_cost": 0.03861112520098686,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 8,
+                  "model_wall_seconds": 11.274332207627594,
+                  "input_tokens": 12,
+                  "output_tokens": 2001
+                },
+                "attempt_id": "3af4b509b9db11efdd2a4233940b266bf0cf84d888ee87d37f3c0af2bacf4731",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "1c4b0c49db5b272428be0df014736331d0eac8f255d713b6cb876eacfe2617dc",
+            "slot_id": "2cf0f189375b8dfa9129ec0e589974f12d90af68c17340f47d59463264a90f62",
+            "lab_id": "2610-36935-gaussian-process-bandits-for",
+            "budget_fraction": 0.12,
+            "replicate_index": 0,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 1.0,
+                "costs": {
+                  "charged_experiment_cost": 0.09470137488096952,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 18,
+                  "model_wall_seconds": 11.906476416625082,
+                  "input_tokens": 10,
+                  "output_tokens": 2365
+                },
+                "attempt_id": "8a70c23b0a92138b3328a560b40b51362b87ea3f4a9c60e4632a36d55a835a4a",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "1c4b0c49db5b272428be0df014736331d0eac8f255d713b6cb876eacfe2617dc",
+            "slot_id": "95a7375891a97cbc820f372f6ac407c2a8d9b9dde6fbbc749b500b8325c4446c",
+            "lab_id": "2610-36935-gaussian-process-bandits-for",
+            "budget_fraction": 0.12,
+            "replicate_index": 1,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 1.0,
+                "costs": {
+                  "charged_experiment_cost": 0.08124402118846774,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 14,
+                  "model_wall_seconds": 14.982919708825648,
+                  "input_tokens": 12,
+                  "output_tokens": 2882
+                },
+                "attempt_id": "3e93d54504c7a1f26593b403ef031d7270aacc8d5dd97c5d6cb6d2a69b327e2c",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "1c4b0c49db5b272428be0df014736331d0eac8f255d713b6cb876eacfe2617dc",
+            "slot_id": "97b66d6d8afad04ceb52cec980d0f2580a8f9e0cfc29bc4a4e2fa25fcf7202c0",
+            "lab_id": "2610-36935-gaussian-process-bandits-for",
+            "budget_fraction": 0.12,
+            "replicate_index": 2,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 1.0,
+                "costs": {
+                  "charged_experiment_cost": 0.0888198334723711,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 16,
+                  "model_wall_seconds": 14.187506082467735,
+                  "input_tokens": 12,
+                  "output_tokens": 2748
+                },
+                "attempt_id": "fa00c4bba89c6d6b41af75ceed889790a9fc881d14b30a5c337491272b2f7955",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "1c4b0c49db5b272428be0df014736331d0eac8f255d713b6cb876eacfe2617dc",
+            "slot_id": "d279faabb520920ae4c6996c7b571467b1fae8f01af7b74bda172e6d92d7c45c",
+            "lab_id": "2610-36935-gaussian-process-bandits-for",
+            "budget_fraction": 0.12,
+            "replicate_index": 3,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 1.0,
+                "costs": {
+                  "charged_experiment_cost": 0.09470137488096952,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 18,
+                  "model_wall_seconds": 12.138653041794896,
+                  "input_tokens": 10,
+                  "output_tokens": 2383
+                },
+                "attempt_id": "971af1b980f029ff8f085fd019eeff3651cd0a03e2cc21d403dc1cfbe65004fb",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "53b7dba6849129614e6c3851e135d577178a2b10610f1c97092215ca8d1d0cb3",
+            "slot_id": "46799d56a9158ec4b49e86f31d13fdb3952248e74b0ce8ab34b6f831a86dcd62",
+            "lab_id": "2610-36935-gaussian-process-bandits-for",
+            "budget_fraction": 0.25,
+            "replicate_index": 0,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 1.0,
+                "costs": {
+                  "charged_experiment_cost": 0.2011211458593607,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 32,
+                  "model_wall_seconds": 18.462833208031952,
+                  "input_tokens": 10,
+                  "output_tokens": 4332
+                },
+                "attempt_id": "ab74c96f50332d580723372be4dcf7968c46fd8c88ddca7b15a28e2fb6ed7797",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "53b7dba6849129614e6c3851e135d577178a2b10610f1c97092215ca8d1d0cb3",
+            "slot_id": "b2bf1c272ba774efc78b6d1872fecc4da5adf305c32fa753486a27156f4297b7",
+            "lab_id": "2610-36935-gaussian-process-bandits-for",
+            "budget_fraction": 0.25,
+            "replicate_index": 1,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 1.0,
+                "costs": {
+                  "charged_experiment_cost": 0.21569539653137326,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 36,
+                  "model_wall_seconds": 17.408675542101264,
+                  "input_tokens": 10,
+                  "output_tokens": 3923
+                },
+                "attempt_id": "79ed06582df98df8a7de1cc64ce847caaaab0b00c1ed0eba7368f6051a79f198",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "53b7dba6849129614e6c3851e135d577178a2b10610f1c97092215ca8d1d0cb3",
+            "slot_id": "40d42a987f6832563165ba93db98181f4c0e55c5689cf32787b6fdf16ec66fdb",
+            "lab_id": "2610-36935-gaussian-process-bandits-for",
+            "budget_fraction": 0.25,
+            "replicate_index": 2,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 1.0,
+                "costs": {
+                  "charged_experiment_cost": 0.20162547985091805,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 32,
+                  "model_wall_seconds": 17.905342957936227,
+                  "input_tokens": 10,
+                  "output_tokens": 3903
+                },
+                "attempt_id": "4024adaf2ff6649fa8a199d71991798448d8976272791df4272f7344a62d93a3",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "53b7dba6849129614e6c3851e135d577178a2b10610f1c97092215ca8d1d0cb3",
+            "slot_id": "c5d6c125dacb953c6dc054025fbcd86918762f274ee4e28af930d83de8346d08",
+            "lab_id": "2610-36935-gaussian-process-bandits-for",
+            "budget_fraction": 0.25,
+            "replicate_index": 3,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 1.0,
+                "costs": {
+                  "charged_experiment_cost": 0.1838343758136034,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 30,
+                  "model_wall_seconds": 13.465150584466755,
+                  "input_tokens": 10,
+                  "output_tokens": 2943
+                },
+                "attempt_id": "91d8b675495a0589bd8838c8f193f8bd3fdfafb55350d088f7a16d167973d5b8",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "80109deb46a44df9d8c10a5938f393492c9bfa8cec684f51c323abeb7e3daa3e",
+            "slot_id": "318199908cda6e21ce24cff6dd9546274ba9e651136f9746aa07dab9bf07d4f5",
+            "lab_id": "2610-36941-algorithmic-monoculture-in-machine",
+            "budget_fraction": 0.06,
+            "replicate_index": 0,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 1.0,
+                "costs": {
+                  "charged_experiment_cost": 0.0716962511651218,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 6,
+                  "model_wall_seconds": 11.295432957820594,
+                  "input_tokens": 10,
+                  "output_tokens": 1779
+                },
+                "attempt_id": "b8ce4634f9d2f307dd68344a1d31c699f33ad40fc1dcc9243b2fb2ada8be2e41",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "80109deb46a44df9d8c10a5938f393492c9bfa8cec684f51c323abeb7e3daa3e",
+            "slot_id": "7fc209a671a306642185d2960f9b929d7072db083ca4bedcffd7fde6957316e7",
+            "lab_id": "2610-36941-algorithmic-monoculture-in-machine",
+            "budget_fraction": 0.06,
+            "replicate_index": 1,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 1.0,
+                "costs": {
+                  "charged_experiment_cost": 0.07115941727533937,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 7,
+                  "model_wall_seconds": 11.67330470867455,
+                  "input_tokens": 10,
+                  "output_tokens": 2041
+                },
+                "attempt_id": "8171afcf1a3d38f4b99ed55b64b16b2f1562202d2611592dd49c8305448bd7e8",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "80109deb46a44df9d8c10a5938f393492c9bfa8cec684f51c323abeb7e3daa3e",
+            "slot_id": "179c3f450b71b6d78914a548e9a18e361cea82bdd9c6cb70b75cb3286f124f48",
+            "lab_id": "2610-36941-algorithmic-monoculture-in-machine",
+            "budget_fraction": 0.06,
+            "replicate_index": 2,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 1.0,
+                "costs": {
+                  "charged_experiment_cost": 0.06368350004777312,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 6,
+                  "model_wall_seconds": 10.452537042088807,
+                  "input_tokens": 10,
+                  "output_tokens": 1742
+                },
+                "attempt_id": "53a88c01e9f5440ec0177cc028ac0deb5d9f989210db1485b1ccc4a2fad7f090",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "80109deb46a44df9d8c10a5938f393492c9bfa8cec684f51c323abeb7e3daa3e",
+            "slot_id": "380ee9a038dcad20eb89327999cf69224df2b5bf1103c5fe2ae6a0e6fc00a146",
+            "lab_id": "2610-36941-algorithmic-monoculture-in-machine",
+            "budget_fraction": 0.06,
+            "replicate_index": 3,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 1.0,
+                "costs": {
+                  "charged_experiment_cost": 0.06532072788104415,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 8,
+                  "model_wall_seconds": 11.667433166876435,
+                  "input_tokens": 10,
+                  "output_tokens": 2026
+                },
+                "attempt_id": "ee7a9f58b0b73703494efe7dad6eda2a5928ab886ab48df8261803e05f8a25d8",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "ec19c47d6519bf9d3f2d76fd6434fc95b743554c91c6aa9da0bc0a214204b437",
+            "slot_id": "6f11a30982a284add2952999f681b86a144a485295328736994a0ed820f09a43",
+            "lab_id": "2610-36941-algorithmic-monoculture-in-machine",
+            "budget_fraction": 0.12,
+            "replicate_index": 0,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 1.0,
+                "costs": {
+                  "charged_experiment_cost": 0.12215308425948024,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 12,
+                  "model_wall_seconds": 12.493611874990165,
+                  "input_tokens": 10,
+                  "output_tokens": 2239
+                },
+                "attempt_id": "95490d0ee0f0e60a6d0b45056252fe3da7f926a155d0c049ef9304273ed6dedc",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "ec19c47d6519bf9d3f2d76fd6434fc95b743554c91c6aa9da0bc0a214204b437",
+            "slot_id": "4ed4f675e558765b8c14549ff30e87a0e3b245881327b74260e5ed310ac627d1",
+            "lab_id": "2610-36941-algorithmic-monoculture-in-machine",
+            "budget_fraction": 0.12,
+            "replicate_index": 1,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 1.0,
+                "costs": {
+                  "charged_experiment_cost": 0.10614914447069168,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 12,
+                  "model_wall_seconds": 12.622002500109375,
+                  "input_tokens": 8,
+                  "output_tokens": 2335
+                },
+                "attempt_id": "4a896b0b9012eaa1a403c0883b3b3b859d6aa2f62e72a3054b78c7ecad301f31",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "ec19c47d6519bf9d3f2d76fd6434fc95b743554c91c6aa9da0bc0a214204b437",
+            "slot_id": "ea3856b607416839532c39d6c92cdbcd0a546b2aa858c45123de44e83d6223a1",
+            "lab_id": "2610-36941-algorithmic-monoculture-in-machine",
+            "budget_fraction": 0.12,
+            "replicate_index": 2,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 1.0,
+                "costs": {
+                  "charged_experiment_cost": 0.1198455011472106,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 12,
+                  "model_wall_seconds": 15.650807875208557,
+                  "input_tokens": 12,
+                  "output_tokens": 2843
+                },
+                "attempt_id": "f5306a1ffc7aa5adde5eeb3bd9e485160b86d5b8d452d79cb722e4cf18617d5f",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "ec19c47d6519bf9d3f2d76fd6434fc95b743554c91c6aa9da0bc0a214204b437",
+            "slot_id": "7178866b570e559856a30a98679c4dee945f5414c1fbee167e372f132193496c",
+            "lab_id": "2610-36941-algorithmic-monoculture-in-machine",
+            "budget_fraction": 0.12,
+            "replicate_index": 3,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 1.0,
+                "costs": {
+                  "charged_experiment_cost": 0.1267238981090486,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 12,
+                  "model_wall_seconds": 14.3150076251477,
+                  "input_tokens": 10,
+                  "output_tokens": 2569
+                },
+                "attempt_id": "f2135a173561baf0b56922cbaf2e06a804a2a4a5cd4dcc0de905614bb2e027f5",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "1c02ba6086c6431668dc91ba91f77f83e264f2cb5fa75770b4c814219f319bc1",
+            "slot_id": "1ca8b8ad3e8b4d2ead8cc0d9ec5979eb5d839d370229043ef95a54987eac4017",
+            "lab_id": "2610-36941-algorithmic-monoculture-in-machine",
+            "budget_fraction": 0.25,
+            "replicate_index": 0,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 1.0,
+                "costs": {
+                  "charged_experiment_cost": 0.23357964400202036,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 24,
+                  "model_wall_seconds": 12.400849041529,
+                  "input_tokens": 8,
+                  "output_tokens": 2463
+                },
+                "attempt_id": "cab9dfb8a28986b0a50ed6fe0d4b7aa7366c44a29b269eee0cd41f8ab13d3870",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "1c02ba6086c6431668dc91ba91f77f83e264f2cb5fa75770b4c814219f319bc1",
+            "slot_id": "433278d2ed4e7451b5ac05661995a1eea694cec7127e11fc61dd074054bfb567",
+            "lab_id": "2610-36941-algorithmic-monoculture-in-machine",
+            "budget_fraction": 0.25,
+            "replicate_index": 1,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 1.0,
+                "costs": {
+                  "charged_experiment_cost": 0.27815360110253096,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 28,
+                  "model_wall_seconds": 16.30939658358693,
+                  "input_tokens": 10,
+                  "output_tokens": 3354
+                },
+                "attempt_id": "67458b2fdd1bfe486ad028f2faa99b7497a189c2f1ed8003a7bfc3c787e0c3a6",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "1c02ba6086c6431668dc91ba91f77f83e264f2cb5fa75770b4c814219f319bc1",
+            "slot_id": "7f5e3b7036187d1dec9f124f7622080a55efea827cb7b06320979a93dc600ad4",
+            "lab_id": "2610-36941-algorithmic-monoculture-in-machine",
+            "budget_fraction": 0.25,
+            "replicate_index": 2,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 1.0,
+                "costs": {
+                  "charged_experiment_cost": 0.2942393086850643,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 30,
+                  "model_wall_seconds": 14.419706041924655,
+                  "input_tokens": 10,
+                  "output_tokens": 2909
+                },
+                "attempt_id": "a813887f1d285cb03d48e274301727e123f70b3197be5f14afd1356e5b740db6",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "1c02ba6086c6431668dc91ba91f77f83e264f2cb5fa75770b4c814219f319bc1",
+            "slot_id": "9014d8bb47e95169bceb604971db8957d77de55d5f3434f86aadc0ca56b389a7",
+            "lab_id": "2610-36941-algorithmic-monoculture-in-machine",
+            "budget_fraction": 0.25,
+            "replicate_index": 3,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 1.0,
+                "costs": {
+                  "charged_experiment_cost": 0.23357964400202036,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 24,
+                  "model_wall_seconds": 16.2298882920295,
+                  "input_tokens": 8,
+                  "output_tokens": 3432
+                },
+                "attempt_id": "3d1758381fa932f257faeebf0720dc86d9393865adad4082863505227b0e81eb",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "ae94445365db1c6fc2763dd089b443223522fa149d5aadef58dea16f9d20ac10",
+            "slot_id": "c19bcb60ea26fe0dbd70f9f6ccd26615dfcd3517605e050467ebc8ab8f6c31e4",
+            "lab_id": "2610-36983-advancement-or-acceleration-how",
+            "budget_fraction": 0.06,
+            "replicate_index": 0,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 0.0,
+                "costs": {
+                  "charged_experiment_cost": 0.016486062202602625,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 6,
+                  "model_wall_seconds": 9.957386958412826,
+                  "input_tokens": 10,
+                  "output_tokens": 1790
+                },
+                "attempt_id": "d2fddd2b50c3539af14eaed418a98437a7512aa0a5056b8d1fb2ffdc3e604b93",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "ae94445365db1c6fc2763dd089b443223522fa149d5aadef58dea16f9d20ac10",
+            "slot_id": "f7c02e2ac35c60ee10ca87d79bbe960f23d5b25bfd88a6fd5c06cb3d859136bd",
+            "lab_id": "2610-36983-advancement-or-acceleration-how",
+            "budget_fraction": 0.06,
+            "replicate_index": 1,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 0.0,
+                "costs": {
+                  "charged_experiment_cost": 0.016486062202602625,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 6,
+                  "model_wall_seconds": 10.414011624641716,
+                  "input_tokens": 10,
+                  "output_tokens": 1876
+                },
+                "attempt_id": "f4b8aa468ec9cbef1cf58774c8e8e6b1e4bb8d9c80f827fa16dc84c60ed3975a",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "ae94445365db1c6fc2763dd089b443223522fa149d5aadef58dea16f9d20ac10",
+            "slot_id": "59200700cd33d143d01cd72244a5bd8b4a9b4ba61b00f34c61d2666fb8527296",
+            "lab_id": "2610-36983-advancement-or-acceleration-how",
+            "budget_fraction": 0.06,
+            "replicate_index": 2,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 1.0,
+                "costs": {
+                  "charged_experiment_cost": 0.018569188192486763,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 7,
+                  "model_wall_seconds": 13.975369917228818,
+                  "input_tokens": 10,
+                  "output_tokens": 2677
+                },
+                "attempt_id": "3f8be8c9ca682b47c12ecd5f1496381f6c16ec542e7eea790457f07dd760f556",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "ae94445365db1c6fc2763dd089b443223522fa149d5aadef58dea16f9d20ac10",
+            "slot_id": "ffa5c158ec3257200c592bd8279ecf58ad7718189705065de7191db65292a8ad",
+            "lab_id": "2610-36983-advancement-or-acceleration-how",
+            "budget_fraction": 0.06,
+            "replicate_index": 3,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 1.0,
+                "costs": {
+                  "charged_experiment_cost": 0.01973233325406909,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 8,
+                  "model_wall_seconds": 14.8171007912606,
+                  "input_tokens": 12,
+                  "output_tokens": 2850
+                },
+                "attempt_id": "6c9e34e2fa6cba06f483616ecde0fc355c013a792859bc2add8808fc4b485573",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "9df9eed38af7b919565c6abaf6e4589f39d709e606a5ec91245b275a9f62c441",
+            "slot_id": "322e57b305ec2d54b28b2269f70d6a3e5aab1b603fc22af3c6cf282780308e1e",
+            "lab_id": "2610-36983-advancement-or-acceleration-how",
+            "budget_fraction": 0.12,
+            "replicate_index": 0,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 0.0,
+                "costs": {
+                  "charged_experiment_cost": 0.03902485314756632,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 15,
+                  "model_wall_seconds": 20.992059499956667,
+                  "input_tokens": 14,
+                  "output_tokens": 4236
+                },
+                "attempt_id": "b4ac74c9939835b9934db9ba5e1f0f95144de7daab099bf1e95d27e62f5b893e",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "9df9eed38af7b919565c6abaf6e4589f39d709e606a5ec91245b275a9f62c441",
+            "slot_id": "1894501eb7a8ef78597f68cf1924513239ebf2cdb6b73f19407fcefcf658e5f3",
+            "lab_id": "2610-36983-advancement-or-acceleration-how",
+            "budget_fraction": 0.12,
+            "replicate_index": 1,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 0.0,
+                "costs": {
+                  "charged_experiment_cost": 0.038180229254066944,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 16,
+                  "model_wall_seconds": 15.494794750586152,
+                  "input_tokens": 12,
+                  "output_tokens": 3169
+                },
+                "attempt_id": "779806bf91d62f3439d376a5dfb60623f447f743487b4ccb6e67298333d09fd6",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "9df9eed38af7b919565c6abaf6e4589f39d709e606a5ec91245b275a9f62c441",
+            "slot_id": "d6363aa92f8135f2e2b5121a1765ab62c8273fba5f5b647f154952084d52dd43",
+            "lab_id": "2610-36983-advancement-or-acceleration-how",
+            "budget_fraction": 0.12,
+            "replicate_index": 2,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 1.0,
+                "costs": {
+                  "charged_experiment_cost": 0.035738729406148195,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 14,
+                  "model_wall_seconds": 16.637461666949093,
+                  "input_tokens": 12,
+                  "output_tokens": 3474
+                },
+                "attempt_id": "ddefefdf829b89bf615151d392399f1261785c6ab87bfc82fa2ada94c32d1067",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "9df9eed38af7b919565c6abaf6e4589f39d709e606a5ec91245b275a9f62c441",
+            "slot_id": "e4e4457bd7362e218579f525ebad2edd86aa2404554b9a3efab6a6d8aa2cc718",
+            "lab_id": "2610-36983-advancement-or-acceleration-how",
+            "budget_fraction": 0.12,
+            "replicate_index": 3,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 0.0,
+                "costs": {
+                  "charged_experiment_cost": 0.03712997818365693,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 14,
+                  "model_wall_seconds": 13.604091667570174,
+                  "input_tokens": 10,
+                  "output_tokens": 2435
+                },
+                "attempt_id": "6f17dc03a358347ec5dcab396c753652a61c1a5fb0fa49c5654ad6e2fdf23b38",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "98af1255781b39fa0d26dff86f666f20f56ff70a634c002c48a94f54d90d712d",
+            "slot_id": "6a2af97e26b756489ab4dd8769c4d6209c5f9bbda5ffcd55a37d28ab4b87aea2",
+            "lab_id": "2610-36983-advancement-or-acceleration-how",
+            "budget_fraction": 0.25,
+            "replicate_index": 0,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 1.0,
+                "costs": {
+                  "charged_experiment_cost": 0.06671589566394687,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 28,
+                  "model_wall_seconds": 14.40621554106474,
+                  "input_tokens": 10,
+                  "output_tokens": 3187
+                },
+                "attempt_id": "08870f1f14b340e573556e1e3950d4e63a0851f4709e266adcd74d69c2ead0c6",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "98af1255781b39fa0d26dff86f666f20f56ff70a634c002c48a94f54d90d712d",
+            "slot_id": "0087f925595bfe026552de1214a64a4f846db14dd70deee5a120af0371b30c00",
+            "lab_id": "2610-36983-advancement-or-acceleration-how",
+            "budget_fraction": 0.25,
+            "replicate_index": 1,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 1.0,
+                "costs": {
+                  "charged_experiment_cost": 0.07336552022024989,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 32,
+                  "model_wall_seconds": 17.762787375599146,
+                  "input_tokens": 10,
+                  "output_tokens": 3914
+                },
+                "attempt_id": "3a373304769e449f09f3879d7997ec9f1bffc6e94af34fc727af1325b912a519",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "98af1255781b39fa0d26dff86f666f20f56ff70a634c002c48a94f54d90d712d",
+            "slot_id": "4328dde4dc94a47eb12dba44977777e6aa090c666d4fc01247c550e88164078a",
+            "lab_id": "2610-36983-advancement-or-acceleration-how",
+            "budget_fraction": 0.25,
+            "replicate_index": 2,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 1.0,
+                "costs": {
+                  "charged_experiment_cost": 0.05589893739670515,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 24,
+                  "model_wall_seconds": 12.782704208046198,
+                  "input_tokens": 8,
+                  "output_tokens": 2821
+                },
+                "attempt_id": "e281076ef18ca2742f83ee33553aa3e935beb7c475efc50b17796aa1caa80c28",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "98af1255781b39fa0d26dff86f666f20f56ff70a634c002c48a94f54d90d712d",
+            "slot_id": "d727b3347e1ce0d4149ea928886eb3415f1cde2c08372eb7fa82565a90aeb10e",
+            "lab_id": "2610-36983-advancement-or-acceleration-how",
+            "budget_fraction": 0.25,
+            "replicate_index": 3,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 1.0,
+                "costs": {
+                  "charged_experiment_cost": 0.07753285393118858,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 32,
+                  "model_wall_seconds": 16.640467500314116,
+                  "input_tokens": 10,
+                  "output_tokens": 3706
+                },
+                "attempt_id": "67095f3370c427c169bba38db9f5591f773b9dcb738ad102bab38a151e55eb74",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "5cdc3deaa5940bce5165b7e932eaa3303b45ab879ecdecb0445732d1f28060bb",
+            "slot_id": "91bad941f4d781213f096c84bbc19f1f1c1792d644e82cadede3b3034d3a64b9",
+            "lab_id": "2610-37225-sharpnessaware-muon-matrixaware-optimization",
+            "budget_fraction": 0.06,
+            "replicate_index": 0,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 1.0,
+                "costs": {
+                  "charged_experiment_cost": 0.5738708744756877,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 8,
+                  "model_wall_seconds": 11.133562166243792,
+                  "input_tokens": 10,
+                  "output_tokens": 2009
+                },
+                "attempt_id": "bab367b06467123f8958180a0680756328c13b01e26f66616bb80a9b819a4eaf",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "5cdc3deaa5940bce5165b7e932eaa3303b45ab879ecdecb0445732d1f28060bb",
+            "slot_id": "e5660ec3bf5d77b8b95b560ad80b393802c12c41768ae9ad793cdbdbd76d2b1a",
+            "lab_id": "2610-37225-sharpnessaware-muon-matrixaware-optimization",
+            "budget_fraction": 0.06,
+            "replicate_index": 1,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 1.0,
+                "costs": {
+                  "charged_experiment_cost": 0.6853764387778938,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 10,
+                  "model_wall_seconds": 13.946702582761645,
+                  "input_tokens": 12,
+                  "output_tokens": 2718
+                },
+                "attempt_id": "b2e9f9d289d27f7326a9778fcb1d42709e00b417e1cf1aa1aa874793118a0b62",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "5cdc3deaa5940bce5165b7e932eaa3303b45ab879ecdecb0445732d1f28060bb",
+            "slot_id": "8accfbb3049cc5a25343bb5397361d9caecbd45235d2dbde06dccb16592de654",
+            "lab_id": "2610-37225-sharpnessaware-muon-matrixaware-optimization",
+            "budget_fraction": 0.06,
+            "replicate_index": 2,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 0.0,
+                "costs": {
+                  "charged_experiment_cost": 0.7067439998500049,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 10,
+                  "model_wall_seconds": 13.715343208052218,
+                  "input_tokens": 10,
+                  "output_tokens": 2705
+                },
+                "attempt_id": "26f6db744f9a23f50fa77e2ed4f7fd03b543f8929101dc1fac0882e5728429e1",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "5cdc3deaa5940bce5165b7e932eaa3303b45ab879ecdecb0445732d1f28060bb",
+            "slot_id": "79b075b933daefe08e6180ab3f490b60578b7c2e37d6f7c2fab5af3c622c528f",
+            "lab_id": "2610-37225-sharpnessaware-muon-matrixaware-optimization",
+            "budget_fraction": 0.06,
+            "replicate_index": 3,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 1.0,
+                "costs": {
+                  "charged_experiment_cost": 0.7184552303515375,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 10,
+                  "model_wall_seconds": 11.674903582781553,
+                  "input_tokens": 10,
+                  "output_tokens": 2295
+                },
+                "attempt_id": "298702c412d2ecc68784e6fb82feddb9d481cb23653c9ad87cc5b1eae16fa0e8",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "661d1627433131ec7f06d9426d7669b160aecddf77e92c2c3b4c09ccb162780f",
+            "slot_id": "6a1657567cbb147141801f5fb10eec338168d35476457e68db86639667032043",
+            "lab_id": "2610-37225-sharpnessaware-muon-matrixaware-optimization",
+            "budget_fraction": 0.12,
+            "replicate_index": 0,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 1.0,
+                "costs": {
+                  "charged_experiment_cost": 1.4082344374619424,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 20,
+                  "model_wall_seconds": 18.131199999712408,
+                  "input_tokens": 14,
+                  "output_tokens": 3698
+                },
+                "attempt_id": "599d233c3170fd16612d6fbc71ac8ff2f4434a9ca8c95e0daf014a948a463a3a",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "661d1627433131ec7f06d9426d7669b160aecddf77e92c2c3b4c09ccb162780f",
+            "slot_id": "7600162d61735f438aa77f2c08039bcdb102363f3bec68d23cb25a0ea74ba590",
+            "lab_id": "2610-37225-sharpnessaware-muon-matrixaware-optimization",
+            "budget_fraction": 0.12,
+            "replicate_index": 1,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 0.0,
+                "costs": {
+                  "charged_experiment_cost": 1.4417872303165495,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 20,
+                  "model_wall_seconds": 20.156080124899745,
+                  "input_tokens": 12,
+                  "output_tokens": 4101
+                },
+                "attempt_id": "514d60cd6d741b6cc77bf8fe9ff13649959b9b0631177bc91c67440f89d0b784",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "661d1627433131ec7f06d9426d7669b160aecddf77e92c2c3b4c09ccb162780f",
+            "slot_id": "0b06881f39286b52db19fe103f2d936bb2dd6b5b2a610bcd90556ad3eed1432d",
+            "lab_id": "2610-37225-sharpnessaware-muon-matrixaware-optimization",
+            "budget_fraction": 0.12,
+            "replicate_index": 2,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 0.0,
+                "costs": {
+                  "charged_experiment_cost": 1.3963425839319825,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 20,
+                  "model_wall_seconds": 11.828881583176553,
+                  "input_tokens": 10,
+                  "output_tokens": 2178
+                },
+                "attempt_id": "ce432b0e0e4fbd6108b3f755ddb54c07f24800635813310433cf3d82738d0bad",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "661d1627433131ec7f06d9426d7669b160aecddf77e92c2c3b4c09ccb162780f",
+            "slot_id": "4e91acf2cdfec95e954b8ba574e539c10ceb80df56c812d8f7e8860a24bcf568",
+            "lab_id": "2610-37225-sharpnessaware-muon-matrixaware-optimization",
+            "budget_fraction": 0.12,
+            "replicate_index": 3,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 1.0,
+                "costs": {
+                  "charged_experiment_cost": 1.3015459580346942,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 18,
+                  "model_wall_seconds": 14.905327166430652,
+                  "input_tokens": 10,
+                  "output_tokens": 3099
+                },
+                "attempt_id": "c063fedfccc6226dda19cc00825795301a12abb1b0775929a150126cb5a0e287",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "e0324aadd7bad9994321065fcac2daf1e77c8b87bd22a90cbddb75c7a00e59be",
+            "slot_id": "5810f506fcc2ceff646cffdf82c7e09144c291a61820d83b9a392bcde8ce9a72",
+            "lab_id": "2610-37225-sharpnessaware-muon-matrixaware-optimization",
+            "budget_fraction": 0.25,
+            "replicate_index": 0,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 1.0,
+                "costs": {
+                  "charged_experiment_cost": 2.908656895160675,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 40,
+                  "model_wall_seconds": 27.80478262435645,
+                  "input_tokens": 12,
+                  "output_tokens": 6265
+                },
+                "attempt_id": "68a29e9b5729466061281348f98ffe70377aa5fd313067cea73c8d7938a6208c",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "e0324aadd7bad9994321065fcac2daf1e77c8b87bd22a90cbddb75c7a00e59be",
+            "slot_id": "4a1f151b1e6dc2d1ae9fd2a0bd7bbc39dcc9b650886f99ecb899cd57af10b5c6",
+            "lab_id": "2610-37225-sharpnessaware-muon-matrixaware-optimization",
+            "budget_fraction": 0.25,
+            "replicate_index": 1,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 1.0,
+                "costs": {
+                  "charged_experiment_cost": 2.890892354771495,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 40,
+                  "model_wall_seconds": 20.968636790290475,
+                  "input_tokens": 10,
+                  "output_tokens": 4940
+                },
+                "attempt_id": "68963b3119677ab41feeac809f469e8e7f6c1a11c81d4c48965f773f9d718ec5",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "e0324aadd7bad9994321065fcac2daf1e77c8b87bd22a90cbddb75c7a00e59be",
+            "slot_id": "6c5bb19b887d9b526dbd23a440013d487d200207f669b0c893fd500d52976179",
+            "lab_id": "2610-37225-sharpnessaware-muon-matrixaware-optimization",
+            "budget_fraction": 0.25,
+            "replicate_index": 2,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 1.0,
+                "costs": {
+                  "charged_experiment_cost": 2.983055292163044,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 41,
+                  "model_wall_seconds": 33.31825925037265,
+                  "input_tokens": 14,
+                  "output_tokens": 7409
+                },
+                "attempt_id": "b97cf933de54f8d61998798b0e7d4b5c18607ac76b1951be0b33478b36dc07bb",
+                "attempt_index": 0
+              }
+            ]
+          },
+          {
+            "group_id": "e0324aadd7bad9994321065fcac2daf1e77c8b87bd22a90cbddb75c7a00e59be",
+            "slot_id": "f9caf246c85a8b0b34d0069d8c3903c39cb2bab4d7a054972759194888560fd7",
+            "lab_id": "2610-37225-sharpnessaware-muon-matrixaware-optimization",
+            "budget_fraction": 0.25,
+            "replicate_index": 3,
+            "attempts": [
+              {
+                "state": "completed",
+                "reward": 1.0,
+                "costs": {
+                  "charged_experiment_cost": 2.9581242511048913,
+                  "unique_executed_runs": 0,
+                  "requested_runs": 41,
+                  "model_wall_seconds": 24.415914541110396,
+                  "input_tokens": 12,
+                  "output_tokens": 5616
+                },
+                "attempt_id": "f01646d799379605a733d5a1d0fbf7a0fb83b8e4e0dedbc13bafa2b2a0f78c75",
+                "attempt_index": 0
+              }
+            ]
+          }
+        ]
+      },
+      "selection": {
+        "schema_version": 1,
+        "selector_id": "beta_mixed_group_v1",
+        "phase": "development",
+        "evidence_kind": "operator_supplied",
+        "status": "selected",
+        "closed": true,
+        "chosen_budget_fraction": 0.06,
+        "fallback_reason": null,
+        "diagnostics": [
+          "no_observed_mixed_budget:2610-36935-gaussian-process-bandits-for",
+          "no_observed_mixed_budget:2610-36941-algorithmic-monoculture-in-machine"
+        ],
+        "labs": [
+          {
+            "lab_id": "2610-36935-gaussian-process-bandits-for",
+            "budgets": [
+              {
+                "group_id": "50c351f648eafed62790d6d5adbaa5c3200a4e60b939969998d84ab82b865cc3",
+                "budget_fraction": 0.06,
+                "correct": 4,
+                "completed": 4,
+                "alpha": 5,
+                "beta": 1,
+                "success_probability_mean": 0.8333333333333334,
+                "success_probability_interval": [
+                  0.47817624989501856,
+                  0.9949492366205319
+                ],
+                "mixed_group_probability": 0.6146076146076146,
+                "planned": 4,
+                "missing": 0,
+                "observed_mixed": false,
+                "status_counts": {
+                  "completed": 4
+                },
+                "pilot_slot_ids": [
+                  "1220436ed0c77d80968e09b3c76f61bcb5e6f27f5847ab0da4a1cc866fe0498e",
+                  "5d90d25be6db7cda017fe1f1bd04679b7a7c5f0a4a774bc4289b6a43836017d6",
+                  "56f3a5e1492cbd3f1b5932306312fc5a3a226434927cf5776f01510db54db396",
+                  "5302844e7eb37e632b231853b716558a5c0e84d3a37de01ecd11f248294ff042"
+                ],
+                "pilot_attempt_ids": [
+                  "b11eda2ea013f815e589bab22fc2084a25a52b35112e7a3e2294d436296a874e",
+                  "6a6f653263a3bf5d20a4a60f25945efda1440b1ae11f10a5ab733457e4a7d267",
+                  "f996eb4f67bd8899595cd86883ebcc6bbace70f31f19bdf1fb336232fab89175",
+                  "3af4b509b9db11efdd2a4233940b266bf0cf84d888ee87d37f3c0af2bacf4731"
+                ]
+              },
+              {
+                "group_id": "1c4b0c49db5b272428be0df014736331d0eac8f255d713b6cb876eacfe2617dc",
+                "budget_fraction": 0.12,
+                "correct": 4,
+                "completed": 4,
+                "alpha": 5,
+                "beta": 1,
+                "success_probability_mean": 0.8333333333333334,
+                "success_probability_interval": [
+                  0.47817624989501856,
+                  0.9949492366205319
+                ],
+                "mixed_group_probability": 0.6146076146076146,
+                "planned": 4,
+                "missing": 0,
+                "observed_mixed": false,
+                "status_counts": {
+                  "completed": 4
+                },
+                "pilot_slot_ids": [
+                  "2cf0f189375b8dfa9129ec0e589974f12d90af68c17340f47d59463264a90f62",
+                  "95a7375891a97cbc820f372f6ac407c2a8d9b9dde6fbbc749b500b8325c4446c",
+                  "97b66d6d8afad04ceb52cec980d0f2580a8f9e0cfc29bc4a4e2fa25fcf7202c0",
+                  "d279faabb520920ae4c6996c7b571467b1fae8f01af7b74bda172e6d92d7c45c"
+                ],
+                "pilot_attempt_ids": [
+                  "8a70c23b0a92138b3328a560b40b51362b87ea3f4a9c60e4632a36d55a835a4a",
+                  "3e93d54504c7a1f26593b403ef031d7270aacc8d5dd97c5d6cb6d2a69b327e2c",
+                  "fa00c4bba89c6d6b41af75ceed889790a9fc881d14b30a5c337491272b2f7955",
+                  "971af1b980f029ff8f085fd019eeff3651cd0a03e2cc21d403dc1cfbe65004fb"
+                ]
+              },
+              {
+                "group_id": "53b7dba6849129614e6c3851e135d577178a2b10610f1c97092215ca8d1d0cb3",
+                "budget_fraction": 0.25,
+                "correct": 4,
+                "completed": 4,
+                "alpha": 5,
+                "beta": 1,
+                "success_probability_mean": 0.8333333333333334,
+                "success_probability_interval": [
+                  0.47817624989501856,
+                  0.9949492366205319
+                ],
+                "mixed_group_probability": 0.6146076146076146,
+                "planned": 4,
+                "missing": 0,
+                "observed_mixed": false,
+                "status_counts": {
+                  "completed": 4
+                },
+                "pilot_slot_ids": [
+                  "46799d56a9158ec4b49e86f31d13fdb3952248e74b0ce8ab34b6f831a86dcd62",
+                  "b2bf1c272ba774efc78b6d1872fecc4da5adf305c32fa753486a27156f4297b7",
+                  "40d42a987f6832563165ba93db98181f4c0e55c5689cf32787b6fdf16ec66fdb",
+                  "c5d6c125dacb953c6dc054025fbcd86918762f274ee4e28af930d83de8346d08"
+                ],
+                "pilot_attempt_ids": [
+                  "ab74c96f50332d580723372be4dcf7968c46fd8c88ddca7b15a28e2fb6ed7797",
+                  "79ed06582df98df8a7de1cc64ce847caaaab0b00c1ed0eba7368f6051a79f198",
+                  "4024adaf2ff6649fa8a199d71991798448d8976272791df4272f7344a62d93a3",
+                  "91d8b675495a0589bd8838c8f193f8bd3fdfafb55350d088f7a16d167973d5b8"
+                ]
+              }
+            ]
+          },
+          {
+            "lab_id": "2610-36941-algorithmic-monoculture-in-machine",
+            "budgets": [
+              {
+                "group_id": "80109deb46a44df9d8c10a5938f393492c9bfa8cec684f51c323abeb7e3daa3e",
+                "budget_fraction": 0.06,
+                "correct": 4,
+                "completed": 4,
+                "alpha": 5,
+                "beta": 1,
+                "success_probability_mean": 0.8333333333333334,
+                "success_probability_interval": [
+                  0.47817624989501856,
+                  0.9949492366205319
+                ],
+                "mixed_group_probability": 0.6146076146076146,
+                "planned": 4,
+                "missing": 0,
+                "observed_mixed": false,
+                "status_counts": {
+                  "completed": 4
+                },
+                "pilot_slot_ids": [
+                  "318199908cda6e21ce24cff6dd9546274ba9e651136f9746aa07dab9bf07d4f5",
+                  "7fc209a671a306642185d2960f9b929d7072db083ca4bedcffd7fde6957316e7",
+                  "179c3f450b71b6d78914a548e9a18e361cea82bdd9c6cb70b75cb3286f124f48",
+                  "380ee9a038dcad20eb89327999cf69224df2b5bf1103c5fe2ae6a0e6fc00a146"
+                ],
+                "pilot_attempt_ids": [
+                  "b8ce4634f9d2f307dd68344a1d31c699f33ad40fc1dcc9243b2fb2ada8be2e41",
+                  "8171afcf1a3d38f4b99ed55b64b16b2f1562202d2611592dd49c8305448bd7e8",
+                  "53a88c01e9f5440ec0177cc028ac0deb5d9f989210db1485b1ccc4a2fad7f090",
+                  "ee7a9f58b0b73703494efe7dad6eda2a5928ab886ab48df8261803e05f8a25d8"
+                ]
+              },
+              {
+                "group_id": "ec19c47d6519bf9d3f2d76fd6434fc95b743554c91c6aa9da0bc0a214204b437",
+                "budget_fraction": 0.12,
+                "correct": 4,
+                "completed": 4,
+                "alpha": 5,
+                "beta": 1,
+                "success_probability_mean": 0.8333333333333334,
+                "success_probability_interval": [
+                  0.47817624989501856,
+                  0.9949492366205319
+                ],
+                "mixed_group_probability": 0.6146076146076146,
+                "planned": 4,
+                "missing": 0,
+                "observed_mixed": false,
+                "status_counts": {
+                  "completed": 4
+                },
+                "pilot_slot_ids": [
+                  "6f11a30982a284add2952999f681b86a144a485295328736994a0ed820f09a43",
+                  "4ed4f675e558765b8c14549ff30e87a0e3b245881327b74260e5ed310ac627d1",
+                  "ea3856b607416839532c39d6c92cdbcd0a546b2aa858c45123de44e83d6223a1",
+                  "7178866b570e559856a30a98679c4dee945f5414c1fbee167e372f132193496c"
+                ],
+                "pilot_attempt_ids": [
+                  "95490d0ee0f0e60a6d0b45056252fe3da7f926a155d0c049ef9304273ed6dedc",
+                  "4a896b0b9012eaa1a403c0883b3b3b859d6aa2f62e72a3054b78c7ecad301f31",
+                  "f5306a1ffc7aa5adde5eeb3bd9e485160b86d5b8d452d79cb722e4cf18617d5f",
+                  "f2135a173561baf0b56922cbaf2e06a804a2a4a5cd4dcc0de905614bb2e027f5"
+                ]
+              },
+              {
+                "group_id": "1c02ba6086c6431668dc91ba91f77f83e264f2cb5fa75770b4c814219f319bc1",
+                "budget_fraction": 0.25,
+                "correct": 4,
+                "completed": 4,
+                "alpha": 5,
+                "beta": 1,
+                "success_probability_mean": 0.8333333333333334,
+                "success_probability_interval": [
+                  0.47817624989501856,
+                  0.9949492366205319
+                ],
+                "mixed_group_probability": 0.6146076146076146,
+                "planned": 4,
+                "missing": 0,
+                "observed_mixed": false,
+                "status_counts": {
+                  "completed": 4
+                },
+                "pilot_slot_ids": [
+                  "1ca8b8ad3e8b4d2ead8cc0d9ec5979eb5d839d370229043ef95a54987eac4017",
+                  "433278d2ed4e7451b5ac05661995a1eea694cec7127e11fc61dd074054bfb567",
+                  "7f5e3b7036187d1dec9f124f7622080a55efea827cb7b06320979a93dc600ad4",
+                  "9014d8bb47e95169bceb604971db8957d77de55d5f3434f86aadc0ca56b389a7"
+                ],
+                "pilot_attempt_ids": [
+                  "cab9dfb8a28986b0a50ed6fe0d4b7aa7366c44a29b269eee0cd41f8ab13d3870",
+                  "67458b2fdd1bfe486ad028f2faa99b7497a189c2f1ed8003a7bfc3c787e0c3a6",
+                  "a813887f1d285cb03d48e274301727e123f70b3197be5f14afd1356e5b740db6",
+                  "3d1758381fa932f257faeebf0720dc86d9393865adad4082863505227b0e81eb"
+                ]
+              }
+            ]
+          },
+          {
+            "lab_id": "2610-36983-advancement-or-acceleration-how",
+            "budgets": [
+              {
+                "group_id": "ae94445365db1c6fc2763dd089b443223522fa149d5aadef58dea16f9d20ac10",
+                "budget_fraction": 0.06,
+                "correct": 2,
+                "completed": 4,
+                "alpha": 3,
+                "beta": 3,
+                "success_probability_mean": 0.5,
+                "success_probability_interval": [
+                  0.14663279963467318,
+                  0.8533672003653268
+                ],
+                "mixed_group_probability": 0.93006993006993,
+                "planned": 4,
+                "missing": 0,
+                "observed_mixed": true,
+                "status_counts": {
+                  "completed": 4
+                },
+                "pilot_slot_ids": [
+                  "c19bcb60ea26fe0dbd70f9f6ccd26615dfcd3517605e050467ebc8ab8f6c31e4",
+                  "f7c02e2ac35c60ee10ca87d79bbe960f23d5b25bfd88a6fd5c06cb3d859136bd",
+                  "59200700cd33d143d01cd72244a5bd8b4a9b4ba61b00f34c61d2666fb8527296",
+                  "ffa5c158ec3257200c592bd8279ecf58ad7718189705065de7191db65292a8ad"
+                ],
+                "pilot_attempt_ids": [
+                  "d2fddd2b50c3539af14eaed418a98437a7512aa0a5056b8d1fb2ffdc3e604b93",
+                  "f4b8aa468ec9cbef1cf58774c8e8e6b1e4bb8d9c80f827fa16dc84c60ed3975a",
+                  "3f8be8c9ca682b47c12ecd5f1496381f6c16ec542e7eea790457f07dd760f556",
+                  "6c9e34e2fa6cba06f483616ecde0fc355c013a792859bc2add8808fc4b485573"
+                ]
+              },
+              {
+                "group_id": "9df9eed38af7b919565c6abaf6e4589f39d709e606a5ec91245b275a9f62c441",
+                "budget_fraction": 0.12,
+                "correct": 1,
+                "completed": 4,
+                "alpha": 2,
+                "beta": 4,
+                "success_probability_mean": 0.3333333333333333,
+                "success_probability_interval": [
+                  0.05274495052631693,
+                  0.7164179361180895
+                ],
+                "mixed_group_probability": 0.8648018648018648,
+                "planned": 4,
+                "missing": 0,
+                "observed_mixed": true,
+                "status_counts": {
+                  "completed": 4
+                },
+                "pilot_slot_ids": [
+                  "322e57b305ec2d54b28b2269f70d6a3e5aab1b603fc22af3c6cf282780308e1e",
+                  "1894501eb7a8ef78597f68cf1924513239ebf2cdb6b73f19407fcefcf658e5f3",
+                  "d6363aa92f8135f2e2b5121a1765ab62c8273fba5f5b647f154952084d52dd43",
+                  "e4e4457bd7362e218579f525ebad2edd86aa2404554b9a3efab6a6d8aa2cc718"
+                ],
+                "pilot_attempt_ids": [
+                  "b4ac74c9939835b9934db9ba5e1f0f95144de7daab099bf1e95d27e62f5b893e",
+                  "779806bf91d62f3439d376a5dfb60623f447f743487b4ccb6e67298333d09fd6",
+                  "ddefefdf829b89bf615151d392399f1261785c6ab87bfc82fa2ada94c32d1067",
+                  "6f17dc03a358347ec5dcab396c753652a61c1a5fb0fa49c5654ad6e2fdf23b38"
+                ]
+              },
+              {
+                "group_id": "98af1255781b39fa0d26dff86f666f20f56ff70a634c002c48a94f54d90d712d",
+                "budget_fraction": 0.25,
+                "correct": 4,
+                "completed": 4,
+                "alpha": 5,
+                "beta": 1,
+                "success_probability_mean": 0.8333333333333334,
+                "success_probability_interval": [
+                  0.47817624989501856,
+                  0.9949492366205319
+                ],
+                "mixed_group_probability": 0.6146076146076146,
+                "planned": 4,
+                "missing": 0,
+                "observed_mixed": false,
+                "status_counts": {
+                  "completed": 4
+                },
+                "pilot_slot_ids": [
+                  "6a2af97e26b756489ab4dd8769c4d6209c5f9bbda5ffcd55a37d28ab4b87aea2",
+                  "0087f925595bfe026552de1214a64a4f846db14dd70deee5a120af0371b30c00",
+                  "4328dde4dc94a47eb12dba44977777e6aa090c666d4fc01247c550e88164078a",
+                  "d727b3347e1ce0d4149ea928886eb3415f1cde2c08372eb7fa82565a90aeb10e"
+                ],
+                "pilot_attempt_ids": [
+                  "08870f1f14b340e573556e1e3950d4e63a0851f4709e266adcd74d69c2ead0c6",
+                  "3a373304769e449f09f3879d7997ec9f1bffc6e94af34fc727af1325b912a519",
+                  "e281076ef18ca2742f83ee33553aa3e935beb7c475efc50b17796aa1caa80c28",
+                  "67095f3370c427c169bba38db9f5591f773b9dcb738ad102bab38a151e55eb74"
+                ]
+              }
+            ]
+          },
+          {
+            "lab_id": "2610-37225-sharpnessaware-muon-matrixaware-optimization",
+            "budgets": [
+              {
+                "group_id": "5cdc3deaa5940bce5165b7e932eaa3303b45ab879ecdecb0445732d1f28060bb",
+                "budget_fraction": 0.06,
+                "correct": 3,
+                "completed": 4,
+                "alpha": 4,
+                "beta": 2,
+                "success_probability_mean": 0.6666666666666666,
+                "success_probability_interval": [
+                  0.28358206388191054,
+                  0.9472550494736831
+                ],
+                "mixed_group_probability": 0.8648018648018648,
+                "planned": 4,
+                "missing": 0,
+                "observed_mixed": true,
+                "status_counts": {
+                  "completed": 4
+                },
+                "pilot_slot_ids": [
+                  "91bad941f4d781213f096c84bbc19f1f1c1792d644e82cadede3b3034d3a64b9",
+                  "e5660ec3bf5d77b8b95b560ad80b393802c12c41768ae9ad793cdbdbd76d2b1a",
+                  "8accfbb3049cc5a25343bb5397361d9caecbd45235d2dbde06dccb16592de654",
+                  "79b075b933daefe08e6180ab3f490b60578b7c2e37d6f7c2fab5af3c622c528f"
+                ],
+                "pilot_attempt_ids": [
+                  "bab367b06467123f8958180a0680756328c13b01e26f66616bb80a9b819a4eaf",
+                  "b2e9f9d289d27f7326a9778fcb1d42709e00b417e1cf1aa1aa874793118a0b62",
+                  "26f6db744f9a23f50fa77e2ed4f7fd03b543f8929101dc1fac0882e5728429e1",
+                  "298702c412d2ecc68784e6fb82feddb9d481cb23653c9ad87cc5b1eae16fa0e8"
+                ]
+              },
+              {
+                "group_id": "661d1627433131ec7f06d9426d7669b160aecddf77e92c2c3b4c09ccb162780f",
+                "budget_fraction": 0.12,
+                "correct": 2,
+                "completed": 4,
+                "alpha": 3,
+                "beta": 3,
+                "success_probability_mean": 0.5,
+                "success_probability_interval": [
+                  0.14663279963467318,
+                  0.8533672003653268
+                ],
+                "mixed_group_probability": 0.93006993006993,
+                "planned": 4,
+                "missing": 0,
+                "observed_mixed": true,
+                "status_counts": {
+                  "completed": 4
+                },
+                "pilot_slot_ids": [
+                  "6a1657567cbb147141801f5fb10eec338168d35476457e68db86639667032043",
+                  "7600162d61735f438aa77f2c08039bcdb102363f3bec68d23cb25a0ea74ba590",
+                  "0b06881f39286b52db19fe103f2d936bb2dd6b5b2a610bcd90556ad3eed1432d",
+                  "4e91acf2cdfec95e954b8ba574e539c10ceb80df56c812d8f7e8860a24bcf568"
+                ],
+                "pilot_attempt_ids": [
+                  "599d233c3170fd16612d6fbc71ac8ff2f4434a9ca8c95e0daf014a948a463a3a",
+                  "514d60cd6d741b6cc77bf8fe9ff13649959b9b0631177bc91c67440f89d0b784",
+                  "ce432b0e0e4fbd6108b3f755ddb54c07f24800635813310433cf3d82738d0bad",
+                  "c063fedfccc6226dda19cc00825795301a12abb1b0775929a150126cb5a0e287"
+                ]
+              },
+              {
+                "group_id": "e0324aadd7bad9994321065fcac2daf1e77c8b87bd22a90cbddb75c7a00e59be",
+                "budget_fraction": 0.25,
+                "correct": 4,
+                "completed": 4,
+                "alpha": 5,
+                "beta": 1,
+                "success_probability_mean": 0.8333333333333334,
+                "success_probability_interval": [
+                  0.47817624989501856,
+                  0.9949492366205319
+                ],
+                "mixed_group_probability": 0.6146076146076146,
+                "planned": 4,
+                "missing": 0,
+                "observed_mixed": false,
+                "status_counts": {
+                  "completed": 4
+                },
+                "pilot_slot_ids": [
+                  "5810f506fcc2ceff646cffdf82c7e09144c291a61820d83b9a392bcde8ce9a72",
+                  "4a1f151b1e6dc2d1ae9fd2a0bd7bbc39dcc9b650886f99ecb899cd57af10b5c6",
+                  "6c5bb19b887d9b526dbd23a440013d487d200207f669b0c893fd500d52976179",
+                  "f9caf246c85a8b0b34d0069d8c3903c39cb2bab4d7a054972759194888560fd7"
+                ],
+                "pilot_attempt_ids": [
+                  "68a29e9b5729466061281348f98ffe70377aa5fd313067cea73c8d7938a6208c",
+                  "68963b3119677ab41feeac809f469e8e7f6c1a11c81d4c48965f773f9d718ec5",
+                  "b97cf933de54f8d61998798b0e7d4b5c18607ac76b1951be0b33478b36dc07bb",
+                  "f01646d799379605a733d5a1d0fbf7a0fb83b8e4e0dedbc13bafa2b2a0f78c75"
+                ]
+              }
+            ]
+          }
+        ],
+        "objectives": [
+          {
+            "budget_fraction": 0.06,
+            "complete_labs": 4,
+            "objective": 0.756021756021756
+          },
+          {
+            "budget_fraction": 0.12,
+            "complete_labs": 4,
+            "objective": 0.756021756021756
+          },
+          {
+            "budget_fraction": 0.25,
+            "complete_labs": 4,
+            "objective": 0.6146076146076146
+          }
+        ],
+        "global_budget_fraction": null,
+        "upfront_cost": {
+          "episode_starts": 48,
+          "retry_episode_starts": 0,
+          "fields": {
+            "requested_runs": {
+              "known_sum": 891,
+              "unreported_attempts": 0,
+              "total": 891,
+              "availability": "reported"
+            },
+            "unique_executed_runs": {
+              "known_sum": 0,
+              "unreported_attempts": 0,
+              "total": 0,
+              "availability": "reported"
+            },
+            "charged_experiment_cost": {
+              "known_sum": 23.579161685425788,
+              "unreported_attempts": 0,
+              "total": 23.579161685425788,
+              "availability": "reported"
+            },
+            "actual_environment_cpu_seconds": {
+              "known_sum": 0.0,
+              "unreported_attempts": 48,
+              "total": null,
+              "availability": "partial_or_unreported"
+            },
+            "environment_wall_seconds": {
+              "known_sum": 0.0,
+              "unreported_attempts": 48,
+              "total": null,
+              "availability": "partial_or_unreported"
+            },
+            "model_wall_seconds": {
+              "known_sum": 725.9173005819321,
+              "unreported_attempts": 0,
+              "total": 725.9173005819321,
+              "availability": "reported"
+            },
+            "input_tokens": {
+              "known_sum": 510,
+              "unreported_attempts": 0,
+              "total": 510,
+              "availability": "reported"
+            },
+            "output_tokens": {
+              "known_sum": 146441,
+              "unreported_attempts": 0,
+              "total": 146441,
+              "availability": "reported"
+            }
+          },
+          "source": "operator_supplied_attempt_costs"
+        },
+        "pilot_slot_ids": [
+          "1220436ed0c77d80968e09b3c76f61bcb5e6f27f5847ab0da4a1cc866fe0498e",
+          "5d90d25be6db7cda017fe1f1bd04679b7a7c5f0a4a774bc4289b6a43836017d6",
+          "56f3a5e1492cbd3f1b5932306312fc5a3a226434927cf5776f01510db54db396",
+          "5302844e7eb37e632b231853b716558a5c0e84d3a37de01ecd11f248294ff042",
+          "2cf0f189375b8dfa9129ec0e589974f12d90af68c17340f47d59463264a90f62",
+          "95a7375891a97cbc820f372f6ac407c2a8d9b9dde6fbbc749b500b8325c4446c",
+          "97b66d6d8afad04ceb52cec980d0f2580a8f9e0cfc29bc4a4e2fa25fcf7202c0",
+          "d279faabb520920ae4c6996c7b571467b1fae8f01af7b74bda172e6d92d7c45c",
+          "46799d56a9158ec4b49e86f31d13fdb3952248e74b0ce8ab34b6f831a86dcd62",
+          "b2bf1c272ba774efc78b6d1872fecc4da5adf305c32fa753486a27156f4297b7",
+          "40d42a987f6832563165ba93db98181f4c0e55c5689cf32787b6fdf16ec66fdb",
+          "c5d6c125dacb953c6dc054025fbcd86918762f274ee4e28af930d83de8346d08",
+          "318199908cda6e21ce24cff6dd9546274ba9e651136f9746aa07dab9bf07d4f5",
+          "7fc209a671a306642185d2960f9b929d7072db083ca4bedcffd7fde6957316e7",
+          "179c3f450b71b6d78914a548e9a18e361cea82bdd9c6cb70b75cb3286f124f48",
+          "380ee9a038dcad20eb89327999cf69224df2b5bf1103c5fe2ae6a0e6fc00a146",
+          "6f11a30982a284add2952999f681b86a144a485295328736994a0ed820f09a43",
+          "4ed4f675e558765b8c14549ff30e87a0e3b245881327b74260e5ed310ac627d1",
+          "ea3856b607416839532c39d6c92cdbcd0a546b2aa858c45123de44e83d6223a1",
+          "7178866b570e559856a30a98679c4dee945f5414c1fbee167e372f132193496c",
+          "1ca8b8ad3e8b4d2ead8cc0d9ec5979eb5d839d370229043ef95a54987eac4017",
+          "433278d2ed4e7451b5ac05661995a1eea694cec7127e11fc61dd074054bfb567",
+          "7f5e3b7036187d1dec9f124f7622080a55efea827cb7b06320979a93dc600ad4",
+          "9014d8bb47e95169bceb604971db8957d77de55d5f3434f86aadc0ca56b389a7",
+          "c19bcb60ea26fe0dbd70f9f6ccd26615dfcd3517605e050467ebc8ab8f6c31e4",
+          "f7c02e2ac35c60ee10ca87d79bbe960f23d5b25bfd88a6fd5c06cb3d859136bd",
+          "59200700cd33d143d01cd72244a5bd8b4a9b4ba61b00f34c61d2666fb8527296",
+          "ffa5c158ec3257200c592bd8279ecf58ad7718189705065de7191db65292a8ad",
+          "322e57b305ec2d54b28b2269f70d6a3e5aab1b603fc22af3c6cf282780308e1e",
+          "1894501eb7a8ef78597f68cf1924513239ebf2cdb6b73f19407fcefcf658e5f3",
+          "d6363aa92f8135f2e2b5121a1765ab62c8273fba5f5b647f154952084d52dd43",
+          "e4e4457bd7362e218579f525ebad2edd86aa2404554b9a3efab6a6d8aa2cc718",
+          "6a2af97e26b756489ab4dd8769c4d6209c5f9bbda5ffcd55a37d28ab4b87aea2",
+          "0087f925595bfe026552de1214a64a4f846db14dd70deee5a120af0371b30c00",
+          "4328dde4dc94a47eb12dba44977777e6aa090c666d4fc01247c550e88164078a",
+          "d727b3347e1ce0d4149ea928886eb3415f1cde2c08372eb7fa82565a90aeb10e",
+          "91bad941f4d781213f096c84bbc19f1f1c1792d644e82cadede3b3034d3a64b9",
+          "e5660ec3bf5d77b8b95b560ad80b393802c12c41768ae9ad793cdbdbd76d2b1a",
+          "8accfbb3049cc5a25343bb5397361d9caecbd45235d2dbde06dccb16592de654",
+          "79b075b933daefe08e6180ab3f490b60578b7c2e37d6f7c2fab5af3c622c528f",
+          "6a1657567cbb147141801f5fb10eec338168d35476457e68db86639667032043",
+          "7600162d61735f438aa77f2c08039bcdb102363f3bec68d23cb25a0ea74ba590",
+          "0b06881f39286b52db19fe103f2d936bb2dd6b5b2a610bcd90556ad3eed1432d",
+          "4e91acf2cdfec95e954b8ba574e539c10ceb80df56c812d8f7e8860a24bcf568",
+          "5810f506fcc2ceff646cffdf82c7e09144c291a61820d83b9a392bcde8ce9a72",
+          "4a1f151b1e6dc2d1ae9fd2a0bd7bbc39dcc9b650886f99ecb899cd57af10b5c6",
+          "6c5bb19b887d9b526dbd23a440013d487d200207f669b0c893fd500d52976179",
+          "f9caf246c85a8b0b34d0069d8c3903c39cb2bab4d7a054972759194888560fd7"
+        ],
+        "pilot_attempt_ids": [
+          "b11eda2ea013f815e589bab22fc2084a25a52b35112e7a3e2294d436296a874e",
+          "6a6f653263a3bf5d20a4a60f25945efda1440b1ae11f10a5ab733457e4a7d267",
+          "f996eb4f67bd8899595cd86883ebcc6bbace70f31f19bdf1fb336232fab89175",
+          "3af4b509b9db11efdd2a4233940b266bf0cf84d888ee87d37f3c0af2bacf4731",
+          "8a70c23b0a92138b3328a560b40b51362b87ea3f4a9c60e4632a36d55a835a4a",
+          "3e93d54504c7a1f26593b403ef031d7270aacc8d5dd97c5d6cb6d2a69b327e2c",
+          "fa00c4bba89c6d6b41af75ceed889790a9fc881d14b30a5c337491272b2f7955",
+          "971af1b980f029ff8f085fd019eeff3651cd0a03e2cc21d403dc1cfbe65004fb",
+          "ab74c96f50332d580723372be4dcf7968c46fd8c88ddca7b15a28e2fb6ed7797",
+          "79ed06582df98df8a7de1cc64ce847caaaab0b00c1ed0eba7368f6051a79f198",
+          "4024adaf2ff6649fa8a199d71991798448d8976272791df4272f7344a62d93a3",
+          "91d8b675495a0589bd8838c8f193f8bd3fdfafb55350d088f7a16d167973d5b8",
+          "b8ce4634f9d2f307dd68344a1d31c699f33ad40fc1dcc9243b2fb2ada8be2e41",
+          "8171afcf1a3d38f4b99ed55b64b16b2f1562202d2611592dd49c8305448bd7e8",
+          "53a88c01e9f5440ec0177cc028ac0deb5d9f989210db1485b1ccc4a2fad7f090",
+          "ee7a9f58b0b73703494efe7dad6eda2a5928ab886ab48df8261803e05f8a25d8",
+          "95490d0ee0f0e60a6d0b45056252fe3da7f926a155d0c049ef9304273ed6dedc",
+          "4a896b0b9012eaa1a403c0883b3b3b859d6aa2f62e72a3054b78c7ecad301f31",
+          "f5306a1ffc7aa5adde5eeb3bd9e485160b86d5b8d452d79cb722e4cf18617d5f",
+          "f2135a173561baf0b56922cbaf2e06a804a2a4a5cd4dcc0de905614bb2e027f5",
+          "cab9dfb8a28986b0a50ed6fe0d4b7aa7366c44a29b269eee0cd41f8ab13d3870",
+          "67458b2fdd1bfe486ad028f2faa99b7497a189c2f1ed8003a7bfc3c787e0c3a6",
+          "a813887f1d285cb03d48e274301727e123f70b3197be5f14afd1356e5b740db6",
+          "3d1758381fa932f257faeebf0720dc86d9393865adad4082863505227b0e81eb",
+          "d2fddd2b50c3539af14eaed418a98437a7512aa0a5056b8d1fb2ffdc3e604b93",
+          "f4b8aa468ec9cbef1cf58774c8e8e6b1e4bb8d9c80f827fa16dc84c60ed3975a",
+          "3f8be8c9ca682b47c12ecd5f1496381f6c16ec542e7eea790457f07dd760f556",
+          "6c9e34e2fa6cba06f483616ecde0fc355c013a792859bc2add8808fc4b485573",
+          "b4ac74c9939835b9934db9ba5e1f0f95144de7daab099bf1e95d27e62f5b893e",
+          "779806bf91d62f3439d376a5dfb60623f447f743487b4ccb6e67298333d09fd6",
+          "ddefefdf829b89bf615151d392399f1261785c6ab87bfc82fa2ada94c32d1067",
+          "6f17dc03a358347ec5dcab396c753652a61c1a5fb0fa49c5654ad6e2fdf23b38",
+          "08870f1f14b340e573556e1e3950d4e63a0851f4709e266adcd74d69c2ead0c6",
+          "3a373304769e449f09f3879d7997ec9f1bffc6e94af34fc727af1325b912a519",
+          "e281076ef18ca2742f83ee33553aa3e935beb7c475efc50b17796aa1caa80c28",
+          "67095f3370c427c169bba38db9f5591f773b9dcb738ad102bab38a151e55eb74",
+          "bab367b06467123f8958180a0680756328c13b01e26f66616bb80a9b819a4eaf",
+          "b2e9f9d289d27f7326a9778fcb1d42709e00b417e1cf1aa1aa874793118a0b62",
+          "26f6db744f9a23f50fa77e2ed4f7fd03b543f8929101dc1fac0882e5728429e1",
+          "298702c412d2ecc68784e6fb82feddb9d481cb23653c9ad87cc5b1eae16fa0e8",
+          "599d233c3170fd16612d6fbc71ac8ff2f4434a9ca8c95e0daf014a948a463a3a",
+          "514d60cd6d741b6cc77bf8fe9ff13649959b9b0631177bc91c67440f89d0b784",
+          "ce432b0e0e4fbd6108b3f755ddb54c07f24800635813310433cf3d82738d0bad",
+          "c063fedfccc6226dda19cc00825795301a12abb1b0775929a150126cb5a0e287",
+          "68a29e9b5729466061281348f98ffe70377aa5fd313067cea73c8d7938a6208c",
+          "68963b3119677ab41feeac809f469e8e7f6c1a11c81d4c48965f773f9d718ec5",
+          "b97cf933de54f8d61998798b0e7d4b5c18607ac76b1951be0b33478b36dc07bb",
+          "f01646d799379605a733d5a1d0fbf7a0fb83b8e4e0dedbc13bafa2b2a0f78c75"
+        ],
+        "parameters": {
+          "budget_fractions": [
+            0.06,
+            0.12,
+            0.25
+          ],
+          "pilots_per_budget": 4,
+          "target_group_size": 8,
+          "prior": {
+            "kind": "beta",
+            "alpha": 1,
+            "beta": 1
+          },
+          "interval": {
+            "confidence": 0.95,
+            "kind": "equal_tailed_beta"
+          },
+          "near_best_tolerance": 0.05
+        },
+        "binding": {
+          "protocol_hash": "ba515089163fa749acff31fc991dd74264bcb02668d87ef07890051109750ac3",
+          "protocol_file_sha256": "65ecc95ec9fb8a57810899a7ea072819223ff21fda0ae1f4045fda544f829a88",
+          "selector_sha256": "762651e53ea1e9bc40bffd6c4e3d33513158120c1e5402a0ed18da615871db47",
+          "input_sha256": "cd2e9730efd83db159fcd6b844d59c26d0e4d22abe39dc2dc179efe4f0fe3cae",
+          "input_file_sha256": null,
+          "runtime": {
+            "python": "3.12.11 | packaged by conda-forge | (main, Jun  4 2025, 14:38:53) [Clang 18.1.8 ]",
+            "implementation": "CPython",
+            "system": "Darwin",
+            "release": "23.5.0",
+            "machine": "arm64",
+            "packages": [
+              [
+                "annotated-types",
+                "0.8.0"
+              ],
+              [
+                "anyio",
+                "4.15.1"
+              ],
+              [
+                "attrs",
+                "26.1.0"
+              ],
+              [
+                "benchtop",
+                "0.1.0"
+              ],
+              [
+                "certifi",
+                "2026.10.23"
+              ],
+              [
+                "cffi",
+                "2.1.1"
+              ],
+              [
+                "click",
+                "8.5.0"
+              ],
+              [
+                "cloudpickle",
+                "3.1.2"
+              ],
+              [
+                "contourpy",
+                "1.4.0"
+              ],
+              [
+                "cryptography",
+                "50.0.2"
+              ],
+              [
+                "cycler",
+                "0.12.1"
+              ],
+              [
+                "filelock",
+                "4.2.4"
+              ],
+              [
+                "fonttools",
+                "4.68.0"
+              ],
+              [
+                "fsspec",
+                "2026.9.0"
+              ],
+              [
+                "h11",
+                "0.16.0"
+              ],
+              [
+                "httpcore",
+                "1.0.9"
+              ],
+              [
+                "httpcore2",
+                "2.16.0"
+              ],
+              [
+                "httptools",
+                "0.9.0"
+              ],
+              [
+                "httpx",
+                "0.28.1"
+              ],
+              [
+                "httpx2",
+                "2.16.0"
+              ],
+              [
+                "idna",
+                "3.20"
+              ],
+              [
+                "iniconfig",
+                "2.3.1"
+              ],
+              [
+                "jinja2",
+                "3.1.6"
+              ],
+              [
+                "joblib",
+                "1.6.0"
+              ],
+              [
+                "jsonschema",
+                "4.26.0"
+              ],
+              [
+                "jsonschema-specifications",
+                "2025.9.1"
+              ],
+              [
+                "kiwisolver",
+                "1.5.1"
+              ],
+              [
+                "markupsafe",
+                "3.0.4"
+              ],
+              [
+                "matplotlib",
+                "3.11.2"
+              ],
+              [
+                "mcp",
+                "2.3.0"
+              ],
+              [
+                "mcp-types",
+                "2.3.0"
+              ],
+              [
+                "mpmath",
+                "1.3.0"
+              ],
+              [
+                "narwhals",
+                "2.28.0"
+              ],
+              [
+                "networkx",
+                "3.7"
+              ],
+              [
+                "numpy",
+                "2.5.4"
+              ],
+              [
+                "opentelemetry-api",
+                "1.45.1"
+              ],
+              [
+                "packaging",
+                "26.3"
+              ],
+              [
+                "pillow",
+                "13.0.0"
+              ],
+              [
+                "pluggy",
+                "1.7.0"
+              ],
+              [
+                "pycparser",
+                "3.12"
+              ],
+              [
+                "pydantic",
+                "2.14.1"
+              ],
+              [
+                "pydantic-core",
+                "2.50.1"
+              ],
+              [
+                "pygments",
+                "2.21.0"
+              ],
+              [
+                "pyjwt",
+                "2.15.1"
+              ],
+              [
+                "pyparsing",
+                "3.3.3"
+              ],
+              [
+                "pytest",
+                "9.2.0"
+              ],
+              [
+                "python-dateutil",
+                "3.0.0"
+              ],
+              [
+                "python-dotenv",
+                "1.2.4"
+              ],
+              [
+                "python-multipart",
+                "0.0.32"
+              ],
+              [
+                "pyyaml",
+                "6.0.3"
+              ],
+              [
+                "referencing",
+                "0.37.0"
+              ],
+              [
+                "rpds-py",
+                "2026.9.1"
+              ],
+              [
+                "ruff",
+                "0.17.3"
+              ],
+              [
+                "scikit-learn",
+                "1.9.1"
+              ],
+              [
+                "scipy",
+                "1.18.1"
+              ],
+              [
+                "setuptools",
+                "84.2.1"
+              ],
+              [
+                "six",
+                "1.17.0"
+              ],
+              [
+                "sse-starlette",
+                "3.6.0"
+              ],
+              [
+                "starlette",
+                "1.10.0"
+              ],
+              [
+                "sympy",
+                "1.14.0"
+              ],
+              [
+                "threadpoolctl",
+                "3.7.0"
+              ],
+              [
+                "torch",
+                "2.15.0"
+              ],
+              [
+                "truststore",
+                "0.10.5"
+              ],
+              [
+                "typing-extensions",
+                "4.16.0"
+              ],
+              [
+                "typing-inspection",
+                "0.4.4"
+              ],
+              [
+                "tzdata",
+                "2026.6"
+              ],
+              [
+                "uvicorn",
+                "0.54.0"
+              ],
+              [
+                "uvloop",
+                "0.23.0"
+              ],
+              [
+                "watchfiles",
+                "1.3.0"
+              ],
+              [
+                "websockets",
+                "17.3"
+              ]
+            ]
+          }
+        },
+        "model_sessions_started_by_selector": 0,
+        "scope": "Offline selection from operator-supplied normalized outcomes. Identities and structure checked; phase locks, admission, group descriptors, outcome classifications, global control and measurements are not authenticated. No study lock or execution authorization.",
+        "selection_sha256": "9786bb7002c464ac1aea90522a223feea2665c84c657adbbd4c73fef6565b469"
+      }
+    },
+    "development_snapshot_sha256": "cc3fbc4f398df27a7396f9601d8d0e9df92b286625d3c9b44429384967b490c2",
+    "pilots": [
+      {
+        "env_id": "2611.08959v1",
+        "input": {
+          "schema_version": 1,
+          "protocol_hash": "ba515089163fa749acff31fc991dd74264bcb02668d87ef07890051109750ac3",
+          "evidence_kind": "operator_supplied",
+          "phase": "fresh_pilot",
+          "closed": true,
+          "lab_ids": [
+            "2611.08959v1"
+          ],
+          "global_budget_fraction": 0.06,
+          "slots": [
+            {
+              "group_id": "5c089594609753213cba4bd87cd7b31e74540821a4b40dfd844d05c5146b4169",
+              "slot_id": "d263fad34f056d2c89ec7e342e0fedbd400947d99f4291d0e6cf65a4d594aabf",
+              "lab_id": "2611.08959v1",
+              "budget_fraction": 0.06,
+              "replicate_index": 0,
+              "attempts": [
+                {
+                  "state": "completed",
+                  "reward": 1.0,
+                  "costs": {
+                    "charged_experiment_cost": 0.00455525191500783,
+                    "unique_executed_runs": 0,
+                    "requested_runs": 10,
+                    "model_wall_seconds": 17.07090516667813,
+                    "input_tokens": 12,
+                    "output_tokens": 2881
+                  },
+                  "attempt_id": "dbe63aa9e71623e75175e3b676aa60ddbd238727affa0f0665acc3a15bf13c44",
+                  "attempt_index": 0
+                }
+              ]
+            },
+            {
+              "group_id": "5c089594609753213cba4bd87cd7b31e74540821a4b40dfd844d05c5146b4169",
+              "slot_id": "f93f518bffdbb3102b821bc3ff3b8e04beeab4256a6251fa8c5123e4c13f092b",
+              "lab_id": "2611.08959v1",
+              "budget_fraction": 0.06,
+              "replicate_index": 1,
+              "attempts": [
+                {
+                  "state": "completed",
+                  "reward": 1.0,
+                  "costs": {
+                    "charged_experiment_cost": 0.003627124708145857,
+                    "unique_executed_runs": 0,
+                    "requested_runs": 8,
+                    "model_wall_seconds": 14.229737208224833,
+                    "input_tokens": 10,
+                    "output_tokens": 2455
+                  },
+                  "attempt_id": "4655273b1f0316bc4fd766eae4b2fbda7f4375e3d3a8fa16574b3e517ad93651",
+                  "attempt_index": 0
+                }
+              ]
+            },
+            {
+              "group_id": "5c089594609753213cba4bd87cd7b31e74540821a4b40dfd844d05c5146b4169",
+              "slot_id": "f27af32c4d1c373d3bbeac54ff9786b2c15e4f22608beda06ff332fcbb86604b",
+              "lab_id": "2611.08959v1",
+              "budget_fraction": 0.06,
+              "replicate_index": 2,
+              "attempts": [
+                {
+                  "state": "completed",
+                  "reward": 1.0,
+                  "costs": {
+                    "charged_experiment_cost": 0.004404563456773758,
+                    "unique_executed_runs": 0,
+                    "requested_runs": 10,
+                    "model_wall_seconds": 19.4158743750304,
+                    "input_tokens": 12,
+                    "output_tokens": 2902
+                  },
+                  "attempt_id": "6d51551cd801590279ef641efb2f51897b69455e4b17a8c677ee0c492fafc4e3",
+                  "attempt_index": 0
+                }
+              ]
+            },
+            {
+              "group_id": "5c089594609753213cba4bd87cd7b31e74540821a4b40dfd844d05c5146b4169",
+              "slot_id": "9029a3d149648feb24afaa0f59a82482922fd0ea331690377a580e0e9e2b0e1f",
+              "lab_id": "2611.08959v1",
+              "budget_fraction": 0.06,
+              "replicate_index": 3,
+              "attempts": [
+                {
+                  "state": "completed",
+                  "reward": 1.0,
+                  "costs": {
+                    "charged_experiment_cost": 0.0044324807822704315,
+                    "unique_executed_runs": 0,
+                    "requested_runs": 10,
+                    "model_wall_seconds": 13.27570587489754,
+                    "input_tokens": 10,
+                    "output_tokens": 2090
+                  },
+                  "attempt_id": "ff90db90845bab5bfcf74a8db2bdb4ae845e6cca05601870c92445356cc88bfe",
+                  "attempt_index": 0
+                }
+              ]
+            },
+            {
+              "group_id": "29e5a510136aee90a2c26e30409389ec824c3e04fe2018ef5942067e6e61ae9a",
+              "slot_id": "50fc42c980cdea05a5662be032b7b77a62388ca9c5340a8b34ebdc26c069d4f1",
+              "lab_id": "2611.08959v1",
+              "budget_fraction": 0.12,
+              "replicate_index": 0,
+              "attempts": [
+                {
+                  "state": "completed",
+                  "reward": 1.0,
+                  "costs": {
+                    "charged_experiment_cost": 0.0072737946175038815,
+                    "unique_executed_runs": 0,
+                    "requested_runs": 16,
+                    "model_wall_seconds": 14.750062291510403,
+                    "input_tokens": 10,
+                    "output_tokens": 2576
+                  },
+                  "attempt_id": "2f52c48764650b5055ac1a87e43e20d50d2f39beeb6369af23aee7c503f03b25",
+                  "attempt_index": 0
+                }
+              ]
+            },
+            {
+              "group_id": "29e5a510136aee90a2c26e30409389ec824c3e04fe2018ef5942067e6e61ae9a",
+              "slot_id": "c532ff9cecc1646e3644528ed32a9f948397983ddb50adc1753a7b7e59bb01fd",
+              "lab_id": "2611.08959v1",
+              "budget_fraction": 0.12,
+              "replicate_index": 1,
+              "attempts": [
+                {
+                  "state": "completed",
+                  "reward": 1.0,
+                  "costs": {
+                    "charged_experiment_cost": 0.007707645650953054,
+                    "unique_executed_runs": 0,
+                    "requested_runs": 16,
+                    "model_wall_seconds": 20.573436124250293,
+                    "input_tokens": 10,
+                    "output_tokens": 3888
+                  },
+                  "attempt_id": "35410cf262894034b1b410b1acdbe3f75a7fee129c662cb28cbae315f360d8b9",
+                  "attempt_index": 0
+                }
+              ]
+            },
+            {
+              "group_id": "29e5a510136aee90a2c26e30409389ec824c3e04fe2018ef5942067e6e61ae9a",
+              "slot_id": "862bc04b213a1d9b31cbf4402ecac3b42aa4f055ebf2487c52d0f2bc389ae4ac",
+              "lab_id": "2611.08959v1",
+              "budget_fraction": 0.12,
+              "replicate_index": 2,
+              "attempts": [
+                {
+                  "state": "completed",
+                  "reward": 1.0,
+                  "costs": {
+                    "charged_experiment_cost": 0.007144167087972164,
+                    "unique_executed_runs": 0,
+                    "requested_runs": 16,
+                    "model_wall_seconds": 14.006787375546992,
+                    "input_tokens": 10,
+                    "output_tokens": 2271
+                  },
+                  "attempt_id": "9e921e36f0403015825c7b38ba3063c1c93334f23d38e28bbc91dc668c4f59fd",
+                  "attempt_index": 0
+                }
+              ]
+            },
+            {
+              "group_id": "29e5a510136aee90a2c26e30409389ec824c3e04fe2018ef5942067e6e61ae9a",
+              "slot_id": "caf913bf94b3523da30dd2147ac194438c853c5479c92fc8f8115d477bae06a9",
+              "lab_id": "2611.08959v1",
+              "budget_fraction": 0.12,
+              "replicate_index": 3,
+              "attempts": [
+                {
+                  "state": "completed",
+                  "reward": 1.0,
+                  "costs": {
+                    "charged_experiment_cost": 0.008362438064068556,
+                    "unique_executed_runs": 0,
+                    "requested_runs": 18,
+                    "model_wall_seconds": 12.878521542064846,
+                    "input_tokens": 10,
+                    "output_tokens": 2188
+                  },
+                  "attempt_id": "763ef30c1fde92a35b12898dd8763cd360ebd8887922bd784f2b18cdc0cc9fc5",
+                  "attempt_index": 0
+                }
+              ]
+            },
+            {
+              "group_id": "74fd49eb0b97b6d9242435f08b822efb7e2a4179e340bb42e6cd88b5a209f0e1",
+              "slot_id": "0954b75ed83f8b781ce493a8a0e38fe8143d35ef9e8c893f1c90e65c89cafc7a",
+              "lab_id": "2611.08959v1",
+              "budget_fraction": 0.25,
+              "replicate_index": 0,
+              "attempts": [
+                {
+                  "state": "completed",
+                  "reward": 1.0,
+                  "costs": {
+                    "charged_experiment_cost": 0.022279438097029924,
+                    "unique_executed_runs": 0,
+                    "requested_runs": 48,
+                    "model_wall_seconds": 19.62607491761446,
+                    "input_tokens": 8,
+                    "output_tokens": 4852
+                  },
+                  "attempt_id": "1e56181a29779a52296ead213c3da9702a89d2f09f541f787cb628376841e244",
+                  "attempt_index": 0
+                }
+              ]
+            },
+            {
+              "group_id": "74fd49eb0b97b6d9242435f08b822efb7e2a4179e340bb42e6cd88b5a209f0e1",
+              "slot_id": "a1d87d8568d23907b7926fe8573621fde9bae902f721a1aac534629e745a7a56",
+              "lab_id": "2611.08959v1",
+              "budget_fraction": 0.25,
+              "replicate_index": 1,
+              "attempts": [
+                {
+                  "state": "completed",
+                  "reward": 1.0,
+                  "costs": {
+                    "charged_experiment_cost": 0.022279438097029924,
+                    "unique_executed_runs": 0,
+                    "requested_runs": 48,
+                    "model_wall_seconds": 17.773588333278894,
+                    "input_tokens": 8,
+                    "output_tokens": 4282
+                  },
+                  "attempt_id": "7e3af0932b96785837c768053c825b1f24217cb1ceb8db5b124b0044e84f6528",
+                  "attempt_index": 0
+                }
+              ]
+            },
+            {
+              "group_id": "74fd49eb0b97b6d9242435f08b822efb7e2a4179e340bb42e6cd88b5a209f0e1",
+              "slot_id": "49f93d38010aef2dada4b3cf2cf5748eaf87d4788831d6a62deb57bfd08432a6",
+              "lab_id": "2611.08959v1",
+              "budget_fraction": 0.25,
+              "replicate_index": 2,
+              "attempts": [
+                {
+                  "state": "completed",
+                  "reward": 1.0,
+                  "costs": {
+                    "charged_experiment_cost": 0.022279438097029924,
+                    "unique_executed_runs": 0,
+                    "requested_runs": 48,
+                    "model_wall_seconds": 20.698728499934077,
+                    "input_tokens": 8,
+                    "output_tokens": 4918
+                  },
+                  "attempt_id": "130c026a0705860a69a0d1c2f4bd3fe542e618d9e25de004f41ce10026374e67",
+                  "attempt_index": 0
+                }
+              ]
+            },
+            {
+              "group_id": "74fd49eb0b97b6d9242435f08b822efb7e2a4179e340bb42e6cd88b5a209f0e1",
+              "slot_id": "8896e35b139baf54c83b3ad1b89e61fd0c92cf52a46b3296463293806895be9a",
+              "lab_id": "2611.08959v1",
+              "budget_fraction": 0.25,
+              "replicate_index": 3,
+              "attempts": [
+                {
+                  "state": "completed",
+                  "reward": 1.0,
+                  "costs": {
+                    "charged_experiment_cost": 0.022279438097029924,
+                    "unique_executed_runs": 0,
+                    "requested_runs": 48,
+                    "model_wall_seconds": 20.056236625649035,
+                    "input_tokens": 8,
+                    "output_tokens": 4641
+                  },
+                  "attempt_id": "534c99d58da0f6c67321ec9e457487563fc6ca7d334756723ccba71eb92474f0",
+                  "attempt_index": 0
+                }
+              ]
+            }
+          ]
+        },
+        "selection": {
+          "schema_version": 1,
+          "selector_id": "beta_mixed_group_v1",
+          "phase": "fresh_pilot",
+          "evidence_kind": "operator_supplied",
+          "status": "fallback",
+          "closed": true,
+          "chosen_budget_fraction": 0.06,
+          "fallback_reason": "no_observed_mixed_budget",
+          "diagnostics": [
+            "no_observed_mixed_budget:2611.08959v1"
+          ],
+          "labs": [
+            {
+              "lab_id": "2611.08959v1",
+              "budgets": [
+                {
+                  "group_id": "5c089594609753213cba4bd87cd7b31e74540821a4b40dfd844d05c5146b4169",
+                  "budget_fraction": 0.06,
+                  "correct": 4,
+                  "completed": 4,
+                  "alpha": 5,
+                  "beta": 1,
+                  "success_probability_mean": 0.8333333333333334,
+                  "success_probability_interval": [
+                    0.47817624989501856,
+                    0.9949492366205319
+                  ],
+                  "mixed_group_probability": 0.6146076146076146,
+                  "planned": 4,
+                  "missing": 0,
+                  "observed_mixed": false,
+                  "status_counts": {
+                    "completed": 4
+                  },
+                  "pilot_slot_ids": [
+                    "d263fad34f056d2c89ec7e342e0fedbd400947d99f4291d0e6cf65a4d594aabf",
+                    "f93f518bffdbb3102b821bc3ff3b8e04beeab4256a6251fa8c5123e4c13f092b",
+                    "f27af32c4d1c373d3bbeac54ff9786b2c15e4f22608beda06ff332fcbb86604b",
+                    "9029a3d149648feb24afaa0f59a82482922fd0ea331690377a580e0e9e2b0e1f"
+                  ],
+                  "pilot_attempt_ids": [
+                    "dbe63aa9e71623e75175e3b676aa60ddbd238727affa0f0665acc3a15bf13c44",
+                    "4655273b1f0316bc4fd766eae4b2fbda7f4375e3d3a8fa16574b3e517ad93651",
+                    "6d51551cd801590279ef641efb2f51897b69455e4b17a8c677ee0c492fafc4e3",
+                    "ff90db90845bab5bfcf74a8db2bdb4ae845e6cca05601870c92445356cc88bfe"
+                  ]
+                },
+                {
+                  "group_id": "29e5a510136aee90a2c26e30409389ec824c3e04fe2018ef5942067e6e61ae9a",
+                  "budget_fraction": 0.12,
+                  "correct": 4,
+                  "completed": 4,
+                  "alpha": 5,
+                  "beta": 1,
+                  "success_probability_mean": 0.8333333333333334,
+                  "success_probability_interval": [
+                    0.47817624989501856,
+                    0.9949492366205319
+                  ],
+                  "mixed_group_probability": 0.6146076146076146,
+                  "planned": 4,
+                  "missing": 0,
+                  "observed_mixed": false,
+                  "status_counts": {
+                    "completed": 4
+                  },
+                  "pilot_slot_ids": [
+                    "50fc42c980cdea05a5662be032b7b77a62388ca9c5340a8b34ebdc26c069d4f1",
+                    "c532ff9cecc1646e3644528ed32a9f948397983ddb50adc1753a7b7e59bb01fd",
+                    "862bc04b213a1d9b31cbf4402ecac3b42aa4f055ebf2487c52d0f2bc389ae4ac",
+                    "caf913bf94b3523da30dd2147ac194438c853c5479c92fc8f8115d477bae06a9"
+                  ],
+                  "pilot_attempt_ids": [
+                    "2f52c48764650b5055ac1a87e43e20d50d2f39beeb6369af23aee7c503f03b25",
+                    "35410cf262894034b1b410b1acdbe3f75a7fee129c662cb28cbae315f360d8b9",
+                    "9e921e36f0403015825c7b38ba3063c1c93334f23d38e28bbc91dc668c4f59fd",
+                    "763ef30c1fde92a35b12898dd8763cd360ebd8887922bd784f2b18cdc0cc9fc5"
+                  ]
+                },
+                {
+                  "group_id": "74fd49eb0b97b6d9242435f08b822efb7e2a4179e340bb42e6cd88b5a209f0e1",
+                  "budget_fraction": 0.25,
+                  "correct": 4,
+                  "completed": 4,
+                  "alpha": 5,
+                  "beta": 1,
+                  "success_probability_mean": 0.8333333333333334,
+                  "success_probability_interval": [
+                    0.47817624989501856,
+                    0.9949492366205319
+                  ],
+                  "mixed_group_probability": 0.6146076146076146,
+                  "planned": 4,
+                  "missing": 0,
+                  "observed_mixed": false,
+                  "status_counts": {
+                    "completed": 4
+                  },
+                  "pilot_slot_ids": [
+                    "0954b75ed83f8b781ce493a8a0e38fe8143d35ef9e8c893f1c90e65c89cafc7a",
+                    "a1d87d8568d23907b7926fe8573621fde9bae902f721a1aac534629e745a7a56",
+                    "49f93d38010aef2dada4b3cf2cf5748eaf87d4788831d6a62deb57bfd08432a6",
+                    "8896e35b139baf54c83b3ad1b89e61fd0c92cf52a46b3296463293806895be9a"
+                  ],
+                  "pilot_attempt_ids": [
+                    "1e56181a29779a52296ead213c3da9702a89d2f09f541f787cb628376841e244",
+                    "7e3af0932b96785837c768053c825b1f24217cb1ceb8db5b124b0044e84f6528",
+                    "130c026a0705860a69a0d1c2f4bd3fe542e618d9e25de004f41ce10026374e67",
+                    "534c99d58da0f6c67321ec9e457487563fc6ca7d334756723ccba71eb92474f0"
+                  ]
+                }
+              ]
+            }
+          ],
+          "objectives": [
+            {
+              "budget_fraction": 0.06,
+              "complete_labs": 1,
+              "objective": 0.6146076146076146
+            },
+            {
+              "budget_fraction": 0.12,
+              "complete_labs": 1,
+              "objective": 0.6146076146076146
+            },
+            {
+              "budget_fraction": 0.25,
+              "complete_labs": 1,
+              "objective": 0.6146076146076146
+            }
+          ],
+          "global_budget_fraction": 0.06,
+          "upfront_cost": {
+            "episode_starts": 12,
+            "retry_episode_starts": 0,
+            "fields": {
+              "requested_runs": {
+                "known_sum": 296,
+                "unreported_attempts": 0,
+                "total": 296,
+                "availability": "reported"
+              },
+              "unique_executed_runs": {
+                "known_sum": 0,
+                "unreported_attempts": 0,
+                "total": 0,
+                "availability": "reported"
+              },
+              "charged_experiment_cost": {
+                "known_sum": 0.13662521867081523,
+                "unreported_attempts": 0,
+                "total": 0.13662521867081523,
+                "availability": "reported"
+              },
+              "actual_environment_cpu_seconds": {
+                "known_sum": 0.0,
+                "unreported_attempts": 12,
+                "total": null,
+                "availability": "partial_or_unreported"
+              },
+              "environment_wall_seconds": {
+                "known_sum": 0.0,
+                "unreported_attempts": 12,
+                "total": null,
+                "availability": "partial_or_unreported"
+              },
+              "model_wall_seconds": {
+                "known_sum": 204.3556583346799,
+                "unreported_attempts": 0,
+                "total": 204.3556583346799,
+                "availability": "reported"
+              },
+              "input_tokens": {
+                "known_sum": 116,
+                "unreported_attempts": 0,
+                "total": 116,
+                "availability": "reported"
+              },
+              "output_tokens": {
+                "known_sum": 39944,
+                "unreported_attempts": 0,
+                "total": 39944,
+                "availability": "reported"
+              }
+            },
+            "source": "operator_supplied_attempt_costs"
+          },
+          "pilot_slot_ids": [
+            "d263fad34f056d2c89ec7e342e0fedbd400947d99f4291d0e6cf65a4d594aabf",
+            "f93f518bffdbb3102b821bc3ff3b8e04beeab4256a6251fa8c5123e4c13f092b",
+            "f27af32c4d1c373d3bbeac54ff9786b2c15e4f22608beda06ff332fcbb86604b",
+            "9029a3d149648feb24afaa0f59a82482922fd0ea331690377a580e0e9e2b0e1f",
+            "50fc42c980cdea05a5662be032b7b77a62388ca9c5340a8b34ebdc26c069d4f1",
+            "c532ff9cecc1646e3644528ed32a9f948397983ddb50adc1753a7b7e59bb01fd",
+            "862bc04b213a1d9b31cbf4402ecac3b42aa4f055ebf2487c52d0f2bc389ae4ac",
+            "caf913bf94b3523da30dd2147ac194438c853c5479c92fc8f8115d477bae06a9",
+            "0954b75ed83f8b781ce493a8a0e38fe8143d35ef9e8c893f1c90e65c89cafc7a",
+            "a1d87d8568d23907b7926fe8573621fde9bae902f721a1aac534629e745a7a56",
+            "49f93d38010aef2dada4b3cf2cf5748eaf87d4788831d6a62deb57bfd08432a6",
+            "8896e35b139baf54c83b3ad1b89e61fd0c92cf52a46b3296463293806895be9a"
+          ],
+          "pilot_attempt_ids": [
+            "dbe63aa9e71623e75175e3b676aa60ddbd238727affa0f0665acc3a15bf13c44",
+            "4655273b1f0316bc4fd766eae4b2fbda7f4375e3d3a8fa16574b3e517ad93651",
+            "6d51551cd801590279ef641efb2f51897b69455e4b17a8c677ee0c492fafc4e3",
+            "ff90db90845bab5bfcf74a8db2bdb4ae845e6cca05601870c92445356cc88bfe",
+            "2f52c48764650b5055ac1a87e43e20d50d2f39beeb6369af23aee7c503f03b25",
+            "35410cf262894034b1b410b1acdbe3f75a7fee129c662cb28cbae315f360d8b9",
+            "9e921e36f0403015825c7b38ba3063c1c93334f23d38e28bbc91dc668c4f59fd",
+            "763ef30c1fde92a35b12898dd8763cd360ebd8887922bd784f2b18cdc0cc9fc5",
+            "1e56181a29779a52296ead213c3da9702a89d2f09f541f787cb628376841e244",
+            "7e3af0932b96785837c768053c825b1f24217cb1ceb8db5b124b0044e84f6528",
+            "130c026a0705860a69a0d1c2f4bd3fe542e618d9e25de004f41ce10026374e67",
+            "534c99d58da0f6c67321ec9e457487563fc6ca7d334756723ccba71eb92474f0"
+          ],
+          "parameters": {
+            "budget_fractions": [
+              0.06,
+              0.12,
+              0.25
+            ],
+            "pilots_per_budget": 4,
+            "target_group_size": 8,
+            "prior": {
+              "kind": "beta",
+              "alpha": 1,
+              "beta": 1
+            },
+            "interval": {
+              "confidence": 0.95,
+              "kind": "equal_tailed_beta"
+            },
+            "near_best_tolerance": 0.05
+          },
+          "binding": {
+            "protocol_hash": "ba515089163fa749acff31fc991dd74264bcb02668d87ef07890051109750ac3",
+            "protocol_file_sha256": "65ecc95ec9fb8a57810899a7ea072819223ff21fda0ae1f4045fda544f829a88",
+            "selector_sha256": "762651e53ea1e9bc40bffd6c4e3d33513158120c1e5402a0ed18da615871db47",
+            "input_sha256": "96838ce984710b722b4cc3cb446c16c4e93151266aaa2e344b7c0a98c9bb84d5",
+            "input_file_sha256": null,
+            "runtime": {
+              "python": "3.12.11 | packaged by conda-forge | (main, Jun  4 2025, 14:38:53) [Clang 18.1.8 ]",
+              "implementation": "CPython",
+              "system": "Darwin",
+              "release": "23.5.0",
+              "machine": "arm64",
+              "packages": [
+                [
+                  "annotated-types",
+                  "0.8.0"
+                ],
+                [
+                  "anyio",
+                  "4.15.1"
+                ],
+                [
+                  "attrs",
+                  "26.1.0"
+                ],
+                [
+                  "benchtop",
+                  "0.1.0"
+                ],
+                [
+                  "certifi",
+                  "2026.10.23"
+                ],
+                [
+                  "cffi",
+                  "2.1.1"
+                ],
+                [
+                  "click",
+                  "8.5.0"
+                ],
+                [
+                  "cloudpickle",
+                  "3.1.2"
+                ],
+                [
+                  "contourpy",
+                  "1.4.0"
+                ],
+                [
+                  "cryptography",
+                  "50.0.2"
+                ],
+                [
+                  "cycler",
+                  "0.12.1"
+                ],
+                [
+                  "filelock",
+                  "4.2.4"
+                ],
+                [
+                  "fonttools",
+                  "4.68.0"
+                ],
+                [
+                  "fsspec",
+                  "2026.9.0"
+                ],
+                [
+                  "h11",
+                  "0.16.0"
+                ],
+                [
+                  "httpcore",
+                  "1.0.9"
+                ],
+                [
+                  "httpcore2",
+                  "2.16.0"
+                ],
+                [
+                  "httptools",
+                  "0.9.0"
+                ],
+                [
+                  "httpx",
+                  "0.28.1"
+                ],
+                [
+                  "httpx2",
+                  "2.16.0"
+                ],
+                [
+                  "idna",
+                  "3.20"
+                ],
+                [
+                  "iniconfig",
+                  "2.3.1"
+                ],
+                [
+                  "jinja2",
+                  "3.1.6"
+                ],
+                [
+                  "joblib",
+                  "1.6.0"
+                ],
+                [
+                  "jsonschema",
+                  "4.26.0"
+                ],
+                [
+                  "jsonschema-specifications",
+                  "2025.9.1"
+                ],
+                [
+                  "kiwisolver",
+                  "1.5.1"
+                ],
+                [
+                  "markupsafe",
+                  "3.0.4"
+                ],
+                [
+                  "matplotlib",
+                  "3.11.2"
+                ],
+                [
+                  "mcp",
+                  "2.3.0"
+                ],
+                [
+                  "mcp-types",
+                  "2.3.0"
+                ],
+                [
+                  "mpmath",
+                  "1.3.0"
+                ],
+                [
+                  "narwhals",
+                  "2.28.0"
+                ],
+                [
+                  "networkx",
+                  "3.7"
+                ],
+                [
+                  "numpy",
+                  "2.5.4"
+                ],
+                [
+                  "opentelemetry-api",
+                  "1.45.1"
+                ],
+                [
+                  "packaging",
+                  "26.3"
+                ],
+                [
+                  "pillow",
+                  "13.0.0"
+                ],
+                [
+                  "pluggy",
+                  "1.7.0"
+                ],
+                [
+                  "pycparser",
+                  "3.12"
+                ],
+                [
+                  "pydantic",
+                  "2.14.1"
+                ],
+                [
+                  "pydantic-core",
+                  "2.50.1"
+                ],
+                [
+                  "pygments",
+                  "2.21.0"
+                ],
+                [
+                  "pyjwt",
+                  "2.15.1"
+                ],
+                [
+                  "pyparsing",
+                  "3.3.3"
+                ],
+                [
+                  "pytest",
+                  "9.2.0"
+                ],
+                [
+                  "python-dateutil",
+                  "3.0.0"
+                ],
+                [
+                  "python-dotenv",
+                  "1.2.4"
+                ],
+                [
+                  "python-multipart",
+                  "0.0.32"
+                ],
+                [
+                  "pyyaml",
+                  "6.0.3"
+                ],
+                [
+                  "referencing",
+                  "0.37.0"
+                ],
+                [
+                  "rpds-py",
+                  "2026.9.1"
+                ],
+                [
+                  "ruff",
+                  "0.17.3"
+                ],
+                [
+                  "scikit-learn",
+                  "1.9.1"
+                ],
+                [
+                  "scipy",
+                  "1.18.1"
+                ],
+                [
+                  "setuptools",
+                  "84.2.1"
+                ],
+                [
+                  "six",
+                  "1.17.0"
+                ],
+                [
+                  "sse-starlette",
+                  "3.6.0"
+                ],
+                [
+                  "starlette",
+                  "1.10.0"
+                ],
+                [
+                  "sympy",
+                  "1.14.0"
+                ],
+                [
+                  "threadpoolctl",
+                  "3.7.0"
+                ],
+                [
+                  "torch",
+                  "2.15.0"
+                ],
+                [
+                  "truststore",
+                  "0.10.5"
+                ],
+                [
+                  "typing-extensions",
+                  "4.16.0"
+                ],
+                [
+                  "typing-inspection",
+                  "0.4.4"
+                ],
+                [
+                  "tzdata",
+                  "2026.6"
+                ],
+                [
+                  "uvicorn",
+                  "0.54.0"
+                ],
+                [
+                  "uvloop",
+                  "0.23.0"
+                ],
+                [
+                  "watchfiles",
+                  "1.3.0"
+                ],
+                [
+                  "websockets",
+                  "17.3"
+                ]
+              ]
+            }
+          },
+          "model_sessions_started_by_selector": 0,
+          "scope": "Offline selection from operator-supplied normalized outcomes. Identities and structure checked; phase locks, admission, group descriptors, outcome classifications, global control and measurements are not authenticated. No study lock or execution authorization.",
+          "selection_sha256": "331a2dbc07b8522c2a2d350f5682ebbc3dc194ec8adb21ff71f46ee5520ffc98"
+        }
+      }
+    ],
+    "pilot_snapshot_sha256": "1ed02310904076b1e46a304297509e6f442e576b5386f29ef5b9744b579e5527"
+  },
+  "baselines": {
+    "policies": [
+      "paired_uniform",
+      "question_coverage",
+      "coverage_plus_cost",
+      "paper_prior_only",
+      "development_majority_label",
+      "random_experiment_design"
+    ],
+    "estimator_id": "paired_context_v1",
+    "development_majority_label": "paper_better",
+    "adaptive_allocation": {
+      "decision": "deferred",
+      "rationale": "Defer adaptive allocation for this bounded release because no adaptive release policy or sequentially validated estimator is implemented. Freeze the existing six controls before fresh generation."
+    }
+  },
+  "origin": {
+    "private_collection_sha256": "d943041e157c47b6877da6be71ab173bfff32f8698ce1b9a878c4c3080e00693",
+    "private_classical_summary_sha256": "f595e509c048c695a19a6fb34d5bc2fc063aa1af1390bda5497218620afbddb8",
+    "private_analysis_sha256": "5fb752762cb75bcafe3cc3a8f11fc9324f701f18def7dd7fddaa08420b423f45",
+    "confirmation_plan_sha256": "a5e97ce63f9a0c40e2080d8dc082f7f38412d3a25f5835a2c2b63c4d86053206"
+  },
+  "scope": "New sanitized projections of verified canonical records. Projection hashes differ from original records; no original evidence is rebound or rewritten. Raw provider transcripts remain private.",
+  "projection_sha256": "0a2d2b7609c2acb489f2e74822303ce88410885df95c87e9785d1df51812039d"
+}

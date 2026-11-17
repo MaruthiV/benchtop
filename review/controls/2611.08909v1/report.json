@@ -1,0 +1,146 @@
+{
+  "scope": "Bounded visible-only scientific review diagnostics, not qualification/confirmation",
+  "rows": [
+    {
+      "config": {
+        "probe": "alpha_zero",
+        "preconditioned": false
+      },
+      "seed": 0,
+      "ok": true,
+      "metrics": {
+        "max_sample_difference": 0.0,
+        "acceptance_difference": 0.0
+      },
+      "secs": 0.020056207664310932
+    },
+    {
+      "config": {
+        "probe": "alpha_zero",
+        "preconditioned": true
+      },
+      "seed": 0,
+      "ok": true,
+      "metrics": {
+        "max_sample_difference": 0.0,
+        "acceptance_difference": 0.0
+      },
+      "secs": 0.0029392922297120094
+    },
+    {
+      "config": {
+        "probe": "target_ratio"
+      },
+      "seed": 0,
+      "ok": true,
+      "metrics": {
+        "ratio_difference": 6.938893903907228e-17
+      },
+      "secs": 3.1542032957077026e-05
+    },
+    {
+      "config": {
+        "probe": "ess_scale"
+      },
+      "seed": 0,
+      "ok": true,
+      "metrics": {
+        "ess_original": 1662.0849543253955,
+        "ess_rescaled": 1662.0849543253958,
+        "rescaled_max_sigma_ratio": 10.023841444460867
+      },
+      "secs": 0.0033668335527181625
+    },
+    {
+      "config": {
+        "method": "SRMC",
+        "condition_number": 100,
+        "dimension": 2,
+        "base_sampler": "MALA"
+      },
+      "seed": 0,
+      "ok": true,
+      "metrics": {
+        "log10_min_ess_per_iter": -2.65917084916,
+        "min_ess_per_iter": 0.002191942467103583,
+        "mean_sq_err": 28.621714963931726,
+        "accept_rate": 0.906,
+        "alpha": 1.0,
+        "probe_max_sigma_ratio": 1.0015004484969399,
+        "probe_min_sigma_ratio": 0.8142481940014656,
+        "probe_finite_samples": 1.0,
+        "probe_outside_clip_count": 0.0
+      },
+      "secs": 0.09072116669267416
+    },
+    {
+      "config": {
+        "method": "GA-SRMC",
+        "condition_number": 100,
+        "dimension": 2,
+        "base_sampler": "MALA"
+      },
+      "seed": 0,
+      "ok": true,
+      "metrics": {
+        "log10_min_ess_per_iter": -1.7021969656040061,
+        "min_ess_per_iter": 0.01985194367831731,
+        "mean_sq_err": 0.24509013355630113,
+        "accept_rate": 0.9075,
+        "alpha": 3.0,
+        "probe_max_sigma_ratio": 1.000534837963133,
+        "probe_min_sigma_ratio": 0.47009472836875776,
+        "probe_finite_samples": 1.0,
+        "probe_outside_clip_count": 0.0
+      },
+      "secs": 0.08563116658478975
+    },
+    {
+      "config": {
+        "method": "SRMC",
+        "condition_number": 100,
+        "dimension": 10,
+        "base_sampler": "FisherMALA"
+      },
+      "seed": 0,
+      "ok": true,
+      "metrics": {
+        "log10_min_ess_per_iter": -0.8872264915365563,
+        "min_ess_per_iter": 0.12965029475649603,
+        "mean_sq_err": 0.021959929065027216,
+        "accept_rate": 0.719,
+        "alpha": 0.1,
+        "probe_max_sigma_ratio": 1.0378659376750805,
+        "probe_min_sigma_ratio": 0.9566132553090018,
+        "probe_finite_samples": 1.0,
+        "probe_outside_clip_count": 0.0
+      },
+      "secs": 0.0983450822532177
+    },
+    {
+      "config": {
+        "method": "GA-SRMC",
+        "condition_number": 100,
+        "dimension": 10,
+        "base_sampler": "FisherMALA"
+      },
+      "seed": 0,
+      "ok": true,
+      "metrics": {
+        "log10_min_ess_per_iter": -0.8555999306551461,
+        "min_ess_per_iter": 0.13944407615251836,
+        "mean_sq_err": 0.007366770445536812,
+        "accept_rate": 0.75,
+        "alpha": 0.3,
+        "probe_max_sigma_ratio": 1.021307473525258,
+        "probe_min_sigma_ratio": 0.9872473872453502,
+        "probe_finite_samples": 1.0,
+        "probe_outside_clip_count": 0.0
+      },
+      "secs": 0.1002693334594369
+    }
+  ],
+  "worker_seconds": 0.4013606244698167,
+  "wall_seconds": 0.49449508264660835,
+  "model_calls": 0
+}

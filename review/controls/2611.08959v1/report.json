@@ -1,0 +1,152 @@
+{
+  "scope": "Visible-only pre-qualification scientific controls",
+  "rows": [
+    {
+      "config": {
+        "probe": "projection_limit",
+        "fraction": 0.0
+      },
+      "seed": 0,
+      "ok": true,
+      "metrics": {
+        "weight_error": 0.0,
+        "oracle_excess_error": 0.0,
+        "raw_to_oracle_ratio": 1.0,
+        "ratio_formula_error": 0.0
+      },
+      "secs": 0.05822195950895548
+    },
+    {
+      "config": {
+        "probe": "projection_limit",
+        "fraction": 0.25
+      },
+      "seed": 0,
+      "ok": true,
+      "metrics": {
+        "weight_error": 5.551115123125783e-17,
+        "oracle_excess_error": 0.0,
+        "raw_to_oracle_ratio": 1.0208333333333335,
+        "ratio_formula_error": 2.220446049250313e-16
+      },
+      "secs": 0.00022287480533123016
+    },
+    {
+      "config": {
+        "probe": "projection_limit",
+        "fraction": 0.5
+      },
+      "seed": 0,
+      "ok": true,
+      "metrics": {
+        "weight_error": 1.1102230246251565e-16,
+        "oracle_excess_error": 5.551115123125783e-17,
+        "raw_to_oracle_ratio": 1.1249999999999998,
+        "ratio_formula_error": 2.220446049250313e-16
+      },
+      "secs": 0.00010629184544086456
+    },
+    {
+      "config": {
+        "probe": "projection_limit",
+        "fraction": 0.75
+      },
+      "seed": 0,
+      "ok": true,
+      "metrics": {
+        "weight_error": 0.0,
+        "oracle_excess_error": 2.7755575615628914e-17,
+        "raw_to_oracle_ratio": 1.5624999999999998,
+        "ratio_formula_error": 2.220446049250313e-16
+      },
+      "secs": 8.079223334789276e-05
+    },
+    {
+      "config": {
+        "method": "raw_error_stacking",
+        "student_invisible_error_fraction": 0.75,
+        "ridge_regularization": 0.01,
+        "unlabeled_sample_size": 1000
+      },
+      "seed": 0,
+      "ok": true,
+      "metrics": {
+        "relative_excess_risk_ratio": 2.292876734140423,
+        "excess_method": 0.32659169163788826,
+        "excess_oracle": 0.1424375269048367,
+        "excess_clean_student": 0.013063722588694595,
+        "weight_on_sup1": 0.5953517903052963,
+        "probe_linearity_error": 1.1102230246251565e-16,
+        "probe_risk_decomposition_error": 0.0,
+        "probe_oracle_grid_gap": -1.0462681365730475e-07
+      },
+      "secs": 0.008184583857655525
+    },
+    {
+      "config": {
+        "method": "student_relative",
+        "student_invisible_error_fraction": 0.75,
+        "ridge_regularization": 0.01,
+        "unlabeled_sample_size": 1000
+      },
+      "seed": 0,
+      "ok": true,
+      "metrics": {
+        "relative_excess_risk_ratio": 1.047181535782377,
+        "excess_method": 0.14915794818196867,
+        "excess_oracle": 0.1424375269048367,
+        "excess_clean_student": 0.013063722588694595,
+        "weight_on_sup1": 0.14080676166895068,
+        "probe_linearity_error": 2.220446049250313e-16,
+        "probe_risk_decomposition_error": 0.0,
+        "probe_oracle_grid_gap": -1.0462681365730475e-07
+      },
+      "secs": 0.0046530840918421745
+    },
+    {
+      "config": {
+        "method": "raw_error_stacking",
+        "student_invisible_error_fraction": 0.75,
+        "ridge_regularization": 10.0,
+        "unlabeled_sample_size": 50
+      },
+      "seed": 0,
+      "ok": true,
+      "metrics": {
+        "relative_excess_risk_ratio": 1.0023195052990774,
+        "excess_method": 0.06009006035122952,
+        "excess_oracle": 0.05995100368027616,
+        "excess_clean_student": 0.27605591786051464,
+        "weight_on_sup1": 0.5953517903052963,
+        "probe_linearity_error": 2.220446049250313e-16,
+        "probe_risk_decomposition_error": 4.440892098500626e-16,
+        "probe_oracle_grid_gap": -1.3496893826875356e-07
+      },
+      "secs": 0.0047218333929777145
+    },
+    {
+      "config": {
+        "method": "student_relative",
+        "student_invisible_error_fraction": 0.75,
+        "ridge_regularization": 10.0,
+        "unlabeled_sample_size": 50
+      },
+      "seed": 0,
+      "ok": true,
+      "metrics": {
+        "relative_excess_risk_ratio": 1.102424133350537,
+        "excess_method": 0.06609143328596571,
+        "excess_oracle": 0.05995100368027616,
+        "excess_clean_student": 0.27605591786051464,
+        "weight_on_sup1": 0.5057751642767749,
+        "probe_linearity_error": 2.220446049250313e-16,
+        "probe_risk_decomposition_error": 0.0,
+        "probe_oracle_grid_gap": -1.3496893826875356e-07
+      },
+      "secs": 0.0042956676334142685
+    }
+  ],
+  "reported_worker_seconds": 0.08048708736896515,
+  "wall_seconds": 0.28131633438169956,
+  "model_calls": 0
+}

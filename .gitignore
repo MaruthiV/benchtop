@@ -1,6 +1,7 @@
+.state/
+artifacts/
 /docs/
-/.state/
-/artifacts/
+.env*
 .venv/
 __pycache__/
 *.pyc

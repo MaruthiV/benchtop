@@ -1,0 +1,135 @@
+{
+  "finished_at_utc": "2026-11-09T20:13:36.977623+00:00",
+  "jobs": [
+    {
+      "config": {
+        "probe": "filled_triangle",
+        "method": "LSF"
+      },
+      "seed": 0,
+      "ok": true,
+      "metrics": {
+        "lifetime_sum": 0.0,
+        "essential_count": 0.0,
+        "positive_bars": 0.0
+      },
+      "secs": 0.00801333412528038
+    },
+    {
+      "config": {
+        "probe": "filled_triangle",
+        "method": "LpF"
+      },
+      "seed": 0,
+      "ok": true,
+      "metrics": {
+        "lifetime_sum": 0.31783724519578205,
+        "essential_count": 0.0,
+        "positive_bars": 1.0
+      },
+      "secs": 0.0073736244812607765
+    },
+    {
+      "config": {
+        "probe": "filled_triangle",
+        "method": "SMF"
+      },
+      "seed": 0,
+      "ok": true,
+      "metrics": {
+        "lifetime_sum": 0.040546510810816505,
+        "essential_count": 0.0,
+        "positive_bars": 1.0
+      },
+      "secs": 3.870762884616852e-05
+    },
+    {
+      "config": {
+        "probe": "cycle",
+        "method": "LSF"
+      },
+      "seed": 0,
+      "ok": true,
+      "metrics": {
+        "lifetime_sum": 0.0,
+        "essential_count": 1.0,
+        "positive_bars": 0.0
+      },
+      "secs": 2.2582709789276123e-05
+    },
+    {
+      "config": {
+        "probe": "cycle",
+        "method": "LpF"
+      },
+      "seed": 0,
+      "ok": true,
+      "metrics": {
+        "lifetime_sum": 0.0,
+        "essential_count": 1.0,
+        "positive_bars": 0.0
+      },
+      "secs": 2.2833235561847687e-05
+    },
+    {
+      "config": {
+        "probe": "cycle",
+        "method": "SMF"
+      },
+      "seed": 0,
+      "ok": true,
+      "metrics": {
+        "lifetime_sum": 0.0,
+        "essential_count": 1.0,
+        "positive_bars": 0.0
+      },
+      "secs": 2.0916573703289032e-05
+    },
+    {
+      "config": {
+        "probe": "cycle_with_isolated_vertex",
+        "method": "LSF"
+      },
+      "seed": 0,
+      "ok": true,
+      "metrics": {
+        "lifetime_sum": 9.3,
+        "essential_count": 1.0,
+        "positive_bars": 1.0
+      },
+      "secs": 3.291666507720947e-05
+    },
+    {
+      "config": {
+        "probe": "cycle_with_isolated_vertex",
+        "method": "LpF"
+      },
+      "seed": 0,
+      "ok": true,
+      "metrics": {
+        "lifetime_sum": 9.193774225170145,
+        "essential_count": 1.0,
+        "positive_bars": 1.0
+      },
+      "secs": 2.445746213197708e-05
+    },
+    {
+      "config": {
+        "probe": "cycle_with_isolated_vertex",
+        "method": "SMF"
+      },
+      "seed": 0,
+      "ok": true,
+      "metrics": {
+        "lifetime_sum": 9.295141264842625,
+        "essential_count": 1.0,
+        "positive_bars": 1.0
+      },
+      "secs": 2.020876854658127e-05
+    }
+  ],
+  "actual_worker_seconds": 0.015569581650197506,
+  "controller_wall_seconds": 0.142150541767478,
+  "model_sessions": 0,
+  "data_scope": "Hand-constructed topology controls, not qualification/confirmation data or fresh performance estimates."
+}

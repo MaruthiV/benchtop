@@ -1,0 +1,945 @@
+{
+  "schema_version": 1,
+  "analysis_id": "paired_confirmation_analysis_v1",
+  "protocol_hash": "ba515089163fa749acff31fc991dd74264bcb02668d87ef07890051109750ac3",
+  "collection_sha256": "13f8dfc5979bd896e74d690c10c2e5ddd3d7aa36d7cac70cc548d8c029e349f3",
+  "status": "analysed",
+  "reporting_status": "complete",
+  "denominators": {
+    "locked_labs": 1,
+    "stable_labs": 0,
+    "complete_paired_labs": 0,
+    "unavailable_comparisons": 1
+  },
+  "primary": {
+    "labs": 0,
+    "estimate": null,
+    "interval": null,
+    "interval_reason": "no_complete_pairs",
+    "per_lab": [],
+    "full_cohort_bounds": [
+      -1.0,
+      1.0
+    ],
+    "interval_method": {
+      "kind": "paired_lab_cluster_percentile_bootstrap",
+      "resamples": 10000,
+      "confidence": 0.95,
+      "rng_seed": 1729,
+      "unit": "Whole labs with both arms and their nested outcomes",
+      "single_lab": "Report raw outcomes and no between-lab interval when fewer than two complete labs remain."
+    },
+    "interpretation": "Paired difference in the fraction of complete, stable-label groups containing both reward 0 and reward 1, calibrated minus global."
+  },
+  "labs": [
+    {
+      "env_id": "2611.08959v1",
+      "stability": "ambiguous",
+      "gradable": false,
+      "selected_budget": 0.06,
+      "fallback_reason": "no_observed_mixed_budget",
+      "arms": {
+        "global_budget": {
+          "slots": [
+            {
+              "slot_id": "d55730efaffff190fa4568d574ffbeb65e2b6722d710f1363c1e8ba4b55b29a9",
+              "group_id": "fe0dbd09d72e9fee504427cb6236b488b88c7843c78111d0996dd0ab47f5b838",
+              "replicate_index": 0,
+              "budget_fraction": 0.06,
+              "state": "unattempted",
+              "reward": null,
+              "answer": null,
+              "confidence": null,
+              "failure_category": null,
+              "attempts": [],
+              "observed_trace": []
+            },
+            {
+              "slot_id": "46d60dcbd44171563d81bab09575d0dc295715b0e68eb3479e65c6f7b4ed10b5",
+              "group_id": "fe0dbd09d72e9fee504427cb6236b488b88c7843c78111d0996dd0ab47f5b838",
+              "replicate_index": 1,
+              "budget_fraction": 0.06,
+              "state": "unattempted",
+              "reward": null,
+              "answer": null,
+              "confidence": null,
+              "failure_category": null,
+              "attempts": [],
+              "observed_trace": []
+            },
+            {
+              "slot_id": "7fa1c100b7f8724b88c21e21322ba5121a892799a3a144f6f2ed921de9a08433",
+              "group_id": "fe0dbd09d72e9fee504427cb6236b488b88c7843c78111d0996dd0ab47f5b838",
+              "replicate_index": 2,
+              "budget_fraction": 0.06,
+              "state": "unattempted",
+              "reward": null,
+              "answer": null,
+              "confidence": null,
+              "failure_category": null,
+              "attempts": [],
+              "observed_trace": []
+            },
+            {
+              "slot_id": "bb57508450501167cafcd72d3c31714188490ba84d1975b34a3d61b560e41945",
+              "group_id": "fe0dbd09d72e9fee504427cb6236b488b88c7843c78111d0996dd0ab47f5b838",
+              "replicate_index": 3,
+              "budget_fraction": 0.06,
+              "state": "unattempted",
+              "reward": null,
+              "answer": null,
+              "confidence": null,
+              "failure_category": null,
+              "attempts": [],
+              "observed_trace": []
+            },
+            {
+              "slot_id": "ff2a0365bb52878d4d7feb5b3d807408ab9b6b6c1a8a6d2ebb53187dc1f9919e",
+              "group_id": "fe0dbd09d72e9fee504427cb6236b488b88c7843c78111d0996dd0ab47f5b838",
+              "replicate_index": 4,
+              "budget_fraction": 0.06,
+              "state": "unattempted",
+              "reward": null,
+              "answer": null,
+              "confidence": null,
+              "failure_category": null,
+              "attempts": [],
+              "observed_trace": []
+            },
+            {
+              "slot_id": "82fb88c3036e82e17e79fc2f7b2556e579fae2e7738d6d6f804d7e66383e6df2",
+              "group_id": "fe0dbd09d72e9fee504427cb6236b488b88c7843c78111d0996dd0ab47f5b838",
+              "replicate_index": 5,
+              "budget_fraction": 0.06,
+              "state": "unattempted",
+              "reward": null,
+              "answer": null,
+              "confidence": null,
+              "failure_category": null,
+              "attempts": [],
+              "observed_trace": []
+            },
+            {
+              "slot_id": "58fc253f2856b5b7d6193278c800aa88d4b2f12e53df1853904ad41655b00cfc",
+              "group_id": "fe0dbd09d72e9fee504427cb6236b488b88c7843c78111d0996dd0ab47f5b838",
+              "replicate_index": 6,
+              "budget_fraction": 0.06,
+              "state": "unattempted",
+              "reward": null,
+              "answer": null,
+              "confidence": null,
+              "failure_category": null,
+              "attempts": [],
+              "observed_trace": []
+            },
+            {
+              "slot_id": "db661b234f0f4fbd631e07a713a9264c2db7f14fdebb301f38a94084bb06b9c2",
+              "group_id": "fe0dbd09d72e9fee504427cb6236b488b88c7843c78111d0996dd0ab47f5b838",
+              "replicate_index": 7,
+              "budget_fraction": 0.06,
+              "state": "unattempted",
+              "reward": null,
+              "answer": null,
+              "confidence": null,
+              "failure_category": null,
+              "attempts": [],
+              "observed_trace": []
+            }
+          ],
+          "planned": 8,
+          "observed": 0,
+          "complete": false,
+          "status_counts": {
+            "unattempted": 8
+          },
+          "mixed": null,
+          "accuracy_observed": null,
+          "reward_variance_observed": null,
+          "accuracy_bounds": null,
+          "mixed_without_agent_failures": null,
+          "costs": {
+            "episode_starts": 0,
+            "retry_episode_starts": 0,
+            "fields": {
+              "requested_runs": {
+                "known_sum": 0,
+                "unreported_attempts": 0,
+                "total": 0,
+                "availability": "reported"
+              },
+              "unique_executed_runs": {
+                "known_sum": 0,
+                "unreported_attempts": 0,
+                "total": 0,
+                "availability": "reported"
+              },
+              "charged_experiment_cost": {
+                "known_sum": 0.0,
+                "unreported_attempts": 0,
+                "total": 0.0,
+                "availability": "reported"
+              },
+              "actual_environment_cpu_seconds": {
+                "known_sum": 0.0,
+                "unreported_attempts": 0,
+                "total": 0.0,
+                "availability": "reported"
+              },
+              "environment_wall_seconds": {
+                "known_sum": 0.0,
+                "unreported_attempts": 0,
+                "total": 0.0,
+                "availability": "reported"
+              },
+              "model_wall_seconds": {
+                "known_sum": 0.0,
+                "unreported_attempts": 0,
+                "total": 0.0,
+                "availability": "reported"
+              },
+              "input_tokens": {
+                "known_sum": 0,
+                "unreported_attempts": 0,
+                "total": 0,
+                "availability": "reported"
+              },
+              "output_tokens": {
+                "known_sum": 0,
+                "unreported_attempts": 0,
+                "total": 0,
+                "availability": "reported"
+              }
+            },
+            "source": "operator_supplied_attempt_costs"
+          }
+        },
+        "calibrated_budget": {
+          "slots": [
+            {
+              "slot_id": "0485b86fceb4b7e4acb889fbbbcf303b1002eb40407b4818ad9b7c8626bd5cbc",
+              "group_id": "d91ac9c7a8b2e101bee472426f85994c20140f68f5d88e41bf03af31c54af534",
+              "replicate_index": 0,
+              "budget_fraction": 0.06,
+              "state": "unattempted",
+              "reward": null,
+              "answer": null,
+              "confidence": null,
+              "failure_category": null,
+              "attempts": [],
+              "observed_trace": []
+            },
+            {
+              "slot_id": "45fc4a295feef8d07f5e0967c4d1e30c79c621c4befaa49683147b8f62a8e136",
+              "group_id": "d91ac9c7a8b2e101bee472426f85994c20140f68f5d88e41bf03af31c54af534",
+              "replicate_index": 1,
+              "budget_fraction": 0.06,
+              "state": "unattempted",
+              "reward": null,
+              "answer": null,
+              "confidence": null,
+              "failure_category": null,
+              "attempts": [],
+              "observed_trace": []
+            },
+            {
+              "slot_id": "fbc2dd0ea7011eb4493f377719a50b71ea1cb075fe4f8e746b083df896c512d8",
+              "group_id": "d91ac9c7a8b2e101bee472426f85994c20140f68f5d88e41bf03af31c54af534",
+              "replicate_index": 2,
+              "budget_fraction": 0.06,
+              "state": "unattempted",
+              "reward": null,
+              "answer": null,
+              "confidence": null,
+              "failure_category": null,
+              "attempts": [],
+              "observed_trace": []
+            },
+            {
+              "slot_id": "093097db61d2f3c766e48d89c4c06f69e7f6730f45f43cf33743096ca479a8a1",
+              "group_id": "d91ac9c7a8b2e101bee472426f85994c20140f68f5d88e41bf03af31c54af534",
+              "replicate_index": 3,
+              "budget_fraction": 0.06,
+              "state": "unattempted",
+              "reward": null,
+              "answer": null,
+              "confidence": null,
+              "failure_category": null,
+              "attempts": [],
+              "observed_trace": []
+            },
+            {
+              "slot_id": "64008a8331ef46bb2d1b5e674058822b37c918bcdbfc58f47081d73c9f34bfa3",
+              "group_id": "d91ac9c7a8b2e101bee472426f85994c20140f68f5d88e41bf03af31c54af534",
+              "replicate_index": 4,
+              "budget_fraction": 0.06,
+              "state": "unattempted",
+              "reward": null,
+              "answer": null,
+              "confidence": null,
+              "failure_category": null,
+              "attempts": [],
+              "observed_trace": []
+            },
+            {
+              "slot_id": "86accf67ccb76d8aefffb92eec00ea6b4677f926dfd9e7542bfdae5c6aef02a2",
+              "group_id": "d91ac9c7a8b2e101bee472426f85994c20140f68f5d88e41bf03af31c54af534",
+              "replicate_index": 5,
+              "budget_fraction": 0.06,
+              "state": "unattempted",
+              "reward": null,
+              "answer": null,
+              "confidence": null,
+              "failure_category": null,
+              "attempts": [],
+              "observed_trace": []
+            },
+            {
+              "slot_id": "fbfcf645d7459e191d77506eb891d340dfa3db78dbd372162739fbd4fc2db9ef",
+              "group_id": "d91ac9c7a8b2e101bee472426f85994c20140f68f5d88e41bf03af31c54af534",
+              "replicate_index": 6,
+              "budget_fraction": 0.06,
+              "state": "unattempted",
+              "reward": null,
+              "answer": null,
+              "confidence": null,
+              "failure_category": null,
+              "attempts": [],
+              "observed_trace": []
+            },
+            {
+              "slot_id": "4cbc53a1b579ef423c3371c732695407638f2b94ef6b1b0a6548da01f43ef62b",
+              "group_id": "d91ac9c7a8b2e101bee472426f85994c20140f68f5d88e41bf03af31c54af534",
+              "replicate_index": 7,
+              "budget_fraction": 0.06,
+              "state": "unattempted",
+              "reward": null,
+              "answer": null,
+              "confidence": null,
+              "failure_category": null,
+              "attempts": [],
+              "observed_trace": []
+            }
+          ],
+          "planned": 8,
+          "observed": 0,
+          "complete": false,
+          "status_counts": {
+            "unattempted": 8
+          },
+          "mixed": null,
+          "accuracy_observed": null,
+          "reward_variance_observed": null,
+          "accuracy_bounds": null,
+          "mixed_without_agent_failures": null,
+          "costs": {
+            "episode_starts": 0,
+            "retry_episode_starts": 0,
+            "fields": {
+              "requested_runs": {
+                "known_sum": 0,
+                "unreported_attempts": 0,
+                "total": 0,
+                "availability": "reported"
+              },
+              "unique_executed_runs": {
+                "known_sum": 0,
+                "unreported_attempts": 0,
+                "total": 0,
+                "availability": "reported"
+              },
+              "charged_experiment_cost": {
+                "known_sum": 0.0,
+                "unreported_attempts": 0,
+                "total": 0.0,
+                "availability": "reported"
+              },
+              "actual_environment_cpu_seconds": {
+                "known_sum": 0.0,
+                "unreported_attempts": 0,
+                "total": 0.0,
+                "availability": "reported"
+              },
+              "environment_wall_seconds": {
+                "known_sum": 0.0,
+                "unreported_attempts": 0,
+                "total": 0.0,
+                "availability": "reported"
+              },
+              "model_wall_seconds": {
+                "known_sum": 0.0,
+                "unreported_attempts": 0,
+                "total": 0.0,
+                "availability": "reported"
+              },
+              "input_tokens": {
+                "known_sum": 0,
+                "unreported_attempts": 0,
+                "total": 0,
+                "availability": "reported"
+              },
+              "output_tokens": {
+                "known_sum": 0,
+                "unreported_attempts": 0,
+                "total": 0,
+                "availability": "reported"
+              }
+            },
+            "source": "operator_supplied_attempt_costs"
+          }
+        }
+      },
+      "confirmation_cpu_work": {
+        "recorded_job_intents": 576,
+        "observed_results": 576,
+        "failed_results": 0,
+        "reported_job_seconds": {
+          "known_sum": 0.4474750179797411,
+          "unreported_jobs": 0,
+          "total": 0.4474750179797411
+        },
+        "collection_wall_seconds": 68.35923983342946,
+        "actual_environment_cpu_seconds": null
+      }
+    }
+  ],
+  "classical": {
+    "status": "complete",
+    "summary_sha256": "7d94ca8375fc5df1512ab764f170644d1fa286b2663bf2ab0841c39f45d9ec77",
+    "comparisons": [
+      {
+        "policy": "paired_uniform",
+        "labs": 0,
+        "estimate": null,
+        "interval": null,
+        "interval_reason": "no_complete_pairs",
+        "per_lab": [],
+        "unavailable_labs": 1
+      },
+      {
+        "policy": "question_coverage",
+        "labs": 0,
+        "estimate": null,
+        "interval": null,
+        "interval_reason": "no_complete_pairs",
+        "per_lab": [],
+        "unavailable_labs": 1
+      },
+      {
+        "policy": "coverage_plus_cost",
+        "labs": 0,
+        "estimate": null,
+        "interval": null,
+        "interval_reason": "no_complete_pairs",
+        "per_lab": [],
+        "unavailable_labs": 1
+      },
+      {
+        "policy": "paper_prior_only",
+        "labs": 0,
+        "estimate": null,
+        "interval": null,
+        "interval_reason": "no_complete_pairs",
+        "per_lab": [],
+        "unavailable_labs": 1
+      },
+      {
+        "policy": "development_majority_label",
+        "labs": 0,
+        "estimate": null,
+        "interval": null,
+        "interval_reason": "no_complete_pairs",
+        "per_lab": [],
+        "unavailable_labs": 1
+      },
+      {
+        "policy": "random_experiment_design",
+        "labs": 0,
+        "estimate": null,
+        "interval": null,
+        "interval_reason": "no_complete_pairs",
+        "per_lab": [],
+        "unavailable_labs": 1
+      }
+    ],
+    "groups": [
+      {
+        "env_id": "2611.08959v1",
+        "policy": "paired_uniform",
+        "gradable": false,
+        "planned": 200,
+        "outcomes": [],
+        "accuracy": null
+      },
+      {
+        "env_id": "2611.08959v1",
+        "policy": "question_coverage",
+        "gradable": false,
+        "planned": 200,
+        "outcomes": [],
+        "accuracy": null
+      },
+      {
+        "env_id": "2611.08959v1",
+        "policy": "coverage_plus_cost",
+        "gradable": false,
+        "planned": 200,
+        "outcomes": [],
+        "accuracy": null
+      },
+      {
+        "env_id": "2611.08959v1",
+        "policy": "paper_prior_only",
+        "gradable": false,
+        "planned": 200,
+        "outcomes": [],
+        "accuracy": null
+      },
+      {
+        "env_id": "2611.08959v1",
+        "policy": "development_majority_label",
+        "gradable": false,
+        "planned": 200,
+        "outcomes": [],
+        "accuracy": null
+      },
+      {
+        "env_id": "2611.08959v1",
+        "policy": "random_experiment_design",
+        "gradable": false,
+        "planned": 200,
+        "outcomes": [],
+        "accuracy": null
+      }
+    ],
+    "interpretation": "Global-arm accuracy minus matched classical accuracy; average equally across available labs. Policy seeds are not independent labs."
+  },
+  "candidate_funnel": [
+    {
+      "id": "2611.08831",
+      "version": "2611.08831v1",
+      "status": "rejected",
+      "basis": "triage_or_mechanical_failure"
+    },
+    {
+      "id": "2611.08833",
+      "version": "2611.08833v1",
+      "status": "rejected",
+      "basis": "human_rejection"
+    },
+    {
+      "id": "2611.08840",
+      "version": "2611.08840v1",
+      "status": "rejected",
+      "basis": "triage_or_mechanical_failure"
+    },
+    {
+      "id": "2611.08866",
+      "version": "2611.08866v1",
+      "status": "generation_failed",
+      "basis": "triage_or_mechanical_failure"
+    },
+    {
+      "id": "2611.08883",
+      "version": "2611.08883v1",
+      "status": "rejected",
+      "basis": "human_rejection"
+    },
+    {
+      "id": "2611.08909",
+      "version": "2611.08909v1",
+      "status": "qualification_ambiguous",
+      "basis": "prequalification_review_and_cached_qualification"
+    },
+    {
+      "id": "2611.08912",
+      "version": "2611.08912v1",
+      "status": "rejected",
+      "basis": "triage_or_mechanical_failure"
+    },
+    {
+      "id": "2611.08918",
+      "version": "2611.08918v1",
+      "status": "generation_failed",
+      "basis": "triage_or_mechanical_failure"
+    },
+    {
+      "id": "2611.08924",
+      "version": "2611.08924v1",
+      "status": "rejected",
+      "basis": "human_rejection"
+    },
+    {
+      "id": "2611.08936",
+      "version": "2611.08936v1",
+      "status": "rejected",
+      "basis": "triage_or_mechanical_failure"
+    },
+    {
+      "id": "2611.08937",
+      "version": "2611.08937v1",
+      "status": "rejected",
+      "basis": "human_rejection"
+    },
+    {
+      "id": "2611.08959",
+      "version": "2611.08959v1",
+      "status": "admitted",
+      "basis": "prequalification_review_and_cached_qualification"
+    },
+    {
+      "id": "2611.08977",
+      "version": "2611.08977v1",
+      "status": "rejected",
+      "basis": "human_rejection"
+    },
+    {
+      "id": "2611.08990",
+      "version": "2611.08990v1",
+      "status": "qualification_ambiguous",
+      "basis": "prequalification_review_and_cached_qualification"
+    },
+    {
+      "id": "2611.08992",
+      "version": "2611.08992v1",
+      "status": "rejected",
+      "basis": "human_rejection"
+    },
+    {
+      "id": "2611.08993",
+      "version": "2611.08993v1",
+      "status": "rejected",
+      "basis": "triage_or_mechanical_failure"
+    }
+  ],
+  "stability_counts": {
+    "ambiguous": 1
+  },
+  "fallback_counts": {
+    "no_observed_mixed_budget": 1
+  },
+  "label_agreement": {
+    "settled_labs": 0,
+    "agreeing_labs": 0,
+    "fraction_among_settled": null
+  },
+  "failure_counts": {
+    "final_slot_states": {
+      "unattempted": 16
+    },
+    "attempt_states": {},
+    "attempt_failure_categories": {}
+  },
+  "costs": {
+    "pilot_costs": {
+      "episode_starts": 12,
+      "retry_episode_starts": 0,
+      "fields": {
+        "requested_runs": {
+          "known_sum": 296,
+          "unreported_attempts": 0,
+          "total": 296,
+          "availability": "reported"
+        },
+        "unique_executed_runs": {
+          "known_sum": 0,
+          "unreported_attempts": 0,
+          "total": 0,
+          "availability": "reported"
+        },
+        "charged_experiment_cost": {
+          "known_sum": 0.13662521867081523,
+          "unreported_attempts": 0,
+          "total": 0.13662521867081523,
+          "availability": "reported"
+        },
+        "actual_environment_cpu_seconds": {
+          "known_sum": 0.0,
+          "unreported_attempts": 12,
+          "total": null,
+          "availability": "partial_or_unreported"
+        },
+        "environment_wall_seconds": {
+          "known_sum": 0.0,
+          "unreported_attempts": 12,
+          "total": null,
+          "availability": "partial_or_unreported"
+        },
+        "model_wall_seconds": {
+          "known_sum": 204.3556583346799,
+          "unreported_attempts": 0,
+          "total": 204.3556583346799,
+          "availability": "reported"
+        },
+        "input_tokens": {
+          "known_sum": 116,
+          "unreported_attempts": 0,
+          "total": 116,
+          "availability": "reported"
+        },
+        "output_tokens": {
+          "known_sum": 39944,
+          "unreported_attempts": 0,
+          "total": 39944,
+          "availability": "reported"
+        }
+      },
+      "source": "operator_supplied_attempt_costs"
+    },
+    "confirmation_costs": {
+      "episode_starts": 0,
+      "retry_episode_starts": 0,
+      "fields": {
+        "requested_runs": {
+          "known_sum": 0,
+          "unreported_attempts": 0,
+          "total": 0,
+          "availability": "reported"
+        },
+        "unique_executed_runs": {
+          "known_sum": 0,
+          "unreported_attempts": 0,
+          "total": 0,
+          "availability": "reported"
+        },
+        "charged_experiment_cost": {
+          "known_sum": 0.0,
+          "unreported_attempts": 0,
+          "total": 0.0,
+          "availability": "reported"
+        },
+        "actual_environment_cpu_seconds": {
+          "known_sum": 0.0,
+          "unreported_attempts": 0,
+          "total": 0.0,
+          "availability": "reported"
+        },
+        "environment_wall_seconds": {
+          "known_sum": 0.0,
+          "unreported_attempts": 0,
+          "total": 0.0,
+          "availability": "reported"
+        },
+        "model_wall_seconds": {
+          "known_sum": 0.0,
+          "unreported_attempts": 0,
+          "total": 0.0,
+          "availability": "reported"
+        },
+        "input_tokens": {
+          "known_sum": 0,
+          "unreported_attempts": 0,
+          "total": 0,
+          "availability": "reported"
+        },
+        "output_tokens": {
+          "known_sum": 0,
+          "unreported_attempts": 0,
+          "total": 0,
+          "availability": "reported"
+        }
+      },
+      "source": "replay_verified_primary_adapter_reports"
+    },
+    "generation_and_repair_usage": {
+      "recorded_invocation_intents": 26,
+      "active": 0,
+      "halted": false,
+      "fields": {
+        "model_wall_seconds": {
+          "known_sum": 1745.6255034971982,
+          "unreported_items": 0,
+          "total": 1745.6255034971982
+        },
+        "input_tokens": {
+          "known_sum": 52,
+          "unreported_items": 0,
+          "total": 52
+        },
+        "output_tokens": {
+          "known_sum": 397856,
+          "unreported_items": 0,
+          "total": 397856
+        }
+      }
+    },
+    "classical_replay": {
+      "charged_experiment_cost": {
+        "known_sum": 0,
+        "unreported_items": 0,
+        "total": 0
+      },
+      "requested_runs": {
+        "known_sum": 0,
+        "unreported_items": 0,
+        "total": 0
+      },
+      "controller_wall_seconds": {
+        "known_sum": 0,
+        "unreported_items": 0,
+        "total": 0
+      },
+      "controller_cpu_seconds": {
+        "known_sum": 0,
+        "unreported_items": 0,
+        "total": 0
+      }
+    },
+    "shared_evaluation_snapshot": {
+      "shared_ledger_counts_at_snapshot": {
+        "total": 68,
+        "active": 0,
+        "primary": 60,
+        "retry": 0,
+        "smoke": 6,
+        "integration": 2,
+        "phase:fresh_pilot": 12,
+        "phase:integration": 2,
+        "phase:smoke": 6,
+        "phase:development": 48
+      },
+      "shared_ledger_costs_at_snapshot": {
+        "fields": {
+          "requested_runs": {
+            "known_sum": 1321,
+            "unreported_attempts": 1,
+            "total": null,
+            "availability": "partial_or_unreported"
+          },
+          "unique_executed_runs": {
+            "known_sum": 0,
+            "unreported_attempts": 1,
+            "total": null,
+            "availability": "partial_or_unreported"
+          },
+          "charged_experiment_cost": {
+            "known_sum": 24.771779583767056,
+            "unreported_attempts": 1,
+            "total": null,
+            "availability": "partial_or_unreported"
+          },
+          "actual_environment_cpu_seconds": {
+            "known_sum": 0.0,
+            "unreported_attempts": 67,
+            "total": null,
+            "availability": "partial_or_unreported"
+          },
+          "environment_wall_seconds": {
+            "known_sum": 0.0,
+            "unreported_attempts": 68,
+            "total": null,
+            "availability": "partial_or_unreported"
+          },
+          "model_wall_seconds": {
+            "known_sum": 1018.8583772517741,
+            "unreported_attempts": 2,
+            "total": null,
+            "availability": "partial_or_unreported"
+          },
+          "input_tokens": {
+            "known_sum": 688,
+            "unreported_attempts": 2,
+            "total": null,
+            "availability": "partial_or_unreported"
+          },
+          "output_tokens": {
+            "known_sum": 203473,
+            "unreported_attempts": 2,
+            "total": null,
+            "availability": "partial_or_unreported"
+          }
+        },
+        "source": "operator_supplied_attempt_costs",
+        "recorded_start_intents": 68,
+        "retry_start_intents": 0
+      },
+      "interpretation": "Frozen snapshot of recorded intents and adapter-reported costs, not authenticated provider calls or billing. Generation is accounted separately.",
+      "prior_protocol_usage": {
+        "parent_protocol_hash": "94e8d7c14c822c80ede18b387ec8669dd36a73947a25af98e0beb9880060dcc6",
+        "parent_ledger_id": "c5f715be498dd79351bcaf55778bc5799016f436d6fe8183060f961e4ac03cb1",
+        "prior_counts": {
+          "total": 1,
+          "active": 0,
+          "primary": 0,
+          "retry": 0,
+          "smoke": 1,
+          "integration": 0,
+          "phase:smoke": 1
+        },
+        "prior_costs": {
+          "episode_starts": 1,
+          "retry_episode_starts": 0,
+          "fields": {
+            "requested_runs": {
+              "known_sum": 8,
+              "unreported_attempts": 0,
+              "total": 8,
+              "availability": "reported"
+            },
+            "unique_executed_runs": {
+              "known_sum": 0,
+              "unreported_attempts": 0,
+              "total": 0,
+              "availability": "reported"
+            },
+            "charged_experiment_cost": {
+              "known_sum": 0.03743008291348815,
+              "unreported_attempts": 0,
+              "total": 0.03743008291348815,
+              "availability": "reported"
+            },
+            "actual_environment_cpu_seconds": {
+              "known_sum": 0.0,
+              "unreported_attempts": 1,
+              "total": null,
+              "availability": "partial_or_unreported"
+            },
+            "environment_wall_seconds": {
+              "known_sum": 0.0,
+              "unreported_attempts": 1,
+              "total": null,
+              "availability": "partial_or_unreported"
+            },
+            "model_wall_seconds": {
+              "known_sum": 9.271727041341364,
+              "unreported_attempts": 0,
+              "total": 9.271727041341364,
+              "availability": "reported"
+            },
+            "input_tokens": {
+              "known_sum": 8,
+              "unreported_attempts": 0,
+              "total": 8,
+              "availability": "reported"
+            },
+            "output_tokens": {
+              "known_sum": 1713,
+              "unreported_attempts": 0,
+              "total": 1713,
+              "availability": "reported"
+            }
+          },
+          "source": "operator_supplied_attempt_costs"
+        },
+        "remaining_start_intents": 299,
+        "global_total_max_episode_starts": 300,
+        "record_sha256": "fbbcaa3c8271a67a79839ad55edb90bd30b6621e41cc73bce2128792d8a093ea",
+        "interpretation": "Excluded earlier compatibility smoke, retained as consumed usage and reported overhead; never pooled into successor primary outcomes."
+      }
+    }
+  },
+  "efficiency": {
+    "mean_selected_budget_fraction": 0.06,
+    "global_budget_fraction": 0.06,
+    "break_even_groups": null,
+    "availability": "No break-even assumption supplied; calibration overhead is reported separately. Mixed rewards alone do not establish an efficiency benefit."
+  },
+  "halted": false,
+  "model_sessions_started_by_analysis": 0,
+  "limitations": [
+    "Exploratory pilot with at most eight labs; no equivalence claim, universal generalization, or learning claim. Secondary results are descriptive.",
+    "Complete-case effects are conditional on stable labels and complete groups. Full-cohort bounds include every unavailable arm.",
+    "Bootstrap resamples whole paired labs, not slots or classical policy seeds. Secondary comparisons are descriptive.",
+    "Reported costs are adapter measurements, not authenticated subscription billing. Unknown usage remains null."
+  ],
+  "analysis_sha256": "72184c018c82f9834eb7c8f63d0572722f94822508f3c12dd545cdd812c1b7b6"
+}

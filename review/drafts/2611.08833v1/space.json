@@ -1,0 +1,46 @@
+{
+  "title": "LSF vs. alternative filtrations on annulus point clouds",
+  "setting": "Each run draws two classes of 2-D point clouds sampled from annuli with different hole sizes (inner radius 0.5 vs. 0.8, outer radius 1), with optional Gaussian jitter, and builds a fixed clique complex (symmetric 6-NN graph plus triangles) on each cloud. The filtration rule assigns simplex values from vertex distances to the centroid, H1 persistence is summarised by three features that are standardised on training clouds, and a nearest-centroid classifier is scored by accuracy on fresh test clouds.",
+  "paper": {
+    "title": "Beyond the Lower-Star Filtration: Alternative Filtration Methods for Persistent Homology",
+    "arxiv_id": "2611.08833",
+    "claim": "Alternative filtrations (LpF, which aggregates all vertex values, rather than LSF's max rule) let higher-dimensional simplices enter after their faces, so H1 features that LSF fills immediately persist and improve separation of two data populations."
+  },
+  "metric": {
+    "name": "accuracy",
+    "goal": "max",
+    "min_effect": 0.01,
+    "description": "Fraction of 100 fresh test clouds (50 per class, never used to fit the classifier) classified correctly by nearest centroid on standardised H1 summaries: total H1 lifetime, count of H1 lifetimes above 0.05, and max H1 lifetime. Essential H1 classes die at the end of each filtration. Compare methods with paired-seed differences against LSF."
+  },
+  "factors": [
+    {
+      "name": "method",
+      "role": "treatment",
+      "levels": ["LSF", "LpF", "SMF"],
+      "description": "Filtration rule for simplex values. LSF is the maximum-vertex rule (baseline). LpF is the L2 aggregate (sum of squared vertex values, then square root), the paper's method. SMF is a log-sum-exp smooth maximum with temperature 0.1 (alternative)."
+    },
+    {
+      "name": "n_points",
+      "role": "context",
+      "levels": [30, 100],
+      "description": "Number of vertices (points) per cloud. Small clouds are sparse and noisy, large clouds have more simplices and more stable features."
+    },
+    {
+      "name": "noise",
+      "role": "context",
+      "levels": [0.0, 0.1, 0.3],
+      "description": "Standard deviation of isotropic Gaussian jitter added to each point. At 0.3 the hole structure is largely blurred and the classes overlap."
+    },
+    {
+      "name": "max_dim",
+      "role": "context",
+      "levels": [1, 2],
+      "description": "1 uses the graph only (no triangles, so loops cannot be filled by 2-simplices). 2 includes clique triangles, which is where the paper's delayed-entry mechanism acts."
+    }
+  ],
+  "treatment": {
+    "factor": "method",
+    "paper": "LpF",
+    "baseline": "LSF"
+  }
+}

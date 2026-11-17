@@ -1,0 +1,46 @@
+{
+  "title": "SQS accuracy-complexity trade-off in polynomial Ridge degree selection",
+  "setting": "Each run draws a small regression set (first 5 features of load_diabetes, or make_friedman1 with 5 features), adds Gaussian target noise, and holds out 20% as a test set. Candidates are polynomial Ridge models of degree 1 to 7, scored by 5-fold CV RMSE on the training pool; the accuracy-only arm picks the lowest-CV-RMSE degree, while the SQS arms pick the argmax of A^w·C^(1-w), where A is normalized CV accuracy and C is normalized simplicity (fewer coefficients), and the selected model is refit on the pool and scored by test RMSE.",
+  "paper": {
+    "title": "Surrogate Quality Score: A Novel Composite Performance Metric for Model Selection",
+    "arxiv_id": "2611.08937",
+    "claim": "Selecting models by SQS = A^w·C^(1-w) lowers the chosen model's complexity as w decreases, while at intermediate w the held-out RMSE stays within about 5% of the accuracy-only choice."
+  },
+  "metric": {
+    "name": "rmse_regret",
+    "goal": "min",
+    "min_effect": 0.01,
+    "description": "Relative test-RMSE increase of the selected model over the accuracy-only model on the same split: (RMSE_sel - RMSE_acc) / RMSE_acc. The accuracy-only arm is 0 by construction, so for SQS arms this is the accuracy cost of the trade-off; read it jointly with param_ratio. Diagnostics returned: param_ratio (SQS-selected / accuracy-selected coefficient count), selected_degree, test_rmse_selected, test_rmse_acc_only."
+  },
+  "factors": [
+    {
+      "name": "method",
+      "role": "treatment",
+      "levels": ["accuracy_only", "sqs_w0.25", "sqs_w0.75"],
+      "description": "Model selection rule. accuracy_only picks the lowest 5-fold CV RMSE (baseline). sqs_w0.25 and sqs_w0.75 pick argmax A^w·C^(1-w) with accuracy weight w = 0.25 (strong pressure toward simpler models) or 0.75 (mild pressure). The paper level is sqs_w0.25; sqs_w0.75 is the milder intermediate weight. Both SQS arms share data and CV folds with the baseline."
+    },
+    {
+      "name": "dataset",
+      "role": "context",
+      "levels": ["load_diabetes", "make_friedman1"],
+      "description": "load_diabetes: real low-signal data (first 5 columns, standardized target). make_friedman1: known nonlinear target with 5 features and no built-in noise."
+    },
+    {
+      "name": "n_samples",
+      "role": "context",
+      "levels": [60, 200, 400],
+      "description": "Total rows drawn per run; 20% are held out for test and the rest form the CV pool. Capped at 400 because load_diabetes has only 442 rows. Small n makes higher-degree overfitting worse, so the complexity term should matter more."
+    },
+    {
+      "name": "noise",
+      "role": "context",
+      "levels": [0.5, 2.0],
+      "description": "Standard deviation of additive Gaussian noise on the target (applied in unit-sd target units for load_diabetes and in raw units for make_friedman1). Higher noise shrinks accuracy gaps between candidates, so the complexity term may dominate selection."
+    }
+  ],
+  "treatment": {
+    "factor": "method",
+    "paper": "sqs_w0.25",
+    "baseline": "accuracy_only"
+  }
+}

@@ -1,0 +1,259 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-11-10T18:21:53.376248+00:00",
+  "scope": "Completed historical development and cached controls; not fresh confirmation",
+  "development": {
+    "model": "claude-haiku-5-5",
+    "completed": 48,
+    "correct": 40,
+    "cells": [
+      {
+        "lab": "GP bandits",
+        "lab_id": "2610-36935-gaussian-process-bandits-for",
+        "budget_fraction": 0.06,
+        "correct": 4,
+        "completed": 4,
+        "observed_mixed": false
+      },
+      {
+        "lab": "GP bandits",
+        "lab_id": "2610-36935-gaussian-process-bandits-for",
+        "budget_fraction": 0.12,
+        "correct": 4,
+        "completed": 4,
+        "observed_mixed": false
+      },
+      {
+        "lab": "GP bandits",
+        "lab_id": "2610-36935-gaussian-process-bandits-for",
+        "budget_fraction": 0.25,
+        "correct": 4,
+        "completed": 4,
+        "observed_mixed": false
+      },
+      {
+        "lab": "Monoculture",
+        "lab_id": "2610-36941-algorithmic-monoculture-in-machine",
+        "budget_fraction": 0.06,
+        "correct": 4,
+        "completed": 4,
+        "observed_mixed": false
+      },
+      {
+        "lab": "Monoculture",
+        "lab_id": "2610-36941-algorithmic-monoculture-in-machine",
+        "budget_fraction": 0.12,
+        "correct": 4,
+        "completed": 4,
+        "observed_mixed": false
+      },
+      {
+        "lab": "Monoculture",
+        "lab_id": "2610-36941-algorithmic-monoculture-in-machine",
+        "budget_fraction": 0.25,
+        "correct": 4,
+        "completed": 4,
+        "observed_mixed": false
+      },
+      {
+        "lab": "Data curation",
+        "lab_id": "2610-36983-advancement-or-acceleration-how",
+        "budget_fraction": 0.06,
+        "correct": 2,
+        "completed": 4,
+        "observed_mixed": true
+      },
+      {
+        "lab": "Data curation",
+        "lab_id": "2610-36983-advancement-or-acceleration-how",
+        "budget_fraction": 0.12,
+        "correct": 1,
+        "completed": 4,
+        "observed_mixed": true
+      },
+      {
+        "lab": "Data curation",
+        "lab_id": "2610-36983-advancement-or-acceleration-how",
+        "budget_fraction": 0.25,
+        "correct": 4,
+        "completed": 4,
+        "observed_mixed": false
+      },
+      {
+        "lab": "Muon",
+        "lab_id": "2610-37225-sharpnessaware-muon-matrixaware-optimization",
+        "budget_fraction": 0.06,
+        "correct": 3,
+        "completed": 4,
+        "observed_mixed": true
+      },
+      {
+        "lab": "Muon",
+        "lab_id": "2610-37225-sharpnessaware-muon-matrixaware-optimization",
+        "budget_fraction": 0.12,
+        "correct": 2,
+        "completed": 4,
+        "observed_mixed": true
+      },
+      {
+        "lab": "Muon",
+        "lab_id": "2610-37225-sharpnessaware-muon-matrixaware-optimization",
+        "budget_fraction": 0.25,
+        "correct": 4,
+        "completed": 4,
+        "observed_mixed": false
+      }
+    ],
+    "selected_global_budget_fraction": 0.06,
+    "diagnostics": [
+      "no_observed_mixed_budget:2610-36935-gaussian-process-bandits-for",
+      "no_observed_mixed_budget:2610-36941-algorithmic-monoculture-in-machine"
+    ]
+  },
+  "classical": {
+    "completed": 14400,
+    "missing": 0,
+    "failed": 0,
+    "model_calls": 0,
+    "equal_lab_means": [
+      {
+        "policy": "paired_uniform",
+        "budget_fraction": 0.06,
+        "labs": 4,
+        "replays_per_lab": 200,
+        "equal_lab_mean_accuracy": 0.6050000000000001
+      },
+      {
+        "policy": "paired_uniform",
+        "budget_fraction": 0.12,
+        "labs": 4,
+        "replays_per_lab": 200,
+        "equal_lab_mean_accuracy": 0.7825
+      },
+      {
+        "policy": "paired_uniform",
+        "budget_fraction": 0.25,
+        "labs": 4,
+        "replays_per_lab": 200,
+        "equal_lab_mean_accuracy": 0.99625
+      },
+      {
+        "policy": "question_coverage",
+        "budget_fraction": 0.06,
+        "labs": 4,
+        "replays_per_lab": 200,
+        "equal_lab_mean_accuracy": 0.6825
+      },
+      {
+        "policy": "question_coverage",
+        "budget_fraction": 0.12,
+        "labs": 4,
+        "replays_per_lab": 200,
+        "equal_lab_mean_accuracy": 0.78125
+      },
+      {
+        "policy": "question_coverage",
+        "budget_fraction": 0.25,
+        "labs": 4,
+        "replays_per_lab": 200,
+        "equal_lab_mean_accuracy": 0.995
+      },
+      {
+        "policy": "coverage_plus_cost",
+        "budget_fraction": 0.06,
+        "labs": 4,
+        "replays_per_lab": 200,
+        "equal_lab_mean_accuracy": 0.5
+      },
+      {
+        "policy": "coverage_plus_cost",
+        "budget_fraction": 0.12,
+        "labs": 4,
+        "replays_per_lab": 200,
+        "equal_lab_mean_accuracy": 0.75
+      },
+      {
+        "policy": "coverage_plus_cost",
+        "budget_fraction": 0.25,
+        "labs": 4,
+        "replays_per_lab": 200,
+        "equal_lab_mean_accuracy": 0.75
+      },
+      {
+        "policy": "paper_prior_only",
+        "budget_fraction": 0.06,
+        "labs": 4,
+        "replays_per_lab": 200,
+        "equal_lab_mean_accuracy": 0.5
+      },
+      {
+        "policy": "paper_prior_only",
+        "budget_fraction": 0.12,
+        "labs": 4,
+        "replays_per_lab": 200,
+        "equal_lab_mean_accuracy": 0.5
+      },
+      {
+        "policy": "paper_prior_only",
+        "budget_fraction": 0.25,
+        "labs": 4,
+        "replays_per_lab": 200,
+        "equal_lab_mean_accuracy": 0.5
+      },
+      {
+        "policy": "development_majority_label",
+        "budget_fraction": 0.06,
+        "labs": 4,
+        "replays_per_lab": 200,
+        "equal_lab_mean_accuracy": 0.5
+      },
+      {
+        "policy": "development_majority_label",
+        "budget_fraction": 0.12,
+        "labs": 4,
+        "replays_per_lab": 200,
+        "equal_lab_mean_accuracy": 0.5
+      },
+      {
+        "policy": "development_majority_label",
+        "budget_fraction": 0.25,
+        "labs": 4,
+        "replays_per_lab": 200,
+        "equal_lab_mean_accuracy": 0.5
+      },
+      {
+        "policy": "random_experiment_design",
+        "budget_fraction": 0.06,
+        "labs": 4,
+        "replays_per_lab": 200,
+        "equal_lab_mean_accuracy": 0.315
+      },
+      {
+        "policy": "random_experiment_design",
+        "budget_fraction": 0.12,
+        "labs": 4,
+        "replays_per_lab": 200,
+        "equal_lab_mean_accuracy": 0.4475
+      },
+      {
+        "policy": "random_experiment_design",
+        "budget_fraction": 0.25,
+        "labs": 4,
+        "replays_per_lab": 200,
+        "equal_lab_mean_accuracy": 0.6224999999999999
+      }
+    ]
+  },
+  "limits": [
+    "Four preselected historical toy references; four independent model sessions per cell.",
+    "The 6% budget was selected on development and is not independently validated by those data.",
+    "Classical repetitions reuse cached visible data; 200 policy seeds are not 200 independent labs.",
+    "Cost-aware acquisition did not consistently outperform the simpler controls.",
+    "Actual Qualia connectivity uses cached historical data, with provider-reported identity unavailable and no claimed reward.",
+    "Source-review diagnostics do not estimate downstream effect sizes or indict the source papers."
+  ],
+  "original_private_snapshot_sha256": {
+    "v2-development-calibration": "4aa6bee8e0c2ab2831ae8f4fdd26ff0a791630065cdc0bd41ba87cc6e4585f9a",
+    "v2-classical-development-summary": "246e91c6d63fc21cb4f97ff20168eceb48f78431a5ffe75499e3da1c61621f60"
+  }
+}

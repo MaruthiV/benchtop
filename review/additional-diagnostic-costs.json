@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "scope": "Additional pre-qualification diagnostics; reported worker elapsed time, not authenticated CPU billing. Separate from qualification/confirmation/model starts.",
+  "rows": [
+    {
+      "reported_worker_seconds": 0.015569581650197506,
+      "jobs": 9,
+      "model_calls": 0,
+      "diagnostic_id": "2611.08833v1",
+      "original_report_sha256": "bbadde899aadbb7b46f56b7a89683137050a23d685bea6a0701d724e9f32f0d5"
+    },
+    {
+      "reported_worker_seconds": 0.002300666645169258,
+      "jobs": 3,
+      "model_calls": 0,
+      "diagnostic_id": "2611.08883v1",
+      "original_report_sha256": "bb1b8300c1278877cc9766ee67f9dccfc2fd2ebbc8be95bb031f23cd951fd900"
+    },
+    {
+      "reported_worker_seconds": 0.4013606244698167,
+      "jobs": 8,
+      "model_calls": 0,
+      "diagnostic_id": "2611.08909v1",
+      "original_report_sha256": "4088fe9f2f39d0c31e5716a0b3990a7a59dcac79f13496db331df51a51e15f7d"
+    },
+    {
+      "reported_worker_seconds": 0.003570999950170517,
+      "jobs": 2,
+      "model_calls": 0,
+      "diagnostic_id": "2611.08924v1",
+      "original_report_sha256": "3fa3e1c9539e1e2e9624a560c3e657e012830056ade98c52f9386ff2dd3f3c60"
+    },
+    {
+      "reported_worker_seconds": 0.08048708736896515,
+      "jobs": 8,
+      "model_calls": 0,
+      "diagnostic_id": "2611.08959v1",
+      "original_report_sha256": "6f4ef5f7205bfbe8944d1ac46d766486e4cdd77ce2b1c9c0ea22e59492100c89"
+    },
+    {
+      "reported_worker_seconds": 1.8965112073346972,
+      "jobs": 5,
+      "model_calls": 0,
+      "diagnostic_id": "2611.08990v1",
+      "original_report_sha256": "1cb23752eb8d413a3ce5fcf8e9dff8fd55e235096af1c4f1f0574c5588fab237"
+    }
+  ],
+  "reported_worker_seconds": 2.3998001674190164
+}

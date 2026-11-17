@@ -1,0 +1,47 @@
+{
+  "id": "2611.08909v1",
+  "source": "arxiv",
+  "arxiv_id": "2611.08909",
+  "arxiv_version": "2611.08909v1",
+  "paper_title": "Geometry-Aware Score-Repellent Monte Carlo",
+  "published": "2026-11-06T02:49:14Z",
+  "seeds": 28,
+  "visible_seeds": 4,
+  "seed_splits": {
+    "visible": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "qualification": [
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "confirmation": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27
+    ]
+  },
+  "grader_id": "seed_block_t_v1"
+}

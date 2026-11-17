@@ -1,0 +1,30 @@
+{
+  "scope": "Pre-qualification mechanism control, not benchmark accuracy effect",
+  "rows": [
+    {
+      "steps": 1,
+      "ok": true,
+      "metrics": {
+        "max_update_difference_with_residual_suppressed": 0.027381489986565206,
+        "resq_residual_energy_fraction": 6.270932942774026e-32,
+        "galore_first_state_size": 12.0,
+        "resq_first_state_size": 4.0
+      },
+      "secs": 0.003225957974791527
+    },
+    {
+      "steps": 3,
+      "ok": true,
+      "metrics": {
+        "max_update_difference_with_residual_suppressed": 0.08214438769554905,
+        "resq_residual_energy_fraction": 9.332580836727713e-32,
+        "galore_first_state_size": 12.0,
+        "resq_first_state_size": 4.0
+      },
+      "secs": 0.0003450419753789902
+    }
+  ],
+  "reported_worker_seconds": 0.003570999950170517,
+  "wall_seconds": 1.099356916733086,
+  "model_calls": 0
+}

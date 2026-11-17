@@ -1,0 +1,373 @@
+{
+  "schema_version": 1,
+  "grader_id": "seed_block_t_v1",
+  "seed_ids": [
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "binding": {
+    "execution_id": "8410bf1da28eaf02cdf4ce3c7e9f9a37c17737bfd028fb0ec860790d0db11822",
+    "qualification_sha256": "9c5fa1b1d257d7788c6019f7cc7f79c1ab33c5ed29c1ed951c3f6c7a5ebc0b92",
+    "generator_sha256": {
+      "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+      "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+      "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+      "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+    },
+    "seed_ids": [
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ]
+  },
+  "interval_method": "student_t_95",
+  "status": "complete",
+  "issues": [],
+  "tasks": [
+    {
+      "id": "where:misspec",
+      "kind": "where",
+      "factor": "misspec",
+      "answer": {
+        "\"none\"": "no_meaningful_difference",
+        "\"mild\"": "no_meaningful_difference",
+        "\"strong\"": "paper_better"
+      },
+      "stats": {
+        "\"none\"": {
+          "delta": 0.0005477598735563185,
+          "se": 0.0012090260201720903,
+          "n_seeds": 12,
+          "interval": [
+            -0.0021132884550071063,
+            0.0032088082021197433
+          ],
+          "label": "no_meaningful_difference",
+          "status": "settled",
+          "bootstrap_interval": [
+            -0.0015210633427691193,
+            0.002970247664306444
+          ],
+          "bootstrap_label": "no_meaningful_difference",
+          "diagnostic_disagreement": false
+        },
+        "\"mild\"": {
+          "delta": 0.0006373623555256289,
+          "se": 0.0016760664219577098,
+          "n_seeds": 12,
+          "interval": [
+            -0.0030516349665311807,
+            0.004326359677582438
+          ],
+          "label": "no_meaningful_difference",
+          "status": "settled",
+          "bootstrap_interval": [
+            -0.0024558681608972525,
+            0.003958412212675548
+          ],
+          "bootstrap_label": "no_meaningful_difference",
+          "diagnostic_disagreement": false
+        },
+        "\"strong\"": {
+          "delta": 0.02757320678011001,
+          "se": 0.006416397129857714,
+          "n_seeds": 12,
+          "interval": [
+            0.013450811916038601,
+            0.04169560164418142
+          ],
+          "label": "paper_better",
+          "status": "settled",
+          "bootstrap_interval": [
+            0.015862128722586962,
+            0.040057205585204717
+          ],
+          "bootstrap_label": "paper_better",
+          "diagnostic_disagreement": false
+        }
+      },
+      "seed_std": 0.020730900793110747,
+      "grader_id": "seed_block_t_v1",
+      "seed_ids": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "binding": {
+        "execution_id": "8410bf1da28eaf02cdf4ce3c7e9f9a37c17737bfd028fb0ec860790d0db11822",
+        "qualification_sha256": "9c5fa1b1d257d7788c6019f7cc7f79c1ab33c5ed29c1ed951c3f6c7a5ebc0b92",
+        "generator_sha256": {
+          "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+          "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+          "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+          "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+        },
+        "seed_ids": [
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ]
+      },
+      "task_sha256": "48b4806bb5799f8a934d7d6729d01ac3212d606a51443addb7d8686b74312b74"
+    },
+    {
+      "id": "best",
+      "kind": "best",
+      "answer": "{\"budget\":\"binding\",\"logging\":\"strong\",\"method\":\"action_centered\",\"misspec\":\"none\"}",
+      "grading_rule": "heldout_best_mean",
+      "best": -0.13533035317778244,
+      "median": -0.19483612574737352,
+      "seed_std": 0.020730900793110747,
+      "grader_id": "seed_block_t_v1",
+      "seed_ids": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "binding": {
+        "execution_id": "8410bf1da28eaf02cdf4ce3c7e9f9a37c17737bfd028fb0ec860790d0db11822",
+        "qualification_sha256": "9c5fa1b1d257d7788c6019f7cc7f79c1ab33c5ed29c1ed951c3f6c7a5ebc0b92",
+        "generator_sha256": {
+          "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+          "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+          "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+          "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+        },
+        "seed_ids": [
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ]
+      },
+      "task_sha256": "38f6dc1345968b2529750aa536fc5b49e9f36c8e627bcd47a7d8fc88f6013972"
+    }
+  ],
+  "contrasts": [
+    {
+      "task_id": "claim",
+      "delta": 0.009586109669730654,
+      "se": 0.0025015224943901585,
+      "n_seeds": 12,
+      "interval": [
+        0.004080295781942496,
+        0.01509192355751881
+      ],
+      "label": null,
+      "status": "ambiguous",
+      "bootstrap_interval": [
+        0.004825873182239974,
+        0.01423510001997319
+      ],
+      "bootstrap_label": null,
+      "diagnostic_disagreement": false
+    },
+    {
+      "task_id": "where:misspec",
+      "level": "\"none\"",
+      "delta": 0.0005477598735563185,
+      "se": 0.0012090260201720903,
+      "n_seeds": 12,
+      "interval": [
+        -0.0021132884550071063,
+        0.0032088082021197433
+      ],
+      "label": "no_meaningful_difference",
+      "status": "settled",
+      "bootstrap_interval": [
+        -0.0015210633427691193,
+        0.002970247664306444
+      ],
+      "bootstrap_label": "no_meaningful_difference",
+      "diagnostic_disagreement": false
+    },
+    {
+      "task_id": "where:misspec",
+      "level": "\"mild\"",
+      "delta": 0.0006373623555256289,
+      "se": 0.0016760664219577098,
+      "n_seeds": 12,
+      "interval": [
+        -0.0030516349665311807,
+        0.004326359677582438
+      ],
+      "label": "no_meaningful_difference",
+      "status": "settled",
+      "bootstrap_interval": [
+        -0.0024558681608972525,
+        0.003958412212675548
+      ],
+      "bootstrap_label": "no_meaningful_difference",
+      "diagnostic_disagreement": false
+    },
+    {
+      "task_id": "where:misspec",
+      "level": "\"strong\"",
+      "delta": 0.02757320678011001,
+      "se": 0.006416397129857714,
+      "n_seeds": 12,
+      "interval": [
+        0.013450811916038601,
+        0.04169560164418142
+      ],
+      "label": "paper_better",
+      "status": "settled",
+      "bootstrap_interval": [
+        0.015862128722586962,
+        0.040057205585204717
+      ],
+      "bootstrap_label": "paper_better",
+      "diagnostic_disagreement": false
+    },
+    {
+      "task_id": "where:logging",
+      "level": "\"uniform\"",
+      "delta": 0.0037949778362857903,
+      "se": 0.003897900207049635,
+      "n_seeds": 12,
+      "interval": [
+        -0.004784242674948581,
+        0.012374198347520161
+      ],
+      "label": null,
+      "status": "ambiguous",
+      "bootstrap_interval": [
+        -0.0033758481413340975,
+        0.010866137742592888
+      ],
+      "bootstrap_label": null,
+      "diagnostic_disagreement": false
+    },
+    {
+      "task_id": "where:logging",
+      "level": "\"moderate\"",
+      "delta": 0.014294244772416921,
+      "se": 0.003936105772854244,
+      "n_seeds": 12,
+      "interval": [
+        0.005630934377813701,
+        0.022957555167020142
+      ],
+      "label": null,
+      "status": "ambiguous",
+      "bootstrap_interval": [
+        0.007187643858095624,
+        0.021864194501399918
+      ],
+      "bootstrap_label": null,
+      "diagnostic_disagreement": false
+    },
+    {
+      "task_id": "where:logging",
+      "level": "\"strong\"",
+      "delta": 0.01066910640048925,
+      "se": 0.003488982031630173,
+      "n_seeds": 12,
+      "interval": [
+        0.002989908725044864,
+        0.018348304075933637
+      ],
+      "label": null,
+      "status": "ambiguous",
+      "bootstrap_interval": [
+        0.004360233132546532,
+        0.017523139483470323
+      ],
+      "bootstrap_label": null,
+      "diagnostic_disagreement": false
+    },
+    {
+      "task_id": "where:budget",
+      "level": "\"loose\"",
+      "delta": 0.011937641690632881,
+      "se": 0.003230326549552583,
+      "n_seeds": 12,
+      "interval": [
+        0.00482774089281762,
+        0.019047542488448144
+      ],
+      "label": null,
+      "status": "ambiguous",
+      "bootstrap_interval": [
+        0.005531133462134393,
+        0.01777851203793287
+      ],
+      "bootstrap_label": null,
+      "diagnostic_disagreement": false
+    },
+    {
+      "task_id": "where:budget",
+      "level": "\"binding\"",
+      "delta": 0.007234577648828425,
+      "se": 0.0022488174384701944,
+      "n_seeds": 12,
+      "interval": [
+        0.0022849638390002357,
+        0.012184191458656613
+      ],
+      "label": null,
+      "status": "ambiguous",
+      "bootstrap_interval": [
+        0.002993816863616968,
+        0.011416172039144502
+      ],
+      "bootstrap_label": null,
+      "diagnostic_disagreement": false
+    }
+  ],
+  "artifact_sha256": "3a128396244557083f4cdab3708cba71181da4fd78499c1f0026bbe31fe1ac59"
+}

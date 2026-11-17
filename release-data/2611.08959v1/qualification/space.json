@@ -1,0 +1,61 @@
+{
+  "title": "Raw-error stacking vs student-relative weighting for a ridge student",
+  "setting": "Inputs are standard Gaussian in 10 dimensions, and the target is a random linear function of them. Two linear weak supervisors have equal raw error size, but the second supervisor's error is partly outside the student's 5-dimensional representation, with the share set by the invisible-fraction factor. The student is ridge regression on the first 5 coordinates, fit to each convex aggregate's pseudo-labels on an unlabeled pool, and the metric is the population excess risk over the representation floor of the chosen weights divided by that of the oracle best convex weight.",
+  "paper": {
+    "title": "Accuracy Is Not Value: Choosing Weak Supervisors by What the Student Inherits",
+    "arxiv_id": "2611.08959",
+    "claim": "For a shared linear squared-loss student, weights set by raw supervisor error inner products can be far from excess-risk optimal, while weights set by the student-relative error geometry, with a few clean anchors estimating the target projection, track the optimum."
+  },
+  "metric": {
+    "name": "relative_excess_risk_ratio",
+    "goal": "min",
+    "min_effect": 0.05,
+    "description": "Population excess risk of the student fit under the method's convex weight, divided by the excess risk under the oracle best convex weight (chosen with the true target). Excess is measured over the clean representation floor ||Q beta||^2, so ridge bias is included. Values near 1 mean near-optimal weighting. For raw stacking at large n and small lambda, the expected ratio is about (1+a)^2/(4a) with a = 1 - invisible fraction (1.0 at fraction 0, about 1.56 at 0.75). The ratio is right-skewed, so compare medians or log-ratios across seeds."
+  },
+  "factors": [
+    {
+      "name": "method",
+      "role": "treatment",
+      "levels": [
+        "raw_error_stacking",
+        "student_relative"
+      ],
+      "description": "raw_error_stacking (baseline): convex weights minimizing the anchor-estimated raw error Gram (forecast combination), ignoring the student. student_relative (paper): convex weights minimizing the student's excess-risk objective, using the ridge operator computed from the unlabeled pool and the target projection estimated by OLS on the anchors."
+    },
+    {
+      "name": "student_invisible_error_fraction",
+      "role": "context",
+      "levels": [
+        0.0,
+        0.25,
+        0.5,
+        0.75
+      ],
+      "description": "Share of supervisor 2's squared error that lies in directions the student's representation cannot see. At 0 all error is visible, so raw and student-relative weights should agree (ratio near 1). Larger values should widen the raw-stacking gap."
+    },
+    {
+      "name": "ridge_regularization",
+      "role": "context",
+      "levels": [
+        0.01,
+        1.0,
+        10.0
+      ],
+      "description": "Ridge penalty lambda on the student's K-dimensional fit. Larger lambda shrinks the student's transmitted errors and adds a weight-independent bias term, which changes the oracle's excess and the shape of the student's objective. Raw stacking does not use lambda, so its ratio changes only through the oracle."
+    },
+    {
+      "name": "unlabeled_sample_size",
+      "role": "context",
+      "levels": [
+        50,
+        1000
+      ],
+      "description": "Number of unlabeled inputs used to fit the student. It determines the finite-sample student operator, including leakage between visible and invisible coordinates, and therefore the oracle and student-relative weights. Raw stacking does not use the unlabeled pool."
+    }
+  ],
+  "treatment": {
+    "factor": "method",
+    "paper": "student_relative",
+    "baseline": "raw_error_stacking"
+  }
+}

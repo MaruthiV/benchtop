@@ -1,0 +1,9 @@
+{
+  "original_lab_sha256": "41f488d62253ff7e23c6e729df916de5be8b20fbd8ce3082f2b94bb40bd13f3b",
+  "observer_lab_sha256": "43e6fe8bec64f772645d019343719bd7ab96bf0536a437b56efd10cd50400a3c",
+  "review_subject_sha256": "2c740292f72229088f05606ca8ba71679b6315a94e9b6b5270d29f6badcdff51",
+  "scope": "Pre-qualification review controls on a separate observer copy. Four visible-seed representative runs, alpha-disabled equivalence, analytic Gaussian tilt and ESS scale diagnostics. No qualification/confirmation outcomes, original code edits or models.",
+  "visible_seed_scope": [
+    0
+  ]
+}

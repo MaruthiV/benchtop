@@ -1,0 +1,46 @@
+{
+  "title": "2-bit QAT of a digits MLP: AdamW vs GaLore-style projection vs ResQAdam residual update",
+  "setting": "Each run trains a 64-32-10 MLP on sklearn load_digits (8x8 images, standardized; 80/20 train/test split, with 20% of the training part held out for learning-rate selection) for 300 minibatch steps of size 64. The hidden and output weight matrices are fake-quantized to 2 or 4 bits (symmetric uniform, per-matrix scale) with a straight-through estimator, and biases stay dense. The optimizer is dense AdamW, a GaLore-style rank-r gradient projection, or a ResQAdam-style principal-subspace Adam plus a sign update of the momentum residual; each of 5 learning rates is trained once and the one with the best validation accuracy is kept.",
+  "paper": {
+    "title": "ResQAdam: Residual-Preserving Adaptive Optimization for Memory-Efficient Quantization Aware Training",
+    "arxiv_id": "2611.08924",
+    "claim": "Low-rank projection optimizers such as GaLore lose substantial accuracy under 2-bit QAT because they discard momentum outside the top-r subspace, and keeping only the sign of that residual (with Adam on the principal r x r block) recovers most of the gap to AdamW with a single momentum state."
+  },
+  "metric": {
+    "name": "quantized_test_accuracy",
+    "goal": "max",
+    "min_effect": 0.01,
+    "description": "Test accuracy (fraction in [0,1]) of the quantized model on the 20% held-out test split, using the learning rate with the best validation accuracy. Average over seeds. Diagnostics: latent_test_accuracy (unquantized latent weights on test, shows how well the optimizer fits); state_frac_vs_adamw (weight-matrix optimizer state relative to AdamW, with the BF16 momentum counted as 2 bytes; at this layer size it is about 31% at rank 2, 38% at rank 4, and 54% at rank 8, not the asymptotic 25% from the paper, because the bases and r x r states are a large fraction of these small matrices; GaLore's diagnostic momentum EMA is not counted as memory); discarded_momentum_frac (mean fraction of momentum energy outside the projection, 0 for AdamW); selected_log10_lr (log10 of the chosen learning rate, to check that no method is at the edge of the grid)."
+  },
+  "factors": [
+    {
+      "name": "method",
+      "role": "treatment",
+      "levels": ["galore", "adamw", "resqadam"],
+      "description": "galore: GaLore-style rank-r projection of the gradient (SVD every 50 steps), Adam on the projected state, projected back with the same sqrt(nm)/r scale as ResQAdam so the residual term is the only difference. adamw: dense FP32 AdamW reference (ceiling, ignores rank). resqadam: the paper's method, one momentum EMA, Adam on the r x r principal coordinates, plus a sign update of the residual scaled to the principal update norm and fused with momentum-energy weights."
+    },
+    {
+      "name": "weight_bit_width",
+      "role": "context",
+      "levels": [2, 4],
+      "description": "Bits of symmetric uniform fake quantization of the hidden and output weight matrices. 2 bits gives ternary weights {-s, 0, s}, where quantization error is largest and the residual may matter most. 4 bits should show a smaller gap between methods."
+    },
+    {
+      "name": "projection_rank",
+      "role": "context",
+      "levels": [2, 4, 8],
+      "description": "Rank r of the projection, applied to GaLore and ResQAdam (AdamW ignores it). The paper's argument predicts the residual term helps more when r is small relative to the 32-unit hidden layer."
+    },
+    {
+      "name": "init_regime",
+      "role": "context",
+      "levels": ["from_scratch", "finetune_from_fp32_pretrained"],
+      "description": "from_scratch: random Glorot init and QAT from the start. finetune_from_fp32_pretrained: 300 steps of dense FP32 AdamW on the same training split (shared by all methods for a seed), then the same QAT run from that checkpoint."
+    }
+  ],
+  "treatment": {
+    "factor": "method",
+    "paper": "resqadam",
+    "baseline": "galore"
+  }
+}

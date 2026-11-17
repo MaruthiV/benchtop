@@ -1,0 +1,17 @@
+{
+  "stage": "synthesis",
+  "errors": [],
+  "info": {
+    "median_secs": 0.18533383356407285,
+    "max_secs": 0.3758475426584482,
+    "seed_varies": true,
+    "arms_differ": true
+  },
+  "files": {
+    "drafts/synthesis/lab.py": "b69990eeca44b61d9bd975ca78b4729d481fbca555fbba9e79134c8c6cd61714",
+    "drafts/synthesis/space.json": "e9d31ec576d027c0b687e6ad0fb2cc108acd6a101dfe438f8e14a2e5edf9c476"
+  },
+  "finished_at_utc": "2026-11-10T18:09:46.828522+00:00",
+  "seed_scope": "mechanical probes on visible seeds 0 and 1 only; no qualification or confirmation",
+  "record_sha256": "38e2232bb068fd8d8fbe68b63e164636d4e7d3261ed8a835195e8dd4aa23772f"
+}
