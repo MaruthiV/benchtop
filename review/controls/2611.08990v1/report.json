@@ -1,0 +1,86 @@
+{
+  "scope": "Visible-only pre-qualification controls, not hidden outcomes",
+  "rows": [
+    {
+      "config": {
+        "probe": "oracle",
+        "budget": 0.0
+      },
+      "seed": 0,
+      "ok": true,
+      "metrics": {
+        "oracle_lp_absolute_error": 0.0
+      },
+      "secs": 0.6720003327354789
+    },
+    {
+      "config": {
+        "probe": "oracle",
+        "budget": 1.0
+      },
+      "seed": 0,
+      "ok": true,
+      "metrics": {
+        "oracle_lp_absolute_error": 0.0
+      },
+      "secs": 0.5198127496987581
+    },
+    {
+      "config": {
+        "probe": "oracle",
+        "budget": 10.0
+      },
+      "seed": 0,
+      "ok": true,
+      "metrics": {
+        "oracle_lp_absolute_error": 0.0
+      },
+      "secs": 0.0032953331246972084
+    },
+    {
+      "config": {
+        "method": "separate_arm",
+        "misspec": "strong",
+        "logging": "strong",
+        "budget": "binding"
+      },
+      "seed": 0,
+      "ok": true,
+      "metrics": {
+        "value_gap": 0.21471182321903012,
+        "cate_param_err": 1.5857209507591274,
+        "cate_rmse": 0.9870282062750122,
+        "budget_violation": 0.0,
+        "spend_rate": 0.3998666017629961,
+        "moment_error": 5.551115123125783e-16,
+        "selected_feature_error": 0.0,
+        "steps": 2030.0
+      },
+      "secs": 0.353991374373436
+    },
+    {
+      "config": {
+        "method": "action_centered",
+        "misspec": "strong",
+        "logging": "strong",
+        "budget": "binding"
+      },
+      "seed": 0,
+      "ok": true,
+      "metrics": {
+        "value_gap": 0.13035398529364342,
+        "cate_param_err": 0.6727149738865048,
+        "cate_rmse": 0.3971140849699884,
+        "budget_violation": 0.0,
+        "spend_rate": 0.3998658125014881,
+        "moment_error": 5.828670879282072e-16,
+        "selected_feature_error": 0.0,
+        "steps": 2030.0
+      },
+      "secs": 0.34741141740232706
+    }
+  ],
+  "reported_worker_seconds": 1.8965112073346972,
+  "controller_wall_seconds": 1.2288868324831128,
+  "model_calls": 0
+}

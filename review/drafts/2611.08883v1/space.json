@@ -1,0 +1,46 @@
+{
+  "title": "Learned vs handcrafted adaptive restart for Nesterov on quadratics and logistic regression",
+  "setting": "Each run draws random convex quadratics (dimension 20, spectrum exactly in [1, kappa]) or 12 row-subsamples of standardized load_breast_cancer logistic regression, with the L2 weight set so that L/mu is about kappa. Nesterov's method with FISTA momentum uses a restart rule that is either the O'Donoghue-Candes gradient rule with a grid-tuned threshold, a learned 2-parameter sigmoid policy (threshold and sharpness) fit by backpropagating a smoothed log-residual surrogate through a 40-step unrolled trajectory on 64 training quadratics, or no restart. The metric is the median iteration count until the noise-free gradient norm falls below 1e-6 of its initial value (capped at 5000), reported over 200 held-out quadratics or 12 logistic subsamples, with optional gradient noise relative to the gradient norm.",
+  "paper": {
+    "title": "Learning to Restart: Differentiable Restart Policies for Optimization Dynamics",
+    "arxiv_id": "2611.08883",
+    "claim": "A restart policy learned with differentiable surrogate gradients through the restart event needs fewer iterations to reach a target accuracy than the handcrafted gradient-based adaptive restart rule, and this advantage transfers zero-shot from synthetic quadratics to logistic regression."
+  },
+  "metric": {
+    "name": "iters_median",
+    "goal": "min",
+    "min_effect": 10.0,
+    "description": "Median over held-out instances of the number of iterations until ||grad f(y_k)|| <= 1e-6 * ||grad f(x_0)||, where the gradient is noise-free at the query point. Instances that never reach the tolerance count as 5000. min_effect is 10 iterations."
+  },
+  "factors": [
+    {
+      "name": "method",
+      "role": "treatment",
+      "levels": ["odc_gradient", "learned_restart", "no_restart"],
+      "description": "odc_gradient is the O'Donoghue-Candes gradient restart rule (restart when grad·Δx > 0), with its threshold grid-tuned on the same training quadratics. learned_restart is the paper method: a sigmoid restart policy with threshold and sharpness fit by surrogate gradients on the same training quadratics, evaluated at the final temperature. no_restart is plain accelerated gradient as a reference."
+    },
+    {
+      "name": "condition_number",
+      "role": "context",
+      "levels": [10, 100, 1000],
+      "description": "Condition number kappa of the training and test quadratics. For logistic regression it sets L/mu of the regularized objective through the L2 weight, so the conditioning regime is comparable across families."
+    },
+    {
+      "name": "problem_family_transfer",
+      "role": "context",
+      "levels": ["synthetic_quadratic_train_and_test", "logistic_regression_breast_cancer_zero_shot"],
+      "description": "Test family. The learned and tuned policies are always fit on synthetic quadratics only, so the logistic level is a zero-shot transfer test on real data."
+    },
+    {
+      "name": "gradient_noise",
+      "role": "context",
+      "levels": [0.0, 0.01],
+      "description": "Relative gradient noise: the gradient used for updates and restart scores is g + sigma·|g|·xi/sqrt(d) with standard normal xi. The convergence check uses the noise-free gradient."
+    }
+  ],
+  "treatment": {
+    "factor": "method",
+    "paper": "learned_restart",
+    "baseline": "odc_gradient"
+  }
+}

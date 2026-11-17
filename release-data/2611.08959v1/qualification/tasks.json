@@ -1,0 +1,292 @@
+{
+  "schema_version": 1,
+  "grader_id": "seed_block_t_v1",
+  "seed_ids": [
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "binding": {
+    "execution_id": "08a76b682007e23597062259e8d97db926124ecd4ea7cf2fe3090474cbb95c06",
+    "qualification_sha256": "044ace419e0816b3a063d8bda8ed9a7b4c31f0efadb58e37ac20a220c95488d6",
+    "generator_sha256": {
+      "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+      "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+      "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+      "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+    },
+    "seed_ids": [
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ]
+  },
+  "interval_method": "student_t_95",
+  "status": "complete",
+  "issues": [],
+  "tasks": [
+    {
+      "id": "claim",
+      "kind": "claim",
+      "answer": "paper_better",
+      "delta": 0.1984677014495032,
+      "se": 0.03467339596891923,
+      "interval": [
+        0.12215207147193075,
+        0.27478333142707567
+      ],
+      "seed_std": 0.18819945786671274,
+      "top_share": 0.11280315523566611,
+      "grader_id": "seed_block_t_v1",
+      "seed_ids": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "binding": {
+        "execution_id": "08a76b682007e23597062259e8d97db926124ecd4ea7cf2fe3090474cbb95c06",
+        "qualification_sha256": "044ace419e0816b3a063d8bda8ed9a7b4c31f0efadb58e37ac20a220c95488d6",
+        "generator_sha256": {
+          "tasks.py": "bd7ca9a73faabfb1dc87e2859a30efbd05717169d8602b5d7eebed3ddd02b82a",
+          "stats.py": "7f1c6a33ccd7989aeed3291f75711f531a252100f15f7561bbdabf35cfeabac0",
+          "space.py": "bb62fe2cf0d7606e7b21531f3e61570ba744df2844f8ac9fc1caf99ab51f5047",
+          "cache.py": "9b184e4cb8c84a2a0c25cfd12b3d1d3b9a30307ddad002ef39ddff4995180729"
+        },
+        "seed_ids": [
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ]
+      },
+      "task_sha256": "58e8b40fa6c548df692acbf04cb47ec60f630b11aba0be6a63da432763b97db2"
+    }
+  ],
+  "contrasts": [
+    {
+      "task_id": "claim",
+      "delta": 0.1984677014495032,
+      "se": 0.03467339596891923,
+      "n_seeds": 12,
+      "interval": [
+        0.12215207147193075,
+        0.27478333142707567
+      ],
+      "label": "paper_better",
+      "status": "settled",
+      "bootstrap_interval": [
+        0.13456871754059474,
+        0.26129189377330325
+      ],
+      "bootstrap_label": "paper_better",
+      "diagnostic_disagreement": false
+    },
+    {
+      "task_id": "where:student_invisible_error_fraction",
+      "level": "0.0",
+      "delta": 0.0535727595643317,
+      "se": 0.023520526680387673,
+      "n_seeds": 12,
+      "interval": [
+        0.0018044293832589833,
+        0.1053410897454044
+      ],
+      "label": null,
+      "status": "ambiguous",
+      "bootstrap_interval": [
+        0.016174230961785566,
+        0.106312107346391
+      ],
+      "bootstrap_label": null,
+      "diagnostic_disagreement": false
+    },
+    {
+      "task_id": "where:student_invisible_error_fraction",
+      "level": "0.25",
+      "delta": 0.08034421081578173,
+      "se": 0.023934824066170115,
+      "n_seeds": 12,
+      "interval": [
+        0.0276640182367371,
+        0.13302440339482635
+      ],
+      "label": null,
+      "status": "ambiguous",
+      "bootstrap_interval": [
+        0.04036729463867039,
+        0.12944310828367062
+      ],
+      "bootstrap_label": null,
+      "diagnostic_disagreement": false
+    },
+    {
+      "task_id": "where:student_invisible_error_fraction",
+      "level": "0.5",
+      "delta": 0.17296123125140325,
+      "se": 0.037211000853037295,
+      "n_seeds": 12,
+      "interval": [
+        0.09106037058171088,
+        0.25486209192109566
+      ],
+      "label": "paper_better",
+      "status": "settled",
+      "bootstrap_interval": [
+        0.1037135627402111,
+        0.24250068128386695
+      ],
+      "bootstrap_label": "paper_better",
+      "diagnostic_disagreement": false
+    },
+    {
+      "task_id": "where:student_invisible_error_fraction",
+      "level": "0.75",
+      "delta": 0.48699260416649626,
+      "se": 0.08786873526303789,
+      "n_seeds": 12,
+      "interval": [
+        0.293594821816529,
+        0.6803903865164636
+      ],
+      "label": "paper_better",
+      "status": "settled",
+      "bootstrap_interval": [
+        0.32089404555594286,
+        0.6485550173431659
+      ],
+      "bootstrap_label": "paper_better",
+      "diagnostic_disagreement": false
+    },
+    {
+      "task_id": "where:ridge_regularization",
+      "level": "0.01",
+      "delta": 0.20218449259782278,
+      "se": 0.042022856226580765,
+      "n_seeds": 12,
+      "interval": [
+        0.10969280965845402,
+        0.29467617553719155
+      ],
+      "label": "paper_better",
+      "status": "settled",
+      "bootstrap_interval": [
+        0.12570003822885675,
+        0.27907537024227197
+      ],
+      "bootstrap_label": "paper_better",
+      "diagnostic_disagreement": false
+    },
+    {
+      "task_id": "where:ridge_regularization",
+      "level": "1.0",
+      "delta": 0.19555139137585156,
+      "se": 0.03943382266364131,
+      "n_seeds": 12,
+      "interval": [
+        0.10875813288749173,
+        0.28234464986421137
+      ],
+      "label": "paper_better",
+      "status": "settled",
+      "bootstrap_interval": [
+        0.12236266254884227,
+        0.2665218808014825
+      ],
+      "bootstrap_label": "paper_better",
+      "diagnostic_disagreement": false
+    },
+    {
+      "task_id": "where:ridge_regularization",
+      "level": "10.0",
+      "delta": 0.19766722037483533,
+      "se": 0.033591248667700344,
+      "n_seeds": 12,
+      "interval": [
+        0.12373338054827886,
+        0.2716010602013918
+      ],
+      "label": "paper_better",
+      "status": "settled",
+      "bootstrap_interval": [
+        0.135417003095703,
+        0.26102549822824844
+      ],
+      "bootstrap_label": "paper_better",
+      "diagnostic_disagreement": false
+    },
+    {
+      "task_id": "where:unlabeled_sample_size",
+      "level": "50",
+      "delta": 0.22209688123054705,
+      "se": 0.06477884631093189,
+      "n_seeds": 12,
+      "interval": [
+        0.07951960181232898,
+        0.3646741606487651
+      ],
+      "label": "paper_better",
+      "status": "settled",
+      "bootstrap_interval": [
+        0.1104286326822758,
+        0.35003209987419387
+      ],
+      "bootstrap_label": "paper_better",
+      "diagnostic_disagreement": false
+    },
+    {
+      "task_id": "where:unlabeled_sample_size",
+      "level": "1000",
+      "delta": 0.17483852166845945,
+      "se": 0.035703722617071526,
+      "n_seeds": 12,
+      "interval": [
+        0.09625515802825683,
+        0.25342188530866205
+      ],
+      "label": "paper_better",
+      "status": "settled",
+      "bootstrap_interval": [
+        0.10850655921601308,
+        0.2416344517231628
+      ],
+      "bootstrap_label": "paper_better",
+      "diagnostic_disagreement": false
+    }
+  ],
+  "artifact_sha256": "8564640339950ff4e4cbe40d5d499a9f73c70d5ad91a74c6522fe2e8ae7f9a88"
+}

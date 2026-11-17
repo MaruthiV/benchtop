@@ -1,0 +1,8 @@
+{
+  "source_lab_sha256": "f17f47a3eebc70e6d406dea871dd650e8988b552093c778ca5f0299b55af13cf",
+  "observer_lab_sha256": "1ed51eccd10c02bdabec1afe163982db1227878db084da1e14a5c592e54ec314",
+  "scope": "Separate pre-qualification observer; rank-two hand-constructed gradients and suppressed residual sign. Tests the factor-description claim that residual is the only difference. No trained-model accuracy, hidden seeds, original code edits or model sessions.",
+  "seed_scope": [
+    0
+  ]
+}

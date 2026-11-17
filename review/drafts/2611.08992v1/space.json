@@ -1,0 +1,46 @@
+{
+  "title": "Post-hoc scale averaging vs. invariant features for a rescaling-symmetric regression target",
+  "setting": "Inputs are 2D points x = s*g with g ~ N(0, I) and s log-uniform on [0.5, 2]. The target depends only on the direction of x, y = sin(2θ) + 0.5cos(3θ) + noise, where θ is the polar angle, so y is invariant to rescaling. The metric is the MSE of each predictor against the noiseless target on fresh test points, either at the training scale range or with all inputs scaled 100x larger.",
+  "paper": {
+    "title": "Enforcing Symmetries on Pre-trained ML Models for Physics",
+    "arxiv_id": "2611.08992",
+    "claim": "For a non-compact rescaling symmetry, post-hoc averaging of a trained MLP over a finite scale grid reduces test error mainly under out-of-distribution scale shift, while an MLP trained directly on scale-invariant features matches or beats the averaged model in-distribution."
+  },
+  "metric": {
+    "name": "test_mse",
+    "goal": "min",
+    "min_effect": 0.01,
+    "description": "Mean squared error between the predictor's output and the noiseless target over 2000 fresh test points, evaluated at the shift level given in the config. in_dist uses the training scale range; ood_100x multiplies all test inputs by 100. Lower is better. Diagnostics returned alongside: raw_test_mse, invariant_test_mse, in_dist_test_mse, gain_over_raw."
+  },
+  "factors": [
+    {
+      "name": "method",
+      "role": "treatment",
+      "levels": ["raw", "scale_avg", "invariant"],
+      "description": "raw: sklearn tanh MLP on unnormalized inputs, no averaging (baseline). scale_avg: the same trained raw MLP, averaged post hoc over a 7-point log-spaced scale grid in [0.5, 2] (paper method). invariant: a separately trained MLP on x/||x|| (strong comparator, third level)."
+    },
+    {
+      "name": "n_train",
+      "role": "context",
+      "levels": [50, 200, 1000],
+      "description": "Number of training points. Low counts test whether averaging helps in low-data regimes; training sets are prefixes of one shared pool."
+    },
+    {
+      "name": "shift",
+      "role": "context",
+      "levels": ["in_dist", "ood_100x"],
+      "description": "Scale of the held-out test inputs. in_dist matches the training scale range; ood_100x scales all test inputs by 100, which is where the paper reports the largest gains."
+    },
+    {
+      "name": "noise",
+      "role": "context",
+      "levels": [0.0, 0.3],
+      "description": "Standard deviation of Gaussian noise added to training targets. Noise changes how much variance averaging can remove relative to bias, and can change the ranking against the invariant-feature model."
+    }
+  ],
+  "treatment": {
+    "factor": "method",
+    "paper": "scale_avg",
+    "baseline": "raw"
+  }
+}

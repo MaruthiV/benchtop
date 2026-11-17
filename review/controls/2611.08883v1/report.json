@@ -1,0 +1,50 @@
+{
+  "scope": "Pre-qualification forward-rule diagnostic; no benchmark effect measured",
+  "rows": [
+    {
+      "score": -0.1,
+      "seed": 0,
+      "ok": true,
+      "metrics": {
+        "soft_weight": 0.11920292202211755,
+        "hard_weight": 0.0,
+        "draft_counter_after_weight": 4.985552001573277,
+        "hard_rule_counter": 5.524937810560445,
+        "full_reset_counter": 1.0,
+        "no_reset_counter": 5.524937810560445
+      },
+      "secs": 0.002050250768661499
+    },
+    {
+      "score": 0.0,
+      "seed": 0,
+      "ok": true,
+      "metrics": {
+        "soft_weight": 0.5,
+        "hard_weight": 0.0,
+        "draft_counter_after_weight": 3.2624689052802225,
+        "hard_rule_counter": 5.524937810560445,
+        "full_reset_counter": 1.0,
+        "no_reset_counter": 5.524937810560445
+      },
+      "secs": 0.00014395825564861298
+    },
+    {
+      "score": 0.1,
+      "seed": 0,
+      "ok": true,
+      "metrics": {
+        "soft_weight": 0.8807970779778823,
+        "hard_weight": 1.0,
+        "draft_counter_after_weight": 1.5393858089871686,
+        "hard_rule_counter": 1.0,
+        "full_reset_counter": 1.0,
+        "no_reset_counter": 5.524937810560445
+      },
+      "secs": 0.00010645762085914612
+    }
+  ],
+  "model_calls": 0,
+  "wall_seconds": 1.8053045002743602,
+  "recorded_worker_seconds": 0.002300666645169258
+}

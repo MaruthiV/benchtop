@@ -1,0 +1,17 @@
+{
+  "stage": "repair_1",
+  "errors": [],
+  "info": {
+    "median_secs": 0.19813650008291006,
+    "max_secs": 0.33523629046976566,
+    "seed_varies": true,
+    "arms_differ": true
+  },
+  "files": {
+    "drafts/repair_1/lab.py": "41f488d62253ff7e23c6e729df916de5be8b20fbd8ce3082f2b94bb40bd13f3b",
+    "drafts/repair_1/space.json": "596a5c9889be46d55b6d8141288635da74b5080ea2f239db99a6c0ce1ada6293"
+  },
+  "finished_at_utc": "2026-11-10T17:13:18.825393+00:00",
+  "seed_scope": "mechanical probes on visible seeds 0 and 1 only; no qualification or confirmation",
+  "record_sha256": "4a570a58ccd53152e6595623eb8d420f9454d810036f25f89ce5ad07479f3a7d"
+}

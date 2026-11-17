@@ -1,0 +1,41 @@
+{
+  "env_id": "2611.08959v1",
+  "min_effect": 0.05,
+  "qualification": {
+    "task_id": "claim",
+    "delta": 0.1984677014495032,
+    "se": 0.03467339596891923,
+    "n_seeds": 12,
+    "interval": [
+      0.12215207147193075,
+      0.27478333142707567
+    ],
+    "label": "paper_better",
+    "status": "settled",
+    "bootstrap_interval": [
+      0.13456871754059474,
+      0.26129189377330325
+    ],
+    "bootstrap_label": "paper_better",
+    "diagnostic_disagreement": false
+  },
+  "independent_confirmation": {
+    "task_id": "claim",
+    "delta": 0.396409182740809,
+    "se": 0.17244536614748157,
+    "n_seeds": 12,
+    "interval": [
+      0.01685949092363309,
+      0.7759588745579848
+    ],
+    "label": null,
+    "status": "ambiguous",
+    "bootstrap_interval": [
+      0.16142544815012388,
+      0.7605519236888576
+    ],
+    "bootstrap_label": "paper_better",
+    "diagnostic_disagreement": true
+  },
+  "scope": "Recorded paired-seed contrasts; no new experiment or change to the primary grading rule."
+}

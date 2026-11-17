@@ -1,0 +1,9 @@
+{
+  "original_lab_sha256": "b82a181870f2a0ceb6a690aff6686ce389d666a134ee25a481c1e051f4a4634f",
+  "probe_lab_sha256": "c845d68b8eb31ff1f8550c4ccf7dd763c308c9f681f3730a7977b6e07803c22a",
+  "subject_sha256": "315c95227fc1e3ca3c31339ac8388d7cd81674cef691a13a84c6360973476553",
+  "scope": "Pre-qualification scientific review only: manual finite/essential H1 controls in a separate sandboxed observer copy. No qualification/confirmation data, original lab edits, outcome-based repairs or model calls.",
+  "seed_scope": [
+    0
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "scope": "qualia_connectivity_only_excluded_from_scientific_results",
+  "qualia_verified": true,
+  "client_observed": true,
+  "client_stopped": true,
+  "client_identity_source": "native desktop operator observation, not provider authentication",
+  "displayed_model_label": "Haiku 5.5",
+  "reported_provider_model_id": null,
+  "tool_counts": {
+    "describe_lab": 1,
+    "run_experiments": 4,
+    "submit_answer": 1
+  },
+  "submission_response_keys": [
+    "received"
+  ],
+  "cached_reward_claimed": false,
+  "model_sessions_in_this_conversation": 1,
+  "demo_duration_seconds": 85,
+  "demo_sha256": "ebc0cda35121cd190a893d2e936d147e5982bbb8334951fef848b6947027bc3b",
+  "disclosures": [
+    "Initial describe_lab call was observed and recorded in the MCP log but its video prefix was lost during capture interruption",
+    "The client displayed Haiku 5.5; exact provider-reported model ID unavailable",
+    "Cached historical integration outcomes excluded from scientific results"
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "title": "Energy-descent vs direct-output looped reasoner on 4x4 Latin-square completion",
+  "setting": "Synthetic 4x4 Latin-square completion puzzles built from all 576 squares, with 96 squares held out for test, and 4, 8, or 12 blanked cells. Both arms use the same 2-hidden-layer, 128-unit MLP as a looped block over a 64-d latent (16 cells x 4 symbols): the baseline is trained with cross-entropy on its decoded latent, while the energy arm learns a scalar energy with contrastive training against wrong completions found by its own descent, then decodes after gradient descent with a gradient-norm stop. The metric is exact-match accuracy on 256 fresh held-out puzzles at a fixed budget of block forward passes, where one energy-gradient step costs 2 passes.",
+  "paper": {
+    "title": "Energy-Based Reasoners: Your Recurrent Reasoner Should Be an Energy-Based Model",
+    "arxiv_id": "2611.08977",
+    "claim": "At matched inference compute, looped reasoning that descends a learned energy with a gradient-norm stopping rule reaches more exact solutions than a same-block looped baseline that outputs states directly, with the advantage growing on harder puzzles."
+  },
+  "metric": {
+    "name": "exact_match_accuracy_at_matched_compute",
+    "goal": "max",
+    "min_effect": 0.02,
+    "description": "Fraction of held-out puzzles whose single-sample decoded completion (sample 0) is a valid completion of the givens. Budget is in block forward passes; energy descent steps cost 2 passes each. Diagnostics: coverage (distinct valid solutions hit across 16 samples divided by the number of valid solutions, averaged over puzzles), mean_passes, early_stop_frac, and mean_blanks."
+  },
+  "factors": [
+    {
+      "name": "method",
+      "role": "treatment",
+      "levels": ["direct_output", "energy_descent"],
+      "description": "direct_output: looped residual MLP trained with cross-entropy on the decoded latent after a random 1-16 steps, then run for exactly the budget in passes. energy_descent: scalar energy MLP of the same shape, trained contrastively (valid completions as positives, wrong completions from its own exploratory descent as negatives), then run for budget//2 gradient-descent steps with early stopping when the gradient norm falls below 0.1 of its initial value."
+    },
+    {
+      "name": "puzzle_difficulty",
+      "role": "context",
+      "levels": ["4 blanks", "8 blanks", "12 blanks"],
+      "description": "Number of blanked cells in the 4x4 Latin square at generation time."
+    },
+    {
+      "name": "inference_step_budget",
+      "role": "context",
+      "levels": [4, 8, 16],
+      "description": "Matched compute budget in block forward passes. The baseline gets budget steps; the energy arm gets budget/2 descent steps with 2 passes each."
+    },
+    {
+      "name": "solution_multiplicity",
+      "role": "context",
+      "levels": ["unique solution", "multiple solutions"],
+      "description": "Multiple: blanks drawn at random and kept only when at least 2 completions exist. Unique: blanks drawn at random, then restored one at a time until exactly one completion remains, so unique puzzles can have fewer realized blanks than the difficulty label; mean_blanks reports the realized count."
+    }
+  ],
+  "treatment": {
+    "factor": "method",
+    "paper": "energy_descent",
+    "baseline": "direct_output"
+  }
+}

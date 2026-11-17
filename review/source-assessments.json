@@ -1,0 +1,1374 @@
+[
+  {
+    "version": "2611.08833v1",
+    "draft_hashes": {
+      "lab_sha256": "b82a181870f2a0ceb6a690aff6686ce389d666a134ee25a481c1e051f4a4634f",
+      "space_sha256": "fa7d30b2eb420c1dc77f735b7d50fac3dc093487125ec2f1fcce957966d796d4",
+      "validation_sha256": "908619ba15679a65b2ff2a41b9d79b6f977b8fa0d66063d4fbfc661b5a409766"
+    },
+    "proposal_file_sha256": "55867a1ea5872829ee29d5ebc0b8571d14bb8963fa0fd43140d2067239cf6553",
+    "assessment": {
+      "schema_version": 1,
+      "decision": "rejected",
+      "paper": {
+        "url": "https://arxiv.org/abs/2611.08833v1",
+        "version": "2611.08833v1",
+        "sections": [
+          "Section 2.1: persistent homology birth/death semantics",
+          "Section 2.3: vectorized persistence summaries",
+          "Section 3, Definition 3.1, Equations 9, 11 and 12: filtration rules",
+          "Section 5.2: graph-population permutation-test experiment"
+        ]
+      },
+      "scope": {
+        "paper_mechanism": "Alternative monotone simplex filtrations use all nonnegative vertex values; higher-dimensional filling can occur after the birth of a loop.",
+        "miniature_comparison": "LpF versus LSF on fixed symmetric 6-neighbor clique complexes of synthetic annulus point clouds, using three H1 summary features and a nearest-centroid classifier.",
+        "preserved_assumptions": [
+          "Exact LSF/LpF/SMF aggregation formulas on nonnegative vertex values.",
+          "Common point clouds, complexes, classifier and train-only scaling within a fixed configuration/seed."
+        ],
+        "simplifications": [
+          "Synthetic annuli and radial vertex functions replace the paper\u2019s graph populations and node filters.",
+          "Three H1 summaries and classification replace the paper\u2019s PL/GPL/BF vectors and energy-based permutation test.",
+          "The draft censors every essential H1 bar at its own method-specific last filtration value."
+        ],
+        "unsupported_claims": [
+          "Replication of paper Section 5 empirical power or real-data results.",
+          "Attribution of classification differences specifically to preservation of finite H1 features or delayed triangle filling.",
+          "Scientific invalidity of the source paper; the concern is this generated measurement."
+        ]
+      },
+      "rationale": "Recommend rejecting this generated draft before qualification. Exact aggregation formulas and passing mechanical tests do not settle the scientific measurement: essential loops are assigned artificial finite lifetimes at method-specific endpoints, and those features enter the primary accuracy metric. The controlled cycle example proves endpoint sensitivity while max_dim=1 supplies no triangle deaths. The current comparison cannot isolate the claimed preservation of finite features; a narrower finite-horizon feature-map benchmark would require a different explicit scientific question and review. Retain this draft and diagnostics unchanged; do not repair or admit it merely to increase cohort size. This rejects the miniature, not the paper.",
+      "margin": {
+        "value": 0.01,
+        "rationale": "Unapproved proposal only; no qualification margin or data is authorized for the rejected recommendation."
+      },
+      "reviewer": {
+        "kind": "assistant",
+        "name": "Assistant proposal for Maruthi Vemula",
+        "reviewed_at_utc": "2026-11-09T20:16:14.006401+00:00"
+      },
+      "checks": {
+        "mechanism_fidelity": {
+          "status": "fail",
+          "evidence": [
+            {
+              "locator": "Section 3, Definition 3.1, Equations 9/11/12",
+              "finding": "The filtration formulas match. The paper motivates preservation of topological features through actual birth/filling events.",
+              "sha256": "dd3647e5a41421e02b46579c705a69786de63d9cd4b183a173c7527d5dc2ca2d",
+              "original_private_source_reference_sha256": "3044bc3433c0df594defb13c905fcd9a38703fdf509361b9a3c1bf09006ca5b7"
+            },
+            {
+              "locator": "_h1_lifetimes: end = simplices[-1][0] and essential-bar append; _summarise; run.featurize",
+              "finding": "The primary classifier includes essential H1 classes with artificial death at the method-specific endpoint, rather than distinguishing finite filling events. Half of the context grid has max_dim=1 and no triangles, so its cycles are all essential.",
+              "sha256": "b82a181870f2a0ceb6a690aff6686ce389d666a134ee25a481c1e051f4a4634f",
+              "original_private_source_reference_sha256": "b54f87d168eb42e2754c2d404d0ee92cc8dc860f5fb502a565989eeede1242db"
+            },
+            {
+              "locator": "cycle versus cycle_with_isolated_vertex, all three methods",
+              "finding": "The same unfilled cycle remains essential but its reported lifetime changes from 0 to 9.3 (LSF), 9.193774225 (LpF), or 9.295141265 (SMF) when only an isolated high-valued vertex is added. This is a hand-constructed function control, not a measured benchmark accuracy effect. It establishes endpoint sensitivity and leaves the claimed finite-feature attribution unisolated.",
+              "sha256": "bbadde899aadbb7b46f56b7a89683137050a23d685bea6a0701d724e9f32f0d5",
+              "source": "artifacts/fresh-review-probe-2611.08833v1/report.json"
+            }
+          ]
+        },
+        "baseline_fairness": {
+          "status": "unresolved",
+          "evidence": [
+            {
+              "locator": "_sample_clouds, _complex, _h1_lifetimes, standardisation and nearest-centroid prediction",
+              "finding": "The arms share generated data and learning code, but a common or otherwise justified essential-bar censoring convention/control is absent. Do not certify causal attribution from the current comparison.",
+              "sha256": "b82a181870f2a0ceb6a690aff6686ce389d666a134ee25a481c1e051f4a4634f",
+              "original_private_source_reference_sha256": "b54f87d168eb42e2754c2d404d0ee92cc8dc860f5fb502a565989eeede1242db"
+            }
+          ]
+        },
+        "shared_randomness": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "run rng_data; _sample_clouds draw order",
+              "finding": "A local generator is seeded once, all training/test clouds are drawn in the same fixed order regardless of filtration method, and the classifier has no stochastic initialization. This is a source-level bounded finding.",
+              "sha256": "b82a181870f2a0ceb6a690aff6686ce389d666a134ee25a481c1e051f4a4634f",
+              "original_private_source_reference_sha256": "b54f87d168eb42e2754c2d404d0ee92cc8dc860f5fb502a565989eeede1242db"
+            }
+          ]
+        },
+        "heldout_metric": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "_sample_clouds and run train-only mu/sd/centroids; test_acc",
+              "finding": "The 100 per-run test clouds are drawn after separate training clouds; feature scaling and centroids use training data only. No qualification/confirmation seed outcome has been inspected. This check does not resolve the feature-definition concern.",
+              "sha256": "b82a181870f2a0ceb6a690aff6686ce389d666a134ee25a481c1e051f4a4634f",
+              "original_private_source_reference_sha256": "b54f87d168eb42e2754c2d404d0ee92cc8dc860f5fb502a565989eeede1242db"
+            }
+          ]
+        },
+        "meaningful_margin": {
+          "status": "unresolved",
+          "evidence": [
+            {
+              "locator": "metric.min_effect and metric.description",
+              "finding": "The proposed 0.01 is one percentage point on a 100-cloud accuracy metric; no accepted pre-qualification margin is being frozen because this draft is recommended for rejection.",
+              "sha256": "fa7d30b2eb420c1dc77f735b7d50fac3dc093487125ec2f1fcce957966d796d4",
+              "original_private_source_reference_sha256": "19cffaabe6905f1c1061fa08b314dd28bf7e24b9319f25055eb2d5fe4d3b617a"
+            }
+          ]
+        },
+        "execution_behavior": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "Visible seeds 0/1; errors and info",
+              "finding": "Mechanical probes passed: median 0.203147729 seconds, max 0.395832917; repeatability and arm-difference checks passed on their bounded probes, not the full grid.",
+              "sha256": "dc32533c83cf75c45bbed5e3ecd05735a56cb75161a54e133558efa21e41f39b",
+              "original_private_source_reference_sha256": "60df5eb68eaee7e5774db1a087423832bf6f1546242e860c62022e4acee86b84"
+            },
+            {
+              "locator": "All nine diagnostic jobs",
+              "finding": "All nine tiny sandboxed topology-control jobs returned finite results; summed recorded worker seconds 0.015569581650197506. These are review overhead, not qualification/confirmation or model episodes.",
+              "sha256": "bbadde899aadbb7b46f56b7a89683137050a23d685bea6a0701d724e9f32f0d5",
+              "source": "artifacts/fresh-review-probe-2611.08833v1/report.json"
+            }
+          ]
+        },
+        "shortcut_audit": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "run and helper functions; accuracy construction",
+              "finding": "Source inspection found no hidden-seed branch, precomputed answer return or test-label use in model fitting. The endpoint issue is treated as a measurement/fidelity defect rather than evidence of cheating. This is not a general correctness/security certification.",
+              "sha256": "b82a181870f2a0ceb6a690aff6686ce389d666a134ee25a481c1e051f4a4634f",
+              "original_private_source_reference_sha256": "b54f87d168eb42e2754c2d404d0ee92cc8dc860f5fb502a565989eeede1242db"
+            }
+          ]
+        }
+      },
+      "original_record_sha256": "ff76a4331896a8242aa284f6c0af4e57c943ddf4dd894363121ed3152e342bd3",
+      "projection_note": "Human assertions retained; private subjects/paths and contact fields omitted. This projection is not the original signed or authenticated review."
+    },
+    "authorization_role": "Owner authorized adoption; assessment performed by Codex, without independent human scientific review."
+  },
+  {
+    "version": "2611.08883v1",
+    "draft_hashes": {
+      "lab_sha256": "888b96823324783065cce736c939c53739fc1bf96e016020fca8e63ca2074ca9",
+      "space_sha256": "2a31acc9f0882545a042ed0016c141df959721ee899b9ebad3896f95f11a2d52",
+      "validation_sha256": "28ffb2e57bfae8064778a3aca0409ad3d6461c184e74347060de8f07d5f9bc0a"
+    },
+    "proposal_file_sha256": "284b4b318d49a0d7e2472fa2965df8860254bd8a5dbbc7a8f1163a02bf05d727",
+    "assessment": {
+      "schema_version": 1,
+      "decision": "rejected",
+      "paper": {
+        "url": "https://arxiv.org/abs/2611.08883v1",
+        "version": "2611.08883v1",
+        "sections": [
+          "Section 2.2: discrete reset map at events",
+          "Section 3, Definitions 3.1 and 3.2, Equations 17-19: surrogate sensitivities",
+          "Section 4.1 and Appendix C.3: learned NAG restart experiment"
+        ]
+      },
+      "scope": {
+        "paper_mechanism": "Learn a discrete restart criterion using surrogate gradients for event times, reset states and changes to phase boundaries.",
+        "miniature_comparison": "A two-parameter sigmoid momentum-damping policy trained on small quadratics, compared with a grid-tuned binary gradient restart, with an optimizer transfer arm on a bundled logistic objective.",
+        "preserved_assumptions": [
+          "Shared seeded training and evaluation problems within each configuration.",
+          "Accelerated first-order optimization and training on synthetic quadratics before logistic-objective evaluation."
+        ],
+        "simplifications": [
+          "Two scalar policy parameters replace the paper MLP.",
+          "Fixed small quadratic and bundled-data objective families replace the reported QP/LP and real transfer benchmarks.",
+          "A continuous forward damping rule replaces discrete resets and their special sensitivity calculation."
+        ],
+        "unsupported_claims": [
+          "Implementation of Definition 3.2 or its continuous-limit sensitivity guarantees.",
+          "Replication of the paper empirical results or real-data transfer gains.",
+          "A qualification or confirmation label, calibration benefit, or indictment of the source paper."
+        ]
+      },
+      "rationale": "Recommend rejecting this generated draft before qualification. The source paper retains discrete forward resets and defines event-time, restart-state and global boundary-shift surrogate sensitivities. The draft instead differentiates through a sigmoid relaxation and retains that continuous damping rule during evaluation. This changes the mechanism under test. It can be an interesting separate optimization comparison, but does not implement the paper method claimed in space.json. Three hand-constructed controls expose fractional forward damping; they do not establish the behavior or effectiveness of a fitted policy. No repair after this scientific diagnosis is proposed; preserve the generated draft and all missing outcomes.",
+      "margin": {
+        "value": 10.0,
+        "rationale": "Unapproved draft proposal; no qualification authorized while rejection awaits the user decision."
+      },
+      "reviewer": {
+        "kind": "assistant",
+        "name": "Assistant proposal for Maruthi Vemula",
+        "reviewed_at_utc": "2026-11-10T04:47:38.696196+00:00"
+      },
+      "checks": {
+        "mechanism_fidelity": {
+          "status": "fail",
+          "evidence": [
+            {
+              "locator": "Section 3, Definitions 3.1-3.2, Equations 17-19",
+              "finding": "The discrete forward trajectory has actual reset events. The formal derivative uses the score backward difference and propagates restart-state and global boundary-shift sensitivities.",
+              "sha256": "1b75847a1d9e2204b4c79a5b0e2dfbc58025d4dc55622650ea6fba7a5b26f78a",
+              "original_private_source_reference_sha256": "df232dd7c210f73e2febe6c31346209b773e6f3da358295d5d38cd23e9b05133"
+            },
+            {
+              "locator": "_soft, _unroll lines134-161, _simulate lines120-126, run learned_restart branch",
+              "finding": "Training uses sigmoid interpolation of momentum/counter; evaluation retains expit at temperature0.05. No event-time/backward-difference or boundary-shift surrogate appears.",
+              "sha256": "888b96823324783065cce736c939c53739fc1bf96e016020fca8e63ca2074ca9",
+              "original_private_source_reference_sha256": "683ff897ab125b05717f20fff91ecd5d9a812d842f9339e0d9df993ddeed1fee"
+            },
+            {
+              "locator": "All three hand-constructed score controls, seed0, no trained-policy or hidden-seed outcomes",
+              "finding": "At the decision boundary the actual draft soft function returns0.5 and its stated counter interpolation gives3.26247, between full reset1 and uninterrupted5.52494. Nearby scores likewise yield fractional forward weights. This diagnoses a distinct rule family; it does not measure the size or direction of any trained-policy advantage.",
+              "sha256": "bb1b8300c1278877cc9766ee67f9dccfc2fd2ebbc8be95bb031f23cd951fd900",
+              "source": "artifacts/fresh-review-probe-2611.08883v1/report.json"
+            }
+          ]
+        },
+        "baseline_fairness": {
+          "status": "unresolved",
+          "evidence": [
+            {
+              "locator": "_tune_odc and _train_policy; _hard versus _soft",
+              "finding": "Both methods fit on the same training quadratics, but the claimed paper-method comparison instead contrasts continuous damping against binary restart. Relative advantages cannot be attributed to the paper surrogate mechanism.",
+              "sha256": "888b96823324783065cce736c939c53739fc1bf96e016020fca8e63ca2074ca9",
+              "original_private_source_reference_sha256": "683ff897ab125b05717f20fff91ecd5d9a812d842f9339e0d9df993ddeed1fee"
+            }
+          ]
+        },
+        "shared_randomness": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "run rng_train/rng_test/rng_noise/rng_init and construction before method branch",
+              "finding": "Independent seed streams keep data and initialization draw order independent of the selected treatment; no hidden-seed branch found in this bounded source review.",
+              "sha256": "888b96823324783065cce736c939c53739fc1bf96e016020fca8e63ca2074ca9",
+              "original_private_source_reference_sha256": "683ff897ab125b05717f20fff91ecd5d9a812d842f9339e0d9df993ddeed1fee"
+            }
+          ]
+        },
+        "heldout_metric": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "_train_policy, _tune_odc, run evaluation family construction and _simulate convergence test",
+              "finding": "Learned and tuned policies use synthetic training quadratics; the reported residual stopping metric is evaluated on separate random quadratics or bundled logistic optimization objectives. Logistic standardization defines that common objective rather than a predictive test accuracy. No qualification/confirmation outcomes have been read.",
+              "sha256": "888b96823324783065cce736c939c53739fc1bf96e016020fca8e63ca2074ca9",
+              "original_private_source_reference_sha256": "683ff897ab125b05717f20fff91ecd5d9a812d842f9339e0d9df993ddeed1fee"
+            }
+          ]
+        },
+        "meaningful_margin": {
+          "status": "unresolved",
+          "evidence": [
+            {
+              "locator": "metric.min_effect=10 and iteration cap5000",
+              "finding": "Ten iterations is a draft proposal. No actual pre-qualification margin is approved for this rejected recommendation.",
+              "sha256": "2a31acc9f0882545a042ed0016c141df959721ee899b9ebad3896f95f11a2d52",
+              "original_private_source_reference_sha256": "a1e14bd9812c1c8c0e03a090402b422245b8a0b1681ba87ba0f7a6e279e18e28"
+            }
+          ]
+        },
+        "execution_behavior": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "errors and bounded visible-seed mechanical probes",
+              "finding": "No mechanical errors; median0.146075s and max4.111479s on the frozen visible probes. seed_varies=false remains an explicit diagnostic, not evidence of stable grading.",
+              "sha256": "68775ceca136feff71cb36767d490ef5e7850dd442c573536ef58869616a227c",
+              "original_private_source_reference_sha256": "21a9c6abb62467ef86366304ef16f3c421bf60229bf7988f7e8fe3f87eaa3ef7"
+            },
+            {
+              "locator": "Three tiny sandbox jobs",
+              "finding": "All three returned finite results; recorded worker seconds0.002300666645169258. No models or lab sweeps.",
+              "sha256": "bb1b8300c1278877cc9766ee67f9dccfc2fd2ebbc8be95bb031f23cd951fd900",
+              "source": "artifacts/fresh-review-probe-2611.08883v1/report.json"
+            }
+          ]
+        },
+        "shortcut_audit": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "run and policy fitting/evaluation helpers",
+              "finding": "Bounded inspection found no qualification/confirmation data access, answer lookup, hidden-seed branch or training on evaluation outcomes. The issue is mechanism substitution, not a claimed deliberate cheat.",
+              "sha256": "888b96823324783065cce736c939c53739fc1bf96e016020fca8e63ca2074ca9",
+              "original_private_source_reference_sha256": "683ff897ab125b05717f20fff91ecd5d9a812d842f9339e0d9df993ddeed1fee"
+            }
+          ]
+        }
+      },
+      "original_record_sha256": "ad39c313a08c7432c46aa8db7669af9c8f43e21d4125385382785ead14954e40",
+      "projection_note": "Human assertions retained; private subjects/paths and contact fields omitted. This projection is not the original signed or authenticated review."
+    },
+    "authorization_role": "Owner authorized adoption; assessment performed by Codex, without independent human scientific review."
+  },
+  {
+    "version": "2611.08909v1",
+    "draft_hashes": {
+      "lab_sha256": "41f488d62253ff7e23c6e729df916de5be8b20fbd8ce3082f2b94bb40bd13f3b",
+      "space_sha256": "596a5c9889be46d55b6d8141288635da74b5080ea2f239db99a6c0ce1ada6293",
+      "validation_sha256": "4a570a58ccd53152e6595623eb8d420f9454d810036f25f89ce5ad07479f3a7d"
+    },
+    "proposal_file_sha256": "b82c917fd9b81a36c84e5b37cb359baf81a103140ba6ce319df1a3985730ceb0",
+    "assessment": {
+      "schema_version": 1,
+      "decision": "accepted",
+      "paper": {
+        "url": "https://arxiv.org/abs/2611.08909v1",
+        "version": "2611.08909v1",
+        "sections": [
+          "Section 1 Equations 3-4: weighted score tilt and Metropolis correction",
+          "Section 2 Equation 7: score-history stochastic approximation",
+          "Section 3 Theorem 3.1 Equation 14 and online Equation 16: inverse-Fisher geometry and normalization choices",
+          "Section 4 and Appendix A.4: finite ESS comparison and target-dispersion stability cap"
+        ]
+      },
+      "scope": {
+        "paper_mechanism": "Score-history feedback tilts a Gaussian target through theta^T M score(x); inverse-Fisher repulsion replaces identity repulsion while the base MALA kernel targets the corresponding surrogate.",
+        "miniature_comparison": "A finite-grid, finite-chain Gaussian experiment comparing inverse-Fisher and Euclidean repulsion under identical visible data/noise pools and alpha-search chain counts. Primary estimand is the equal-context average difference in log10 minimum-coordinate ESS per iteration, not posterior correctness.",
+        "preserved_assumptions": [
+          "The weighted score-tilt and exact Gaussian mean shift, with Metropolis forward/reverse proposal correction.",
+          "Score-history stochastic approximation uses the true-target score, and the proposal family/context is matched between arms.",
+          "Same initial point, per-step Gaussian/uniform pools and separate within-run tuning/evaluation pools for both treatments."
+        ],
+        "simplifications": [
+          "Only diagonal Gaussian targets; dimensions2/10/50 and finite2000-sample ESS replace the paper full benchmark.",
+          "The draft uses trace(S_hat M)=d (the general theorem with tau=d), not the paper online Eq16 choice tau=trace(S_hat). A finite alpha grid cannot remove all scalar-scale sensitivity.",
+          "Cumulative regularized score moments, ten-step refresh, bounded step adaptation and eigenvalue stabilization replace the exact online recursion/implementation.",
+          "First-negative-lag ESS replaces ArviZ bulk ESS. Acceptance-floor filtering replaces the paper marginal-dispersion stability cap. Four visible-only probes did not exceed the paper upper cap, but no general target-fidelity guarantee is made.",
+          "Nonfinite/large output clipping is retained as a numerical limitation; the four observed evaluation trajectories had finite samples and zero clipped entries."
+        ],
+        "unsupported_claims": [
+          "Replication of reported paper gains, asymptotic guarantees, online metric convergence or real-data results.",
+          "Posterior fidelity, a uniformly correct ESS estimator for adaptive nonstationary chains, or an unqualified gain in sampling accuracy.",
+          "A pure geometry effect separated from normalization and a finite scalar-strength search.",
+          "Uniform benefit in every context, best scalar alpha outside the grid, or any qualification/confirmation label before collection."
+        ]
+      },
+      "rationale": "Accept only the declared finite Gaussian miniature: inverse-Fisher versus identity repulsion with an equal finite alpha-search budget, measuring the stated finite-trajectory log ESS statistic. The core score-tilt, Gaussian mean shift, MALA correction and score-history update are present, and bounded disable/analytic controls pass. This does not replicate the paper online normalization or stability-capped empirical comparison, certify target fidelity or prove a pure geometry effect independent of scalar strength. The limitations below are part of the acceptance, fixed before qualification.",
+      "margin": {
+        "value": 0.1,
+        "rationale": "Freeze0.1log10 units before qualification: this is a25.89% geometric-mean change in the measured ESS statistic across equally weighted contexts. It is a practical toy-task threshold, not a posterior-accuracy or paper-replication threshold."
+      },
+      "reviewer": {
+        "kind": "assistant",
+        "name": "Codex source assessment for owner approval",
+        "reviewed_at_utc": "2026-11-10T17:17:47.897796+00:00"
+      },
+      "checks": {
+        "mechanism_fidelity": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "Equations3-4,7,14 and16",
+              "finding": "The core method is weighted score repulsion, with a general trace parameter in Theorem3.1. Online Eq16 chooses a different scale; the miniature explicitly limits acceptance to tau=d and its finite-grid recipe.",
+              "sha256": "5a661a277aee579cace311add9710440ec678f367f9f9c1b800bd169ee61e8f2",
+              "original_private_source_reference_sha256": "e541f1e3056ef96149d210205a7ca93c62b205c6a204a84604b8bfcb30075a26"
+            },
+            {
+              "locator": "_chain: m=alpha*(M@theta), tilted Gaussian log density, forward/reverse q and score-history update; _refresh",
+              "finding": "The Gaussian tilt and MALA correction are implemented. M is symmetric regularized inverse score moment; proposal preconditioning is the matched base-sampler context.",
+              "sha256": "41f488d62253ff7e23c6e729df916de5be8b20fbd8ce3082f2b94bb40bd13f3b",
+              "original_private_source_reference_sha256": "9a7de8b51dc3a60e57935af87cf1a958d18ca65c6dd5c96df88b8dc058bc7e27"
+            },
+            {
+              "locator": "alpha_zero and target_ratio controls",
+              "finding": "Both disabled-repulsion sampler families matched exactly under shared draws; the analytic Eq4 target-ratio difference was6.94e-17. This is bounded core-mechanism evidence, not a guarantee on every trajectory.",
+              "sha256": "4088fe9f2f39d0c31e5716a0b3990a7a59dcac79f13496db331df51a51e15f7d",
+              "source": "artifacts/fresh-review-probe-2611.08909v1/report.json"
+            }
+          ]
+        },
+        "baseline_fairness": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "run ALPHA_GRID, pilot loops and common _chain",
+              "finding": "Both arms receive the same finite alpha grid, pilot lengths, evaluation length, initialization and proposal-family context. The estimand is the whole finite recipe, including its scalar normalization, not a geometry-only causal effect or unrestricted tuned baseline.",
+              "sha256": "41f488d62253ff7e23c6e729df916de5be8b20fbd8ce3082f2b94bb40bd13f3b",
+              "original_private_source_reference_sha256": "9a7de8b51dc3a60e57935af87cf1a958d18ca65c6dd5c96df88b8dc058bc7e27"
+            }
+          ]
+        },
+        "shared_randomness": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "run rng_init/rng_noise, xi_e/u_e/xi_p/u_p drawn before method branch",
+              "finding": "Both methods use the same initial point and pre-drawn Gaussian/uniform streams for a fixed config/seed. Separate pools isolate alpha tuning from evaluation.",
+              "sha256": "41f488d62253ff7e23c6e729df916de5be8b20fbd8ce3082f2b94bb40bd13f3b",
+              "original_private_source_reference_sha256": "9a7de8b51dc3a60e57935af87cf1a958d18ca65c6dd5c96df88b8dc058bc7e27"
+            },
+            {
+              "locator": "Two alpha_zero controls",
+              "finding": "When the repulsion is disabled, both methods return exactly identical samples and acceptance in MALA and FisherMALA on the hand-constructed control.",
+              "sha256": "4088fe9f2f39d0c31e5716a0b3990a7a59dcac79f13496db331df51a51e15f7d",
+              "source": "artifacts/fresh-review-probe-2611.08909v1/report.json"
+            }
+          ]
+        },
+        "heldout_metric": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "run: tune on xi_p/u_p and evaluate on xi_e/u_e; _min_ess",
+              "finding": "Alpha selection does not use the evaluation pool. The metric is the explicit finite-trajectory autocorrelation statistic, with posterior-mean MSE as a separate diagnostic. No qualification/confirmation data were inspected.",
+              "sha256": "41f488d62253ff7e23c6e729df916de5be8b20fbd8ce3082f2b94bb40bd13f3b",
+              "original_private_source_reference_sha256": "9a7de8b51dc3a60e57935af87cf1a958d18ca65c6dd5c96df88b8dc058bc7e27"
+            },
+            {
+              "locator": "ess_scale and four observed runs",
+              "finding": "Rescaling a generic sample by10 preserves ESS; this records why ESS alone cannot establish target fidelity. In the four actual visible-seed observed runs, maximum marginal SD ratios were1.0005-1.0379 and minimum ratios0.4701-0.9872; no claim of complete finite-sample target convergence is made.",
+              "sha256": "4088fe9f2f39d0c31e5716a0b3990a7a59dcac79f13496db331df51a51e15f7d",
+              "source": "artifacts/fresh-review-probe-2611.08909v1/report.json"
+            }
+          ]
+        },
+        "meaningful_margin": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "metric.min_effect=0.1 on log10_min_ess_per_iter",
+              "finding": "An equal-context average log10 improvement of0.1 corresponds to a geometric mean ESS ratio of10^0.1=1.2589. A roughly26% change in the declared finite statistic is chosen before qualification, not tuned to settle a preferred label.",
+              "sha256": "596a5c9889be46d55b6d8141288635da74b5080ea2f239db99a6c0ce1ada6293",
+              "original_private_source_reference_sha256": "3e651a81b5d1172061d4bb27252d6aedc3a275ed7952a896ca319ea7080cd62f"
+            }
+          ]
+        },
+        "execution_behavior": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "Bounded mechanical validation of repair_1",
+              "finding": "Initial synthesis failed a positive-definite factorization and was repaired once using only mechanical feedback. The reviewed repair passed; median0.19814s,max0.33524s,seed variation and arm differences observed on visible probes.",
+              "sha256": "1228d41f9a057338c64cde9431a9c14d1ceb7963c109f7551d10fd5a173042d1",
+              "original_private_source_reference_sha256": "1773703bab8e22b502576f46fb73a7f16fc92471d2399a3d1f9c0d399476c961"
+            },
+            {
+              "locator": "All eight sandbox jobs",
+              "finding": "All eight completed;0.40136recorded worker seconds. Four representative actual runs had finite samples and zero outside-clip counts. Full paired qualification grid execution remains separate.",
+              "sha256": "4088fe9f2f39d0c31e5716a0b3990a7a59dcac79f13496db331df51a51e15f7d",
+              "source": "artifacts/fresh-review-probe-2611.08909v1/report.json"
+            }
+          ]
+        },
+        "shortcut_audit": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "Entire run and helper source",
+              "finding": "No qualification/confirmation data reads, cached answer lookup, hidden-seed condition or evaluation-pool use during tuning found in source inspection. Numeric clipping and finite-ESS limits remain explicitly disclosed rather than certified away.",
+              "sha256": "41f488d62253ff7e23c6e729df916de5be8b20fbd8ce3082f2b94bb40bd13f3b",
+              "original_private_source_reference_sha256": "9a7de8b51dc3a60e57935af87cf1a958d18ca65c6dd5c96df88b8dc058bc7e27"
+            }
+          ]
+        }
+      },
+      "original_record_sha256": "955703830a37dc28e523dcba9d583327f922b76a4d7629479ff7a80a8876c4be",
+      "projection_note": "Human assertions retained; private subjects/paths and contact fields omitted. This projection is not the original signed or authenticated review."
+    },
+    "authorization_role": "Owner authorized adoption; assessment performed by Codex, without independent human scientific review."
+  },
+  {
+    "version": "2611.08924v1",
+    "draft_hashes": {
+      "lab_sha256": "f17f47a3eebc70e6d406dea871dd650e8988b552093c778ca5f0299b55af13cf",
+      "space_sha256": "43f9c79b9aaf9929d8cb1e0f7000531b369b5e61939597fc12f31f96f2fd56da",
+      "validation_sha256": "42025ded4e18eb786f9360e9115b6ae80ced4c19d0e466aef615329cc34b2674"
+    },
+    "proposal_file_sha256": "d32b3b5fe9a5bf9fc0743b5b1070bed99e28156b72f89fa94c87254525d09ba7",
+    "assessment": {
+      "schema_version": 1,
+      "decision": "rejected",
+      "paper": {
+        "url": "https://arxiv.org/abs/2611.08924v1",
+        "version": "2611.08924v1",
+        "sections": [
+          "Sections3.1-3.3, Equations1-7: principal/residual updates",
+          "Section3.4 and AppendixA Equations9-18: transport of both principal moments",
+          "Section4: tuned QAT comparisons"
+        ]
+      },
+      "scope": {
+        "paper_mechanism": "Principal-subspace Adam combined with a norm-matched sign of dense-momentum residual and energy-derived weights, including moment transport when bases change.",
+        "miniature_comparison": "Two approximate projected optimizers and a dense AdamW reference on fake-quantized digits MLPs, with separate train/validation/test splits.",
+        "preserved_assumptions": [
+          "Fake-quantized forward passes and STE updates.",
+          "Momentum-derived two-sided principal and residual sign components in the treatment.",
+          "Shared seeded data, parameters and minibatches, with validation-only learning-rate selection."
+        ],
+        "simplifications": [
+          "Small digits MLP and float64 arithmetic replace LLM QAT and actual low-precision optimizer storage.",
+          "Baseline is one-sided gradient projection; treatment uses two-sided momentum projection.",
+          "Only first moments are transported on basis refresh; second-moment transport is omitted."
+        ],
+        "unsupported_claims": [
+          "The residual term is the only difference between arms.",
+          "A causal residual-only gain or exact implementation of the paper optimizer.",
+          "Measured BF16 memory savings, throughput, LLM results or invalidity of the source paper."
+        ]
+      },
+      "rationale": "Exclude this generated draft before qualification. It claims the residual sign is the only optimizer difference, but the baseline uses one-sided projected coordinates while the treatment uses a two-sided r-by-r state and energy weighting. With a rank-two gradient, negligible residual energy and the residual sign explicitly suppressed in an observer, the updates still differ. The treatment also omits the paper second-moment transport across refreshed bases. The source comparison can describe two approximate recipes, but does not isolate the residual mechanism as declared or implement the full stated paper update. No trained accuracy effect or source-paper defect is claimed, and no scientific-feedback repair is proposed.",
+      "margin": {
+        "value": 0.01,
+        "rationale": "Unapproved draft proposal; no qualification for this exclusion recommendation."
+      },
+      "reviewer": {
+        "kind": "assistant",
+        "name": "Codex source assessment",
+        "reviewed_at_utc": "2026-11-10T17:29:26.710036+00:00"
+      },
+      "checks": {
+        "mechanism_fidelity": {
+          "status": "fail",
+          "evidence": [
+            {
+              "locator": "Section3.4 and AppendixA Equations9-18",
+              "finding": "Paper transports both first and second principal moments to refreshed coordinates.",
+              "sha256": "a6f1475f83d2c374233abf604cb70ec7e0eb9b97366cc0589d417049de339493",
+              "original_private_source_reference_sha256": "41605c59abc99bced5f0a2cd2e75c14ab550ae992487f9ed101a2bc8facc1a59"
+            },
+            {
+              "locator": "_MatrixOpt._resq basis refresh",
+              "finding": "Only self.m1 is transformed; self.v is reused unchanged across changing bases.",
+              "sha256": "f17f47a3eebc70e6d406dea871dd650e8988b552093c778ca5f0299b55af13cf",
+              "original_private_source_reference_sha256": "b09c84e0ac34bb45cfb5fe829a1e445eef9950437f95867ace1bc36dac39c82d"
+            },
+            {
+              "locator": "method.description",
+              "finding": "Metadata calls the treatment the paper method and says matching a scalar principal scale makes residual the only difference; this exceeds the implemented comparison.",
+              "sha256": "43f9c79b9aaf9929d8cb1e0f7000531b369b5e61939597fc12f31f96f2fd56da",
+              "original_private_source_reference_sha256": "477fbe58cdc35b6a21a5bc9761e96c48c96f74cf23f582758aee87b568824df5"
+            }
+          ]
+        },
+        "baseline_fairness": {
+          "status": "fail",
+          "evidence": [
+            {
+              "locator": "_MatrixOpt.__init__, _galore and _resq",
+              "finding": "Baseline first/second moments use r-by-m or n-by-r coordinates from gradient singular vectors; treatment uses r-by-r coordinates from momentum singular vectors and energy weights.",
+              "sha256": "f17f47a3eebc70e6d406dea871dd650e8988b552093c778ca5f0299b55af13cf",
+              "original_private_source_reference_sha256": "b09c84e0ac34bb45cfb5fe829a1e445eef9950437f95867ace1bc36dac39c82d"
+            },
+            {
+              "locator": "Rank-two controls with residual sign suppressed, steps1 and3",
+              "finding": "Residual energy fractions were6.27e-32 and9.33e-32, yet max update differences were0.02738 and0.08214. First-state sizes were12 and4. This proves additional update differences, not any resulting test-accuracy effect.",
+              "sha256": "3fa3e1c9539e1e2e9624a560c3e657e012830056ade98c52f9386ff2dd3f3c60",
+              "source": "artifacts/fresh-review-probe-2611.08924v1/report.json"
+            }
+          ]
+        },
+        "shared_randomness": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "_init_params, _splits, _pretrained and run idx",
+              "finding": "Data partitions, initial weights/checkpoint and minibatch stream are seeded independently of method; each learning-rate arm sees the same batches.",
+              "sha256": "f17f47a3eebc70e6d406dea871dd650e8988b552093c778ca5f0299b55af13cf",
+              "original_private_source_reference_sha256": "b09c84e0ac34bb45cfb5fe829a1e445eef9950437f95867ace1bc36dac39c82d"
+            }
+          ]
+        },
+        "heldout_metric": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "_splits StandardScaler.fit(X_tr); run best selection via Xva and final Xte",
+              "finding": "Feature scaling is train-only, learning rates are selected on validation accuracy, and the primary metric uses held-out test data. No qualification/confirmation outcomes were inspected.",
+              "sha256": "f17f47a3eebc70e6d406dea871dd650e8988b552093c778ca5f0299b55af13cf",
+              "original_private_source_reference_sha256": "b09c84e0ac34bb45cfb5fe829a1e445eef9950437f95867ace1bc36dac39c82d"
+            }
+          ]
+        },
+        "meaningful_margin": {
+          "status": "unresolved",
+          "evidence": [
+            {
+              "locator": "metric.min_effect=0.01",
+              "finding": "One percentage point remains an unapproved draft margin because the declared mechanism comparison fails source review.",
+              "sha256": "43f9c79b9aaf9929d8cb1e0f7000531b369b5e61939597fc12f31f96f2fd56da",
+              "original_private_source_reference_sha256": "477fbe58cdc35b6a21a5bc9761e96c48c96f74cf23f582758aee87b568824df5"
+            }
+          ]
+        },
+        "execution_behavior": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "Bounded visible-seed probes",
+              "finding": "Mechanical errors empty; median0.257737s,max0.321876s, seed variation and arm differences observed on bounded probes.",
+              "sha256": "90b6c543f60a8cbbc81ca003babe3ed40767cde306ef12434138a6c959155ff7",
+              "original_private_source_reference_sha256": "481bed760975c42e66e5ebaa90bdb496bfd12909ece18b0432fe401a164430ff"
+            },
+            {
+              "locator": "Two tiny sandboxed optimizer controls",
+              "finding": "Both completed;0.003571reported worker seconds, zero models.",
+              "sha256": "3fa3e1c9539e1e2e9624a560c3e657e012830056ade98c52f9386ff2dd3f3c60",
+              "source": "artifacts/fresh-review-probe-2611.08924v1/report.json"
+            }
+          ]
+        },
+        "shortcut_audit": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "run and helper source",
+              "finding": "No hidden-seed branch, answer lookup or results-file read found. Hyperparameter selection uses validation rather than test accuracy. Memory values are an idealized formula, not actual array allocation measurements.",
+              "sha256": "f17f47a3eebc70e6d406dea871dd650e8988b552093c778ca5f0299b55af13cf",
+              "original_private_source_reference_sha256": "b09c84e0ac34bb45cfb5fe829a1e445eef9950437f95867ace1bc36dac39c82d"
+            }
+          ]
+        }
+      },
+      "original_record_sha256": "e53b47259a46914d1777645b9022c376150ddc4749f41673c7ba3c52b4b2b9c2",
+      "projection_note": "Human assertions retained; private subjects/paths and contact fields omitted. This projection is not the original signed or authenticated review."
+    },
+    "authorization_role": "Owner authorized adoption; assessment performed by Codex, without independent human scientific review."
+  },
+  {
+    "version": "2611.08937v1",
+    "draft_hashes": {
+      "lab_sha256": "2caa8ec744863ccd9c92e2364d103b90250e37c823d71bd846979317249d6449",
+      "space_sha256": "1a37a4863953250bbff01af9dc90942cac02b863846d8d20148bf5a7493aa458",
+      "validation_sha256": "7854f3ce0669a02f062120d217bc0247abc96c0203a3757975bd224f6c8aad2a"
+    },
+    "proposal_file_sha256": "07457f6420197fd4e04c212a3baac8c94af94758dce27693a289e32ca31e2f67",
+    "assessment": {
+      "schema_version": 1,
+      "decision": "rejected",
+      "paper": {
+        "url": "https://arxiv.org/abs/2611.08937v1",
+        "version": "2611.08937v1",
+        "sections": [
+          "Section3: degrees of freedom versus raw parameter count",
+          "Section5, PDFpage13, Equations12a-12c: actual SQS definition and minimization",
+          "Section5.1: logarithmic complexity and sufficient-accuracy threshold"
+        ]
+      },
+      "scope": {
+        "paper_mechanism": "A lower-is-better product of normalized effective complexity and thresholded MSE, controlled by gamma and a sufficient-accuracy cutoff.",
+        "miniature_comparison": "A different higher-is-better min-max geometric mean for polynomial Ridge degree selection, evaluated on regression test RMSE.",
+        "preserved_assumptions": [
+          "A finite candidate model set and a user-selected accuracy/complexity preference.",
+          "Common data and CV folds across selection arms, with final fitted-model test evaluation."
+        ],
+        "simplifications": [
+          "Small regression datasets and polynomial Ridge candidates.",
+          "Raw coefficient count replaces effective degrees of freedom.",
+          "Min-max RMSE/simplicity product replaces the actual paper score, noise floor and gamma parameterization."
+        ],
+        "unsupported_claims": [
+          "Implementation of the paper SQS formula or its sufficient-accuracy preference.",
+          "A universal5% RMSE guarantee or a joint complexity/accuracy claim from the scalar RMSE superiority grade.",
+          "Any qualification result or criticism of the source paper itself."
+        ]
+      },
+      "rationale": "Exclude the generated draft before qualification. The source PDF defines SQS with a logarithmic effective-degrees-of-freedom factor, user-thresholded MSE floor and minimization. The draft instead maximizes a min-max normalized geometric mean of negative RMSE and negative parameter count, with accuracy weights0.25/0.75. That is a different selection rule. Its primary scalar RMSE-superiority task also does not encode the declared accuracy/complexity tradeoff. The model received the allowed abstract fallback because arXiv HTML was404; the full PDF was inspected separately for review, without changing the frozen model input or repairing the draft.",
+      "margin": {
+        "value": 0.01,
+        "rationale": "Unapproved draft margin; no qualification authorized for this excluded formula substitution."
+      },
+      "reviewer": {
+        "kind": "assistant",
+        "name": "Codex source assessment, PDF inspected",
+        "reviewed_at_utc": "2026-11-10T17:36:14.028285+00:00"
+      },
+      "checks": {
+        "mechanism_fidelity": {
+          "status": "fail",
+          "evidence": [
+            {
+              "locator": "PDFpage13 Section5 Equations12a-12c, visually confirmed in rendered page",
+              "finding": "The source combines log(1+dof)/log(1+maxdof), a gamma exponent, target variance scaling and a median-MSE sufficient-accuracy floor; lower score is preferred.",
+              "sha256": "683e1bc21bbaaed1b24eec7a23cf96b775e058639c9b0b6535c8fc7bd98e5628",
+              "source": "artifacts/fresh-review-sources/2611.08937v1.pdf"
+            },
+            {
+              "locator": "Rendered PDFpage13",
+              "finding": "Visual verification confirms formula layout and lower-is-better selection, avoiding reliance on damaged equation text extraction.",
+              "sha256": "537a3d27150bc595c2d9a1deec8017bea13ff599f598b1a9c269c75155c532d0",
+              "source": "artifacts/fresh-review-sources/2611.08937v1-formula-page.png"
+            },
+            {
+              "locator": "run A=_minmax(-cv), C=_minmax(-params), score=A^w*C^(1-w), np.argmax",
+              "finding": "The draft implements a different geometric selection rule with a different normalization, accuracy statistic, complexity measure, parameterization and direction.",
+              "sha256": "2caa8ec744863ccd9c92e2364d103b90250e37c823d71bd846979317249d6449",
+              "original_private_source_reference_sha256": "e4d55a6c07865c076c26056cc428dca598d8f4e3d4affec062c6ed1d65891631"
+            }
+          ]
+        },
+        "baseline_fairness": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "_make_split, KFold, cv array and method-specific sel",
+              "finding": "The alternative selection rules see the same candidate models, folds and computed CV errors. This source-level fairness does not make the alternative rule the paper method.",
+              "sha256": "2caa8ec744863ccd9c92e2364d103b90250e37c823d71bd846979317249d6449",
+              "original_private_source_reference_sha256": "e4d55a6c07865c076c26056cc428dca598d8f4e3d4affec062c6ed1d65891631"
+            }
+          ]
+        },
+        "shared_randomness": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "_make_split and KFold random_state",
+              "finding": "Data/noise draws and CV folds are independent of method. Model fitting is deterministic for the declared pipeline.",
+              "sha256": "2caa8ec744863ccd9c92e2364d103b90250e37c823d71bd846979317249d6449",
+              "original_private_source_reference_sha256": "e4d55a6c07865c076c26056cc428dca598d8f4e3d4affec062c6ed1d65891631"
+            }
+          ]
+        },
+        "heldout_metric": {
+          "status": "unresolved",
+          "evidence": [
+            {
+              "locator": "run rmse_regret, param_ratio and final test calls",
+              "finding": "The selected model is scored on a separate test partition, but the grader uses only RMSE regret. It does not jointly enforce complexity reduction and sufficient accuracy. Diabetes target units are also set using full bundled target statistics, so no broad train-only preprocessing certification is made.",
+              "sha256": "2caa8ec744863ccd9c92e2364d103b90250e37c823d71bd846979317249d6449",
+              "original_private_source_reference_sha256": "e4d55a6c07865c076c26056cc428dca598d8f4e3d4affec062c6ed1d65891631"
+            },
+            {
+              "locator": "paper.claim versus metric.name/treatment",
+              "finding": "The declared claim is a tradeoff including complexity and bounded degradation, whereas the primary task is scalar RMSE superiority under a1% effect margin.",
+              "sha256": "1a37a4863953250bbff01af9dc90942cac02b863846d8d20148bf5a7493aa458",
+              "original_private_source_reference_sha256": "c9487fe51a2eaaf069e5c167e4cabd7274113ea6fb81c14d6f4745948bf7210e"
+            }
+          ]
+        },
+        "meaningful_margin": {
+          "status": "unresolved",
+          "evidence": [
+            {
+              "locator": "metric.min_effect=0.01",
+              "finding": "The draft1% relative-RMSE margin is not approved for a rejected or unimplemented paper rule.",
+              "sha256": "1a37a4863953250bbff01af9dc90942cac02b863846d8d20148bf5a7493aa458",
+              "original_private_source_reference_sha256": "c9487fe51a2eaaf069e5c167e4cabd7274113ea6fb81c14d6f4745948bf7210e"
+            }
+          ]
+        },
+        "execution_behavior": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "Bounded visible-seed validation",
+              "finding": "Mechanical errors empty, median0.148775s,max0.273957s; seed_varies=false remains explicit. Passing execution does not validate the formula.",
+              "sha256": "782df48d0aa9f4d0a78169cdc672978365781298e41d100b2cb6ced5e2a40425",
+              "original_private_source_reference_sha256": "d1efd5806354adaed7dd4c763ba5240fe56fb460c0b8ef2a6f805de4c936e62b"
+            }
+          ]
+        },
+        "shortcut_audit": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "run cv selection and final test; module data constants",
+              "finding": "No hidden-seed branch, stored answer lookup or results-file read found. Selection uses CV errors rather than test RMSE. Full-data target normalization and the untested joint metric remain separate unresolved limitations.",
+              "sha256": "2caa8ec744863ccd9c92e2364d103b90250e37c823d71bd846979317249d6449",
+              "original_private_source_reference_sha256": "e4d55a6c07865c076c26056cc428dca598d8f4e3d4affec062c6ed1d65891631"
+            }
+          ]
+        }
+      },
+      "original_record_sha256": "03fb5c203bef85c01bde80aa98dc52c18b1826df26ae542cc00b4e3b22315b38",
+      "projection_note": "Human assertions retained; private subjects/paths and contact fields omitted. This projection is not the original signed or authenticated review."
+    },
+    "authorization_role": "Owner authorized adoption; assessment performed by Codex, without independent human scientific review."
+  },
+  {
+    "version": "2611.08959v1",
+    "draft_hashes": {
+      "lab_sha256": "f7837d6b34febc21a2f9470f3559c0b3eabdfa23f096a7daf73664fe7e74b1c0",
+      "space_sha256": "983bc13d147a7e5e63255653853594ceeb029f0c53f6ae2c812981108eaab704",
+      "validation_sha256": "71ea87db8b589ad446a95569260d6da45fe8a522e9b71036226f89a3c3d6e4c5"
+    },
+    "proposal_file_sha256": "e9c51244d720de1794262ca4b5efda7dbb2d2a43357b85afbbfb610851b8e616",
+    "assessment": {
+      "schema_version": 1,
+      "decision": "accepted",
+      "paper": {
+        "url": "https://arxiv.org/abs/2611.08959v1",
+        "version": "2611.08959v1",
+        "sections": [
+          "Section3: common linear learner and independent fitting/anchor information",
+          "Section4.1 Proposition4.1: exact student-risk identity",
+          "Section4.3 Corollary4.3: raw versus transmitted error weighting",
+          "Section7: fitted ridge students and finite data"
+        ]
+      },
+      "scope": {
+        "paper_mechanism": "Raw teacher-error geometry and the geometry transmitted through a common label-linear student can favor different aggregate weights; clean anchors estimate the unknown target moments.",
+        "miniature_comparison": "Two known linear weak functions in10-dimensional standard Gaussian input, a fitted5-coordinate ridge student, the same60 noisy anchors for both weight rules, and the analytic population risk of the resulting convex aggregate.",
+        "preserved_assumptions": [
+          "One ridge operator with label-independent regularization/fitting inputs is shared across all supervisor mixtures.",
+          "Raw errors have fixed equal norms and zero cross-product while their student-visible share changes.",
+          "Both methods use the same anchors, weak functions, task and unlabeled pool; true target coefficients enter scoring/oracle diagnostics, not the student-relative estimated selection target.",
+          "The held-out estimand is exact Gaussian population risk, not training-point error."
+        ],
+        "simplifications": [
+          "Two synthetic linear teachers and a fixed small Gaussian design replace general weak-supervisor families.",
+          "OLS on the full10-dimensional anchor design estimates the target; no optimal low-dimensional anchor-complexity or structural efficiency claim.",
+          "The primary grader uses its fixed arithmetic mean of the declared ratios. The draft advice to inspect medians/log-ratios is a diagnostic only, not a later metric change.",
+          "An additive1e-10 floor stabilizes the ratio near an oracle-zero denominator; ratio tails and small oracle excess remain limitations."
+        ],
+        "unsupported_claims": [
+          "Replication of empirical LLM supervision results or universal benefits from student-relative weighting.",
+          "The paper worst-case sample-complexity rates or uniformly near-oracle selection with60 noisy anchors.",
+          "A guaranteed positive qualification/confirmation label, median-based primary result or calibration improvement before measurement."
+        ]
+      },
+      "rationale": "Accept the narrow two-linear-supervisor Gaussian/ridge comparison before qualification. The fitted student is a common label-linear operator; selection uses the same noisy clean anchors, with target estimates for student-relative weighting rather than the hidden true coefficient. The primary metric is analytically evaluated population excess-risk ratio for the fitted student. Projection-limit, learner-linearity, exact-risk and convex-oracle controls support the implemented mechanism. This does not replicate general teacher families, label-complexity rates or arbitrary weak-to-strong learning, and it preserves finite-anchor uncertainty and ratio-tail limitations.",
+      "margin": {
+        "value": 0.05,
+        "rationale": "Freeze0.05absolute oracle-normalized excess-risk ratio units before qualification. This detects a five-percentage-point change relative to the oracle risk scale, with the same equal-context mean and paired-seed grading as the protocol. It is not an empirical label tuned to favor an arm."
+      },
+      "reviewer": {
+        "kind": "assistant",
+        "name": "Codex source assessment",
+        "reviewed_at_utc": "2026-11-10T17:49:14.658026+00:00"
+      },
+      "checks": {
+        "mechanism_fidelity": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "Sections3,4.1,4.3 and7",
+              "finding": "The source distinguishes raw-error and transmitted-error objectives for one common linear learner, with finite-anchor estimation and fitted ridge extensions.",
+              "sha256": "0bc9ec7097e4e2992c7e687746e8294992f373299748108c7c17b0a095673a23",
+              "original_private_source_reference_sha256": "6bd8082d06a282082f5ba08373cd7daa56006ae2d858012eb7a5ef9a503aa528"
+            },
+            {
+              "locator": "Student L construction, u0/du objective, raw and student_relative branches",
+              "finding": "Ridge is linear in pseudo-labels. The student-relative branch uses beta_hat from anchors; the oracle beta is used in the scoring objective and reference optimum. Exact risk includes finite-fit leakage and ridge bias.",
+              "sha256": "f7837d6b34febc21a2f9470f3559c0b3eabdfa23f096a7daf73664fe7e74b1c0",
+              "original_private_source_reference_sha256": "b66e029d9b5c4bfc1707425bc348ae76f21c5e8ad02fa8974b44f69af15230da"
+            },
+            {
+              "locator": "Projection-limit and fitted-operator controls",
+              "finding": "The closed-form raw/oracle ratios match1,1.0208333,1.125,1.5625; fitted-learner linearity errors are at most2.22e-16 and Gaussian risk-decomposition errors at most4.44e-16.",
+              "sha256": "6f4ef5f7205bfbe8944d1ac46d766486e4cdd77ce2b1c9c0ea22e59492100c89",
+              "source": "artifacts/fresh-review-probe-2611.08959v1/report.json"
+            }
+          ]
+        },
+        "baseline_fairness": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "raw_error_stacking versus student_relative branches and N_ANCHOR",
+              "finding": "Both use the same60 noisy target anchors, known weak functions and candidate convex weights. The difference is whether the selection objective accounts for the shared student operator. The exact-target oracle is a diagnostic, not one of the compared selectable methods.",
+              "sha256": "f7837d6b34febc21a2f9470f3559c0b3eabdfa23f096a7daf73664fe7e74b1c0",
+              "original_private_source_reference_sha256": "b66e029d9b5c4bfc1707425bc348ae76f21c5e8ad02fa8974b44f69af15230da"
+            }
+          ]
+        },
+        "shared_randomness": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "SeedSequence.spawn(3) and all draws before the method branch",
+              "finding": "Task, unlabeled inputs and anchors have separate deterministic streams independent of method/context; fitting uses a common nested pool with no stochastic initialization.",
+              "sha256": "f7837d6b34febc21a2f9470f3559c0b3eabdfa23f096a7daf73664fe7e74b1c0",
+              "original_private_source_reference_sha256": "b66e029d9b5c4bfc1707425bc348ae76f21c5e8ad02fa8974b44f69af15230da"
+            }
+          ]
+        },
+        "heldout_metric": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "excess_of_t, beta_hat selection and ex_method/ex_oracle",
+              "finding": "For new standard-Gaussian inputs the squared coefficient error is exact population MSE. The representation-floor term is removed, while ridge bias remains. Target beta is not used as the estimated selection target.",
+              "sha256": "f7837d6b34febc21a2f9470f3559c0b3eabdfa23f096a7daf73664fe7e74b1c0",
+              "original_private_source_reference_sha256": "b66e029d9b5c4bfc1707425bc348ae76f21c5e8ad02fa8974b44f69af15230da"
+            },
+            {
+              "locator": "Four fitted visible-seed controls",
+              "finding": "Direct whole-space risk matches reported excess plus representation floor to floating-point tolerance; exact convex oracle is no worse than a1001-point weight grid. No qualification/confirmation data was read.",
+              "sha256": "6f4ef5f7205bfbe8944d1ac46d766486e4cdd77ce2b1c9c0ea22e59492100c89",
+              "source": "artifacts/fresh-review-probe-2611.08959v1/report.json"
+            }
+          ]
+        },
+        "meaningful_margin": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "metric.min_effect=0.05 and oracle-normalized ratio units",
+              "finding": "A0.05 difference is five percentage points of oracle excess-risk units. It is a small but substantive toy-task deviation from near-optimal weighting, fixed before qualification. It is not5% accuracy or a multiplicative5% gain relative to each method.",
+              "sha256": "983bc13d147a7e5e63255653853594ceeb029f0c53f6ae2c812981108eaab704",
+              "original_private_source_reference_sha256": "7029f4e7cd2e8f5f78049bc63a48d2873a247a480472783f8caf4e45e7f65410"
+            }
+          ]
+        },
+        "execution_behavior": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "Bounded visible-seed mechanical probes",
+              "finding": "Errors empty; median0.000533s,max0.022627s; seed variation and arm differences observed.",
+              "sha256": "d4d728bb855fd38b90dfecff65de29a949da86eb31035a1b32e87f639083bb79",
+              "original_private_source_reference_sha256": "3d022770bc6ff8a09c26a72304d3f41bac9876d0384ddb2a3fb7fc0c1d0548e6"
+            },
+            {
+              "locator": "All eight separate sandbox controls",
+              "finding": "Eight successful controls,0.080487reported worker seconds and zero models. Full paired grid execution is still separate.",
+              "sha256": "6f4ef5f7205bfbe8944d1ac46d766486e4cdd77ce2b1c9c0ea22e59492100c89",
+              "source": "artifacts/fresh-review-probe-2611.08959v1/report.json"
+            }
+          ]
+        },
+        "shortcut_audit": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "run: t_oracle and beta versus actual t branches",
+              "finding": "The compared selection branches do not choose t_oracle or use the true beta projection directly; the method uses the anchor estimate. No hidden-seed condition, stored answer or result-file access found. Known weak-function coefficients are part of this synthetic task.",
+              "sha256": "f7837d6b34febc21a2f9470f3559c0b3eabdfa23f096a7daf73664fe7e74b1c0",
+              "original_private_source_reference_sha256": "b66e029d9b5c4bfc1707425bc348ae76f21c5e8ad02fa8974b44f69af15230da"
+            }
+          ]
+        }
+      },
+      "original_record_sha256": "710023579be072a220d113b10268d4e7f8cfc738d588eae34426b213b46fc5b1",
+      "projection_note": "Human assertions retained; private subjects/paths and contact fields omitted. This projection is not the original signed or authenticated review."
+    },
+    "authorization_role": "Owner authorized adoption; assessment performed by Codex, without independent human scientific review."
+  },
+  {
+    "version": "2611.08977v1",
+    "draft_hashes": {
+      "lab_sha256": "0c5dec7a1f97d63ed7a493953fe825551e9a3583f21830534a20b316a1e3726f",
+      "space_sha256": "25d2475e063d8587eaf316647df45c3a6e2975e493297c38c79858df4a3f1f49",
+      "validation_sha256": "6fabea8710dc360ba220389b39652fc733d0c4857eaf9a4ba7bf9ca28def6c36"
+    },
+    "proposal_file_sha256": "4b47b2bc225584dd327fd701d0203ccb69e00cbf521f01a9fcef1f542255b035",
+    "assessment": {
+      "schema_version": 1,
+      "decision": "rejected",
+      "paper": {
+        "url": "https://arxiv.org/abs/2611.08977v1",
+        "version": "2611.08977v1",
+        "sections": [
+          "Section3.1 Equations2-5: training through energy descent and convergence supervision",
+          "Section3.2: state-based explorative modeling",
+          "Inference algorithm2"
+        ]
+      },
+      "scope": {
+        "paper_mechanism": "A learned latent energy guides recurrent refinement; decoded prediction and convergence losses train through the final descent steps, with trajectory-based exploration.",
+        "miniature_comparison": "Contrastive scalar-energy training versus cross-entropy training of a residual MLP on small Latin-square completions.",
+        "preserved_assumptions": [
+          "Scalar energy gradients guide iterative refinement; both arms use shared seeded puzzle generation and initial evaluation states."
+        ],
+        "simplifications": [
+          "Direct cell logits replace a separately decoded latent representation.",
+          "All energy-descent states are detached; contrastive energy-score fitting replaces prediction and convergence supervision through descent.",
+          "Nominal forward-pass accounting replaces measured matched inference compute."
+        ],
+        "unsupported_claims": [
+          "An implementation of the paper training mechanism or isolated energy-dynamics effect.",
+          "Strictly held-out solution identities in the multiple-solution training labels.",
+          "Measured compute savings from stopping; inactive rows still undergo network and gradient computation."
+        ]
+      },
+      "rationale": "Exclude this generated miniature before qualification. Its contrastive energy-score objective replaces the source method of training decoded predictions and convergence through energy descent. All descent states are detached, removing the required higher-order learning path. The claimed held-out square split also does not constrain the complete label set used in multi-solution training, and nominal pass counts do not measure equal compute. These are limitations of this generated draft, not evidence against the paper. No accuracy effect, qualification outcome or repaired scientific comparison is claimed.",
+      "margin": {
+        "value": 0.02,
+        "rationale": "Unapproved draft margin; no qualification is authorized for this excluded miniature."
+      },
+      "reviewer": {
+        "kind": "assistant",
+        "name": "Codex source assessment",
+        "reviewed_at_utc": "2026-11-10T18:04:20.029762+00:00"
+      },
+      "checks": {
+        "mechanism_fidelity": {
+          "status": "fail",
+          "evidence": [
+            {
+              "locator": "Section3.1 Equations2-5",
+              "finding": "The source differentiates decoded prediction and convergence losses through the final descent steps, requiring energy second derivatives.",
+              "sha256": "ebd26ee5b9a263f6c85b6cd8c39f96967954c5a8808b4a7f9856555cb56c29e3",
+              "original_private_source_reference_sha256": "8fdfbe7d12889ce70e1ef2462ddafbeb78674b6dc300e8aef35613376fc1aba3"
+            },
+            {
+              "locator": "_train_energy lines161-190",
+              "finding": "Every descent step is detached and autograd.grad does not create a higher-order graph. The optimizer instead fits softplus scores on valid one-hot positives and generated negative states; no decoded prediction or convergence loss trains through descent.",
+              "sha256": "0c5dec7a1f97d63ed7a493953fe825551e9a3583f21830534a20b316a1e3726f",
+              "original_private_source_reference_sha256": "8dbd34734743ced4e9e895f0ce2083d29be8dd62d98cdebeab84c56e418bbe87"
+            }
+          ]
+        },
+        "baseline_fairness": {
+          "status": "fail",
+          "evidence": [
+            {
+              "locator": "_train_direct, _train_energy, _build and _descend",
+              "finding": "Both use common inputs, but training objectives and output dimensions differ. Nominal two-pass energy charging is not measured compute matching; inactive rows still run through the full energy-gradient batch. A general recipe comparison is possible but not the claimed same-block matched-compute mechanism comparison.",
+              "sha256": "0c5dec7a1f97d63ed7a493953fe825551e9a3583f21830534a20b316a1e3726f",
+              "original_private_source_reference_sha256": "8dbd34734743ced4e9e895f0ce2083d29be8dd62d98cdebeab84c56e418bbe87"
+            }
+          ]
+        },
+        "shared_randomness": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "run, _build and _evaluate",
+              "finding": "Data partitions and evaluation noise are deterministic and independent of method; shared hidden-layer initializations use the same seed. Training consumes randomness differently, which is not evidence of independent test splits.",
+              "sha256": "0c5dec7a1f97d63ed7a493953fe825551e9a3583f21830534a20b316a1e3726f",
+              "original_private_source_reference_sha256": "8dbd34734743ced4e9e895f0ce2083d29be8dd62d98cdebeab84c56e418bbe87"
+            }
+          ]
+        },
+        "heldout_metric": {
+          "status": "fail",
+          "evidence": [
+            {
+              "locator": "_valid_rows, _pack and run train_pool/test_pool",
+              "finding": "Base solution indices are split, but training valid-completion labels enumerate the global set of576 squares. Under multiple solutions these labels can include squares from the nominal held-out solution pool. Newly sampled test puzzles do not establish held-out solution identity.",
+              "sha256": "0c5dec7a1f97d63ed7a493953fe825551e9a3583f21830534a20b316a1e3726f",
+              "original_private_source_reference_sha256": "8dbd34734743ced4e9e895f0ce2083d29be8dd62d98cdebeab84c56e418bbe87"
+            }
+          ]
+        },
+        "meaningful_margin": {
+          "status": "unresolved",
+          "evidence": [
+            {
+              "locator": "metric.min_effect=0.02",
+              "finding": "The two-percentage-point draft margin remains unapproved because the declared mechanism comparison fails source review.",
+              "sha256": "25d2475e063d8587eaf316647df45c3a6e2975e493297c38c79858df4a3f1f49",
+              "original_private_source_reference_sha256": "848a600329a6eaec0c7eb81599ab83110e2c895df17b15bfe3d9534a3a8dfa58"
+            }
+          ]
+        },
+        "execution_behavior": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "Bounded mechanical validation",
+              "finding": "The frozen validation reports successful bounded execution; mechanical validity does not establish paper fidelity.",
+              "sha256": "ba0ca20de92da089fd06447a6b1f2c0e37472f701c0cad28aa8e7a85ba759d5a",
+              "original_private_source_reference_sha256": "018e1dc0a2e52ab3b7a27a08618809f4f3f028ae15c49791e00c53bddae3765e"
+            }
+          ]
+        },
+        "shortcut_audit": {
+          "status": "fail",
+          "evidence": [
+            {
+              "locator": "_pack global completion enumeration and _descend",
+              "finding": "Training can use nominal held-out solution identities in its valid-label set. No hidden study-seed branch or stored-answer lookup was found. The nominal early-stop accounting omits work still performed on inactive batch rows.",
+              "sha256": "0c5dec7a1f97d63ed7a493953fe825551e9a3583f21830534a20b316a1e3726f",
+              "original_private_source_reference_sha256": "8dbd34734743ced4e9e895f0ce2083d29be8dd62d98cdebeab84c56e418bbe87"
+            }
+          ]
+        }
+      },
+      "original_record_sha256": "316ed51d5312f9355af81e3e3af4761e3e7aee23607d0c9cdc89647a794a2643",
+      "projection_note": "Human assertions retained; private subjects/paths and contact fields omitted. This projection is not the original signed or authenticated review."
+    },
+    "authorization_role": "Owner authorized adoption; assessment performed by Codex, without independent human scientific review."
+  },
+  {
+    "version": "2611.08990v1",
+    "draft_hashes": {
+      "lab_sha256": "b69990eeca44b61d9bd975ca78b4729d481fbca555fbba9e79134c8c6cd61714",
+      "space_sha256": "e9d31ec576d027c0b687e6ad0fb2cc108acd6a101dfe438f8e14a2e5edf9c476",
+      "validation_sha256": "38e2232bb068fd8d8fbe68b63e164636d4e7d3261ed8a835195e8dd4aa23772f"
+    },
+    "proposal_file_sha256": "55f9cb342838fdd6431e52a78d0a8103c958a54432b39458634305de23625c10",
+    "assessment": {
+      "schema_version": 1,
+      "decision": "accepted",
+      "paper": {
+        "url": "https://arxiv.org/abs/2611.08990v1",
+        "version": "2611.08990v1",
+        "sections": [
+          "Section4.2 Equations8-11: action-centered moments and online update",
+          "Section4.4: affordable-action primal-dual budget control",
+          "Section5.2 Theorem2: baseline robustness and separate-arm contrast bias"
+        ]
+      },
+      "scope": {
+        "paper_mechanism": "Conditional action centering removes an arbitrary predictable shared baseline from the contrast-estimating moment; separate-arm misspecified reward models can create contrast bias under action-dependent assignment.",
+        "miniature_comparison": "Two estimator recipes within one fixed adaptive action-selection and budget-controller family, on synthetic five-dimensional contexts, three priced actions and2030 rounds.",
+        "preserved_assumptions": [
+          "Linear CATE, action-independent nonlinear nuisance and bounded common noise.",
+          "Exact conditional action probabilities and u=z(A)-sum(pi*z); predictable control-arm residualizer and no online inverse-propensity weighting.",
+          "Common contexts/noise/uniform draws, identical declared acquisition/controller rules and pathwise affordable-action restriction."
+        ],
+        "simplifications": [
+          "No offline doubly robust warm start or cross-fitting;30 method-independent-policy rounds are a pilot.",
+          "No parameter-ball projection or theorem-calibrated confidence scales; constant dual step and a custom cost-law mixture.",
+          "Same centered design governs both acquisition widths, which is a declared comparison convention, not optimal baseline tuning.",
+          "The oracle is the fluid LP on realized contexts, not a replication of the source proprietary-feature benchmark or a policy regret theorem."
+        ],
+        "unsupported_claims": [
+          "Full DR-CATE-CBwK reproduction, asymptotic regret rates, or guaranteed value improvement.",
+          "A universal benefit from estimated residualization; the source allows it to change variance either way.",
+          "Held-out field deployment, actual promotion outcomes, or independent observations for each adaptive round."
+        ]
+      },
+      "rationale": "Accept the narrow online action-centering comparison before qualification. The exact conditional estimating moment and shared randomness are implemented, the primary metric evaluates true incremental policy value against a checked fluid-LP oracle, and both arms use a declared common acquisition/controller family. Five visible-only controls support these specific checks. This is not the complete doubly robust warm-start algorithm, a theorem-level confidence/coverage guarantee or a replication of the proprietary-data experiment. Preserve the0.01per-round CATE margin and all18contexts without selecting favorable cases.",
+      "margin": {
+        "value": 0.01,
+        "rationale": "Freeze the original0.01absolute CATE-per-round gap threshold before qualification:20.3aggregate units over2030rounds, with equal context averaging and paired outer seeds. This is a bounded toy-value criterion, not a percentage or result-tuned threshold."
+      },
+      "reviewer": {
+        "kind": "assistant",
+        "name": "Codex source assessment",
+        "reviewed_at_utc": "2026-11-10T18:11:56.928712+00:00"
+      },
+      "checks": {
+        "mechanism_fidelity": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "Equations8-11 and Theorem2",
+              "finding": "The source moment uses exact conditional action probabilities and remains valid for any predictable baseline estimate.",
+              "sha256": "3a7910c56f0537cbcfb04fe60e38d71d448cf0e156d4d76a8889da14b29c2cd3",
+              "original_private_source_reference_sha256": "f1edd9d9a964cf05af348f71f16b8374b7412b8f1bbcaf56608c286eba53e92a"
+            },
+            {
+              "locator": "run: pi, zbar, u, g, Vinv and b updates",
+              "finding": "The implementation follows the exact centered-feature ridge update, with separate-arm reward contrasts as the comparator. It scopes the comparison to the online centering mechanism.",
+              "sha256": "b69990eeca44b61d9bd975ca78b4729d481fbca555fbba9e79134c8c6cd61714",
+              "original_private_source_reference_sha256": "26b2181bbc46c14f08eac1c8edb6d43e2a9185500b46b4741c5ad3f2a8d2b7f9"
+            },
+            {
+              "locator": "Actual run tracer:2030rounds per compared method",
+              "finding": "Conditional moment errors at most5.83e-16; selected-feature errors zero. These controls do not measure hidden study performance.",
+              "sha256": "1cb23752eb8d413a3ce5fcf8e9dff8fd55e235096af1c4f1f0574c5588fab237",
+              "source": "artifacts/fresh-review-probe-2611.08990v1/report.json"
+            }
+          ]
+        },
+        "baseline_fairness": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "Shared estimator state, active-set policy and controller",
+              "finding": "Both arms maintain the same raw and centered sufficient statistics and use the same affordable-action, exploration and budget-control rule. The estimator used for action scores differs, so chosen actions may differ as intended. Baseline-model capacity and data-generating law are shared.",
+              "sha256": "b69990eeca44b61d9bd975ca78b4729d481fbca555fbba9e79134c8c6cd61714",
+              "original_private_source_reference_sha256": "26b2181bbc46c14f08eac1c8edb6d43e2a9185500b46b4741c5ad3f2a8d2b7f9"
+            }
+          ]
+        },
+        "shared_randomness": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "run: init_rng,data_rng,eval_rng; X,noise,U before branching",
+              "finding": "Contexts, outcome noise and uniform categorical draws are precomputed independent of method. Method-dependent actions do not alter future exogenous draws.",
+              "sha256": "b69990eeca44b61d9bd975ca78b4729d481fbca555fbba9e79134c8c6cd61714",
+              "original_private_source_reference_sha256": "26b2181bbc46c14f08eac1c8edb6d43e2a9185500b46b4741c5ad3f2a8d2b7f9"
+            }
+          ]
+        },
+        "heldout_metric": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "_oracle_value and achieved true CATE accumulation",
+              "finding": "The primary metric compares realized policy true incremental value with the fluid-LP optimum on the same contexts. It uses true conditional CATE rather than observed reward or training fit. New outer seeds independently test the fixed policy recipe; no within-trajectory holdout is claimed.",
+              "sha256": "b69990eeca44b61d9bd975ca78b4729d481fbca555fbba9e79134c8c6cd61714",
+              "original_private_source_reference_sha256": "26b2181bbc46c14f08eac1c8edb6d43e2a9185500b46b4741c5ad3f2a8d2b7f9"
+            },
+            {
+              "locator": "Independent scipy.optimize.linprog controls for budgets0,1,10",
+              "finding": "The dual oracle agrees with explicit small primal LPs to floating-point precision; both actual visible0 trajectories satisfy the hard budget and have nonnegative value gaps.",
+              "sha256": "1cb23752eb8d413a3ce5fcf8e9dff8fd55e235096af1c4f1f0574c5588fab237",
+              "source": "artifacts/fresh-review-probe-2611.08990v1/report.json"
+            }
+          ]
+        },
+        "meaningful_margin": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "metric.min_effect=0.01 CATE units per round",
+              "finding": "A0.01 per-round value-gap difference is20.3 cumulative true incremental-value units over2030rounds. The existing draft threshold is kept before qualification and is not an accuracy percentage.",
+              "sha256": "e9d31ec576d027c0b687e6ad0fb2cc108acd6a101dfe438f8e14a2e5edf9c476",
+              "original_private_source_reference_sha256": "57c081992b9c496caf83f757730da632a69dc41405e9660f943750e12aed1c9d"
+            }
+          ]
+        },
+        "execution_behavior": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "Bounded visible0/1 mechanical probes",
+              "finding": "No errors; median0.185334s and max0.375848s. Both seed variation and arm differences recorded.",
+              "sha256": "db86ccdbb5e80b6e38ccbb8317a6627e4d90465ecf0cdd8aa03a76bc498b2a75",
+              "original_private_source_reference_sha256": "6c2e35bf5725115ad13a93b6569127a62cae72ce7c81101e09b177cad7179bcb"
+            },
+            {
+              "locator": "Five bounded observer jobs",
+              "finding": "All five passed;1.896511reported worker seconds and zero model calls. No hidden qualification or confirmation data read.",
+              "sha256": "1cb23752eb8d413a3ce5fcf8e9dff8fd55e235096af1c4f1f0574c5588fab237",
+              "source": "artifacts/fresh-review-probe-2611.08990v1/report.json"
+            }
+          ]
+        },
+        "shortcut_audit": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "True THETA usage, current outcomes and offline oracle",
+              "finding": "Learners update using observed y and past statistics; true THETA generates outcomes and evaluates estimates/value, not policy scores directly. The oracle is computed after rollout. No study-seed special case, stored answer or external result lookup found.",
+              "sha256": "b69990eeca44b61d9bd975ca78b4729d481fbca555fbba9e79134c8c6cd61714",
+              "original_private_source_reference_sha256": "26b2181bbc46c14f08eac1c8edb6d43e2a9185500b46b4741c5ad3f2a8d2b7f9"
+            }
+          ]
+        }
+      },
+      "original_record_sha256": "01c1eeecccfdfef185cadb13dbd74efbf15259d0be3a37afcbb0f744c3ea20c1",
+      "projection_note": "Human assertions retained; private subjects/paths and contact fields omitted. This projection is not the original signed or authenticated review."
+    },
+    "authorization_role": "Owner authorized adoption; assessment performed by Codex, without independent human scientific review."
+  },
+  {
+    "version": "2611.08992v1",
+    "draft_hashes": {
+      "lab_sha256": "5633b0973f1c4d7439c937342da794d3bb5dab070a230103abe9510bf15b42cb",
+      "space_sha256": "974614a4672ac967a4ef3cb528421aac682af865019475faad3c6b2b9f15ff38",
+      "validation_sha256": "3ef55c50ae9a3babc3cd7cb27ff3634a5e497ef9cccbbe2f6734bfeb9fc93d30"
+    },
+    "proposal_file_sha256": "cd47bafd543392912a3bfb41c62dc67b8388a8dc8cb3e4ac910fa71c7b8ed7f3",
+    "assessment": {
+      "schema_version": 1,
+      "decision": "rejected",
+      "paper": {
+        "url": "https://arxiv.org/abs/2611.08992v1",
+        "version": "2611.08992v1",
+        "sections": [
+          "Section3.1 Equations2-5: normalized compact-group Reynolds averaging",
+          "Section4.1: finite-window obstruction for non-compact groups",
+          "Sections4.2-4.4: Weyl trick, orthogonal projection and frame alternatives"
+        ]
+      },
+      "scope": {
+        "paper_mechanism": "Compact-group Reynolds projection and three specified alternatives for non-compact symmetries: Weyl complexification, distribution-dependent orthogonal projection and frame averaging.",
+        "miniature_comparison": "A tanh MLP averaged over seven positive scales in a fixed finite window versus the same raw checkpoint and a separately trained direction-feature predictor.",
+        "preserved_assumptions": [
+          "The synthetic target is invariant to positive scaling, raw and averaged predictions share a trained checkpoint, and evaluation uses independent clean targets."
+        ],
+        "simplifications": [
+          "Fixed-window numerical smoothing replaces all three non-compact projection constructions.",
+          "Two-dimensional direction regression replaces physical emulators and the source scaling/Lorentz constructions."
+        ],
+        "unsupported_claims": [
+          "The finite-window predictor implements the paper non-compact symmetry-enforcement method.",
+          "The paper OOD behavior is being tested by this particular scale-window heuristic.",
+          "Exact scale invariance or the compact-group non-increasing risk guarantee."
+        ]
+      },
+      "rationale": "Exclude this generated miniature before qualification. It substitutes a seven-point fixed-window scale smoother for the paper non-compact symmetry constructions. Section4.1 explicitly explains why windowed averaging does not generally yield equivariance; later methods use Weyl complexification, orthogonal projection or frame averaging, none implemented here. The raw/averaged checkpoint comparison and clean test metric are mechanically reasonable, but cannot support attribution to the paper method or its OOD findings. This exclusion concerns the generated miniature; no source-paper defect or qualification effect is claimed.",
+      "margin": {
+        "value": 0.01,
+        "rationale": "Unapproved draft MSE margin; no qualification is authorized for the excluded miniature."
+      },
+      "reviewer": {
+        "kind": "assistant",
+        "name": "Codex source assessment",
+        "reviewed_at_utc": "2026-11-10T18:18:43.027525+00:00"
+      },
+      "checks": {
+        "mechanism_fidelity": {
+          "status": "fail",
+          "evidence": [
+            {
+              "locator": "Section4.1 Equations9-10 and Sections4.2-4.4",
+              "finding": "The paper explicitly distinguishes a finite-window heuristic from a canonical equivariant projection, then supplies Weyl, orthogonal-projection and frame alternatives for non-compact groups.",
+              "sha256": "78e0e72fcca68fc44787e85b3ef9e3ea73f94057cf2b41425e6442073b3b6a5d",
+              "original_private_source_reference_sha256": "bb045714a6e2ec3336c5cd923b99d964f38bfcf49aa3cf0c2663323dbc937410"
+            },
+            {
+              "locator": "SCALE_GRID and predict(scale_avg)",
+              "finding": "The treatment is only mean(raw.predict(c*x)) over seven fixed scales in[0.5,2]. It implements none of the source non-compact constructions. Multiplying x translates the averaging window along the scale group rather than enforcing invariance.",
+              "sha256": "5633b0973f1c4d7439c937342da794d3bb5dab070a230103abe9510bf15b42cb",
+              "original_private_source_reference_sha256": "ce083269941f12e6a5990ac3bd0014dafb18672c4c86b3869a32aa8d6420f4a6"
+            },
+            {
+              "locator": "paper.claim and method.description",
+              "finding": "Metadata calls this finite-window average the paper method and associates it with the source OOD advantage. That attribution is unsupported by the implementation.",
+              "sha256": "974614a4672ac967a4ef3cb528421aac682af865019475faad3c6b2b9f15ff38",
+              "original_private_source_reference_sha256": "cf52cbf53d64621e94a692ac4871cc0a679fda2bdd795b77629f4d47e8241885"
+            }
+          ]
+        },
+        "baseline_fairness": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "raw fit and predict closure",
+              "finding": "The raw and averaged comparison uses the same trained raw predictor. The third invariant-feature comparator is separately trained and not the primary treatment contrast.",
+              "sha256": "5633b0973f1c4d7439c937342da794d3bb5dab070a230103abe9510bf15b42cb",
+              "original_private_source_reference_sha256": "ce083269941f12e6a5990ac3bd0014dafb18672c4c86b3869a32aa8d6420f4a6"
+            }
+          ]
+        },
+        "shared_randomness": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "Data/init streams before method selection",
+              "finding": "All methods share fixed exogenous pools, target noise and checkpoint seeds. Training sizes are nested prefixes; scoring selects method only after computing the same models.",
+              "sha256": "5633b0973f1c4d7439c937342da794d3bb5dab070a230103abe9510bf15b42cb",
+              "original_private_source_reference_sha256": "ce083269941f12e6a5990ac3bd0014dafb18672c4c86b3869a32aa8d6420f4a6"
+            }
+          ]
+        },
+        "heldout_metric": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "g_te,z_te,y_te and scores",
+              "finding": "Fresh test points are drawn separately from training. Clean known target values are used only for test scoring, with the same target under100x positive scaling.",
+              "sha256": "5633b0973f1c4d7439c937342da794d3bb5dab070a230103abe9510bf15b42cb",
+              "original_private_source_reference_sha256": "ce083269941f12e6a5990ac3bd0014dafb18672c4c86b3869a32aa8d6420f4a6"
+            }
+          ]
+        },
+        "meaningful_margin": {
+          "status": "unresolved",
+          "evidence": [
+            {
+              "locator": "metric.min_effect=0.01",
+              "finding": "The draft MSE margin is not approved because the attributed paper-method comparison fails source review.",
+              "sha256": "974614a4672ac967a4ef3cb528421aac682af865019475faad3c6b2b9f15ff38",
+              "original_private_source_reference_sha256": "cf52cbf53d64621e94a692ac4871cc0a679fda2bdd795b77629f4d47e8241885"
+            }
+          ]
+        },
+        "execution_behavior": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "Visible0/1 bounded mechanical probes",
+              "finding": "No errors; median0.380914s,max0.760963s, variation and arm differences observed.",
+              "sha256": "a48240fb83a4ff4e0493da8f71b9e265f4d2d9c4dcdf34c5ebf4b5eeef44bf13",
+              "original_private_source_reference_sha256": "a479c668630d00471b69f47c3a4450400dcce90afe972c1a96cada9df164d1d5"
+            }
+          ]
+        },
+        "shortcut_audit": {
+          "status": "pass",
+          "evidence": [
+            {
+              "locator": "run, predict and returned diagnostics",
+              "finding": "No hidden-seed branch, stored answer or result-file access found. Each query computes all predictor/shift scores and exposes several visible comparison diagnostics, so actual information per paid query is broader than one scalar metric. This does not validate paper fidelity.",
+              "sha256": "5633b0973f1c4d7439c937342da794d3bb5dab070a230103abe9510bf15b42cb",
+              "original_private_source_reference_sha256": "ce083269941f12e6a5990ac3bd0014dafb18672c4c86b3869a32aa8d6420f4a6"
+            }
+          ]
+        }
+      },
+      "original_record_sha256": "e72ceffe83aeba29c0ca15a5b1430e29869c271d7c7639182991e5d18ab385f9",
+      "projection_note": "Human assertions retained; private subjects/paths and contact fields omitted. This projection is not the original signed or authenticated review."
+    },
+    "authorization_role": "Owner authorized adoption; assessment performed by Codex, without independent human scientific review."
+  }
+]

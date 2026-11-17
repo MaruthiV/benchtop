@@ -1,0 +1,46 @@
+{
+  "title": "Action-centered vs separate-arm contrasts for budgeted promotion bandits",
+  "setting": "Each run simulates 30 pilot rounds followed by 2000 adaptive rounds of promotion decisions over 5-dimensional uniform contexts, with a free control and three priced actions whose true CATEs are linear in the context. The outcome adds a shared baseline that is linear or nonlinear depending on the misspecification level, plus bounded noise. Actions come from an active-set rule mixed with a cost-dependent logging law, and a primal-dual controller enforces a per-round spend rate, so the learner must estimate contrasts from adaptively collected data. The primary metric is the per-round gap between a fluid-LP oracle value on the same realized contexts and the achieved true CATE value; diagnostics are the parameter error and the fresh-context RMSE of the final contrast estimates.",
+  "paper": {
+    "title": "Action-Centered Causal Bandits for Budget-Constrained Promotion Targeting",
+    "arxiv_id": "2611.08990",
+    "claim": "The action-centered contrast estimator remains unbiased under any predictable baseline, whereas separate-arm reward regression can exhibit contrast bias under action-dependent logging and misspecified shared baselines, which yields a larger budget-feasible value gap that grows with misspecification strength."
+  },
+  "metric": {
+    "name": "value_gap",
+    "goal": "min",
+    "min_effect": 0.01,
+    "description": "Per-round value gap: (fluid-LP oracle value computed from true CATEs on the same realized contexts, minus the sum of true CATEs of the chosen actions) divided by the number of rounds N=2030. It is nonnegative for budget-feasible runs. Lower is better. Units are CATE units per round."
+  },
+  "factors": [
+    {
+      "name": "method",
+      "role": "treatment",
+      "levels": ["separate_arm", "action_centered"],
+      "description": "separate_arm fits one ridge regression of raw reward per arm (control included) and takes differences against control as contrasts. action_centered regresses centered residuals on e_a (x) x with a predictable linear control-arm baseline and uses no inverse-propensity weights. Both share the same design, exploration rule, and budget controller."
+    },
+    {
+      "name": "misspec",
+      "role": "context",
+      "levels": ["none", "mild", "strong"],
+      "description": "Nonlinearity amplitude of the shared baseline f(x) = linear part + amplitude * (sin(2x0) + 1.5(x1^2 - 0.3) + 0.8 x2 x3), with amplitude 0, 1, and 3. Under none, both estimators' model classes are correct."
+    },
+    {
+      "name": "logging",
+      "role": "context",
+      "levels": ["uniform", "moderate", "strong"],
+      "description": "Strength gamma of the cost-dependent logging law exp(-gamma * cost) over affordable actions, with gamma 0, 1.5, and 3. It is mixed into the policy with weight 0.2 and makes arm-specific designs depend on cost. Adaptive selection also shifts arm designs even under uniform logging."
+    },
+    {
+      "name": "budget",
+      "role": "context",
+      "levels": ["loose", "binding"],
+      "description": "Per-round spend rate 1.5 (rarely binding) or 0.4 (binding). The total budget is rate times 2030 rounds, and an affordable-action rule enforces it pathwise."
+    }
+  ],
+  "treatment": {
+    "factor": "method",
+    "paper": "action_centered",
+    "baseline": "separate_arm"
+  }
+}
